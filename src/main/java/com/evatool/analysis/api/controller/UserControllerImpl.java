@@ -60,7 +60,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public EntityModel<UserDTO> addUser(UserDTO userDTO) {
-        logger.info("[POST] /addUser");
+        logger.info("[POST] /users");
         User user = userRepository.save(userDTOService.create(userDTO));
 
         userEventPublisher.publishEvent(new UserCreatedEvent(user.toString()));
@@ -69,7 +69,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public EntityModel<UserDTO> updateUser(UserDTO userDTO) {
-        logger.info("[PUT] /user");
+        logger.info("[PUT] /users");
         Optional<User> userOptional = userRepository.findById(userDTO.getRootEntityID());
         if (userOptional.isPresent()) {
             User user = userOptional.get();

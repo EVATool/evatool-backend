@@ -45,7 +45,7 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     @Override
     public List<EntityModel<StakeholderDTO>> getStakeholderList() {
-        logger.info("[GET] /stakeholder");
+        logger.info("[GET] /stakeholders");
         List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
         if (stakeholderList.isEmpty()){
             return Arrays.asList();
@@ -55,7 +55,7 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     @Override
     public EntityModel<StakeholderDTO> getStakeholderById(UUID id) {
-        logger.info("[GET] /stakeholder/{id}");
+        logger.info("[GET] /stakeholders/{id}");
         Optional<Stakeholder> stakeholder = stakeholderRepository.findById(id);
         if (stakeholder.isEmpty()){
             throw new EntityNotFoundException(Stakeholder.class, id);
@@ -65,7 +65,7 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     @Override
     public EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
-        logger.info("[POST] /addStakeholder");
+        logger.info("[POST] /stakeholders");
         Stakeholder stakeholder = stakeholderRepository.save(stakeholderDTOService.create(stakeholderDTO));
         stakeholderEventPublisher.publishEvent(new StakeholderCreatedEvent(this, stakeholder.toString()));
         return getStakeholderById(stakeholder.getStakeholderId());
@@ -73,7 +73,7 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     @Override
     public EntityModel<StakeholderDTO> updateStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
-        logger.info("[PUT] /stakeholder");
+        logger.info("[PUT] /stakeholders");
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(stakeholderDTO.getRootEntityID());
         Stakeholder stakeholder = stakeholderOptional.orElseThrow();
         stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());

@@ -15,13 +15,13 @@ import java.util.UUID;
 @Api("API-endpoint for user")
 public interface UserController {
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     @ApiOperation(value = "This method returns a list of all user")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All entities returned")})
     public List<EntityModel<UserDTO>> getUserList();
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     @ApiOperation(value = "This method returns an Optional of a user by his ID ")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "The entity was found"),
@@ -29,7 +29,7 @@ public interface UserController {
             @ApiResponse(code = 404, message = "The entity was not found")})
     public EntityModel<UserDTO> getUserById(@PathVariable UUID id);
 
-    @PostMapping("/addUser")
+    @PostMapping("/users")
     @ApiOperation(value = "This method add a user")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "The entity is inserted"),
@@ -37,14 +37,14 @@ public interface UserController {
             @ApiResponse(code = 404, message = "The entity is not found")})
     public EntityModel<UserDTO> addUser(@RequestBody UserDTO userDTO);
 
-    @PutMapping("/user/{id}")
+    @PutMapping("/users/{id}")
     @ApiOperation(value = "This method updated an user by his id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity is deleted"),
             @ApiResponse(code = 404, message = "The entity is not found")})
     public EntityModel<UserDTO> updateUser(@RequestBody UserDTO userDTO);
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/users/{id}")
     @ApiOperation(value = "This method delete an user by his id ")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity is updated"),
