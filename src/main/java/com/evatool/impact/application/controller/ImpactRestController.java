@@ -48,10 +48,18 @@ public class ImpactRestController {
     @GetMapping(IMPACTS)
     @ApiOperation(value = "Read all impacts")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "OK")})
-    public ResponseEntity<List<EntityModel<ImpactDto>>> findAll() {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Not Found")})
+    public ResponseEntity<List<EntityModel<ImpactDto>>> findAll(@ApiParam(value = "Analysis Id") @Valid @RequestParam(value = "analysisId", required = false) UUID analysisId) {
         logger.info("GET " + IMPACTS);
-        return new ResponseEntity<>(getImpactsWithLinks(impactService.findAll()), HttpStatus.OK);
+        List<ImpactDto> impactDtoList;
+        if (analysisId == null) {
+            impactDtoList = impactService.findAll();
+        } else {
+            impactDtoList = impactService.findAllByAnalysisId(analysisId);
+        }
+        return new ResponseEntity<>(getImpactsWithLinks(impactDtoList), HttpStatus.OK);
     }
 
     @PostMapping(IMPACTS)
@@ -99,6 +107,7 @@ public class ImpactRestController {
         entityModel.add(linkTo(methodOn(ImpactRestController.class).deleteById(impactDto.getId())).withRel(DELETE_IMPACT));
         entityModel.add(linkTo(ImpactRestController.class).slash(STAKEHOLDERS).slash(impactDto.getStakeholder().getId()).withRel(GET_STAKEHOLDER));
         entityModel.add(linkTo(ImpactRestController.class).slash(DIMENSIONS).slash(impactDto.getDimension().getId()).withRel(GET_DIMENSION));
+        entityModel.add(linkTo(ImpactRestController.class).slash(ANALYSES).slash(impactDto.getAnalysis().getId()).withRel(GET_ANALYSIS));
         return entityModel;
     }
 

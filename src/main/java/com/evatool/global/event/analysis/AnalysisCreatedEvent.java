@@ -6,12 +6,7 @@ import org.springframework.context.ApplicationEvent;
 public class AnalysisCreatedEvent extends ApplicationEvent {
 
     @Getter
-    private String jsonPayload;
-
-//    public AnalysisCreatedEvent(Object source, String jsonPayload) {
-//        super(source);
-//        this.jsonPayload = jsonPayload;
-//    }
+    private final String jsonPayload;
 
     public AnalysisCreatedEvent(String jsonPayload) {
         super(jsonPayload);

@@ -1,29 +1,27 @@
 package com.evatool.requirements.dto;
-
 import com.google.gson.Gson;
 
 import java.util.*;
 
 public class RequirementDTO {
 
-    private Map<UUID,String> impactTitles = new HashMap<>();
+    private Map<UUID,String> impactDescription = new HashMap<>();
     private UUID rootEntityId;
     private UUID projectID;
     private String requirementTitle;
     private String requirementDescription;
-    private Set dimensions = new HashSet();
+    private Set<String> dimensions = new HashSet<>();
     private Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
     private Map<UUID,String> variantsTitle = new HashMap<>();
-
-    public RequirementDTO() {
-
-    }
 
     public UUID getRootEntityId() {
         return rootEntityId;
     }
 
     public void setRootEntityId(UUID rootEntityId) {
+        if (rootEntityId == null) {
+            throw new IllegalArgumentException("RootEntityId cannot be null.");
+        }
         this.rootEntityId = rootEntityId;
     }
 
@@ -32,6 +30,9 @@ public class RequirementDTO {
     }
 
     public void setRequirementTitle(String requirementTitle) {
+        if (requirementTitle == null) {
+            throw new IllegalArgumentException("Requirement title cannot be null.");
+        }
         this.requirementTitle = requirementTitle;
     }
 
@@ -40,22 +41,31 @@ public class RequirementDTO {
     }
 
     public void setRequirementDescription(String requirementDescription) {
+        if (requirementDescription == null) {
+            throw new IllegalArgumentException("Requirement description cannot be null.");
+        }
         this.requirementDescription = requirementDescription;
     }
 
-    public Map<UUID,String> getImpactTitles() {
-        return impactTitles;
+    public Map<UUID,String> getImpactDescription() {
+        return impactDescription;
     }
 
-    public void setImpactTitles(Map<UUID,String> impactTitles) {
-        this.impactTitles = impactTitles;
+    public void setImpactDescription(Map<UUID,String> impactDescription) {
+        if (impactDescription == null) {
+            throw new IllegalArgumentException("Impact description cannot be null.");
+        }
+        this.impactDescription = impactDescription;
     }
 
-    public Set getDimensions() {
+    public Set<String> getDimensions() {
         return dimensions;
     }
 
-    public void setDimensions(Set dimensions) {
+    public void setDimensions(Set<String> dimensions) {
+        if (dimensions == null) {
+            throw new IllegalArgumentException("Dimensions cannot be null.");
+        }
         this.dimensions = dimensions;
     }
 
@@ -64,6 +74,9 @@ public class RequirementDTO {
     }
 
     public void setVariantsTitle(Map<UUID, String> variantsTitle) {
+        if (variantsTitle == null) {
+            throw new IllegalArgumentException("Variants title cannot be null.");
+        }
         this.variantsTitle = variantsTitle;
     }
 
@@ -72,6 +85,9 @@ public class RequirementDTO {
     }
 
     public void setRequirementImpactPoints(Map<UUID, Integer> requirementImpactPoints) {
+        if (requirementImpactPoints == null) {
+            throw new IllegalArgumentException("Requirement Impact Points cannot be null.");
+        }
         this.requirementImpactPoints = requirementImpactPoints;
     }
 
@@ -80,6 +96,9 @@ public class RequirementDTO {
     }
 
     public void setProjectID(UUID projectID) {
+        if (projectID == null) {
+            throw new IllegalArgumentException("ProjectID cannot be null.");
+        }
         this.projectID = projectID;
     }
 

@@ -18,7 +18,7 @@ public class VariantStakeholderUpdatedEventListener implements ApplicationListen
 
     @Override
     public void onApplicationEvent(StakeholderUpdatedEvent stakeholderUpdatedEvent) {
-        logger.info("Listening Event in VariantStakeholderUpdated from " + stakeholderUpdatedEvent.getClass());
+        logger.info("Listening Event in VariantStakeholderUpdated from {}", stakeholderUpdatedEvent.getClass());
 
 
         // TODO Uncomment once weird test cases get solved

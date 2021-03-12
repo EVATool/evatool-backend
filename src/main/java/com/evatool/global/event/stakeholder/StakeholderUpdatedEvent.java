@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEvent;
 public class StakeholderUpdatedEvent extends ApplicationEvent {
 
     @Getter
-    private String jsonPayload;
+    private final String jsonPayload;
 
     public StakeholderUpdatedEvent(Object source, String jsonPayload) {
         super(source);

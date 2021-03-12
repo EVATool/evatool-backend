@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEvent;
 
 @Getter
 public class VariantCreatedEvent extends ApplicationEvent {
-    private String variantJson;
+    private final String variantJson;
 
     public VariantCreatedEvent(Object source, String variantJson) {
         super(source);

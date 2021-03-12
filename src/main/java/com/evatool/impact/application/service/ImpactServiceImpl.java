@@ -23,18 +23,22 @@ public class ImpactServiceImpl implements ImpactService {
 
     private final ImpactRepository impactRepository;
 
+    private final DimensionService dimensionService;
+
     private final ImpactStakeholderService impactStakeholderService;
 
-    private final DimensionService dimensionService;
+    private final ImpactAnalysisService impactAnalysisService;
 
     private final ImpactEventPublisher impactEventPublisher;
 
-    public ImpactServiceImpl(ImpactRepository impactRepository, ImpactStakeholderService impactStakeholderService, DimensionService dimensionService, ImpactEventPublisher impactEventPublisher) {
+    public ImpactServiceImpl(ImpactRepository impactRepository, DimensionService dimensionService, ImpactStakeholderService impactStakeholderService, ImpactAnalysisService impactAnalysisService, ImpactEventPublisher impactEventPublisher) {
         this.impactRepository = impactRepository;
-        this.impactStakeholderService = impactStakeholderService;
         this.dimensionService = dimensionService;
+        this.impactStakeholderService = impactStakeholderService;
+        this.impactAnalysisService = impactAnalysisService;
         this.impactEventPublisher = impactEventPublisher;
     }
+
 
     @Override
     public ImpactDto findById(UUID id) {
@@ -59,12 +63,21 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
+    public List<ImpactDto> findAllByAnalysisId(UUID analysisId) {
+        logger.info("Get Impacts By Analysis Id");
+        var impacts = impactRepository.findAllByAnalysisId(analysisId);
+        var impactDtoList = new ArrayList<ImpactDto>();
+        impacts.forEach(impact -> impactDtoList.add(ImpactDtoMapper.toDto(impact)));
+        return impactDtoList;
+    }
+
+    @Override
     public ImpactDto create(ImpactDto impactDto) {
         logger.info("Create Impact");
         if (impactDto.getId() != null) {
             throw new EntityIdMustBeNullException(Impact.class.getSimpleName());
         }
-        this.findImpactChildren(impactDto);
+        this.assertImpactChildrenExist(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
         impactEventPublisher.publishImpactCreated(impact);
         return ImpactDtoMapper.toDto(impact);
@@ -74,7 +87,7 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto update(ImpactDto impactDto) {
         logger.info("Update Impact");
         this.findById(impactDto.getId());
-        this.findImpactChildren(impactDto);
+        this.assertImpactChildrenExist(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
         impactEventPublisher.publishImpactUpdated(impact);
         return ImpactDtoMapper.toDto(impact);
@@ -95,8 +108,9 @@ public class ImpactServiceImpl implements ImpactService {
         impactRepository.deleteAll();
     }
 
-    private void findImpactChildren(ImpactDto impactDto) {
+    private void assertImpactChildrenExist(ImpactDto impactDto) {
         this.impactStakeholderService.findById(impactDto.getStakeholder().getId());
         this.dimensionService.findById(impactDto.getDimension().getId());
+        this.impactAnalysisService.findById(impactDto.getAnalysis().getId());
     }
 }

@@ -1,9 +1,7 @@
 package com.evatool.variants.controller;
 
-import com.evatool.variants.entities.Variant;
 import com.evatool.variants.entities.VariantDto;
 import com.evatool.variants.services.VariantService;
-import com.evatool.variants.services.VariantsUriHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -15,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-import static com.evatool.variants.services.VariantsUriHelper.*;
+import static com.evatool.variants.services.VariantsUriHelper.VARIANTS;
+import static com.evatool.variants.services.VariantsUriHelper.VARIANTS_ID;
 
 @Api(value = "VariantsController", description = "REST API for variants", tags = "variants")
 @RestController

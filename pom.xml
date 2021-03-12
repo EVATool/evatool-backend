@@ -2,15 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <!--     <packaging>pom</packaging>
-        <modules>
-            <module>global</module>
-            <module>com.evatool.impact</module>
-            <module>variants</module>
-            <module>analysis</module>
-            <module>com.evatool.requirements</module>
-            <module>evatoolapp</module>
-        </modules>-->
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -166,23 +157,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>
-                <groupId>de.andrena.tools.macker</groupId>
-                <artifactId>macker-maven-plugin</artifactId>
-                <version>1.0.2</version>
-                <configuration>
-                    <rule>macker-rules.xml</rule>
-                    <includeTests>true</includeTests>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>macker</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
         </plugins>
     </build>
 

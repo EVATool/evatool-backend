@@ -26,6 +26,26 @@ class ImpactStakeholderJsonMapperTest {
     }
 
     @Test
+    void testFromJsonString_JsonStringEmpty_ThrowEventPayloadInvalidException() {
+        // given
+
+        // when
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(""));
+    }
+
+    @Test
+    void testFromJsonString_JsonStringNull_ThrowEventPayloadInvalidException() {
+        // given
+
+        // when
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(null));
+    }
+
+    @Test
     void testFromJsonString_JsonStringMissingColon_ThrowEventPayloadInvalidException() {
         // given
         var id = UUID.randomUUID().toString();
@@ -36,6 +56,19 @@ class ImpactStakeholderJsonMapperTest {
 
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
+
+    @Test
+    void testFromJsonString_JsonHasNotRequiredFields_EqualsImpactStakeholder() {
+        // given
+        var stakeholder = createDummyStakeholder();
+        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"not required\":\"useless\"}", stakeholder.getId(), stakeholder.getName());
+
+        // when
+        var eventStakeholder = fromJson(json);
+
+        // then
+        assertThat(eventStakeholder).isEqualTo(stakeholder);
     }
 
     @Test

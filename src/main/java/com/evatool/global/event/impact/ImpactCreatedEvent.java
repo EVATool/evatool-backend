@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEvent;
 public class ImpactCreatedEvent extends ApplicationEvent {
 
     @Getter
-    private String jsonPayload;
+    private final String jsonPayload;
 
     public ImpactCreatedEvent(Object source, String jsonPayload) {
         super(source);

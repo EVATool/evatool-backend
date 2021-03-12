@@ -79,19 +79,21 @@ public class ImpactRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.links").isNotEmpty())
-                    .andExpect(jsonPath("$.links", hasSize(5)))
+                    .andExpect(jsonPath("$.links", hasSize(6)))
                     .andExpect(jsonPath("$.links[*].rel").value(containsInAnyOrder(
                             "self",
                             UPDATE_IMPACT,
                             DELETE_IMPACT,
                             GET_STAKEHOLDER,
-                            GET_DIMENSION)))
+                            GET_DIMENSION,
+                            GET_ANALYSIS)))
                     .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
                             "http://localhost" + IMPACTS,
                             "http://localhost" + IMPACTS + "/" + impactDto.getId(),
                             "http://localhost" + IMPACTS + "/" + impactDto.getId(),
                             "http://localhost" + STAKEHOLDERS + "/" + impactDto.getStakeholder().getId(),
-                            "http://localhost" + DIMENSIONS + "/" + impactDto.getDimension().getId())));
+                            "http://localhost" + DIMENSIONS + "/" + impactDto.getDimension().getId(),
+                            "http://localhost" + ANALYSES + "/" + impactDto.getAnalysis().getId())));
         }
 
         @Test

@@ -2,10 +2,12 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
+import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.application.service.ImpactService;
 import com.evatool.impact.domain.repository.DimensionRepository;
+import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,9 +21,10 @@ import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
-import static com.evatool.impact.application.controller.UriUtil.*;
+import static com.evatool.impact.application.controller.UriUtil.IMPACTS;
 import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.toDto;
-import static com.evatool.impact.common.TestDataGenerator.*;
+import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
+import static com.evatool.impact.common.TestDataGenerator.createDummyImpactDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -40,18 +43,23 @@ public class ImpactRestControllerTest {
     @Autowired
     private ImpactStakeholderRepository stakeholderRepository;
 
+    @Autowired
+    private ImpactAnalysisRepository analysisRepository;
+
     @BeforeEach
     @AfterAll
     private void clearDatabase() {
         impactService.deleteAll();
         stakeholderRepository.deleteAll();
         dimensionRepository.deleteAll();
+        analysisRepository.deleteAll();
     }
 
     private ImpactDto saveFullDummyImpactDto() {
         var impact = createDummyImpact();
         impact.setDimension(dimensionRepository.save(impact.getDimension()));
         impact.setStakeholder(stakeholderRepository.save(impact.getStakeholder()));
+        impact.setAnalysis(analysisRepository.save(impact.getAnalysis()));
         return impactService.create(toDto(impact));
     }
 
@@ -59,8 +67,8 @@ public class ImpactRestControllerTest {
         var impactDto = createDummyImpactDto();
         impactDto.getDimension().setId(UUID.randomUUID());
         dimensionRepository.save(DimensionDtoMapper.fromDto(impactDto.getDimension()));
-        impactDto.getStakeholder().setId(UUID.randomUUID());
         stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder()));
+        analysisRepository.save(ImpactAnalysisDtoMapper.fromDto(impactDto.getAnalysis()));
         return impactDto;
     }
 
@@ -113,6 +121,24 @@ public class ImpactRestControllerTest {
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(impactDtoList).isNotNull().hasSize(value);
+        }
+
+        @Test
+        void testFindAllByAnalysisId_AnalysisWithTwoImpacts_ReturnImpactsByAnalysisId() {
+            // given
+            var impact1 = saveFullDummyImpactDto();
+            var impact2 = saveFullDummyImpactDto();
+
+            // when
+            impact2.setAnalysis(impact1.getAnalysis());
+            impactService.update(impact2);
+
+            var response = testRestTemplate.getForEntity(
+                    IMPACTS + "?analysisId=" + impact1.getAnalysis().getId(), ImpactDto[].class);
+            var impactsOfAnalysis = response.getBody();
+
+            // then
+            assertThat(impactsOfAnalysis).isEqualTo(new ImpactDto[]{impact1, impact2});
         }
     }
 

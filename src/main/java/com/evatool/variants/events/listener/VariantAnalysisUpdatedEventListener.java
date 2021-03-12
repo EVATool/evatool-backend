@@ -20,7 +20,7 @@ public class VariantAnalysisUpdatedEventListener implements ApplicationListener<
     @Override
     public void onApplicationEvent(AnalysisUpdatedEvent analysisUpdatedEvent) {
 
-        logger.info("Listening Event in VariantAnalysisUpdated from " + analysisUpdatedEvent.getClass());
+        logger.info("Listening Event in VariantAnalysisUpdated from {}", analysisUpdatedEvent.getClass());
 
         // TODO uncomment once the event has been correctly implemented
         // VariantsAnalysis variantsAnalysis = gson.fromJson(analysisUpdatedEvent.getMessage(), VariantsAnalysis.class);

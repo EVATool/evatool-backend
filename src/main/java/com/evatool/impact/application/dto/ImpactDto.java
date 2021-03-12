@@ -36,22 +36,29 @@ public class ImpactDto {
     @Getter
     @Setter
     @NotNull
+    private DimensionDto dimension;
+
+    @ApiModelProperty(required = true)
+    @Getter
+    @Setter
+    @NotNull
     private ImpactStakeholderDto stakeholder;
 
     @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull
-    private DimensionDto dimension;
+    private ImpactAnalysisDto analysis;
 
     @Override
     public String toString() {
         return "ImpactDto{" +
                 "id='" + id + '\'' +
-                ", stakeholder=" + stakeholder +
-                ", dimension=" + dimension +
                 ", value=" + value +
                 ", description='" + description + '\'' +
+                ", dimension=" + dimension +
+                ", stakeholder=" + stakeholder +
+                ", analysis=" + analysis +
                 '}';
     }
 
@@ -59,12 +66,17 @@ public class ImpactDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ImpactDto impactDto = (ImpactDto) o;
-        return Double.compare(impactDto.value, value) == 0 && Objects.equals(id, impactDto.id) && Objects.equals(description, impactDto.description) && Objects.equals(stakeholder, impactDto.stakeholder) && Objects.equals(dimension, impactDto.dimension);
+        ImpactDto that = (ImpactDto) o;
+        return Double.compare(that.value, value) == 0
+                && Objects.equals(id, that.id)
+                && Objects.equals(description, that.description)
+                && Objects.equals(stakeholder, that.stakeholder)
+                && Objects.equals(dimension, that.dimension)
+                && Objects.equals(analysis, that.analysis);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, value, description, stakeholder, dimension);
+        return Objects.hash(id, value, description, stakeholder, dimension, analysis);
     }
 }

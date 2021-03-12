@@ -8,6 +8,11 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class ImpactStakeholderTest {
 
     @Test
+    void testConstructor_NullId_ThrowIllegalArgumentException() {
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new ImpactStakeholder(null, "name"));
+    }
+
+    @Test
     void testSetId_NullValue_ThrowIllegalArgumentException() {
         // given
         var stakeholder = createDummyStakeholder();

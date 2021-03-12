@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 
 public class DimensionJsonMapper {
 
-    private DimensionJsonMapper() {}
+    private DimensionJsonMapper() {
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(DimensionJsonMapper.class);
 

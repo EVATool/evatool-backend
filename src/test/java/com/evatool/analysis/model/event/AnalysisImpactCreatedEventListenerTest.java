@@ -10,10 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -24,18 +21,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-@EnableAutoConfiguration
-@ComponentScan(basePackages = {"com.evatool.analysis", "com.evatool.global"})
-public class AnalysisImpactCreatedEventListener {
+class AnalysisImpactCreatedEventListenerTest {
 
     @Autowired
     private AnalysisImpactRepository analysisImpactRepository;
 
     @Autowired
     private AnalysisEventListener analysisEventListener;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_ImpactCreated() {
@@ -45,8 +37,8 @@ public class AnalysisImpactCreatedEventListener {
         String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), title);
 
         // when
-        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(impactCreatedEvent);
+        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(this, json);
+        analysisEventListener.impactCreated(impactCreatedEvent);
 
         // then
         Optional<AnalysisImpacts> createdByEvent = analysisImpactRepository.findById(id);
@@ -76,9 +68,9 @@ public class AnalysisImpactCreatedEventListener {
         analysisImpactRepository.save(analysisImpacts);
 
         // when
-        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(applicationEventPublisher, json);
+        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(this, json);
 
         // then
-        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(impactCreatedEvent));
+        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> analysisEventListener.impactCreated(impactCreatedEvent));
     }
 }

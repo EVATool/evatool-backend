@@ -12,13 +12,13 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class VariantRepositoryTest {
+class VariantRepositoryTest {
 
     @Autowired
     private VariantRepository variantRepository;
 
     @Test
-    public void testFindById_InsertedVariant_ReturnVariant() {
+    void testFindById_InsertedVariant_ReturnVariant() {
         // given
         Variant variant = new Variant();
         variantRepository.save(variant);
@@ -27,6 +27,7 @@ public class VariantRepositoryTest {
         Variant found = variantRepository.findById(variant.getId()).orElse(null);
 
         // then
+        assert found != null;
         assertThat(found.getId()).isEqualTo(variant.getId());
     }
 
@@ -55,6 +56,7 @@ public class VariantRepositoryTest {
         Variant changedVariant = variantRepository.findById(variant.getId()).orElse(null);
 
         // then
+        assert changedVariant != null;
         assertThat(changedVariant.getTitle()).isEqualTo(newTitle);
     }
 

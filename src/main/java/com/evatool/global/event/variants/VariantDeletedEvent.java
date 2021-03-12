@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEvent;
 
 @Getter
 public class VariantDeletedEvent extends ApplicationEvent {
-    private String variantJson;
+    private final String variantJson;
 
     public VariantDeletedEvent(Object source, String variantJson) {
         super(source);

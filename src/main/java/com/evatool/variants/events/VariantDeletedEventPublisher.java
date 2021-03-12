@@ -20,8 +20,8 @@ public class VariantDeletedEventPublisher {
         Gson gson = new Gson();
         String variantJson = gson.toJson(variant);
 
-        logger.info("Publishing Event in " + applicationEventPublisher.getClass());
-        logger.debug(variant.getClass() + " Eventpayload: " + variantJson);
+        logger.info("Publishing Event in {}", applicationEventPublisher.getClass());
+        logger.debug("{} Eventpayload: {}", variant.getClass(), variantJson);
 
         VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(this, variantJson);
         applicationEventPublisher.publishEvent(variantDeletedEvent);

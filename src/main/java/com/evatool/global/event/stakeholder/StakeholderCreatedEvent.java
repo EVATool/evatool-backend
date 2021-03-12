@@ -6,10 +6,10 @@ import org.springframework.context.ApplicationEvent;
 public class StakeholderCreatedEvent extends ApplicationEvent {
 
     @Getter
-    private String jsonPayload;
+    private final String jsonPayload;
 
-    public StakeholderCreatedEvent(String jsonPayload) {
-        super(jsonPayload);
+    public StakeholderCreatedEvent(Object source, String jsonPayload) {
+        super(source);
         this.jsonPayload = jsonPayload;
     }
 }

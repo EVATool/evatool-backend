@@ -19,7 +19,7 @@ public class VariantRequirementDeletedEventListener implements ApplicationListen
 
     @Override
     public void onApplicationEvent(RequirementDeletedEvent requirementDeletedEvent) {
-        logger.info("Listening Event in VariantRequirementDeleted from " + requirementDeletedEvent.getClass());
+        logger.info("Listening Event in VariantRequirementDeleted from {}", requirementDeletedEvent.getClass());
 
         // TODO uncomment once the event has been correctly implemented
 //        VariantsRequirement variantsRequirement = gson.fromJson(requirementDeletedEvent.getJsonPayload(), VariantsRequirement.class);

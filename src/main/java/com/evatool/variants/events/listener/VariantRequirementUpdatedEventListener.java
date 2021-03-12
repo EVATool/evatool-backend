@@ -15,11 +15,11 @@ public class VariantRequirementUpdatedEventListener implements ApplicationListen
     @Autowired
     VariantsRequirementRepository variantsRequirementRepository;
     Gson gson = new Gson();
-    Logger logger = LoggerFactory.getLogger(VariantRequirementDeletedEventListener.class);
+    Logger logger = LoggerFactory.getLogger(VariantRequirementUpdatedEventListener.class);
 
     @Override
     public void onApplicationEvent(RequirementUpdatedEvent requirementUpdatedEvent) {
-        logger.info("Listening Event in VariantRequirementDeleted from " + requirementUpdatedEvent.getClass());
+        logger.info("Listening Event in VariantRequirementDeleted from {}", requirementUpdatedEvent.getClass());
 
         // TODO uncomment once the event has been correctly implemented
 //        VariantsRequirement variantsRequirement = gson.fromJson(requirementUpdatedEvent.getJsonPayload(), VariantsRequirement.class);

@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEvent;
 public class DimensionCreatedEvent extends ApplicationEvent {
 
     @Getter
-    private String jsonPayload;
+    private final String jsonPayload;
 
     public DimensionCreatedEvent(Object source, String jsonPayload) {
         super(source);

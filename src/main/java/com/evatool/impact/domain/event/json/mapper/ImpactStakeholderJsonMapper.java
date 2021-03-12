@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
 
 public class ImpactStakeholderJsonMapper {
 
-    private ImpactStakeholderJsonMapper() {}
+    private ImpactStakeholderJsonMapper() {
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholderJsonMapper.class);
 
@@ -23,7 +24,7 @@ public class ImpactStakeholderJsonMapper {
         try {
             var impactStakeholderJson = new Gson().fromJson(json, ImpactStakeholderJson.class);
             return modelMapper.map(impactStakeholderJson, ImpactStakeholder.class);
-        } catch (JsonSyntaxException | MappingException ex) {
+        } catch (JsonSyntaxException | IllegalArgumentException | MappingException ex) {
             throw new EventPayloadInvalidException(json, ex);
         }
     }

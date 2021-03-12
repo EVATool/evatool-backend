@@ -51,7 +51,7 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request")})
-    public ResponseEntity<List<EntityModel<DimensionDto>>> findAll(@ApiParam(value = "Dimension Type") @RequestParam(value = "type", required = false) DimensionType type) {
+    public ResponseEntity<List<EntityModel<DimensionDto>>> findAll(@ApiParam(value = "Dimension Type") @Valid @RequestParam(value = "type", required = false) DimensionType type) {
         List<DimensionDto> dimensionDtoList;
         if (type == null) {
             logger.info("GET " + DIMENSIONS);

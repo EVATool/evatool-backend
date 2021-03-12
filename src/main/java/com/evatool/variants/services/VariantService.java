@@ -129,7 +129,7 @@ public class VariantService {
     /**
      * Creates a new Variant, saves it using the repository and publishes a corresponding event
      *
-     * @param newVariant New Variant-Object to be saved
+     * @param newVariantDto New VariantDto-Object to be saved
      * @return A ResponseEntity containing a message and corresponding Http-Status Code
      */
     public ResponseEntity<VariantDto> createVariant(VariantDto newVariantDto) {

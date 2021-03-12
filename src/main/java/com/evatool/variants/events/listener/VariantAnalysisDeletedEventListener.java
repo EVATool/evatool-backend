@@ -20,7 +20,7 @@ public class VariantAnalysisDeletedEventListener implements ApplicationListener<
     @Override
     public void onApplicationEvent(AnalysisDeletedEvent analysisDeletedEvent) {
 
-        logger.info("Listening Event in VariantAnalysisDeleted from " + analysisDeletedEvent.getClass());
+        logger.info("Listening Event in VariantAnalysisDeleted from {}", analysisDeletedEvent.getClass());
 
         // TODO uncomment once the event has been correctly implemented
         // VariantsAnalysis variantsAnalysis = gson.fromJson(analysisDeletedEvent.getMessage(), VariantsAnalysis.class);

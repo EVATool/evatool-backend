@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEvent;
 public class ImpactDeletedEvent extends ApplicationEvent {
 
     @Getter
-    private String jsonPayload;
+    private final String jsonPayload;
 
     public ImpactDeletedEvent(Object source, String jsonPayload) {
         super(source);

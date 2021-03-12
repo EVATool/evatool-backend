@@ -2,8 +2,6 @@ package com.evatool.impact.application.dto.mapper;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
-
 import static com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
@@ -29,7 +27,6 @@ class ImpactStakeholderDtoMapperTest {
     void testFromDto_RecreatedStakeholderDto_EqualsStakeholderDto() {
         // given
         var stakeholderDto = createDummyStakeholderDto();
-        stakeholderDto.setId(UUID.randomUUID());
 
         // when
         var stakeholder = fromDto(stakeholderDto);

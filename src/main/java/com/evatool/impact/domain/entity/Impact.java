@@ -32,17 +32,22 @@ public class Impact extends SuperEntity {
     @ManyToOne(optional = false)
     private ImpactStakeholder stakeholder;
 
+    @Getter
+    @ManyToOne(optional = false)
+    private ImpactAnalysis analysis;
+
     public Impact() {
         super();
         logger.debug("{} created", Impact.class.getSimpleName());
     }
 
-    public Impact(double value, String description, Dimension dimension, ImpactStakeholder stakeholder) {
+    public Impact(double value, String description, Dimension dimension, ImpactStakeholder stakeholder, ImpactAnalysis analysis) {
         this();
         this.setValue(value);
         this.setDescription(description);
         this.setDimension(dimension);
         this.setStakeholder(stakeholder);
+        this.setAnalysis(analysis);
     }
 
     @Override
@@ -53,6 +58,7 @@ public class Impact extends SuperEntity {
                 ", description='" + this.description + '\'' +
                 ", dimension=" + this.dimension +
                 ", stakeholder=" + this.stakeholder +
+                ", analysis=" + this.analysis +
                 '}';
     }
 
@@ -65,12 +71,13 @@ public class Impact extends SuperEntity {
                 && Double.compare(this.value, that.value) == 0
                 && Objects.equals(this.description, that.description)
                 && Objects.equals(this.dimension, that.dimension)
-                && Objects.equals(this.stakeholder, that.stakeholder);
+                && Objects.equals(this.stakeholder, that.stakeholder)
+                && Objects.equals(this.analysis, that.analysis);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), this.value, this.description, this.dimension, this.stakeholder);
+        return Objects.hash(super.hashCode(), this.value, this.description, this.dimension, this.stakeholder, this.analysis);
     }
 
     public void setValue(double value) {
@@ -109,4 +116,12 @@ public class Impact extends SuperEntity {
         this.stakeholder = stakeholder;
     }
 
+    public void setAnalysis(ImpactAnalysis analysis) {
+        logger.debug("Set Analysis");
+        if (analysis == null) {
+            logger.error("Attempted to set analysis to null");
+            throw new IllegalArgumentException("Analysis cannot be null.");
+        }
+        this.analysis = analysis;
+    }
 }

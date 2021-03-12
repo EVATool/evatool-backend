@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -22,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementImpactCreateEventListener {
+class RequirementsImpactCreateEventListenerTest {
 
     @Autowired
     private RequirementsImpactsRepository requirementsImpactsRepository;
@@ -30,19 +29,16 @@ public class RequirementImpactCreateEventListener {
     @Autowired
     private RequirementEventListener requirementEventListener;
 
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
-
     @Test
     void testOnApplicationEvent_PublishEvent_ImpactCreated() {
         // given
         UUID id = UUID.randomUUID();
-        String  title = "name";
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
+        String description = "description";
+        String json = String.format("{\"id\":\"%s\",\"description\":\"%s\"}", id.toString(), description);
 
         // when
-        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(impactCreatedEvent);
+        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(requirementEventListener, json);
+        requirementEventListener.impactCreated(impactCreatedEvent);
 
         // then
         Optional<RequirementsImpact> createdByEvent = requirementsImpactsRepository.findById(id);
@@ -55,15 +51,15 @@ public class RequirementImpactCreateEventListener {
     void testOnApplicationEvent_ImpactAlreadyExists_ThrowEventEntityAlreadyExistsException() {
         // given
         UUID id = UUID.randomUUID();
-        String  name = "name";
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), name);
+        String description = "description";
+        String json = String.format("{\"id\":\"%s\",\"description\":\"%s\"}", id.toString(), description);
 
         RequirementsImpact requirementsImpact;
 
         try {
-            var jsonObject = new JSONObject(json);
+            JSONObject jsonObject = new JSONObject(json);
             requirementsImpact = new RequirementsImpact();
-            requirementsImpact.setTitle(jsonObject.getString("title"));
+            requirementsImpact.setDescription(jsonObject.getString("description"));
             requirementsImpact.setId(UUID.fromString(jsonObject.getString("id")));
         } catch (JSONException jex) {
             throw new InvalidEventPayloadException(json, jex);
@@ -72,10 +68,10 @@ public class RequirementImpactCreateEventListener {
         requirementsImpactsRepository.save(requirementsImpact);
 
         // when
-        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(applicationEventPublisher, json);
+        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(requirementEventListener, json);
 
         // then
-        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(impactCreatedEvent));
+        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.impactCreated(impactCreatedEvent));
     }
 
 

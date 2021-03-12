@@ -1,10 +1,16 @@
 package com.evatool.impact.common;
 
 import com.evatool.impact.application.dto.DimensionDto;
+import com.evatool.impact.application.dto.ImpactAnalysisDto;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.ImpactStakeholderDto;
+import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
+import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
+import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
+import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
+import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 
 import java.util.UUID;
@@ -20,29 +26,27 @@ public class TestDataGenerator {
     }
 
     public static Impact createDummyImpact() {
-        return new Impact(0.0, "dummyImpactDescription", createDummyDimension(), createDummyStakeholder());
+        return new Impact(0.0, "dummyImpactDescription", createDummyDimension(), createDummyStakeholder(), createDummyAnalysis());
+    }
+
+    public static ImpactAnalysis createDummyAnalysis() {
+        return new ImpactAnalysis(UUID.randomUUID());
     }
 
     public static DimensionDto createDummyDimensionDto() {
-        var dimensionDto = new DimensionDto();
-        dimensionDto.setName("dummyDimension");
-        dimensionDto.setType(DimensionType.ECONOMIC);
-        dimensionDto.setDescription("dummyDimensionDescription");
-        return dimensionDto;
+        return DimensionDtoMapper.toDto(createDummyDimension());
     }
 
     public static ImpactStakeholderDto createDummyStakeholderDto() {
-        var stakeholderDto = new ImpactStakeholderDto();
-        stakeholderDto.setName("dummyStakeholder");
-        return stakeholderDto;
+        return ImpactStakeholderDtoMapper.toDto(createDummyStakeholder());
+
     }
 
     public static ImpactDto createDummyImpactDto() {
-        var impactDto = new ImpactDto();
-        impactDto.setValue(0.0);
-        impactDto.setDescription("dummyImpactDescription");
-        impactDto.setDimension(createDummyDimensionDto());
-        impactDto.setStakeholder(createDummyStakeholderDto());
-        return impactDto;
+        return ImpactDtoMapper.toDto(createDummyImpact());
+    }
+
+    public static ImpactAnalysisDto createDummyAnalysisDto() {
+        return ImpactAnalysisDtoMapper.toDto(createDummyAnalysis());
     }
 }

@@ -6,10 +6,10 @@ import org.springframework.context.ApplicationEvent;
 public class StakeholderDeletedEvent extends ApplicationEvent {
 
     @Getter
-    private String jsonPayload;
+    private final String jsonPayload;
 
-    public StakeholderDeletedEvent(String jsonPayload) {
-        super(jsonPayload);
+    public StakeholderDeletedEvent(Object source, String jsonPayload) {
+        super(source);
         this.jsonPayload = jsonPayload;
     }
 }

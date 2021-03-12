@@ -1,17 +1,14 @@
 package com.evatool.analysis.model.event;
 
-import com.evatool.global.event.impact.ImpactUpdatedEvent;
+import com.evatool.analysis.error.exceptions.EventEntityDoesNotExistException;
 import com.evatool.analysis.events.listener.AnalysisEventListener;
 import com.evatool.analysis.model.AnalysisImpacts;
 import com.evatool.analysis.repository.AnalysisImpactRepository;
+import com.evatool.global.event.impact.ImpactUpdatedEvent;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
-import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -21,18 +18,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-@EnableAutoConfiguration
-@ComponentScan(basePackages = {"com.evatool.analysis", "com.evatool.global"})
-public class AnalysisImpactUpdatedEventListener {
+class AnalysisImpactUpdatedEventListenerTest {
 
     @Autowired
     private AnalysisImpactRepository analysisImpactRepository;
 
     @Autowired
     private AnalysisEventListener analysisEventListener;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_ImpactUpdated() {
@@ -46,8 +38,8 @@ public class AnalysisImpactUpdatedEventListener {
         analysisImpactRepository.save(analysisImpacts);
 
         // when
-        ImpactUpdatedEvent impactUpdatedEvent = new ImpactUpdatedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(impactUpdatedEvent);
+        ImpactUpdatedEvent impactUpdatedEvent = new ImpactUpdatedEvent(this, json);
+        analysisEventListener.impactUpdated(impactUpdatedEvent);
 
         // then
         Optional<AnalysisImpacts> analysisImpactsRepositoryById = analysisImpactRepository.findById(id);
@@ -65,9 +57,9 @@ public class AnalysisImpactUpdatedEventListener {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
 
         // when
-        ImpactUpdatedEvent impactUpdatedEvent = new ImpactUpdatedEvent(applicationEventPublisher, json);
+        ImpactUpdatedEvent impactUpdatedEvent = new ImpactUpdatedEvent(this, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(impactUpdatedEvent));
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> analysisEventListener.impactUpdated(impactUpdatedEvent));
     }
 }

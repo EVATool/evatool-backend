@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 public class DimensionDtoMapper {
 
-    private DimensionDtoMapper() {}
+    private DimensionDtoMapper() {
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(DimensionDtoMapper.class);
 

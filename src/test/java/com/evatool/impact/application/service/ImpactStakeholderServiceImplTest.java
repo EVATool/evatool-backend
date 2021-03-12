@@ -11,8 +11,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.UUID;
-
 import static com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;

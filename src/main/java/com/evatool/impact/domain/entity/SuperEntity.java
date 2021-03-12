@@ -17,7 +17,9 @@ public class SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(SuperEntity.class);
 
-    protected SuperEntity() {}
+    protected SuperEntity() {
+        logger.debug("{} created", SuperEntity.class.getSimpleName());
+    }
 
     @Getter
     @Id

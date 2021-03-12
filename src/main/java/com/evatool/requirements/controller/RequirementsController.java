@@ -1,17 +1,7 @@
 package com.evatool.requirements.controller;
 
-import com.evatool.global.event.requirements.RequirementCreatedEvent;
-import com.evatool.global.event.requirements.RequirementDeletedEvent;
-import com.evatool.global.event.requirements.RequirementUpdatedEvent;
+
 import com.evatool.requirements.dto.RequirementDTO;
-import com.evatool.requirements.entity.Requirement;
-import com.evatool.requirements.entity.RequirementsAnalysis;
-import com.evatool.requirements.entity.RequirementsVariant;
-import com.evatool.requirements.error.exceptions.EntityNotFoundException;
-import com.evatool.requirements.events.RequirementEventPublisher;
-import com.evatool.requirements.repository.RequirementAnalysisRepository;
-import com.evatool.requirements.repository.RequirementRepository;
-import com.evatool.requirements.repository.RequirementsVariantsRepository;
 import com.evatool.requirements.service.RequirementDTOService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,35 +16,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@Api(description = "API-endpoint RequirementsController!")
+@Api("API-endpoint RequirementsController!")
 public class RequirementsController {
 
 	final Logger logger = LoggerFactory.getLogger(RequirementsController.class);
 
 	@Autowired
-	private RequirementRepository requirementRepository;
-
-	@Autowired
-	private RequirementsVariantsRepository requirementsVariantsRepository;
-
-	@Autowired
-	private RequirementAnalysisRepository requirementAnalysisRepository;
-
-	@Autowired
-	private RequirementPointController requirementPointController;
-
-	@Autowired
 	private RequirementDTOService dtoService;
-
-	@Autowired
-	private RequirementEventPublisher eventPublisher;
-
 
 	@GetMapping("/requirements")
 	@ApiOperation(value = "This method returns a list of all Requirements.")
@@ -62,9 +35,7 @@ public class RequirementsController {
 			@ApiResponse(code = 200, message = "All entities returned")})
 	public List<EntityModel<RequirementDTO>> getRequirementList() {
 		logger.info("[GET] /requirements");
-		List<Requirement> resultList = requirementRepository.findAll();
-		if(resultList.size()==0){return Collections.emptyList();}
-		return generateLinks(dtoService.findAll(resultList));
+		return generateLinks(dtoService.findAll());
 	}
 
 	@GetMapping(value = "/requirements",params = "analysisId")
@@ -75,11 +46,7 @@ public class RequirementsController {
 			@ApiResponse(code = 404, message = "The entity was not found")})
 	public List<EntityModel<RequirementDTO>> getRequirementListForAnalysis(@RequestParam("analysisId") UUID analysisId) {
 		logger.info("[GET] /requirements?analysisId");
-		Optional<RequirementsAnalysis> optionalRequirementsAnalysis = requirementAnalysisRepository.findById(analysisId);
-		if(optionalRequirementsAnalysis.isEmpty()) throw new EntityNotFoundException(RequirementsAnalysis.class, analysisId);
-		Collection<Requirement> resultList = requirementRepository.findByRequirementsAnalysis(optionalRequirementsAnalysis.get());
-		if(resultList.size()==0){return Collections.emptyList();}
-		return generateLinks(dtoService.findAll(resultList));
+		return generateLinks(dtoService.findAllForAnalysis(analysisId));
 	}
 
 	@GetMapping("/requirements/{id}")
@@ -90,9 +57,7 @@ public class RequirementsController {
 			@ApiResponse(code = 404, message = "The entity was not found")})
 	public EntityModel<RequirementDTO> getRequirementById(@PathVariable UUID id) {
 		logger.info("[GET] /requirements/{id}");
-		Optional<Requirement> requirement = requirementRepository.findById(id);
-		if(requirement.isEmpty()) throw new EntityNotFoundException(Requirement.class, id);
-		return generateLinks(dtoService.findId(requirement.get()));
+		return generateLinks(dtoService.findById(id));
 	}
 
 	@PostMapping("/requirements")
@@ -103,9 +68,8 @@ public class RequirementsController {
 			@ApiResponse(code = 404, message = "The entity was not found")})
 	public ResponseEntity<EntityModel<RequirementDTO>> newRequirement(@RequestBody RequirementDTO requirementDTO) {
 		logger.info("[POST] /requirements");
-		Requirement requirement = requirementPointController.createPoints(dtoService.create(requirementDTO),requirementDTO);
-		eventPublisher.publishEvent(new RequirementCreatedEvent(requirement.toJson()));
-		return new ResponseEntity<>(getRequirementById(requirement.getId()), HttpStatus.CREATED);
+		this.dtoService.checkDto(requirementDTO);
+		return new ResponseEntity<>(getRequirementById(dtoService.create(requirementDTO)), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/requirements")
@@ -115,25 +79,8 @@ public class RequirementsController {
 			@ApiResponse(code = 404, message = "The entity was not found")})
 	public EntityModel<RequirementDTO> updateRequirement(@RequestBody RequirementDTO requirementDTO) {
 		logger.info("[PUT] /requirements");
-		//eventPublisher.publishEvent(new RequirementUpdatedEvent(null));
-		Optional<Requirement> requirementOptional = requirementRepository.findById(requirementDTO.getRootEntityId());
-		if(requirementOptional.isEmpty()) throw new EntityNotFoundException(Requirement.class, requirementDTO.getRootEntityId());
-		Requirement requirement = requirementOptional.get();
-		requirement.setDescription(requirementDTO.getRequirementDescription());
-		requirement.setTitle(requirementDTO.getRequirementTitle());
-		Collection<RequirementsVariant> requirementsVariantCollectionDTO = requirementsVariantsRepository.findAllById(requirementDTO.getVariantsTitle().keySet());
-		//Remove the Variants which are removed
-		Collection<RequirementsVariant> newCollection = requirement.getVariants().stream().filter(e-> requirementsVariantCollectionDTO.contains(e)).collect(Collectors.toList());
-		//Add the new Variants
-		requirementsVariantCollectionDTO.stream().forEach(e->{
-			if(!newCollection.contains(e)){
-				newCollection.add(e);
-			}
-		});
-		requirement.setVariants(newCollection);
-		requirement = requirementRepository.save(requirement);
-		eventPublisher.publishEvent(new RequirementUpdatedEvent(requirement.toJson()));
-		requirementPointController.updatePoints(requirement,requirementDTO);
+		this.dtoService.checkDto(requirementDTO);
+		dtoService.update(requirementDTO);
 		return getRequirementById(requirementDTO.getRootEntityId());
 	}
 
@@ -145,14 +92,8 @@ public class RequirementsController {
 			@ApiResponse(code = 404, message = "The entity was not found")})
 	public ResponseEntity<Void> deleteRequirement(@PathVariable UUID id) {
 		logger.info("[DELETE] /requirements/{id}");
-		Optional<Requirement> requirementOptional = requirementRepository.findById(id);
-		if(requirementOptional.isEmpty()) throw new EntityNotFoundException(Requirement.class, id);
-		Requirement requirement = requirementOptional.get();
-		requirementPointController.deletePointsForRequirement(requirement);
-		requirementRepository.deleteById(id);
-		eventPublisher.publishEvent(new RequirementDeletedEvent(requirement.toJson()));
+		dtoService.deleteRequirement(id);
 		return ResponseEntity.ok().build();
-
 	}
 
 	private EntityModel<RequirementDTO> generateLinks(RequirementDTO requirementDTO){

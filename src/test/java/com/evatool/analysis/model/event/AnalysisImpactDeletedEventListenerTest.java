@@ -1,18 +1,14 @@
 package com.evatool.analysis.model.event;
 
+import com.evatool.analysis.error.exceptions.EventEntityDoesNotExistException;
 import com.evatool.analysis.events.listener.AnalysisEventListener;
 import com.evatool.analysis.model.AnalysisImpacts;
 import com.evatool.analysis.repository.AnalysisImpactRepository;
-import com.evatool.global.event.impact.ImpactCreatedEvent;
 import com.evatool.global.event.impact.ImpactDeletedEvent;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
-import com.evatool.analysis.error.exceptions.*;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -22,18 +18,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-@EnableAutoConfiguration
-@ComponentScan(basePackages = {"com.evatool.analysis", "com.evatool.global"})
-public class AnalysisImpactDeletedEventListener {
+class AnalysisImpactDeletedEventListenerTest {
 
     @Autowired
     private AnalysisImpactRepository analysisImpactRepository;
 
     @Autowired
     private AnalysisEventListener analysisEventListener;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_ImpactDeleted() {
@@ -47,8 +38,8 @@ public class AnalysisImpactDeletedEventListener {
         analysisImpactRepository.save(analysisImpacts);
 
         // when
-        ImpactDeletedEvent impactDeletedEvent = new ImpactDeletedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(impactDeletedEvent);
+        ImpactDeletedEvent impactDeletedEvent = new ImpactDeletedEvent(this, json);
+        analysisEventListener.impactDeleted(impactDeletedEvent);
 
         // then
         Optional<AnalysisImpacts> optionalAnalysisImpacts = analysisImpactRepository.findById(id);
@@ -63,9 +54,9 @@ public class AnalysisImpactDeletedEventListener {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
 
         // when
-        ImpactDeletedEvent impactDeletedEvent = new ImpactDeletedEvent(applicationEventPublisher, json);
+        ImpactDeletedEvent impactDeletedEvent = new ImpactDeletedEvent(this, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(impactDeletedEvent));
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> analysisEventListener.impactDeleted(impactDeletedEvent));
     }
 }

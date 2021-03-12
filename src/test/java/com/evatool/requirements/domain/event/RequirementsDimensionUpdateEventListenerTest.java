@@ -8,7 +8,6 @@ import com.evatool.requirements.repository.RequirementDimensionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementDimensionUpdateEventListener {
+class RequirementsDimensionUpdateEventListenerTest {
 
     @Autowired
     private RequirementDimensionRepository requirementDimensionRepository;
@@ -27,29 +26,25 @@ public class RequirementDimensionUpdateEventListener {
     @Autowired
     private RequirementEventListener requirementEventListener;
 
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_DimensionUpdated() {
         // given
-        UUID id = UUID.randomUUID();
-        String  title = "title";
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
-
-        RequirementDimension requirementsImpact = new RequirementDimension("Title");
-        requirementsImpact.setId(id);
-        requirementDimensionRepository.save(requirementsImpact);
+        RequirementDimension requirementDimension = new RequirementDimension("Name");
+        requirementDimensionRepository.save(requirementDimension);
+        String newName = "newName";
+        String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", requirementDimension.getId().toString(), newName);
+        UUID tempId = requirementDimension.getId();
 
         // when
-        DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(dimensionUpdatedEvent);
+        DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(requirementEventListener, json);
+        requirementEventListener.dimensionUpdated(dimensionUpdatedEvent);
 
         // then
-        Optional<RequirementDimension> optionalRequirementDimension = requirementDimensionRepository.findById(id);
+        Optional<RequirementDimension> optionalRequirementDimension = requirementDimensionRepository.findById(tempId);
         assertThat(optionalRequirementDimension).isPresent();
-        assertThat(optionalRequirementDimension.get().getId()).isEqualTo(id);
-        assertThat(optionalRequirementDimension.get().getTitle()).isEqualTo(title);
+        assertThat(optionalRequirementDimension.get().getId()).isEqualTo(tempId);
+        assertThat(optionalRequirementDimension.get().getName()).isEqualTo(newName);
     }
 
     @Test
@@ -57,14 +52,14 @@ public class RequirementDimensionUpdateEventListener {
 
         // given
         UUID id = UUID.randomUUID();
-        String  title = "name";
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
+        String name = "name";
+        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), name);
 
         // when
-        DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(applicationEventPublisher, json);
+        DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(requirementEventListener, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(dimensionUpdatedEvent));
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.dimensionUpdated(dimensionUpdatedEvent));
 
     }
 

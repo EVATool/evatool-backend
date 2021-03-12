@@ -1,30 +1,24 @@
 package com.evatool.analysis.api.controller;
 
-import antlr.ASTNULLType;
-import com.evatool.analysis.api.interfaces.AnalysisController;
 import com.evatool.analysis.api.interfaces.StakeholderController;
-import com.evatool.analysis.dto.AnalysisDTO;
 import com.evatool.analysis.dto.StakeholderDTO;
-import com.evatool.analysis.enums.StakeholderLevel;
+import com.evatool.analysis.error.exceptions.EntityNotFoundException;
 import com.evatool.analysis.events.AnalysisEventPublisher;
 import com.evatool.analysis.model.Analysis;
-import com.evatool.analysis.model.AnalysisImpacts;
 import com.evatool.analysis.model.Stakeholder;
 import com.evatool.analysis.repository.AnalysisImpactRepository;
 import com.evatool.analysis.repository.StakeholderRepository;
 import com.evatool.analysis.services.StakeholderDTOService;
-import com.evatool.global.event.analysis.AnalysisCreatedEvent;
-import com.evatool.global.event.analysis.AnalysisDeletedEvent;
-import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
-import com.evatool.analysis.error.exceptions.*;
+import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
@@ -73,7 +67,7 @@ public class StakeholderControllerImpl implements StakeholderController {
     public EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
         logger.info("[POST] /addStakeholder");
         Stakeholder stakeholder = stakeholderRepository.save(stakeholderDTOService.create(stakeholderDTO));
-        stakeholderEventPublisher.publishEvent(new StakeholderCreatedEvent(stakeholder.toString()));
+        stakeholderEventPublisher.publishEvent(new StakeholderCreatedEvent(this, stakeholder.toString()));
         return getStakeholderById(stakeholder.getStakeholderId());
     }
 
@@ -81,12 +75,12 @@ public class StakeholderControllerImpl implements StakeholderController {
     public EntityModel<StakeholderDTO> updateStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
         logger.info("[PUT] /stakeholder");
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(stakeholderDTO.getRootEntityID());
-        Stakeholder stakeholder  = stakeholderOptional.get();
+        Stakeholder stakeholder = stakeholderOptional.orElseThrow();
         stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
         stakeholder.setPriority(stakeholderDTO.getPriority());
-        List<AnalysisImpacts> analysisImpactsSet = analysisImpactRepository.findAllById(stakeholderDTO.getImpactsTitles().keySet());
-        stakeholderEventPublisher.publishEvent(new AnalysisUpdatedEvent(stakeholder.toString()));
+        analysisImpactRepository.findAllById(stakeholderDTO.getImpactsTitles().keySet());
+        stakeholderEventPublisher.publishEvent(new StakeholderUpdatedEvent(this, stakeholderDTO.toString()));
         return getStakeholderById(stakeholderDTO.getRootEntityID());
     }
 
@@ -99,7 +93,7 @@ public class StakeholderControllerImpl implements StakeholderController {
         }
         Stakeholder stakeholder = stakeholderOptional.get();
         stakeholderRepository.deleteById(id);
-        stakeholderEventPublisher.publishEvent(new StakeholderDeletedEvent(stakeholder.toString()));
+        stakeholderEventPublisher.publishEvent(new StakeholderDeletedEvent(this, stakeholder.toString()));
         return ResponseEntity.ok().build();
     }
 

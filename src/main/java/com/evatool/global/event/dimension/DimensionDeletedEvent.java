@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEvent;
 public class DimensionDeletedEvent extends ApplicationEvent {
 
     @Getter
-    private String jsonPayload;
+    private final String jsonPayload;
 
     public DimensionDeletedEvent(Object source, String jsonPayload) {
         super(source);
