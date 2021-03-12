@@ -42,7 +42,7 @@ public class UserControllerImpl implements UserController {
     public List<EntityModel<UserDTO>> getUserList() {
         logger.info("[GET] /user");
         List<User> userList = userRepository.findAll();
-        if (userList.size() == 0){
+        if (userList.isEmpty()){
             return Arrays.asList();
         }
         return generateLinks(userDTOService.findAll(userList));
@@ -71,11 +71,13 @@ public class UserControllerImpl implements UserController {
     public EntityModel<UserDTO> updateUser(UserDTO userDTO) {
         logger.info("[PUT] /user");
         Optional<User> userOptional = userRepository.findById(userDTO.getRootEntityID());
-        User user  = userOptional.get();
-        user.setUserName(userDTO.getUserName());
-        user.setUserEmail(userDTO.getEmail());
-        user.setUserPassword(userDTO.getPassword());
-        userEventPublisher.publishEvent(new AnalysisUpdatedEvent(user.toString()));
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setUserName(userDTO.getUserName());
+            user.setUserEmail(userDTO.getEmail());
+            user.setUserPassword(userDTO.getPassword());
+            userEventPublisher.publishEvent(new AnalysisUpdatedEvent(user.toString()));
+        }
         return getUserById(userDTO.getRootEntityID());
     }
 

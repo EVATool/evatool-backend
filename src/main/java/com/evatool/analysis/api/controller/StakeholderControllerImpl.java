@@ -47,7 +47,7 @@ public class StakeholderControllerImpl implements StakeholderController {
     public List<EntityModel<StakeholderDTO>> getStakeholderList() {
         logger.info("[GET] /stakeholder");
         List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
-        if (stakeholderList.size() == 0){
+        if (stakeholderList.isEmpty()){
             return Arrays.asList();
         }
         return generateLinks(stakeholderDTOService.findAll(stakeholderList));
