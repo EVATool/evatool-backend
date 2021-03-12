@@ -2,7 +2,6 @@ package com.evatool.analysis.api.controller;
 
 import com.evatool.analysis.api.interfaces.AnalysisController;
 import com.evatool.analysis.dto.AnalysisDTO;
-import com.evatool.analysis.model.AnalysisImpacts;
 import com.evatool.analysis.repository.AnalysisImpactRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.analysis.events.AnalysisEventPublisher;
