@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.UUID;
 
@@ -20,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
-@ActiveProfiles(profiles = "non-async")
 public class ImpactAnalysisEventListenerTest {
 
     @Autowired
@@ -77,7 +75,6 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisDeletedEvent_PublishEvent_AnalysisDeleted() {
             // given
             var id = UUID.randomUUID();
-            // TODO [hbuhl] See actual jsonPayload published by the analysis domain
             var json = String.format("{\"id\":\"%s\"}", id.toString());
 
             var analysis = new ImpactAnalysis(id);
@@ -96,7 +93,6 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisDeletedEvent_AnalysisDoesNotExist_ThrowEventEntityDoesNotExistException() {
             // given
             var id = UUID.randomUUID();
-            // TODO [hbuhl] See actual jsonPayload published by the analysis domain
             var json = String.format("{\"id\":\"%s\"}", id.toString());
 
             // when
