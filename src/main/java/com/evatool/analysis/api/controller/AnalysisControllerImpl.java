@@ -2,7 +2,6 @@ package com.evatool.analysis.api.controller;
 
 import com.evatool.analysis.api.interfaces.AnalysisController;
 import com.evatool.analysis.dto.AnalysisDTO;
-import com.evatool.analysis.model.AnalysisImpacts;
 import com.evatool.analysis.repository.AnalysisImpactRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.analysis.events.AnalysisEventPublisher;
@@ -48,7 +47,7 @@ public class AnalysisControllerImpl implements AnalysisController {
     public List<EntityModel<AnalysisDTO>> getAnalysisList() {
         logger.info("[GET] /analysis");
         List<Analysis> analysisList = analysisRepository.findAll();
-        if (analysisList.size() == 0){
+        if (analysisList.isEmpty()){
             return Arrays.asList();
         }
         return generateLinks(analysisDTOService.findAll(analysisList));
@@ -76,10 +75,12 @@ public class AnalysisControllerImpl implements AnalysisController {
     public EntityModel<AnalysisDTO> updateAnalysis(@RequestBody AnalysisDTO analysisDTO) {
         logger.info("[PUT] /analysis");
         Optional<Analysis> analysisOptional = analysisRepository.findById(analysisDTO.getRootEntityID());
-        Analysis analysis  = analysisOptional.get();
-        analysis.setAnalysisName(analysisDTO.getAnalysisName());
-        analysis.setDescription(analysisDTO.getAnalysisDescription());
-        analysisEventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toString()));
+        if (analysisOptional.isPresent()) {
+            Analysis analysis = analysisOptional.get();
+            analysis.setAnalysisName(analysisDTO.getAnalysisName());
+            analysis.setDescription(analysisDTO.getAnalysisDescription());
+            analysisEventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toString()));
+        }
         return getAnalysisById(analysisDTO.getRootEntityID());
     }
 

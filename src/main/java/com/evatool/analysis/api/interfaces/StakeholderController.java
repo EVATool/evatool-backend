@@ -1,11 +1,7 @@
 package com.evatool.analysis.api.interfaces;
 
 
-import com.evatool.analysis.dto.AnalysisDTO;
 import com.evatool.analysis.dto.StakeholderDTO;
-import com.evatool.analysis.enums.StakeholderLevel;
-import com.evatool.analysis.model.Analysis;
-import com.evatool.analysis.model.Stakeholder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -13,13 +9,10 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-@Api (description = "API-endpoint for Stakeholder")
+@Api ("API-endpoint for Stakeholder")
 public interface StakeholderController {
 
     @GetMapping("/stakeholder")

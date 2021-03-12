@@ -1,6 +1,5 @@
 package com.evatool.analysis.enums;
 
-import com.sun.istack.NotNull;
 
 /**
  * This Enum represents the Stakeholder Level
@@ -10,9 +9,9 @@ import com.sun.istack.NotNull;
  */
 public enum StakeholderLevel {
 
-    naturalPerson("natural person"),
-    organization("organization"),
-    society("society");
+    NATURAL_PERSON("natural person"),
+    ORGANIZATION("organization"),
+    SOCIETY("society");
 
     private String stakeholderLevel;
 
@@ -20,7 +19,6 @@ public enum StakeholderLevel {
         this.stakeholderLevel = stakeholderLevel;
     }
 
-    @NotNull
     public String getStakeholderLevel() {
         return this.stakeholderLevel;
     }

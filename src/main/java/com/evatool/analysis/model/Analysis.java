@@ -2,7 +2,6 @@ package com.evatool.analysis.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
