@@ -21,7 +21,7 @@ jobs:
           java-version: 11
 
       - name: Build with Maven
-        run: |
+      - run: |
           mvn -B clean install --file pom.xml
           mvn -B clean install -Dmaven.test.skip=true -P prod --file pom.xml
 
