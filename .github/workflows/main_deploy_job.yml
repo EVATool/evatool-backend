@@ -24,6 +24,7 @@ jobs:
         env:
           DB_PASSWORD: 123
         run: |
+          DB_PASSWORD="123"
           mvn clean install -P prod -Dmaven.test.skip=true --file pom.xml
 
       - name: Transfer docker file to remote server
