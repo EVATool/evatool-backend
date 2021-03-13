@@ -1,15 +1,15 @@
 #!/bin/bash
 echo ------------------------------
-echo DOCKER BUILD
+echo BUILD DOCKER IMAGE
 docker build -t evatoolapp_image /home/evauser/evatool
 echo ------------------------------
 echo RUNNING CONTAINERS
 docker ps
 echo ------------------------------
-echo STOP DOCKER IMAGE
+echo STOP DOCKER CONTAINER
 docker stop evatoolapp_container
 echo ------------------------------
-echo START DOCKER IMAGE
+echo START DOCKER CONTAINER
 docker run --name evatoolapp_container --net=host -d --rm evatoolapp_image --server.port=443
 echo ------------------------------
 echo RUNNING CONTAINERS
