@@ -1,9 +1,7 @@
 #!/bin/bash
 echo ------------------------------
 echo BUILD DOCKER IMAGE
-ls
-docker build -t evatoolapp_image /home/evauser/evatool/backend/docker
-ls
+docker build -t evatoolapp_image /home/evauser/evatool
 echo ------------------------------
 echo RUNNING CONTAINERS
 docker ps
