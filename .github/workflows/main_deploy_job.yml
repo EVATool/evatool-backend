@@ -23,7 +23,7 @@ jobs:
       - name: Build with Maven
         run: |
           cat src/main/resources/application-prod.properties
-          sed -i 's/DB_PASSWORD_PLACEHOLDER/${{ secrets.DB_PASSWORD }}/g' src/main/resources/application-prod.properties
+          sed -i 's/DB_PASSWORD_PLACEHOLDER/123/g' src/main/resources/application-prod.properties
           cat src/main/resources/application-prod.properties
           # mvn test --file pom.xml
           mvn clean install -P prod -Dmaven.test.skip=true --file pom.xml
