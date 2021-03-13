@@ -22,7 +22,7 @@ jobs:
 
       - name: Build with Maven
         run: |
-          mvn jasypt:decrypt clean install -P prod -Djasypt.encryptor.password=${{ secrets.JASYPT_PASSWORD }} -Dmaven.test.skip=true --file pom.xml
+          mvn clean install -P prod -Djasypt.encryptor.password=${{ secrets.JASYPT_PASSWORD }} -Dmaven.test.skip=true --file pom.xml
 
       - name: Transfer docker file to remote server
         uses: garygrossgarten/github-action-scp@release
