@@ -24,12 +24,6 @@ jobs:
         run: |
           mvn -B test --file pom.xml
           mvn -B clean install -Dmaven.test.skip=true -P prod --file pom.xml
-        env:
-          DB_USER: ${DB_USER}
-          DB_PASSWORD: ${DB_PASSWORD}
-          DB_HOST: ${DB_HOST}
-          DB_PORT: ${DB_PORT}
-          DB_NAME: ${DB_NAME}
 
       - name: Transfer docker file to remote server
         uses: garygrossgarten/github-action-scp@release
