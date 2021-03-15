@@ -55,35 +55,31 @@ public class VariantService {
      * Returns an existing Variant from the Repository
      *
      * @param id Existing id to return the related Variant
-     * @return A ResponseEntity containing a message and corresponding Http-Status Code
+     * @return VariantDTO
      */
-    public ResponseEntity<VariantDto> getVariant(UUID id) {
+    public VariantDto getVariant(UUID id) {
         Variant variant = variantRepository.findVariantById(id);
-        VariantDto variantDto = variantMapper.toDto(variant);
         if (variant == null) {
             throw new VariantsEntityNotFoundException();
-        } else {
-            variant.add(linkTo(VariantController.class).slash(id).withSelfRel());
-            return new ResponseEntity<>(variantDto, HttpStatus.OK);
         }
+        variant.add(linkTo(VariantController.class).slash(id).withSelfRel());
+        return variantMapper.toDto(variant);
     }
 
 
     /**
      * Returns all Variants from the Repository
      *
-     * @return A ResponseEntity containing a message and corresponding Http-Status Code
+     * @return Collection of VariantDTO
      */
-    public ResponseEntity<CollectionModel<VariantDto>> getAllVariants() {
+    public CollectionModel<VariantDto> getAllVariants() {
         List<Variant> variants = variantRepository.findAll();
-
         variants.forEach(variant -> variant.add(linkTo(VariantController.class).slash(variant.getId()).withSelfRel()));
-
         Link variantsLink = linkTo(methodOn(VariantController.class).getAllVariants()).withSelfRel();
         CollectionModel<VariantDto> variantCollectionModel = CollectionModel.of(variantMapper.mapAll(variants));
         variantCollectionModel.add(variantsLink);
+        return variantCollectionModel;
 
-        return new ResponseEntity<>(variantCollectionModel, HttpStatus.OK);
     }
 
     /**
@@ -91,36 +87,31 @@ public class VariantService {
      *
      * @param id             Existing id for updating related Variant
      * @param updatedVariant Overwrites the Variant that will be updated
-     * @return A ResponseEntity containing a message and corresponding Http-Status Code
+     * @return VariantDTO
      */
-    public ResponseEntity<VariantDto> updateVariant(UUID id, VariantDto updatedVariant) {
+    public VariantDto updateVariant(UUID id, VariantDto updatedVariant) {
         Variant variant = variantRepository.findVariantById(id);
         if (variant == null) {
             throw new VariantsEntityNotFoundException();
         } else {
-            //TODO validate updateVariant
             Variant savedVariant = variantRepository.save(variantMapper.fromDto(updatedVariant));
-            VariantDto savedVariantDto = variantMapper.toDto(savedVariant);
             variantsEventPublisher.publishEvent(new VariantUpdatedEvent(savedVariant.toJson()));
-            return new ResponseEntity<>(savedVariantDto, HttpStatus.OK);
+            return variantMapper.toDto(savedVariant);
         }
     }
-
 
     /**
      * Deletes an existing Variant from the Repository and publishes a corresponding event
      *
      * @param id Existing id for deleting related Variant
-     * @return A ResponseEntity containing a message and corresponding Http-Status Code
      */
-    public ResponseEntity<VariantDto> deleteVariant(UUID id) {
+    public void deleteVariant(UUID id) {
         Variant variant = variantRepository.findVariantById(id);
         if (variant == null) {
             throw new VariantsEntityNotFoundException();
         } else {
             variantRepository.delete(variant);
             variantsEventPublisher.publishEvent(new VariantDeletedEvent(variant.toJson()));
-            return new ResponseEntity<>(null, HttpStatus.OK);
         }
     }
 
@@ -128,13 +119,11 @@ public class VariantService {
      * Creates a new Variant, saves it using the repository and publishes a corresponding event
      *
      * @param newVariantDto New VariantDto-Object to be saved
-     * @return A ResponseEntity containing a message and corresponding Http-Status Code
+     * @return VariantDTO
      */
-    public ResponseEntity<VariantDto> createVariant(VariantDto newVariantDto) {
-        //TODO Validate newVariant
-        Variant newVariant = variantMapper.fromDto(newVariantDto);
-        Variant savedVariant = variantRepository.save(newVariant);
-        variantsEventPublisher.publishEvent(new VariantCreatedEvent(savedVariant.toJson()));
-        return new ResponseEntity<>(variantMapper.toDto(savedVariant), HttpStatus.CREATED);
+    public VariantDto createVariant(VariantDto newVariantDto) {
+        Variant newVariant = variantRepository.save(variantMapper.fromDto(newVariantDto));
+        variantsEventPublisher.publishEvent(new VariantCreatedEvent(newVariant.toJson()));
+        return variantMapper.toDto(newVariant);
     }
 }
