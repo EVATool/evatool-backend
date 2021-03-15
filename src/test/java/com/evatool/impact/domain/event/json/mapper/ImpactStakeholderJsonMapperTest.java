@@ -30,7 +30,7 @@ class ImpactStakeholderJsonMapperTest {
         // given
 
         // when
- 
+
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(""));
     }
