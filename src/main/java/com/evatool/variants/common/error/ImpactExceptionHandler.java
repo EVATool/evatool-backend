@@ -1,8 +1,5 @@
 package com.evatool.variants.common.error;
 
-
-
-
 import com.evatool.variants.common.error.exceptions.IllegalAnalysisException;
 import com.evatool.variants.common.error.exceptions.VariantsEntityNotFoundException;
 import org.slf4j.Logger;
@@ -29,14 +26,10 @@ public class ImpactExceptionHandler {
     }
 
 
-
     private ResponseEntity<VariantsErrorMessage> createErrorResponseEntity(Exception exception, WebRequest webRequest, HttpStatus httpStatus) {
         logger.warn("{} handled. Returning HttpStatus {}. Message: {}", exception.getClass().getSimpleName(), httpStatus, exception.getMessage());
         var errorMessage = new VariantsErrorMessage(exception, ((ServletWebRequest) webRequest).getRequest().getRequestURI(), httpStatus);
         return new ResponseEntity<>(errorMessage, httpStatus);
     }
 
-    private String getUri(WebRequest webRequest) {
-        return ((ServletWebRequest) webRequest).getRequest().getRequestURI();
-    }
 }
