@@ -68,7 +68,7 @@ public class VariantMapper {
         Optional<VariantsAnalysis> variantsAnalysis = variantsAnalysisRepository.findById(variantDto.getAnalysesId());
         if(variantsAnalysis.isEmpty())
         {
-            throw new IllegalAnalysisException();
+            throw new IllegalAnalysisException(variantDto.getAnalysesId().toString());
         }
 
         variantsAnalysis.ifPresent(variant::setVariantsAnalyses);

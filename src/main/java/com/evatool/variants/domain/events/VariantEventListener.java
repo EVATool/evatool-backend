@@ -33,7 +33,7 @@ public class VariantEventListener {
             variantsAnalysisRepository.save(variantsAnalysis);
         }
         catch (Exception e) {
-            throw new IllegalEventPayloadException();
+            throw new IllegalEventPayloadException(event.getJsonPayload());
         }
     }
 
@@ -47,7 +47,7 @@ public class VariantEventListener {
             variantsAnalysisRepository.delete(variantsAnalysis);
         }
         catch (Exception e){
-            throw new IllegalEventPayloadException();
+            throw new IllegalEventPayloadException(event.getJsonPayload());
         }
 
     }

@@ -61,7 +61,7 @@ public class VariantService {
         Variant variant = variantRepository.findVariantById(id);
         VariantDto variantDto = variantMapper.toDto(variant);
         if (variant == null) {
-            throw new VariantsEntityNotFoundException();
+            throw new VariantsEntityNotFoundException(id.toString());
         } else {
             variant.add(linkTo(VariantController.class).slash(id).withSelfRel());
             return new ResponseEntity<>(variantDto, HttpStatus.OK);
@@ -96,7 +96,7 @@ public class VariantService {
     public ResponseEntity<VariantDto> updateVariant(UUID id, VariantDto updatedVariant) {
         Variant variant = variantRepository.findVariantById(id);
         if (variant == null) {
-            throw new VariantsEntityNotFoundException();
+            throw new VariantsEntityNotFoundException(id.toString());
         } else {
             //TODO validate updateVariant
             Variant savedVariant = variantRepository.save(variantMapper.fromDto(updatedVariant));
@@ -116,7 +116,7 @@ public class VariantService {
     public ResponseEntity<VariantDto> deleteVariant(UUID id) {
         Variant variant = variantRepository.findVariantById(id);
         if (variant == null) {
-            throw new VariantsEntityNotFoundException();
+            throw new VariantsEntityNotFoundException(id.toString());
         } else {
             variantRepository.delete(variant);
             variantsEventPublisher.publishEvent(new VariantDeletedEvent(variant.toJson()));
