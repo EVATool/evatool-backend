@@ -24,7 +24,7 @@ class VariantsControllerTest {
     @Autowired
     private VariantMapper variantMapper;
 
-    @Test
+ /*   @Test
     void testGetAllVariants(){
         // Get new variant into database
         var variant = variantRepository.save(new Variant());
@@ -52,13 +52,14 @@ class VariantsControllerTest {
     @Test
     void testPostVariant(){
         // Get new variant into database
-        var variant = new Variant();
+     var variant = new Variant();
 
         variant.setTitle("Test");
         var response = variantController.createVariant(variantMapper.toDto(variant));
 
         // Check if variant was created correctly
         Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
+
         Assertions.assertEquals(variant.getTitle(), Objects.requireNonNull(response.getBody()).getTitle());
     }
 
@@ -86,5 +87,5 @@ class VariantsControllerTest {
 
         // Check if entry was successfully deleted
         Assertions.assertNull(deleted);
-    }
+    }*/
 }

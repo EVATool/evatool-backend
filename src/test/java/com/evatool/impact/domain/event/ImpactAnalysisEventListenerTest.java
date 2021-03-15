@@ -39,7 +39,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisCreatedEvent_PublishEvent_AnalysisCreated() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             // when
             var analysisCreatedEvent = new AnalysisCreatedEvent(json);
@@ -55,7 +55,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisCreatedEvent_AnalysisAlreadyExists_ThrowEventEntityAlreadyExistsException() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             var analysis = new ImpactAnalysis(id);
             analysisRepository.save(analysis);
@@ -75,7 +75,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisDeletedEvent_PublishEvent_AnalysisDeleted() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             var analysis = new ImpactAnalysis(id);
             analysisRepository.save(analysis);
@@ -93,7 +93,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisDeletedEvent_AnalysisDoesNotExist_ThrowEventEntityDoesNotExistException() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             // when
             AnalysisDeletedEvent analysisDeletedEvent = new AnalysisDeletedEvent(json);
@@ -110,7 +110,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisUpdatedEvent_PublishEvent_AnalysisUpdated() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             var analysis = new ImpactAnalysis(id);
             analysisRepository.save(analysis);
@@ -129,7 +129,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisUpdatedEvent_AnalysisDoesNotExists_ThrowEventEntityDoesNotExistException() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             // when
             AnalysisUpdatedEvent analysisUpdatedEvent = new AnalysisUpdatedEvent(json);
