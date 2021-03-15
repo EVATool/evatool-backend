@@ -9,5 +9,5 @@ public class ImpactAnalysisJson {
 
     @Getter
     @Setter
-    private UUID id;
+    private UUID analysisId;
 }
