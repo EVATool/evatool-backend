@@ -54,6 +54,7 @@ public class StakeholderRepoTest {
 
         // then
         UUID.fromString(stakeholder.getStakeholderId().toString());
+        assertThat(stakeholder.getStakeholderId()).isNotNull();
 
     }
 

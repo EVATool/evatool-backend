@@ -6,7 +6,6 @@ import com.evatool.analysis.dto.AnalysisDTO;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AnalysisMapper {

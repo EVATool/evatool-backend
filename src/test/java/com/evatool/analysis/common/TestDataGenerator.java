@@ -10,8 +10,6 @@ import com.evatool.analysis.model.AnalysisImpacts;
 import com.evatool.analysis.model.Stakeholder;
 import com.evatool.analysis.model.User;
 
-import java.util.UUID;
-
 public class TestDataGenerator {
 
     public static Analysis getAnalysis() {
@@ -19,7 +17,7 @@ public class TestDataGenerator {
     }
 
     public static Stakeholder getStakholder() {
-        return new Stakeholder("StakeholderName", Integer.valueOf(10), StakeholderLevel.naturalPerson);
+        return new Stakeholder("StakeholderName", Integer.valueOf(10), StakeholderLevel.NATURAL_PERSON);
     }
 
     public static User getUser() {

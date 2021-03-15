@@ -1,6 +1,5 @@
 package com.evatool.global.event.requirements;
 
-import com.evatool.requirements.dto.RequirementDTO;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 

@@ -12,14 +12,14 @@ import static com.evatool.requirements.common.TestDataGenerator.getRequirementsV
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class VariantsRepositoryTest {
+class VariantsRepositoryTest {
 
     @Autowired
     private RequirementsVariantsRepository requirementsVariantsRepository;
 
 
     @Test
-    public void testFindById_InsertedVariants_ReturnImpact() {
+    void testFindById_InsertedVariants_ReturnImpact() {
         // given
         RequirementsVariant requirementsVariant = getRequirementsVariant();
         requirementsVariantsRepository.save(requirementsVariant);
@@ -32,7 +32,7 @@ public class VariantsRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedVariants_IdIsNotNull() {
+    void testSave_InsertedVariants_IdIsNotNull() {
         // given
         RequirementsVariant requirementsVariant = getRequirementsVariant();
 
@@ -44,7 +44,7 @@ public class VariantsRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedVariants_IdIsUuid() {
+    void testSave_InsertedVariants_IdIsUuid() {
         // given
         RequirementsVariant requirementsVariant = getRequirementsVariant();
 
@@ -53,10 +53,12 @@ public class VariantsRepositoryTest {
 
         // then
         UUID.fromString(requirementsVariant.getId().toString());
+
+        assertThat(requirementsVariant.getId().toString()).isNotNull();
     }
 
     @Test
-    public void testDelete_DeletedVariants_ReturnNull() {
+    void testDelete_DeletedVariants_ReturnNull() {
         // given
         RequirementsVariant requirementsVariant = getRequirementsVariant();
         requirementsVariantsRepository.save(requirementsVariant);

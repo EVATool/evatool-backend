@@ -14,7 +14,7 @@ import static com.evatool.requirements.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class RequirementPointRepositoryTest {
+class RequirementPointRepositoryTest {
 
     @Autowired
     private RequirementPointRepository requirementPointRepository;
@@ -35,7 +35,7 @@ public class RequirementPointRepositoryTest {
     private RequirementsVariantsRepository requirementsVariantsRepository;
 
     @Test
-    public void testFindById_ExistingRequirementGR_ReturnRequirement() {
+    void testFindById_ExistingRequirementGR_ReturnRequirement() {
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
         requirementDimensionRepository.save(requirementDimension);
@@ -70,7 +70,7 @@ public class RequirementPointRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedRequirementGR_IdIsNotNull() {
+    void testSave_InsertedRequirementGR_IdIsNotNull() {
 
         RequirementDimension requirementDimension = getRequirementDimension();
         requirementDimensionRepository.save(requirementDimension);
@@ -104,7 +104,7 @@ public class RequirementPointRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedRequirementGR_IdIsUuid() {
+    void testSave_InsertedRequirementGR_Id_IsUuid() {
 
         RequirementDimension requirementDimension = getRequirementDimension();
         requirementDimensionRepository.save(requirementDimension);
@@ -134,10 +134,12 @@ public class RequirementPointRepositoryTest {
 
         // then
         UUID.fromString(requirementPoint.getId().toString());
+
+        assertThat(requirementsImpact.getId()).isNotNull();
     }
 
     @Test
-    public void testDelete_DeletedRequirementGR_ReturnNull() {
+    void testDelete_DeletedRequirementGR_ReturnNull() {
 
         RequirementDimension requirementDimension = getRequirementDimension();
         requirementDimensionRepository.save(requirementDimension);

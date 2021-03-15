@@ -14,6 +14,7 @@ public class AnalysisEventPublisher {
     private ApplicationEventPublisher applicationEventPublisher;
     Logger logger = LoggerFactory.getLogger(AnalysisEventPublisher.class);
 
+
     public void publishEvent(ApplicationEvent applicationEvent) {
         logger.info("Publishing Event: " + applicationEvent.getClass());
         logger.debug(applicationEvent.getClass() + "  Eventpayload: " + applicationEvent.getSource().toString());

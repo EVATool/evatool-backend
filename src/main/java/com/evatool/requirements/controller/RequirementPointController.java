@@ -34,9 +34,9 @@ public class RequirementPointController {
 		requirementPointRepository.saveAll(requirementPointList);
 	}
 
-	public void updateRequirementPoint(RequirementPoint requirementPoint) {
+	public void updateRequirementPoint(Collection<RequirementPoint> requirementPoint) {
 		logger.debug("updateRequirementPoint [{}]",requirementPoint);
-		requirementPointRepository.save(requirementPoint);
+		requirementPointRepository.saveAll(requirementPoint);
 	}
 
 	public void deleteRequirementPoint(RequirementPoint requirementPoint) {
@@ -47,7 +47,7 @@ public class RequirementPointController {
 	public Collection<RequirementsImpact> getRequirementImpactByRequirement(UUID id) {
 		logger.debug("getRequirementImpactByRequirement [{}]",id);
 		Optional<Requirement> requirement = requirementRepository.findById(id);
-		if(requirement.isEmpty()) return null;
+		if(requirement.isEmpty()) return Collections.emptyList();
 		List<RequirementsImpact> requirementsImpactList = new ArrayList<>();
 		requirementPointRepository.findByRequirement(requirement.get()).forEach(e-> requirementsImpactList.add(e.getRequirementsImpact()));
 		return requirementsImpactList;
@@ -72,14 +72,15 @@ public class RequirementPointController {
 			requirementPoint.setRequirementsImpact(requirementsImpact.get());
 			requirementPointCollection.add(requirementPoint);
 		}
-		Requirement requirement1=requirementRepository.save(requirement);
+		requirementRepository.save(requirement);
 		this.newRequirementPoint(requirementPointCollection);
-		return requirement1;
+		return requirement;
 	}
 
 	public void updatePoints(Requirement requirement, RequirementDTO requirementDTO) {
 		logger.debug("updatePoints [{}] [{}]",requirement,requirementDTO);
 		Collection<RequirementPoint> requirementPointCollectionFromEntity = requirementPointRepository.findByRequirement(requirement);
+		Collection<RequirementPoint> updateList = new ArrayList<>();
 		Map<UUID, Integer> requirementImpactPointsMap=requirementDTO.getRequirementImpactPoints();
 		for (RequirementPoint requirementPoint:requirementPointCollectionFromEntity){
 			if(requirementImpactPointsMap.get(requirementPoint.getId())==null) {
@@ -87,10 +88,11 @@ public class RequirementPointController {
 			}
 			else if(requirementImpactPointsMap.get(requirementPoint.getId())!=requirementPoint.getPoints()){
 				requirementPoint.setPoints(requirementImpactPointsMap.get(requirementPoint.getId()));
-				this.updateRequirementPoint(requirementPoint);
+				updateList.add(requirementPoint);
 				requirementDTO.getRequirementImpactPoints().remove(requirementPoint.getId());
 			}
 		}
+		this.updateRequirementPoint(updateList);
 		this.createPoints(requirement,requirementDTO);
 	}
 

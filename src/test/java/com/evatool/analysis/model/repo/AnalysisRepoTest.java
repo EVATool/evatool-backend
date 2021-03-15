@@ -55,6 +55,7 @@ public class AnalysisRepoTest {
 
         // then
         UUID.fromString(analysis.getAnalysisId().toString());
+        assertThat(analysis.getAnalysisId()).isNotNull();
 
     }
 

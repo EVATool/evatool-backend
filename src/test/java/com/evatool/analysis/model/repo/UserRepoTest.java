@@ -54,6 +54,7 @@ public class UserRepoTest {
 
         // then
         UUID.fromString(user.getUserId().toString());
+        assertThat(user.getUserId()).isNotNull();
 
     }
 

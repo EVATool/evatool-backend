@@ -10,10 +10,10 @@ import static com.evatool.requirements.common.TestDataGenerator.getRequirementDi
 import static com.evatool.requirements.common.TestDataGenerator.getRequirementsImpacts;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class RequirementsImpactTest {
+class RequirementsImpactTest {
 
     @Test
-    public void testSetDescription_NullValue_ThrowException() {
+    void testSetDescription_NullValue_ThrowException() {
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
         RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
@@ -24,21 +24,10 @@ public class RequirementsImpactTest {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementsImpact.setDescription(null));
     }
 
-    @Test
-    public void testSetTitle_NullValue_ThrowException() {
-        // given
-        RequirementDimension requirementDimension = getRequirementDimension();
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementsImpact.setTitle(null));
-    }
 
     @ParameterizedTest
     @ValueSource(ints = {3,2,4})
-    public void testSetValue_NullValue_ThrowException(int value) {
+    void testSetValue_NullValue_ThrowException(int value) {
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
         RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
@@ -50,7 +39,7 @@ public class RequirementsImpactTest {
     }
 
     @Test
-    public void testSetRequirementDimension_NullValue_ThrowException() {
+    void testSetRequirementDimension_NullValue_ThrowException() {
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
         RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);

@@ -1,22 +1,16 @@
 package com.evatool.analysis.api.controller;
 
-import com.evatool.analysis.api.interfaces.AnalysisController;
 import com.evatool.analysis.api.interfaces.UserController;
-import com.evatool.analysis.dto.AnalysisDTO;
 import com.evatool.analysis.dto.UserDTO;
 import com.evatool.analysis.events.AnalysisEventPublisher;
 import com.evatool.analysis.model.Analysis;
-import com.evatool.analysis.model.Stakeholder;
 import com.evatool.analysis.model.User;
 import com.evatool.analysis.repository.UserRepository;
 import com.evatool.analysis.services.UserDTOService;
-import com.evatool.global.event.analysis.AnalysisCreatedEvent;
-import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import com.evatool.global.event.user.UserCreatedEvent;
 import com.evatool.global.event.user.UserDeletedEvent;
 import com.evatool.analysis.error.exceptions.*;
-import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +42,7 @@ public class UserControllerImpl implements UserController {
     public List<EntityModel<UserDTO>> getUserList() {
         logger.info("[GET] /user");
         List<User> userList = userRepository.findAll();
-        if (userList.size() == 0){
+        if (userList.isEmpty()){
             return Arrays.asList();
         }
         return generateLinks(userDTOService.findAll(userList));
@@ -77,11 +71,13 @@ public class UserControllerImpl implements UserController {
     public EntityModel<UserDTO> updateUser(UserDTO userDTO) {
         logger.info("[PUT] /user");
         Optional<User> userOptional = userRepository.findById(userDTO.getRootEntityID());
-        User user  = userOptional.get();
-        user.setUserName(userDTO.getUserName());
-        user.setUserEmail(userDTO.getEmail());
-        user.setUserPassword(userDTO.getPassword());
-        userEventPublisher.publishEvent(new AnalysisUpdatedEvent(user.toString()));
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setUserName(userDTO.getUserName());
+            user.setUserEmail(userDTO.getEmail());
+            user.setUserPassword(userDTO.getPassword());
+            userEventPublisher.publishEvent(new AnalysisUpdatedEvent(user.toString()));
+        }
         return getUserById(userDTO.getRootEntityID());
     }
 
