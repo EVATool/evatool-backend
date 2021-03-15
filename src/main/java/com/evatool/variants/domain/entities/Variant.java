@@ -31,10 +31,10 @@ public class Variant extends RepresentationModel<Variant> {
     private String description;
 
     @ApiModelProperty(notes = "Potential flag of a Variant", name = "potentialFlag", required = false)
-    private boolean stFlagsPot;
+    private Boolean stFlagsPot;
 
     @ApiModelProperty(notes = "Reality flag of a Variant", name = "realityFlag", required = false)
-    private boolean stFlagsReal;
+    private Boolean stFlagsReal;
 
     @ApiModelProperty(notes = "Analysis of a Variant", name = "analysis", required = true)
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})

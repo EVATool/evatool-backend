@@ -39,8 +39,8 @@ public class VariantMapper {
         variantDto.setUuid(variant.getId());
         variantDto.setTitle(variant.getTitle());
         variantDto.setDescription(variant.getDescription());
-        variantDto.setStFlagsPot(variant.isStFlagsPot());
-        variantDto.setStFlagsReal(variant.isStFlagsReal());
+        variantDto.setStFlagsPot(variant.getStFlagsPot());
+        variantDto.setStFlagsReal(variant.getStFlagsReal());
 
         if (variant.getSubVariant() != null){
             Link subVariantLink = linkTo(methodOn(VariantController.class).getAllVariants()).withSelfRel();
@@ -63,8 +63,8 @@ public class VariantMapper {
             variant.setSubVariant(variantDto.getSubVariant().getContent().stream().collect(Collectors.toList()));
         }
         variant.setDescription(variantDto.getDescription());
-        variant.setStFlagsPot(variantDto.isStFlagsPot());
-        variant.setStFlagsReal(variantDto.isStFlagsReal());
+        variant.setStFlagsPot(variantDto.getStFlagsPot());
+        variant.setStFlagsReal(variantDto.getStFlagsReal());
         Optional<VariantsAnalysis> variantsAnalysis = variantsAnalysisRepository.findById(variantDto.getAnalysesId());
         if(variantsAnalysis.isEmpty())
         {

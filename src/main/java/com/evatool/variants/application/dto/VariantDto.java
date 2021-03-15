@@ -14,8 +14,8 @@ public class VariantDto {
     private UUID uuid;
     private String title;
     private String description;
-    private boolean stFlagsPot;
-    private boolean stFlagsReal;
+    private Boolean stFlagsPot;
+    private Boolean stFlagsReal;
     private CollectionModel<Variant> subVariant;
     private UUID analysesId;
 }
