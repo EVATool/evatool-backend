@@ -37,7 +37,7 @@ class RequirementsVariantsUpdateEventListenerTest {
         UUID tempId = requirementsVariant.getId();
 
         // when
-        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(requirementEventListener, json);
+        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(json);
         requirementEventListener.variantsUpdated(variantUpdatedEvent);
 
         // then
@@ -58,7 +58,7 @@ class RequirementsVariantsUpdateEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", id.toString(),newTitle,newDescription);
 
         // when
-        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(requirementEventListener, json);
+        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(json);
 
         // then
         assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.variantsUpdated(variantUpdatedEvent));
