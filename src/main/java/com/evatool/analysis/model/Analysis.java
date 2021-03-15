@@ -1,5 +1,6 @@
 package com.evatool.analysis.model;
 
+import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -69,5 +70,10 @@ public class Analysis {
             throw new IllegalArgumentException("description cannot be null.");
         }
         this.description = description;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
