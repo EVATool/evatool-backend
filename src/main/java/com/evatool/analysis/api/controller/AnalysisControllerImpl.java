@@ -67,7 +67,7 @@ public class AnalysisControllerImpl implements AnalysisController {
     public EntityModel<AnalysisDTO> addAnalysis(@RequestBody AnalysisDTO analysisDTO) {
         logger.info("[POST] /analysis");
         Analysis analysis = analysisRepository.save(analysisDTOService.create(analysisDTO));
-        analysisEventPublisher.publishEvent(new AnalysisCreatedEvent(analysis.toString()));
+        analysisEventPublisher.publishEvent(new AnalysisCreatedEvent(analysis.toJson()));
         return getAnalysisById(analysis.getAnalysisId());
     }
 

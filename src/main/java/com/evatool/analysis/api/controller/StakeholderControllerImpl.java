@@ -67,7 +67,7 @@ public class StakeholderControllerImpl implements StakeholderController {
     public EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
         logger.info("[POST] /stakeholders");
         Stakeholder stakeholder = stakeholderRepository.save(stakeholderDTOService.create(stakeholderDTO));
-        stakeholderEventPublisher.publishEvent(new StakeholderCreatedEvent(this, stakeholder.toString()));
+        stakeholderEventPublisher.publishEvent(new StakeholderCreatedEvent(this, stakeholder.toJson()));
         return getStakeholderById(stakeholder.getStakeholderId());
     }
 

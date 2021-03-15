@@ -1,5 +1,6 @@
 package com.evatool.analysis.model;
 
+import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -34,20 +35,22 @@ public class Analysis {
     /**
      * The User of the Analysis {@link java.util.List<User>}
      * Referenz zum User
+     *  @Getter
+     *     @Setter
+     *     @OneToMany
+     *     private Set<User> analysisUserId;
      */
-    @Getter
-    @Setter
-    @OneToMany
-    private Set<User> analysisUserId;
+
 
     /**
      * The Stakeholder of the Analysis {@link java.util.List<Stakeholder>}
      * Referenz zum Stakholder
+     *  @Getter
+     *     @Setter
+     *     @OneToMany
+     *     private Set<Stakeholder> analysisStakeholderId;
      */
-    @Getter
-    @Setter
-    @OneToMany
-    private Set<Stakeholder> analysisStakeholderId;
+
 
     public Analysis(String analysisName, String description) {
         this.analysisName = analysisName;
@@ -68,5 +71,18 @@ public class Analysis {
             throw new IllegalArgumentException("description cannot be null.");
         }
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Analysis{" +
+                "analysisId=" + analysisId +
+                ", analysisName='" + analysisName + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this.toString());
     }
 }
