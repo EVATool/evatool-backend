@@ -1,4 +1,4 @@
-package com.evatool.variants.entities;
+package com.evatool.variants.domain.entities;
 
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiModelProperty;

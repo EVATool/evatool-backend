@@ -1,9 +1,9 @@
 package com.evatool.variants.application;
 
-import com.evatool.variants.controller.VariantController;
-import com.evatool.variants.entities.Variant;
-import com.evatool.variants.repositories.VariantRepository;
-import com.evatool.variants.services.VariantMapper;
+import com.evatool.variants.application.controller.VariantController;
+import com.evatool.variants.domain.entities.Variant;
+import com.evatool.variants.domain.repositories.VariantRepository;
+import com.evatool.variants.application.dto.VariantMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

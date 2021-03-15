@@ -1,6 +1,6 @@
-package com.evatool.variants.repositories;
+package com.evatool.variants.domain.repositories;
 
-import com.evatool.variants.entities.VariantsAnalysis;
+import com.evatool.variants.domain.entities.VariantsAnalysis;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

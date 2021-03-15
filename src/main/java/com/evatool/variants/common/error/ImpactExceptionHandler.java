@@ -1,4 +1,4 @@
-package com.evatool.variants.error;
+package com.evatool.variants.common.error;
 
 
 

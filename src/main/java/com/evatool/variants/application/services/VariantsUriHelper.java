@@ -1,4 +1,4 @@
-package com.evatool.variants.services;
+package com.evatool.variants.application.services;
 
 public class VariantsUriHelper {
     private VariantsUriHelper() {

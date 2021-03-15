@@ -1,11 +1,9 @@
-package com.evatool.variants.entities;
+package com.evatool.variants.domain.entities;
 
 import lombok.Getter;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.UUID;
 

@@ -1,13 +1,15 @@
-package com.evatool.variants.services;
+package com.evatool.variants.application.services;
 
 import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
-import com.evatool.variants.controller.VariantController;
-import com.evatool.variants.entities.Variant;
-import com.evatool.variants.entities.VariantDto;
-import com.evatool.variants.events.VariantsEventPublisher;
-import com.evatool.variants.repositories.VariantRepository;
+import com.evatool.variants.application.controller.VariantController;
+import com.evatool.variants.application.dto.VariantMapper;
+import com.evatool.variants.common.error.exceptions.VariantsEntityNotFoundException;
+import com.evatool.variants.domain.entities.Variant;
+import com.evatool.variants.application.dto.VariantDto;
+import com.evatool.variants.domain.events.VariantsEventPublisher;
+import com.evatool.variants.domain.repositories.VariantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +61,7 @@ public class VariantService {
         Variant variant = variantRepository.findVariantById(id);
         VariantDto variantDto = variantMapper.toDto(variant);
         if (variant == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            throw new VariantsEntityNotFoundException();
         } else {
             variant.add(linkTo(VariantController.class).slash(id).withSelfRel());
             return new ResponseEntity<>(variantDto, HttpStatus.OK);
@@ -94,7 +96,7 @@ public class VariantService {
     public ResponseEntity<VariantDto> updateVariant(UUID id, VariantDto updatedVariant) {
         Variant variant = variantRepository.findVariantById(id);
         if (variant == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            throw new VariantsEntityNotFoundException();
         } else {
             //TODO validate updateVariant
             Variant savedVariant = variantRepository.save(variantMapper.fromDto(updatedVariant));
@@ -114,7 +116,7 @@ public class VariantService {
     public ResponseEntity<VariantDto> deleteVariant(UUID id) {
         Variant variant = variantRepository.findVariantById(id);
         if (variant == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            throw new VariantsEntityNotFoundException();
         } else {
             variantRepository.delete(variant);
             variantsEventPublisher.publishEvent(new VariantDeletedEvent(variant.toJson()));

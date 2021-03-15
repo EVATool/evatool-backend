@@ -1,4 +1,4 @@
-package com.evatool.variants.events;
+package com.evatool.variants.domain.events;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

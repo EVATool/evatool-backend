@@ -1,11 +1,11 @@
-package com.evatool.variants.services;
+package com.evatool.variants.application.dto;
 
-import com.evatool.variants.controller.VariantController;
-import com.evatool.variants.entities.*;
-import com.evatool.variants.repositories.VariantsAnalysisRepository;
+import com.evatool.variants.application.controller.VariantController;
+import com.evatool.variants.common.error.exceptions.IllegalAnalysisException;
+import com.evatool.variants.domain.entities.*;
+import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import static com.evatool.variants.services.VariantsUriHelper.*;
 
 @Service
 public class VariantMapper {
@@ -40,7 +39,6 @@ public class VariantMapper {
         variantDto.setUuid(variant.getId());
         variantDto.setTitle(variant.getTitle());
         variantDto.setDescription(variant.getDescription());
-
         variantDto.setStFlagsPot(variant.isStFlagsPot());
         variantDto.setStFlagsReal(variant.isStFlagsReal());
 
@@ -68,6 +66,11 @@ public class VariantMapper {
         variant.setStFlagsPot(variantDto.isStFlagsPot());
         variant.setStFlagsReal(variantDto.isStFlagsReal());
         Optional<VariantsAnalysis> variantsAnalysis = variantsAnalysisRepository.findById(variantDto.getAnalysesId());
+        if(variantsAnalysis.isEmpty())
+        {
+            throw new IllegalAnalysisException();
+        }
+
         variantsAnalysis.ifPresent(variant::setVariantsAnalyses);
         return variant;
     }

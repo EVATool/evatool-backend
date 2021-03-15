@@ -1,10 +1,9 @@
-package com.evatool.variants.entities;
+package com.evatool.variants.application.dto;
 
+import com.evatool.variants.domain.entities.Variant;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.util.UUID;
 
