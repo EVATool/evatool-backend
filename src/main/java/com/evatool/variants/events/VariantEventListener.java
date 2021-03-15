@@ -1,0 +1,43 @@
+package com.evatool.variants.events;
+
+
+import com.evatool.global.event.analysis.AnalysisCreatedEvent;
+import com.evatool.global.event.analysis.AnalysisDeletedEvent;
+import com.evatool.variants.entities.VariantsAnalysis;
+import com.evatool.variants.repositories.VariantsAnalysisRepository;
+import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+
+@Component
+public class VariantEventListener {
+
+    final Logger logger = LoggerFactory.getLogger(VariantEventListener.class);
+    Gson gson = new Gson();
+    @Autowired
+    VariantsAnalysisRepository variantsAnalysisRepository;
+
+    @EventListener
+    @Async
+    public void analyseCreated(AnalysisCreatedEvent event){
+        logger.info("analyse created event");
+        logger.debug("Event " + event.getClass() + " With Payload: " + event.getJsonPayload() );
+        VariantsAnalysis variantsAnalysis = gson.fromJson(event.getJsonPayload(), VariantsAnalysis.class);
+        variantsAnalysisRepository.save(variantsAnalysis);
+
+    }
+
+    @EventListener
+    @Async
+    public void analyseDeleted(AnalysisDeletedEvent event){
+        logger.info("analyse created event");
+        logger.debug("Event " + event.getClass() + " With Payload: " + event.getJsonPayload() );
+        VariantsAnalysis variantsAnalysis = gson.fromJson(event.getJsonPayload(), VariantsAnalysis.class);
+        variantsAnalysisRepository.delete(variantsAnalysis);
+    }
+}

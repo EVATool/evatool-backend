@@ -1,5 +1,6 @@
 package com.evatool.variants.entities;
 
+import com.google.gson.Gson;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,4 +40,21 @@ public class Variant extends RepresentationModel<Variant> {
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private VariantsAnalysis variantsAnalyses;
 
+    @Override
+    public String toString() {
+        return "Variant{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", subVariant=" + subVariant +
+                ", description='" + description + '\'' +
+                ", stFlagsPot=" + stFlagsPot +
+                ", stFlagsReal=" + stFlagsReal +
+                ", variantsAnalyses=" + variantsAnalyses +
+                '}';
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this.toString());
+    }
 }

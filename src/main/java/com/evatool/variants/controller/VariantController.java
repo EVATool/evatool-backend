@@ -20,6 +20,8 @@ import static com.evatool.variants.services.VariantsUriHelper.VARIANTS_ID;
 @RestController
 public class VariantController {
 
+    //todo error handling
+
     @Autowired
     VariantService variantService;
 

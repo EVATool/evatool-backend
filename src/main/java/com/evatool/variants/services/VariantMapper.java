@@ -18,7 +18,7 @@ import static com.evatool.variants.services.VariantsUriHelper.*;
 
 @Service
 public class VariantMapper {
-
+    //todo error handling
     @Autowired
     VariantController variantController;
 
@@ -48,13 +48,7 @@ public class VariantMapper {
             subVariantCollectionModel.add(subVariantLink);
         }
 
-        if (variant.getVariantsAnalyses() != null){
-            Link variantAnalysisLink = linkTo(VariantController.class).slash(ANALYSIS).withSelfRel();
-            List<VariantsAnalysis> variantsAnalysisList = new ArrayList<>();
-            variantsAnalysisList.addAll(variant.getVariantsAnalyses());
-            CollectionModel<VariantsAnalysis> analysisCollectionModel = CollectionModel.of(variantsAnalysisList);
-            analysisCollectionModel.add(variantAnalysisLink);
-        }
+        variantDto.setAnalysesId(variant.getVariantsAnalyses().getId());
 
         return variantDto;
     }
@@ -63,17 +57,13 @@ public class VariantMapper {
         Variant variant = new Variant();
         variant.setId(variantDto.getUuid());
         variant.setTitle(variantDto.getTitle());
-        variant.setCriterion(variantDto.getCriterion());
         if(variantDto.getSubVariant() != null) {
             variant.setSubVariant(variantDto.getSubVariant().getContent().stream().collect(Collectors.toList()));
         }
         variant.setDescription(variantDto.getDescription());
         variant.setStFlagsPot(variantDto.isStFlagsPot());
         variant.setStFlagsReal(variantDto.isStFlagsReal());
-        if(variantDto.getVariantsAnalyses() != null) {
-            variant.setVariantsAnalyses(variantDto.getVariantsAnalyses().getContent().stream().collect(Collectors.toList()));
-        }
-
+        variant.setVariantsAnalyses(new VariantsAnalysis(variantDto.getAnalysesId()));
         return variant;
     }
 

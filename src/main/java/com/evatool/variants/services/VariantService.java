@@ -1,11 +1,12 @@
 package com.evatool.variants.services;
 
+import com.evatool.global.event.variants.VariantCreatedEvent;
+import com.evatool.global.event.variants.VariantDeletedEvent;
+import com.evatool.global.event.variants.VariantUpdatedEvent;
 import com.evatool.variants.controller.VariantController;
 import com.evatool.variants.entities.Variant;
 import com.evatool.variants.entities.VariantDto;
-import com.evatool.variants.events.VariantCreatedEventPublisher;
-import com.evatool.variants.events.VariantDeletedEventPublisher;
-import com.evatool.variants.events.VariantUpdatedEventPublisher;
+import com.evatool.variants.events.VariantsEventPublisher;
 import com.evatool.variants.repositories.VariantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,20 +30,15 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class VariantService {
 
     VariantRepository variantRepository;
-    VariantCreatedEventPublisher variantCreatedEventPublisher;
-    VariantUpdatedEventPublisher variantUpdatedEventPublisher;
-    VariantDeletedEventPublisher variantDeletedEventPublisher;
+
+    VariantsEventPublisher variantsEventPublisher;
     Logger logger = LoggerFactory.getLogger(VariantService.class);
 
     @Autowired
     public VariantService(VariantRepository variantRepository,
-                          VariantCreatedEventPublisher variantCreatedEventPublisher,
-                          VariantUpdatedEventPublisher variantUpdatedEventPublisher,
-                          VariantDeletedEventPublisher variantDeletedEventPublisher) {
+                          VariantsEventPublisher variantsEventPublisher) {
         this.variantRepository = variantRepository;
-        this.variantCreatedEventPublisher = variantCreatedEventPublisher;
-        this.variantDeletedEventPublisher = variantDeletedEventPublisher;
-        this.variantUpdatedEventPublisher = variantUpdatedEventPublisher;
+        this.variantsEventPublisher = variantsEventPublisher;
     }
 
     @Autowired
@@ -103,7 +99,7 @@ public class VariantService {
             //TODO validate updateVariant
             Variant savedVariant = variantRepository.save(variantMapper.fromDto(updatedVariant));
             VariantDto savedVariantDto = variantMapper.toDto(savedVariant);
-            variantUpdatedEventPublisher.publishVariantUpdatedEvent(savedVariant);
+            variantsEventPublisher.publishEvent(new VariantUpdatedEvent(savedVariant.toJson()));
             return new ResponseEntity<>(savedVariantDto, HttpStatus.OK);
         }
     }
@@ -121,7 +117,7 @@ public class VariantService {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
             variantRepository.delete(variant);
-            variantDeletedEventPublisher.publishVariantDeletedEvent(variant);
+            variantsEventPublisher.publishEvent(new VariantDeletedEvent(variant.toJson()));
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
     }
@@ -136,7 +132,7 @@ public class VariantService {
         //TODO Validate newVariant
         Variant newVariant = variantMapper.fromDto(newVariantDto);
         Variant savedVariant = variantRepository.save(newVariant);
-        variantCreatedEventPublisher.publishVariantCreatedEvent(savedVariant);
+        variantsEventPublisher.publishEvent(new VariantCreatedEvent(savedVariant.toJson()));
         return new ResponseEntity<>(variantMapper.toDto(savedVariant), HttpStatus.CREATED);
     }
 }

@@ -8,8 +8,8 @@ import org.springframework.context.ApplicationEvent;
 public class VariantCreatedEvent extends ApplicationEvent {
     private final String variantJson;
 
-    public VariantCreatedEvent(Object source, String variantJson) {
-        super(source);
+    public VariantCreatedEvent( String variantJson) {
+        super(variantJson);
         this.variantJson = variantJson;
     }
 }
