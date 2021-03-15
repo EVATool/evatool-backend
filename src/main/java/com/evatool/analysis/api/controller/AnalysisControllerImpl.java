@@ -79,7 +79,7 @@ public class AnalysisControllerImpl implements AnalysisController {
             Analysis analysis = analysisOptional.get();
             analysis.setAnalysisName(analysisDTO.getAnalysisName());
             analysis.setDescription(analysisDTO.getAnalysisDescription());
-            analysisEventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toString()));
+            analysisEventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toJson()));
         }
         return getAnalysisById(analysisDTO.getRootEntityID());
     }
