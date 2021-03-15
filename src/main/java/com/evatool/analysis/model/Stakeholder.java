@@ -1,6 +1,7 @@
 package com.evatool.analysis.model;
 
 import com.evatool.analysis.enums.StakeholderLevel;
+import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -73,5 +74,10 @@ public class Stakeholder {
             throw new IllegalArgumentException("priority name cannot be null.");
         }
         this.priority = priority;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
