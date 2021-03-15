@@ -22,9 +22,6 @@ public class Variant extends RepresentationModel<Variant> {
     @ApiModelProperty(notes = "Title of a Variant", name = "title", required = true)
     private String title;
 
-    @ApiModelProperty(notes = "Criterion of a Variant", name = "criterion", required = true)
-    private String criterion;
-
     @ApiModelProperty(notes = "SubVariant of a Variant", name = "subVariant", required = true)
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<Variant> subVariant;
@@ -32,21 +29,14 @@ public class Variant extends RepresentationModel<Variant> {
     @ApiModelProperty(notes = "Description of a Variant", name = "description", required = true)
     private String description;
 
-    @ApiModelProperty(notes = "Potential flag of a Variant", name = "potentialFlag", required = true)
+    @ApiModelProperty(notes = "Potential flag of a Variant", name = "potentialFlag", required = false)
     private boolean stFlagsPot;
 
-    @ApiModelProperty(notes = "Reality flag of a Variant", name = "realityFlag", required = true)
+    @ApiModelProperty(notes = "Reality flag of a Variant", name = "realityFlag", required = false)
     private boolean stFlagsReal;
 
-    @ApiModelProperty(notes = "Stakeholder of a Variant", name = "stakeholder", required = true)
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    private VariantsStakeholder variantsStakeholder;
-
     @ApiModelProperty(notes = "Analysis of a Variant", name = "analysis", required = true)
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    private List<VariantsAnalysis> variantsAnalyses;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    private VariantsAnalysis variantsAnalyses;
 
-    @ApiModelProperty(notes = "Requirement of a Variant", name = "requirement", required = true)
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    private List<VariantsRequirement> variantsRequirements;
 }

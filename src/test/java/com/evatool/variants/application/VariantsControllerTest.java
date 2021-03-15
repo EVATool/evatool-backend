@@ -2,7 +2,6 @@ package com.evatool.variants.application;
 
 import com.evatool.variants.controller.VariantController;
 import com.evatool.variants.entities.Variant;
-import com.evatool.variants.entities.VariantsStakeholder;
 import com.evatool.variants.repositories.VariantRepository;
 import com.evatool.variants.services.VariantMapper;
 import org.junit.jupiter.api.Assertions;
@@ -30,8 +29,6 @@ class VariantsControllerTest {
         // Get new variant into database
         var variant = variantRepository.save(new Variant());
 
-        variant.setVariantsStakeholder(new VariantsStakeholder());
-
         // Get all Variants and filter by id
         var savedVariants = Objects.requireNonNull(variantController.getAllVariants().getBody()).getContent()
                 .stream().filter(var -> var.getUuid().equals(variant.getId())).toArray();
@@ -45,8 +42,6 @@ class VariantsControllerTest {
         // Get new variant into database
         var variant = variantRepository.save(new Variant());
 
-        variant.setVariantsStakeholder(new VariantsStakeholder());
-
         // Get variant out of the system
         var response = variantController.getVariant(variant.getId());
 
@@ -58,8 +53,6 @@ class VariantsControllerTest {
     void testPostVariant(){
         // Get new variant into database
         var variant = new Variant();
-
-        variant.setVariantsStakeholder(new VariantsStakeholder());
 
         variant.setTitle("Test");
         var response = variantController.createVariant(variantMapper.toDto(variant));
@@ -73,7 +66,6 @@ class VariantsControllerTest {
     void testUpdateVariant(){
         // Get new variant into database
         var variant = variantRepository.save(new Variant());
-        variant.setVariantsStakeholder(new VariantsStakeholder());
         variant.setTitle("Test");
 
         // Update Variant
@@ -88,8 +80,6 @@ class VariantsControllerTest {
     void testDeleteVariant(){
         // Get new variant into database
         var variant = variantRepository.save(new Variant());
-        variant.setVariantsStakeholder(new VariantsStakeholder());
-
         // Delete Variant
         variantController.deleteVariant(variant.getId());
         var deleted = variantRepository.findVariantById(variant.getId());

@@ -35,15 +35,6 @@ public class VariantMapper {
         VariantDto variantDto = new VariantDto();
         variantDto.setUuid(variant.getId());
         variantDto.setTitle(variant.getTitle());
-        variantDto.setCriterion(variant.getCriterion());
-
-        if (variant.getVariantsStakeholder() != null) {
-            Link stakeholderLink = linkTo(VariantController.class).slash(STAKEHOLDERS).withSelfRel();
-            EntityModel<VariantsStakeholder> variantsStakeholder = EntityModel.of(variant.getVariantsStakeholder());
-            variantsStakeholder.add(stakeholderLink);
-            variantDto.setVariantsStakeholder(variantsStakeholder);
-        }
-
         variantDto.setDescription(variant.getDescription());
 
         variantDto.setStFlagsPot(variant.isStFlagsPot());
@@ -65,14 +56,6 @@ public class VariantMapper {
             analysisCollectionModel.add(variantAnalysisLink);
         }
 
-        if (variant.getVariantsRequirements() != null) {
-            Link variantRequirementLink = linkTo(VariantController.class).slash(REQUIREMENTS).withSelfRel();
-            List<VariantsRequirement> variantsRequirementsList = new ArrayList<>();
-            variantsRequirementsList.addAll(variant.getVariantsRequirements());
-            CollectionModel<VariantsRequirement> variantsRequirementCollectionModel = CollectionModel.of(variantsRequirementsList);
-            variantsRequirementCollectionModel.add(variantRequirementLink);
-        }
-
         return variantDto;
     }
 
@@ -87,14 +70,9 @@ public class VariantMapper {
         variant.setDescription(variantDto.getDescription());
         variant.setStFlagsPot(variantDto.isStFlagsPot());
         variant.setStFlagsReal(variantDto.isStFlagsReal());
-        variant.setVariantsStakeholder(variantDto.getVariantsStakeholder().getContent());
         if(variantDto.getVariantsAnalyses() != null) {
             variant.setVariantsAnalyses(variantDto.getVariantsAnalyses().getContent().stream().collect(Collectors.toList()));
         }
-        if (variantDto.getVariantsRequirements() != null){
-            variant.setVariantsRequirements(variantDto.getVariantsRequirements().getContent().stream().collect(Collectors.toList()));
-        }
-
 
         return variant;
     }

@@ -14,21 +14,9 @@ public class VariantDto {
 
     private UUID uuid;
     private String title;
-    private String criterion;
-
-    private CollectionModel<Variant> subVariant;
-
     private String description;
-
     private boolean stFlagsPot;
     private boolean stFlagsReal;
-
-    private EntityModel<VariantsStakeholder> variantsStakeholder;
-//    private UUID variantsStakeholderId;
-
-    private CollectionModel<VariantsAnalysis> variantsAnalyses;
-//    private UUID variantsAnalysisId;
-
-    private CollectionModel<VariantsRequirement> variantsRequirements;
-//    private UUID variantsRequirementId;
+    private CollectionModel<Variant> subVariant;
+    private UUID analysesId;
 }
