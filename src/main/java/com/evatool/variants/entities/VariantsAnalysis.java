@@ -15,11 +15,10 @@ public class VariantsAnalysis extends RepresentationModel<VariantsAnalysis> {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private UUID analysisId;
 
     public VariantsAnalysis(UUID id){
-        this.id = id;
+        this.analysisId = id;
     }
 
     public VariantsAnalysis(){

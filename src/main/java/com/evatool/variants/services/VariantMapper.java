@@ -52,7 +52,7 @@ public class VariantMapper {
             subVariantCollectionModel.add(subVariantLink);
         }
 
-        variantDto.setAnalysesId(variant.getVariantsAnalyses().getId());
+        variantDto.setAnalysesId(variant.getVariantsAnalyses().getAnalysisId());
 
         return variantDto;
     }
