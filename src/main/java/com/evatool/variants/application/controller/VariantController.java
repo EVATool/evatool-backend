@@ -16,13 +16,12 @@ import java.util.UUID;
 
 import static com.evatool.variants.application.services.VariantsUriHelper.VARIANTS;
 import static com.evatool.variants.application.services.VariantsUriHelper.VARIANTS_ID;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
-@Api(value = "VariantsController", description = "REST API for variants", tags = "variants")
+
+@Api(value = "VariantsController", tags = "variants")
 @RestController
 public class VariantController {
 
-    //todo error handling
 
     @Autowired
     VariantService variantService;
@@ -39,7 +38,7 @@ public class VariantController {
     @ApiResponse(code = 201, message = "Created successfully", response = VariantDto.class, responseContainer = "Variant")
     @GetMapping(VARIANTS_ID)
     public ResponseEntity<VariantDto> getVariant(
-            @ApiParam (name = "variantId", value = "identification of a Variant", required = true)
+            @ApiParam(name = "variantId", value = "identification of a Variant", required = true)
             @PathVariable UUID id) {
 
         return new ResponseEntity<>(variantService.getVariant(id), HttpStatus.OK);
@@ -57,7 +56,7 @@ public class VariantController {
     @ApiResponse(code = 200, message = "Successful changed", response = VariantDto.class, responseContainer = "List")
     @PutMapping(VARIANTS_ID)
     public ResponseEntity<VariantDto> updateVariant(
-            @ApiParam (name = "variantId", value = "identification of a Variant", required = true)
+            @ApiParam(name = "variantId", value = "identification of a Variant", required = true)
             @PathVariable UUID id,
             @RequestBody VariantDto updatedVariantDto) {
 
@@ -68,7 +67,7 @@ public class VariantController {
     @ApiResponse(code = 200, message = "Successful deleted", response = VariantDto.class, responseContainer = "List")
     @DeleteMapping(value = VARIANTS_ID)
     public ResponseEntity<Void> deleteVariant(
-            @ApiParam (name = "variantId", value = "identification of a Variant", required = true)
+            @ApiParam(name = "variantId", value = "identification of a Variant", required = true)
             @PathVariable UUID id) {
 
         variantService.deleteVariant(id);

@@ -18,8 +18,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class VariantEventListener {
 
+    private static final String DEBUGFORMAT = "EVENT: %s With Payload %s";
     final Logger logger = LoggerFactory.getLogger(VariantEventListener.class);
     Gson gson = new Gson();
+
     @Autowired
     VariantsAnalysisRepository variantsAnalysisRepository;
 
@@ -27,7 +29,7 @@ public class VariantEventListener {
     @Async
     public void analyseCreated(AnalysisCreatedEvent event){
         logger.info("analyse created event");
-        logger.debug("Event " + event.getClass() + " With Payload: " + event.getJsonPayload());
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         try {
             VariantsAnalysis variantsAnalysis = gson.fromJson(event.getJsonPayload(), VariantsAnalysis.class);
             variantsAnalysisRepository.save(variantsAnalysis);
@@ -41,7 +43,7 @@ public class VariantEventListener {
     @Async
     public void analyseDeleted(AnalysisDeletedEvent event){
         logger.info("analyse created event");
-        logger.debug("Event " + event.getClass() + " With Payload: " + event.getJsonPayload());
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         try {
             VariantsAnalysis variantsAnalysis = gson.fromJson(event.getJsonPayload(), VariantsAnalysis.class);
             variantsAnalysisRepository.delete(variantsAnalysis);

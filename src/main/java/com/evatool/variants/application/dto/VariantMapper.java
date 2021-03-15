@@ -19,7 +19,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class VariantMapper {
-    //todo error handling
     @Autowired
     VariantController variantController;
     @Autowired
@@ -34,24 +33,20 @@ public class VariantMapper {
     }
 
     public VariantDto toDto(Variant variant) {
-
         VariantDto variantDto = new VariantDto();
         variantDto.setUuid(variant.getId());
         variantDto.setTitle(variant.getTitle());
         variantDto.setDescription(variant.getDescription());
         variantDto.setStFlagsPot(variant.getStFlagsPot());
         variantDto.setStFlagsReal(variant.getStFlagsReal());
-
-        if (variant.getSubVariant() != null){
+        if (variant.getSubVariant() != null) {
             Link subVariantLink = linkTo(methodOn(VariantController.class).getAllVariants()).withSelfRel();
             List<Variant> variantList = new ArrayList<>();
             variantList.addAll(variant.getSubVariant());
             CollectionModel<Variant> subVariantCollectionModel = CollectionModel.of(variantList);
             subVariantCollectionModel.add(subVariantLink);
         }
-
         variantDto.setAnalysesId(variant.getVariantsAnalyses().getAnalysisId());
-
         return variantDto;
     }
 
@@ -59,18 +54,16 @@ public class VariantMapper {
         Variant variant = new Variant();
         variant.setId(variantDto.getUuid());
         variant.setTitle(variantDto.getTitle());
-        if(variantDto.getSubVariant() != null) {
+        if (variantDto.getSubVariant() != null) {
             variant.setSubVariant(variantDto.getSubVariant().getContent().stream().collect(Collectors.toList()));
         }
         variant.setDescription(variantDto.getDescription());
         variant.setStFlagsPot(variantDto.getStFlagsPot());
         variant.setStFlagsReal(variantDto.getStFlagsReal());
         Optional<VariantsAnalysis> variantsAnalysis = variantsAnalysisRepository.findById(variantDto.getAnalysesId());
-        if(variantsAnalysis.isEmpty())
-        {
+        if (variantsAnalysis.isEmpty()) {
             throw new IllegalAnalysisException(variantDto.getAnalysesId().toString());
         }
-
         variantsAnalysis.ifPresent(variant::setVariantsAnalyses);
         return variant;
     }
