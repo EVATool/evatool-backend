@@ -2,6 +2,7 @@ package com.evatool.variants.services;
 
 import com.evatool.variants.controller.VariantController;
 import com.evatool.variants.entities.*;
+import com.evatool.variants.repositories.VariantsAnalysisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -21,6 +23,8 @@ public class VariantMapper {
     //todo error handling
     @Autowired
     VariantController variantController;
+    @Autowired
+    VariantsAnalysisRepository variantsAnalysisRepository;
 
     public List<VariantDto> mapAll(List<Variant> variantList) {
         List<VariantDto> variantDtoList = new ArrayList<>();
@@ -63,7 +67,8 @@ public class VariantMapper {
         variant.setDescription(variantDto.getDescription());
         variant.setStFlagsPot(variantDto.isStFlagsPot());
         variant.setStFlagsReal(variantDto.isStFlagsReal());
-        variant.setVariantsAnalyses(new VariantsAnalysis(variantDto.getAnalysesId()));
+        Optional<VariantsAnalysis> variantsAnalysis = variantsAnalysisRepository.findById(variantDto.getAnalysesId());
+        variantsAnalysis.ifPresent(variant::setVariantsAnalyses);
         return variant;
     }
 
