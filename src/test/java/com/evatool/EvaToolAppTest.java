@@ -13,6 +13,8 @@ import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
+import com.evatool.impact.common.DimensionType;
+import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.event.DimensionEventPublisher;
 import com.evatool.impact.domain.event.ImpactEventPublisher;
 import com.evatool.impact.domain.repository.DimensionRepository;
@@ -206,37 +208,57 @@ class EvaToolAppTest {
             dimensionRepository.deleteAll();
         }
 
+        Dimension createDummyDimension() {
+            return dimensionRepository.save(new Dimension("Name", DimensionType.SOCIAL, "Description"));
+        }
+
         // Received by: Requirement
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
+            var dimension = createDummyDimension();
 
             // when
+            dimensionEventPublisher.publishDimensionCreated(dimension);
+            var requirementDimension = requirementDimensionRepository.findById(dimension.getId()).orElse(null);
 
             // then
-
+            assertThat(requirementDimension).isNotNull();
+            assertThat(requirementDimension.getId()).isEqualTo(dimension.getId());
+            assertThat(requirementDimension.getName()).isEqualTo(dimension.getName());
         }
 
         // Received by: Requirement
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
+            var dimension = createDummyDimension();
+            dimensionEventPublisher.publishDimensionCreated(dimension);
 
             // when
+            dimension.setName("new_name");
+            dimensionEventPublisher.publishDimensionUpdated(dimension);
+            var requirementDimension = requirementDimensionRepository.findById(dimension.getId()).orElse(null);
 
             // then
-
+            assertThat(requirementDimension).isNotNull();
+            assertThat(requirementDimension.getId()).isEqualTo(dimension.getId());
+            assertThat(requirementDimension.getName()).isEqualTo(dimension.getName());
         }
 
         // Received by: Requirement
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
+            var dimension = createDummyDimension();
+            dimensionEventPublisher.publishDimensionCreated(dimension);
 
             // when
+            dimensionEventPublisher.publishDimensionDeleted(dimension);
+            var requirementDimension = requirementDimensionRepository.findById(dimension.getId()).orElse(null);
 
             // then
-
+            assertThat(requirementDimension).isNull();
         }
     }
 
@@ -263,6 +285,7 @@ class EvaToolAppTest {
             analysisImpactRepository.deleteAll();
             impactRepository.deleteAll();
         }
+
         // Received by: Requirement, Analysis
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
