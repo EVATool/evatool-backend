@@ -26,9 +26,6 @@ public class SuperEntity {
 
     @Getter
     @Id
-    @ColumnTransformer(
-            read="uuid_from_bin(id)",
-            write="uuid_to_bin(?)")
     @GeneratedValue(generator = "SuperEntityUuidGenerator")
     @GenericGenerator(name = "SuperEntityUuidGenerator", strategy = "com.evatool.impact.domain.entity.SuperEntityUuidGenerator")
     @Column(name = "ID", updatable = false, nullable = false)
