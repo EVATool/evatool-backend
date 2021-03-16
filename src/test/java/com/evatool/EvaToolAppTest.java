@@ -145,17 +145,6 @@ class EvaToolAppTest {
             assertThat(variantAnalysis.getAnalysisId()).isEqualTo(analysis.getAnalysisId());
         }
 
-        // Received by: Impact
-        @Test
-        void testUpdatedEvent_ModulesReceive_ModulesPersist() {
-            // given
-
-            // when
-
-            // then
-
-        }
-
         // Received by: Impact, Requirement, Variant
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
