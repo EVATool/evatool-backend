@@ -9,9 +9,14 @@ import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
+import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import com.evatool.requirements.repository.RequirementAnalysisRepository;
+import com.evatool.requirements.repository.RequirementsVariantsRepository;
+import com.evatool.variants.domain.entities.Variant;
+import com.evatool.variants.domain.events.VariantsEventPublisher;
+import com.evatool.variants.domain.repositories.VariantRepository;
 import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,11 +128,15 @@ class EvaToolAppTest {
             variantsAnalysisRepository.deleteAll();
         }
 
+        Analysis createDummyAnalysis() {
+            return new Analysis("Name", "Description");
+        }
+
         // Received by: Impact, Requirement, Variant
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var analysis = new Analysis("Name", "Description");
+            var analysis = createDummyAnalysis();
             var analysisCreatedEvent = new AnalysisCreatedEvent(analysis.toJson());
 
             // when
@@ -150,7 +159,7 @@ class EvaToolAppTest {
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var analysis = new Analysis("Name", "Description");
+            var analysis = createDummyAnalysis();
             var analysisCreatedEvent = new AnalysisCreatedEvent(analysis.toJson());
             analysisEventPublisher.publishEvent(analysisCreatedEvent);
 
@@ -260,24 +269,46 @@ class EvaToolAppTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class VariantEvent {
 
+        @Autowired
+        VariantsEventPublisher variantsEventPublisher;
+
+        @Autowired
+        RequirementsVariantsRepository requirementsVariantsRepository;
+
+        @Autowired
+        VariantRepository variantRepository;
+
         @BeforeEach
         @AfterAll
         void clearDatabase() {
-
+            requirementsVariantsRepository.deleteAll();
         }
 
-        // Received by: ?
+        Variant createDummyVariant() {
+            var variant = new Variant();
+            variant.setTitle("Title");
+            return variantRepository.save(variant);
+        }
+
+        // Received by: Requirement
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
+            var variant = createDummyVariant();
+            var variantCreatedEvent = new VariantCreatedEvent(variant.toJson());
 
             // when
+            variantsEventPublisher.publishEvent(variantCreatedEvent);
+            var requirementsVariant = requirementsVariantsRepository.findById(variant.getId()).orElse(null);
 
             // then
-
+            assertThat(requirementsVariant).isNotNull();
+            assertThat(requirementsVariant.getId()).isEqualTo(variant.getId());
+            assertThat(requirementsVariant.getTitle()).isEqualTo(variant.getTitle());
+            assertThat(requirementsVariant.getDescription()).isEqualTo(variant.getDescription());
         }
 
-        // Received by: ?
+        // Received by: Requirement
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -288,7 +319,7 @@ class EvaToolAppTest {
 
         }
 
-        // Received by: ?
+        // Received by: Requirement
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
