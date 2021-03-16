@@ -3,6 +3,7 @@ package com.evatool.impact.domain.entity;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +27,7 @@ public class SuperEntity {
     @Id
     @GeneratedValue(generator = "SuperEntityUuidGenerator")
     @GenericGenerator(name = "SuperEntityUuidGenerator", strategy = "com.evatool.impact.domain.entity.SuperEntityUuidGenerator")
-    @Column(name = "ID", updatable = false, nullable = false)
-    @Type(type = "org.hibernate.type.UUIDCharType")
+    @Column(name = "ID", updatable = false, nullable = false, columnDefinition = "VARCHAR(36)")
     protected UUID id;
 
     public void setId(UUID id) {
