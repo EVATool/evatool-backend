@@ -1,7 +1,6 @@
 package com.evatool.impact.domain.entity;
 
 import lombok.Getter;
-import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -26,7 +25,7 @@ public class SuperEntity {
 
     @Getter
     @Id
-    @ColumnTransformer(read = "BIN_TO_UUID(?)", write = "UUID_TO_BIN(?)")
+    @Type(type="uuid-char")
     @GeneratedValue(generator = "SuperEntityUuidGenerator")
     @GenericGenerator(name = "SuperEntityUuidGenerator", strategy = "com.evatool.impact.domain.entity.SuperEntityUuidGenerator")
     @Column(name = "ID", updatable = false, nullable = false)
