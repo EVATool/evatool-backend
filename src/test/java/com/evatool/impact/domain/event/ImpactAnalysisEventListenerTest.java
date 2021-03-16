@@ -102,40 +102,4 @@ public class ImpactAnalysisEventListenerTest {
             assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisDeletedEvent(analysisDeletedEvent));
         }
     }
-
-    @Nested
-    class Updated {
-
-        @Test
-        void testOnAnalysisUpdatedEvent_PublishEvent_AnalysisUpdated() {
-            // given
-            var id = UUID.randomUUID();
-            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
-
-            var analysis = new ImpactAnalysis(id);
-            analysisRepository.save(analysis);
-
-            // when
-            AnalysisUpdatedEvent analysisUpdatedEvent =  new AnalysisUpdatedEvent(json);
-            impactAnalysisEventListener.onAnalysisUpdatedEvent(analysisUpdatedEvent);
-
-            // then
-            var updatedByEventAnalysis = analysisRepository.findById(id);
-            assertThat(updatedByEventAnalysis).isPresent();
-            assertThat(updatedByEventAnalysis.get().getId()).isEqualTo(id);
-        }
-
-        @Test
-        void testOnAnalysisUpdatedEvent_AnalysisDoesNotExists_ThrowEventEntityDoesNotExistException() {
-            // given
-            var id = UUID.randomUUID();
-            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
-
-            // when
-            AnalysisUpdatedEvent analysisUpdatedEvent = new AnalysisUpdatedEvent(json);
-
-            // then
-            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisUpdatedEvent(analysisUpdatedEvent));
-        }
-    }
 }

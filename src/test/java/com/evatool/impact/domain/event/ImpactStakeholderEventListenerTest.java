@@ -40,7 +40,7 @@ class ImpactStakeholderEventListenerTest {
             // given
             var id = UUID.randomUUID();
             var name = "name";
-            var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
+            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
 
             // when
             var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, json);
@@ -58,7 +58,7 @@ class ImpactStakeholderEventListenerTest {
             // given
             var id = UUID.randomUUID();
             var name = "name";
-            var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
+            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
 
             var stakeholder = new ImpactStakeholder(id, name);
             stakeholderRepository.save(stakeholder);
@@ -79,7 +79,7 @@ class ImpactStakeholderEventListenerTest {
             // given
             var id = UUID.randomUUID();
             var name = "name";
-            var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
+            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
 
             var stakeholder = new ImpactStakeholder(id, name);
             stakeholderRepository.save(stakeholder);
@@ -98,7 +98,7 @@ class ImpactStakeholderEventListenerTest {
             // given
             var id = UUID.randomUUID();
             var name = "name";
-            var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
+            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
 
             // when
             var stakeholderDeletedEvent = new StakeholderDeletedEvent(this, json);
@@ -116,7 +116,7 @@ class ImpactStakeholderEventListenerTest {
             // given
             var id = UUID.randomUUID();
             var name = "name";
-            var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
+            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
 
             var stakeholder = new ImpactStakeholder(id, "old_name");
             stakeholderRepository.save(stakeholder);
@@ -137,7 +137,7 @@ class ImpactStakeholderEventListenerTest {
             // given
             var id = UUID.randomUUID();
             var name = "name";
-            var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
+            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
 
             // when
             var stakeholderUpdatedEvent = new StakeholderUpdatedEvent(this, json);

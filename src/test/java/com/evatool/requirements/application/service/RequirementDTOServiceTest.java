@@ -65,7 +65,7 @@ class RequirementDTOServiceTest {
         Map<UUID,String> variantsTitle = new HashMap<>();
         variantsTitle.put(requirementsVariant.getId(),requirementsVariant.getTitle());
 
-        RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getId(),variantsTitle);
+        RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getAnalysisId(),variantsTitle);
 
         //create
         UUID uuidRequirement = requirementDTOService.create(requirementDTO);
