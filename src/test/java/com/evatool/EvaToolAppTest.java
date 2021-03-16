@@ -10,6 +10,8 @@ import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.global.event.variants.VariantCreatedEvent;
+import com.evatool.global.event.variants.VariantDeletedEvent;
+import com.evatool.global.event.variants.VariantUpdatedEvent;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import com.evatool.requirements.repository.RequirementAnalysisRepository;
@@ -312,22 +314,38 @@ class EvaToolAppTest {
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
+            var variant = createDummyVariant();
+            var variantCreatedEvent = new VariantCreatedEvent(variant.toJson());
+            variantsEventPublisher.publishEvent(variantCreatedEvent);
 
             // when
+            variant.setTitle("New_Title");
+            var variantUpdatedEvent = new VariantUpdatedEvent(variant.toJson());
+            variantsEventPublisher.publishEvent(variantUpdatedEvent);
+            var requirementsVariant = requirementsVariantsRepository.findById(variant.getId()).orElse(null);
 
             // then
-
+            assertThat(requirementsVariant).isNotNull();
+            assertThat(requirementsVariant.getId()).isEqualTo(variant.getId());
+            assertThat(requirementsVariant.getTitle()).isEqualTo(variant.getTitle());
+            assertThat(requirementsVariant.getDescription()).isEqualTo(variant.getDescription());
         }
 
         // Received by: Requirement
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
+            var variant = createDummyVariant();
+            var variantCreatedEvent = new VariantCreatedEvent(variant.toJson());
+            variantsEventPublisher.publishEvent(variantCreatedEvent);
 
             // when
+            var variantDeletedEvent = new VariantDeletedEvent(variant.toJson());
+            variantsEventPublisher.publishEvent(variantDeletedEvent);
+            var requirementsVariant = requirementsVariantsRepository.findById(variant.getId()).orElse(null);
 
             // then
-
+            assertThat(requirementsVariant).isNull();
         }
     }
 }
