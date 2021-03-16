@@ -5,7 +5,10 @@ import com.evatool.analysis.model.Stakeholder;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
+import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
+import com.evatool.requirements.repository.RequirementAnalysisRepository;
+import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,22 +20,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("non-async")
 class EvaToolAppTest {
 
-
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class StakeholderEvent {
-
-        @BeforeEach
-        @AfterAll
-        void clearDatabase() {
-            impactStakeholderRepository.deleteAll();
-        }
 
         @Autowired
         AnalysisEventPublisher analysisEventPublisher;
 
         @Autowired
         ImpactStakeholderRepository impactStakeholderRepository;
+
+        @BeforeEach
+        @AfterAll
+        void clearDatabase() {
+            impactStakeholderRepository.deleteAll();
+        }
 
         // Received by: Impact
         @Test
@@ -96,16 +98,31 @@ class EvaToolAppTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class AnalysisEvent {
 
+        @Autowired
+        AnalysisEventPublisher analysisEventPublisher;
+
+        @Autowired
+        ImpactAnalysisRepository impactAnalysisRepository;
+
+        @Autowired
+        RequirementAnalysisRepository requirementAnalysisRepository;
+
+        @Autowired
+        VariantsAnalysisRepository variantsAnalysisRepository;
+
         @BeforeEach
         @AfterAll
         void clearDatabase() {
-
+            impactAnalysisRepository.deleteAll();
+            requirementAnalysisRepository.deleteAll();
+            variantsAnalysisRepository.deleteAll();
         }
 
-        // Received by: ?
+        // Received by: Impact, Requirement, Variant
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
+
 
             // when
 
@@ -113,7 +130,7 @@ class EvaToolAppTest {
 
         }
 
-        // Received by: ?
+        // Received by: Impact
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -124,7 +141,7 @@ class EvaToolAppTest {
 
         }
 
-        // Received by: ?
+        // Received by: Impact, Requirement, Variant
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
