@@ -15,6 +15,9 @@ import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
 import com.evatool.impact.common.DimensionType;
 import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.domain.entity.Impact;
+import com.evatool.impact.domain.entity.ImpactAnalysis;
+import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.event.DimensionEventPublisher;
 import com.evatool.impact.domain.event.ImpactEventPublisher;
 import com.evatool.impact.domain.repository.DimensionRepository;
@@ -33,6 +36,8 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -270,6 +275,15 @@ class EvaToolAppTest {
         ImpactRepository impactRepository;
 
         @Autowired
+        DimensionRepository dimensionRepository;
+
+        @Autowired
+        ImpactStakeholderRepository impactStakeholderRepository;
+
+        @Autowired
+        ImpactAnalysisRepository impactAnalysisRepository;
+
+        @Autowired
         ImpactEventPublisher impactEventPublisher;
 
         @Autowired
@@ -284,12 +298,23 @@ class EvaToolAppTest {
             requirementsImpactsRepository.deleteAll();
             analysisImpactRepository.deleteAll();
             impactRepository.deleteAll();
+            dimensionRepository.deleteAll();
+            impactStakeholderRepository.deleteAll();
+            impactAnalysisRepository.deleteAll();
+        }
+
+        Impact createDummyImpact() {
+            var dimension = dimensionRepository.save(new Dimension("Name", DimensionType.SOCIAL, "Description"));
+            var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name"));
+            var analysis = impactAnalysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
+            return impactRepository.save(new Impact(0.0, "Description", dimension, stakeholder, analysis));
         }
 
         // Received by: Requirement, Analysis
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
+            createDummyImpact();
 
             // when
 
