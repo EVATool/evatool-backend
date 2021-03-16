@@ -4,6 +4,7 @@ import com.evatool.analysis.enums.StakeholderLevel;
 import com.evatool.analysis.events.AnalysisEventPublisher;
 import com.evatool.analysis.model.Analysis;
 import com.evatool.analysis.model.Stakeholder;
+import com.evatool.analysis.repository.AnalysisImpactRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
@@ -12,9 +13,15 @@ import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
+import com.evatool.impact.domain.event.DimensionEventPublisher;
+import com.evatool.impact.domain.event.ImpactEventPublisher;
+import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
+import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import com.evatool.requirements.repository.RequirementAnalysisRepository;
+import com.evatool.requirements.repository.RequirementDimensionRepository;
+import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.repository.RequirementsVariantsRepository;
 import com.evatool.variants.domain.entities.Variant;
 import com.evatool.variants.domain.events.VariantsEventPublisher;
@@ -183,13 +190,23 @@ class EvaToolAppTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class DimensionEvent {
 
+        @Autowired
+        DimensionRepository dimensionRepository;
+
+        @Autowired
+        DimensionEventPublisher dimensionEventPublisher;
+
+        @Autowired
+        RequirementDimensionRepository requirementDimensionRepository;
+
         @BeforeEach
         @AfterAll
         void clearDatabase() {
-
+            requirementDimensionRepository.deleteAll();
+            dimensionRepository.deleteAll();
         }
 
-        // Received by: ?
+        // Received by: Requirement
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -200,7 +217,7 @@ class EvaToolAppTest {
 
         }
 
-        // Received by: ?
+        // Received by: Requirement
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -211,7 +228,7 @@ class EvaToolAppTest {
 
         }
 
-        // Received by: ?
+        // Received by: Requirement
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -227,13 +244,26 @@ class EvaToolAppTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class ImpactEvent {
 
+        @Autowired
+        ImpactRepository impactRepository;
+
+        @Autowired
+        ImpactEventPublisher impactEventPublisher;
+
+        @Autowired
+        RequirementsImpactsRepository requirementsImpactsRepository;
+
+        @Autowired
+        AnalysisImpactRepository analysisImpactRepository;
+
         @BeforeEach
         @AfterAll
         void clearDatabase() {
-
+            requirementsImpactsRepository.deleteAll();
+            analysisImpactRepository.deleteAll();
+            impactRepository.deleteAll();
         }
-
-        // Received by: ?
+        // Received by: Requirement, Analysis
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -244,7 +274,7 @@ class EvaToolAppTest {
 
         }
 
-        // Received by: ?
+        // Received by: Requirement, Analysis
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -255,7 +285,7 @@ class EvaToolAppTest {
 
         }
 
-        // Received by: ?
+        // Received by: Requirement, Analysis
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -284,6 +314,7 @@ class EvaToolAppTest {
         @AfterAll
         void clearDatabase() {
             requirementsVariantsRepository.deleteAll();
+            variantRepository.deleteAll();
         }
 
         Variant createDummyVariant() {
