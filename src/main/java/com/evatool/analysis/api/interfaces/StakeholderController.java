@@ -15,13 +15,13 @@ import java.util.UUID;
 @Api ("API-endpoint for Stakeholder")
 public interface StakeholderController {
 
-    @GetMapping("/stakeholder")
+    @GetMapping("/stakeholders")
     @ApiOperation(value = "This method returns a list of stakeholder")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All entities returned")})
     public List<EntityModel<StakeholderDTO>> getStakeholderList();
 
-    @GetMapping("/stakeholder/{id}")
+    @GetMapping("/stakeholders/{id}")
     @ApiOperation(value = "This method returns an optional of an Stakeholder by his ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "The entity was found"),
@@ -29,7 +29,7 @@ public interface StakeholderController {
             @ApiResponse(code = 404, message = "The entity was not found")})
     public EntityModel<StakeholderDTO> getStakeholderById(@PathVariable UUID id);
 
-    @PostMapping("/addStakeholder")
+    @PostMapping("/stakeholders")
     @ApiOperation(value = "This Method add a Stakeholder")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "The entity is inserted"),
@@ -37,14 +37,14 @@ public interface StakeholderController {
             @ApiResponse(code = 404, message = "The entity is not found")})
     public EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO);
 
-    @PutMapping("/stakeholder/{id}")
+    @PutMapping("/stakeholders/{id}")
     @ApiOperation(value = "This method updated an stakeholder by his id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity is deleted"),
             @ApiResponse(code = 404, message = "The entity is not found")})
     public EntityModel<StakeholderDTO> updateStakeholder(@RequestBody StakeholderDTO stakeholderDTO);
 
-    @DeleteMapping("/stakeholder/{id}")
+    @DeleteMapping("/stakeholders/{id}")
     @ApiOperation(value = "This method delete an stakeholder by his id ")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity is updated"),

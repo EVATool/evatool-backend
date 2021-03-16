@@ -45,7 +45,7 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     @Override
     public List<EntityModel<StakeholderDTO>> getStakeholderList() {
-        logger.info("[GET] /stakeholder");
+        logger.info("[GET] /stakeholders");
         List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
         if (stakeholderList.isEmpty()){
             return Arrays.asList();
@@ -65,7 +65,7 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     @Override
     public EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
-        logger.info("[POST] /addStakeholder");
+        logger.info("[POST] /stakeholder");
         Stakeholder stakeholder = stakeholderRepository.save(stakeholderDTOService.create(stakeholderDTO));
         stakeholderEventPublisher.publishEvent(new StakeholderCreatedEvent(this, stakeholder.toJson()));
         return getStakeholderById(stakeholder.getStakeholderId());
