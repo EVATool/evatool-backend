@@ -15,8 +15,8 @@ public class VariantsEventPublisher {
     final Logger logger = LoggerFactory.getLogger(VariantsEventPublisher.class);
 
     public void publishEvent(ApplicationEvent applicationEvent){
-        if(logger.isInfoEnabled())logger.info("Publishing Event: "+ applicationEvent.getClass());
-        if(logger.isDebugEnabled())logger.debug(applicationEvent.getClass() + "  Eventpayload: " + applicationEvent.getSource().toString());
+        if(logger.isInfoEnabled())logger.info(String.format("Publishing Event: %s" , applicationEvent.getClass()));
+        if(logger.isDebugEnabled())logger.debug(String.format("EVENT: %s  Eventpayload:  %s", applicationEvent.getClass() , applicationEvent.getSource().toString() ));
         applicationEventPublisher.publishEvent(applicationEvent);
     }
 

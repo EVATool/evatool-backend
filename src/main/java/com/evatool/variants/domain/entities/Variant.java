@@ -8,9 +8,10 @@ import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
-@Entity(name = "VARIANT")
+@Entity(name = "Var_VARIANT")
 @Getter
 @Setter
 public class Variant extends RepresentationModel<Variant> {
@@ -38,7 +39,7 @@ public class Variant extends RepresentationModel<Variant> {
 
     @ApiModelProperty(notes = "Analysis of a Variant", name = "analysis", required = true)
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    private VariantsAnalysis variantsAnalyses;
+    private VariantsAnalysis variantsAnalysis;
 
     @Override
     public String toString() {
@@ -49,8 +50,22 @@ public class Variant extends RepresentationModel<Variant> {
                 ", description='" + description + '\'' +
                 ", stFlagsPot=" + stFlagsPot +
                 ", stFlagsReal=" + stFlagsReal +
-                ", variantsAnalyses=" + variantsAnalyses +
+                ", variantsAnalyses=" + variantsAnalysis +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Variant variant = (Variant) o;
+        return Objects.equals(id, variant.id) && Objects.equals(title, variant.title) && Objects.equals(subVariant, variant.subVariant) && Objects.equals(description, variant.description) && Objects.equals(stFlagsPot, variant.stFlagsPot) && Objects.equals(stFlagsReal, variant.stFlagsReal) && Objects.equals(variantsAnalysis, variant.variantsAnalysis);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, title, subVariant, description, stFlagsPot, stFlagsReal, variantsAnalysis);
     }
 
     public String toJson(){
