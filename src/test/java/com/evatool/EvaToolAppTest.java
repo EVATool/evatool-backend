@@ -1,7 +1,10 @@
 package com.evatool;
 
+import com.evatool.analysis.enums.StakeholderLevel;
 import com.evatool.analysis.events.AnalysisEventPublisher;
+import com.evatool.analysis.model.Analysis;
 import com.evatool.analysis.model.Stakeholder;
+import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
@@ -36,12 +39,15 @@ class EvaToolAppTest {
             impactStakeholderRepository.deleteAll();
         }
 
+        Stakeholder createDummyStakeholder() {
+            return new Stakeholder("Patient", 1, StakeholderLevel.NATURAL_PERSON);
+        }
+
         // Received by: Impact
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var stakeholder = new Stakeholder();
-            stakeholder.setStakeholderName("Patient");
+            var stakeholder = createDummyStakeholder();
             var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, stakeholder.toJson());
 
             // when
@@ -58,8 +64,7 @@ class EvaToolAppTest {
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var stakeholder = new Stakeholder();
-            stakeholder.setStakeholderName("Patient");
+            var stakeholder = createDummyStakeholder();
             var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, stakeholder.toJson());
             analysisEventPublisher.publishEvent(stakeholderCreatedEvent);
 
@@ -79,8 +84,7 @@ class EvaToolAppTest {
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var stakeholder = new Stakeholder();
-            stakeholder.setStakeholderName("Patient");
+            var stakeholder = createDummyStakeholder();
             var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, stakeholder.toJson());
             analysisEventPublisher.publishEvent(stakeholderCreatedEvent);
 
@@ -122,12 +126,23 @@ class EvaToolAppTest {
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
-
+            var analysis = new Analysis("Name", "Description");
+            var analysisCreatedEvent = new AnalysisCreatedEvent(analysis.toJson());
 
             // when
+            analysisEventPublisher.publishEvent(analysisCreatedEvent);
+            var impactAnalysis = impactAnalysisRepository.findById(analysis.getAnalysisId()).orElse(null);
+            var requirementAnalysis = requirementAnalysisRepository.findById(analysis.getAnalysisId()).orElse(null);
+            var variantAnalysis = variantsAnalysisRepository.findById(analysis.getAnalysisId()).orElse(null);
 
             // then
+            assertThat(impactAnalysis).isNotNull();
+            assertThat(requirementAnalysis).isNotNull();
+            assertThat(variantAnalysis).isNotNull();
 
+            assertThat(impactAnalysis.getId()).isEqualTo(analysis.getAnalysisId());
+            assertThat(requirementAnalysis.getAnalysisId()).isEqualTo(analysis.getAnalysisId());
+            assertThat(variantAnalysis.getAnalysisId()).isEqualTo(analysis.getAnalysisId());
         }
 
         // Received by: Impact

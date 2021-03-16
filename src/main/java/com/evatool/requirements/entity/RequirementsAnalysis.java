@@ -12,17 +12,18 @@ import java.util.UUID;
 public class RequirementsAnalysis {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    private UUID analysisId;
 
-    public UUID getId() {
-        return id;
+    public UUID getAnalysisId() {
+        return analysisId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setAnalysisId(UUID analysisId) {
+        this.analysisId = analysisId;
     }
 
     public static  RequirementsAnalysis fromJson(String json){
+        System.out.println(json);
         return  new Gson().fromJson(json, RequirementsAnalysis.class);
     }
 }

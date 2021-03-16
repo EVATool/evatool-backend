@@ -32,8 +32,8 @@ class RequirementsAnalysisDeletedEventListenerTest {
         RequirementsAnalysis requirementsAnalysis = new RequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
 
-        String json = String.format("{\"id\":\"%s\"}", requirementsAnalysis.getId().toString());
-        UUID tempId = requirementsAnalysis.getId();
+        String json = String.format("{\"id\":\"%s\"}", requirementsAnalysis.getAnalysisId().toString());
+        UUID tempId = requirementsAnalysis.getAnalysisId();
 
         // when
         AnalysisDeletedEvent analysisDeletedEvent = new AnalysisDeletedEvent(json);

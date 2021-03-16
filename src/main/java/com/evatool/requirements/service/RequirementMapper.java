@@ -30,7 +30,7 @@ public class RequirementMapper {
         RequirementDTO requirementDTO = new RequirementDTO();
         requirementDTO.setRequirementTitle(requirement.getTitle());
         requirementDTO.setRootEntityId(requirement.getId());
-        requirementDTO.setProjectID(requirement.getRequirementsAnalysis().getId());
+        requirementDTO.setProjectID(requirement.getRequirementsAnalysis().getAnalysisId());
         requirementDTO.setRequirementDescription(requirement.getDescription());
         requirement.getVariants().forEach(variants-> requirementDTO.getVariantsTitle().put(variants.getId(),variants.getTitle()));
         Collection<RequirementsImpact> requirementsImpactList = requirementPointController.getRequirementImpactByRequirement(requirement.getId());

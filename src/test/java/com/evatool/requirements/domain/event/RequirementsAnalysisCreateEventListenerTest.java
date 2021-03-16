@@ -44,7 +44,7 @@ class RequirementsAnalysisCreateEventListenerTest {
         // then
         Optional<RequirementsAnalysis> createdByEvent = requirementAnalysisRepository.findById(id);
         assertThat(createdByEvent).isPresent();
-        assertThat(createdByEvent.get().getId()).isEqualTo(id);
+        assertThat(createdByEvent.get().getAnalysisId()).isEqualTo(id);
     }
 
 
@@ -60,7 +60,7 @@ class RequirementsAnalysisCreateEventListenerTest {
         try {
             JSONObject jsonObject = new JSONObject(json);
             requirementsAnalysis = new RequirementsAnalysis();
-            requirementsAnalysis.setId(UUID.fromString(jsonObject.getString("id")));
+            requirementsAnalysis.setAnalysisId(UUID.fromString(jsonObject.getString("id")));
         } catch (JSONException jex) {
             throw new InvalidEventPayloadException(json, jex);
         }
