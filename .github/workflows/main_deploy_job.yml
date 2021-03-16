@@ -20,10 +20,13 @@ jobs:
         with:
           java-version: 11
 
-      - name: Build with Maven
+      - name: Test
+        run: |
+          mvn test --file pom.xml
+
+      - name: Build
         run: |
           sed -i 's/DB_PASSWORD_PLACEHOLDER/${{ secrets.DB_PASSWORD }}/g' src/main/resources/application-prod.properties
-          mvn test --file pom.xml
           mvn clean install -P prod -Dmaven.test.skip=true --file pom.xml
 
       - name: Transfer docker folder to remote server
