@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity(name = "VARIANT_ANALYSIS")
+@Entity(name = "VAR_ANALYSIS")
 @Getter
 public class VariantsAnalysis extends RepresentationModel<VariantsAnalysis> {
 
