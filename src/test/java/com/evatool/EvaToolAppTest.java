@@ -163,11 +163,12 @@ class EvaToolAppTest {
 
             // then
             assertThat(impactAnalysis).isNotNull();
-            assertThat(requirementAnalysis).isNotNull();
-            assertThat(variantAnalysis).isNotNull();
-
             assertThat(impactAnalysis.getId()).isEqualTo(analysis.getAnalysisId());
+
+            assertThat(requirementAnalysis).isNotNull();
             assertThat(requirementAnalysis.getAnalysisId()).isEqualTo(analysis.getAnalysisId());
+
+            assertThat(variantAnalysis).isNotNull();
             assertThat(variantAnalysis.getAnalysisId()).isEqualTo(analysis.getAnalysisId());
         }
 
@@ -314,34 +315,64 @@ class EvaToolAppTest {
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
-            createDummyImpact();
+            var impact = createDummyImpact();
 
             // when
+            impactEventPublisher.publishImpactCreated(impact);
+            var requirementImpact = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
+            var analysisImpact = analysisImpactRepository.findById(impact.getId()).orElse(null);
 
             // then
+            assertThat(requirementImpact).isNotNull();
+            assertThat(requirementImpact.getId()).isEqualTo(impact.getId());
+            //assertThat(requirementImpact.getValue()).isEqualTo(impact.getValue());
+            assertThat(requirementImpact.getDescription()).isEqualTo(impact.getDescription());
+            assertThat(requirementImpact.getRequirementDimension().getId()).isEqualTo(impact.getDimension().getId());
+            assertThat(requirementImpact.getRequirementDimension().getName()).isEqualTo(impact.getDimension().getName());
 
+            assertThat(analysisImpact).isNotNull();
+            assertThat(analysisImpact.getId()).isEqualTo(impact.getId());
+            assertThat(analysisImpact.getValue()).isEqualTo(impact.getValue());
+            assertThat(analysisImpact.getDescription()).isEqualTo(impact.getDescription());
+            //assertThat(analysisImpact.getDimension()).isEqualTo(impact.getDimension());
         }
 
         // Received by: Requirement, Analysis
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
+            var impact = createDummyImpact();
+            impactEventPublisher.publishImpactCreated(impact);
 
             // when
+            impact.setValue(1.0);
+            impactEventPublisher.publishImpactUpdated(impact);
+            var requirementImpact = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
+            var analysisImpact = analysisImpactRepository.findById(impact.getId()).orElse(null);
 
             // then
+            assertThat(requirementImpact).isNotNull();
+            //assertThat(requirementImpact.getValue()).isEqualTo(impact.getValue());
 
+            assertThat(analysisImpact).isNotNull();
+            assertThat(analysisImpact.getValue()).isEqualTo(impact.getValue());
         }
 
         // Received by: Requirement, Analysis
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
+            var impact = createDummyImpact();
+            impactEventPublisher.publishImpactCreated(impact);
 
             // when
+            impactEventPublisher.publishImpactDeleted(impact);
+            var requirementImpact = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
+            var analysisImpact = analysisImpactRepository.findById(impact.getId()).orElse(null);
 
             // then
-
+            assertThat(requirementImpact).isNull();
+            assertThat(analysisImpact).isNull();
         }
     }
 
