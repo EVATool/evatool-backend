@@ -26,8 +26,7 @@ public class SuperEntity {
     @Id
     @GeneratedValue(generator = "SuperEntityUuidGenerator")
     @GenericGenerator(name = "SuperEntityUuidGenerator", strategy = "com.evatool.impact.domain.entity.SuperEntityUuidGenerator")
-    @Column(name = "ID", updatable = false, nullable = false)
-    @Type(type="uuid-char")
+    @Column(name = "ID", updatable = false, nullable = false, columnDefinition = "VARCHAR(32)")
     protected UUID id;
 
     public void setId(UUID id) {
