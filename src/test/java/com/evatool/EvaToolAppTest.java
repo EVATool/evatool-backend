@@ -5,6 +5,7 @@ import com.evatool.analysis.events.AnalysisEventPublisher;
 import com.evatool.analysis.model.Analysis;
 import com.evatool.analysis.model.Stakeholder;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
+import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
@@ -149,11 +150,21 @@ class EvaToolAppTest {
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
+            var analysis = new Analysis("Name", "Description");
+            var analysisCreatedEvent = new AnalysisCreatedEvent(analysis.toJson());
+            analysisEventPublisher.publishEvent(analysisCreatedEvent);
 
             // when
+            var analysisDeletedEvent = new AnalysisDeletedEvent(analysis.toJson());
+            analysisEventPublisher.publishEvent(analysisDeletedEvent);
+            var impactAnalysis = impactAnalysisRepository.findById(analysis.getAnalysisId()).orElse(null);
+            var requirementAnalysis = requirementAnalysisRepository.findById(analysis.getAnalysisId()).orElse(null);
+            var variantAnalysis = variantsAnalysisRepository.findById(analysis.getAnalysisId()).orElse(null);
 
             // then
-
+            assertThat(impactAnalysis).isNull();
+            assertThat(requirementAnalysis).isNull();
+            assertThat(variantAnalysis).isNull();
         }
     }
 

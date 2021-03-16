@@ -27,7 +27,6 @@ public class RequirementsAnalysis {
     }
 
     public static RequirementsAnalysis fromJson(String json) {
-        System.out.println(json);
-        return  new Gson().fromJson(json, RequirementsAnalysis.class);
+        return new Gson().fromJson(json, RequirementsAnalysis.class);
     }
 }
