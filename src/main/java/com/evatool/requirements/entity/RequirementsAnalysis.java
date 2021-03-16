@@ -14,6 +14,10 @@ public class RequirementsAnalysis {
     @Id
     private UUID analysisId;
 
+    public RequirementsAnalysis() {
+        analysisId = UUID.randomUUID();
+    }
+
     public UUID getAnalysisId() {
         return analysisId;
     }
@@ -22,7 +26,7 @@ public class RequirementsAnalysis {
         this.analysisId = analysisId;
     }
 
-    public static  RequirementsAnalysis fromJson(String json){
+    public static RequirementsAnalysis fromJson(String json) {
         System.out.println(json);
         return  new Gson().fromJson(json, RequirementsAnalysis.class);
     }
