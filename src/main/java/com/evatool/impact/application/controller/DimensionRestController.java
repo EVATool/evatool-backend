@@ -23,7 +23,6 @@ import static com.evatool.impact.application.controller.UriUtil.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@CrossOrigin
 @RestController
 public class DimensionRestController {
 
