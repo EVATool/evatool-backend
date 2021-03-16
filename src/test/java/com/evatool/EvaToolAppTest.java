@@ -299,48 +299,4 @@ class EvaToolAppTest {
 
         }
     }
-
-    @Nested
-    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-    class RequirementEvent {
-
-        @BeforeEach
-        @AfterAll
-        void clearDatabase() {
-
-        }
-
-        // Received by: ?
-        @Test
-        void testCreatedEvent_ModulesReceive_ModulesPersist() {
-            // given
-
-            // when
-
-            // then
-
-        }
-
-        // Received by: ?
-        @Test
-        void testUpdatedEvent_ModulesReceive_ModulesPersist() {
-            // given
-
-            // when
-
-            // then
-
-        }
-
-        // Received by: ?
-        @Test
-        void testDeletedEvent_ModulesReceive_ModulesPersist() {
-            // given
-
-            // when
-
-            // then
-
-        }
-    }
 }
