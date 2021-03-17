@@ -3,6 +3,7 @@ package com.evatool.requirements.entity;
 
 
 import com.evatool.requirements.error.exceptions.IllegalDtoValueExcpetion;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
 public class RequirementPoint {
 
     @Id
+    @Type(type = "uuid-char")
     private final UUID id = UUID.randomUUID();
     @ManyToOne
     private RequirementsImpact requirementsImpact;

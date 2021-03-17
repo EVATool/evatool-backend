@@ -1,6 +1,7 @@
 package com.evatool.requirements.entity;
 
 import com.google.gson.Gson;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,6 +13,8 @@ import java.util.UUID;
 public class RequirementsAnalysis {
 
     @Id
+    @Type(type = "uuid-char")
+
     private UUID analysisId;
 
     public RequirementsAnalysis() {

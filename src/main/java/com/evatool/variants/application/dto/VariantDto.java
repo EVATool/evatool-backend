@@ -17,5 +17,5 @@ public class VariantDto {
     private Boolean stFlagsPot;
     private Boolean stFlagsReal;
     private CollectionModel<Variant> subVariant;
-    private UUID analysesId;
+    private UUID analysisId;
 }
