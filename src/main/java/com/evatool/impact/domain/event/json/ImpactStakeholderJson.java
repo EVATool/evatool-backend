@@ -9,9 +9,9 @@ public class ImpactStakeholderJson {
 
     @Getter
     @Setter
-    private UUID id;
+    private UUID stakeholderId;
 
     @Getter
     @Setter
-    private String name;
+    private String stakeholderName;
 }

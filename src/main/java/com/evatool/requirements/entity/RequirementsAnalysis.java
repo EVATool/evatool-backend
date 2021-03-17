@@ -14,17 +14,22 @@ public class RequirementsAnalysis {
 
     @Id
     @Type(type = "uuid-char")
-    private UUID id = UUID.randomUUID();
 
-    public UUID getId() {
-        return id;
+    private UUID analysisId;
+
+    public RequirementsAnalysis() {
+        analysisId = UUID.randomUUID();
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public UUID getAnalysisId() {
+        return analysisId;
     }
 
-    public static  RequirementsAnalysis fromJson(String json){
-        return  new Gson().fromJson(json, RequirementsAnalysis.class);
+    public void setAnalysisId(UUID analysisId) {
+        this.analysisId = analysisId;
+    }
+
+    public static RequirementsAnalysis fromJson(String json) {
+        return new Gson().fromJson(json, RequirementsAnalysis.class);
     }
 }

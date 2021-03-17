@@ -147,7 +147,7 @@ public class RequirementEventListener {
     public void analyseCreated(AnalysisCreatedEvent event){
         logger.info("analyse created event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
-        if (requirementAnalysisRepository.existsById(RequirementsAnalysis.fromJson(event.getJsonPayload()).getId())) {
+        if (requirementAnalysisRepository.existsById(RequirementsAnalysis.fromJson(event.getJsonPayload()).getAnalysisId())) {
             throw new EventEntityAlreadyExistsException();
         }
         requirementAnalysisRepository.save(RequirementsAnalysis.fromJson(event.getJsonPayload()));
@@ -159,7 +159,7 @@ public class RequirementEventListener {
     public void analyseDeleted(AnalysisDeletedEvent event){
         logger.info("analyse deleted event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getSource().toString() ));
-        if (!requirementAnalysisRepository.existsById(RequirementsAnalysis.fromJson(event.getJsonPayload()).getId())) {
+        if (!requirementAnalysisRepository.existsById(RequirementsAnalysis.fromJson(event.getJsonPayload()).getAnalysisId())) {
             throw new EventEntityDoesNotExistException();
         }
         requirementAnalysisRepository.delete(RequirementsAnalysis.fromJson(event.getJsonPayload()));

@@ -29,7 +29,7 @@ public interface AnalysisController {
             @ApiResponse(code = 404, message = "The entity was not found")})
     public EntityModel<AnalysisDTO> getAnalysisById(@PathVariable UUID id);
 
-    @PostMapping("/addAnalysis")
+    @PostMapping("/analysis")
     @ApiOperation(value = "This method add an analysis")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "The entity is inserted"),
