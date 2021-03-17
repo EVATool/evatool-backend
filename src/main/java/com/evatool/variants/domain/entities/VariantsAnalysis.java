@@ -17,7 +17,7 @@ public class VariantsAnalysis extends RepresentationModel<VariantsAnalysis> {
 
     @Id
     @Type(type = "uuid-char")
-    @Column(columnDefinition = "CHAR(255)")
+    @Column(columnDefinition = "CHAR(36)")
     private UUID analysisId;
 
     public VariantsAnalysis(UUID id){
