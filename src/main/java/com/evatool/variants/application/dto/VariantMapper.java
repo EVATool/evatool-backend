@@ -46,7 +46,7 @@ public class VariantMapper {
             CollectionModel<Variant> subVariantCollectionModel = CollectionModel.of(variantList);
             subVariantCollectionModel.add(subVariantLink);
         }
-        variantDto.setAnalysesId(variant.getVariantsAnalyses().getAnalysisId());
+        variantDto.setAnalysisId(variant.getVariantsAnalysis().getAnalysisId());
         return variantDto;
     }
 
@@ -60,11 +60,12 @@ public class VariantMapper {
         variant.setDescription(variantDto.getDescription());
         variant.setStFlagsPot(variantDto.getStFlagsPot());
         variant.setStFlagsReal(variantDto.getStFlagsReal());
-        Optional<VariantsAnalysis> variantsAnalysis = variantsAnalysisRepository.findById(variantDto.getAnalysesId());
+        System.out.println(variantDto.getAnalysisId());
+        Optional<VariantsAnalysis> variantsAnalysis = variantsAnalysisRepository.findById(variantDto.getAnalysisId());
         if (variantsAnalysis.isEmpty()) {
-            throw new IllegalAnalysisException(variantDto.getAnalysesId().toString());
+            throw new IllegalAnalysisException(variantDto.getAnalysisId().toString());
         }
-        variantsAnalysis.ifPresent(variant::setVariantsAnalyses);
+        variantsAnalysis.ifPresent(variant::setVariantsAnalysis);
         return variant;
     }
 

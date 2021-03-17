@@ -1,6 +1,7 @@
 package com.evatool.variants.domain.entities;
 
 import lombok.Getter;
+import org.hibernate.annotations.Type;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ public class VariantsAnalysis extends RepresentationModel<VariantsAnalysis> {
 
 
     @Id
+    @Type(type = "uuid-char")
     private UUID analysisId;
 
     public VariantsAnalysis(UUID id){

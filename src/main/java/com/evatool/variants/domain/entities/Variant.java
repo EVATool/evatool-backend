@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Variant extends RepresentationModel<Variant> {
 
     @ApiModelProperty(notes = "Uuid of a Variant", name = "uuid", required = true)
     @Id
+    @Type(type = "uuid-char")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 

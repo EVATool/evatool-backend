@@ -3,6 +3,7 @@ package com.evatool.analysis.model;
 import com.evatool.analysis.enums.StakeholderLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -18,6 +19,7 @@ public class Stakeholder {
     @Id
     @Getter
     @Setter
+    @Type(type = "uuid-char")
     private UUID stakeholderId = UUID.randomUUID();
 
     /**

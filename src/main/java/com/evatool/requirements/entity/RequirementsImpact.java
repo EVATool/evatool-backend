@@ -4,6 +4,7 @@ package com.evatool.requirements.entity;
 
 
 import com.google.gson.Gson;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -13,6 +14,7 @@ import java.util.UUID;
 public class RequirementsImpact {
 
     @Id
+    @Type(type = "uuid-char")
     private UUID id = UUID.randomUUID();
     private String description;
     private int value;
