@@ -13,7 +13,8 @@ import java.util.UUID;
 public class RequirementPoint {
 
     @Id
-    @Type(type = "uuid-char")
+    @Type(type= "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
     private final UUID id = UUID.randomUUID();
     @ManyToOne
     private RequirementsImpact requirementsImpact;
