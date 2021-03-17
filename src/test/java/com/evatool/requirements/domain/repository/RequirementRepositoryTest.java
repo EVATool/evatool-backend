@@ -19,7 +19,7 @@ import static com.evatool.requirements.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class RequirementRepositoryTest {
+class RequirementRepositoryTest {
     @Autowired
     private RequirementRepository requirementRepository;
 
@@ -31,7 +31,7 @@ public class RequirementRepositoryTest {
 
 
     @Test
-    public void testFindById_ExistingRequirement_ReturnRequirement() {
+    void testFindById_ExistingRequirement_ReturnRequirement() {
         // given
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
@@ -59,7 +59,7 @@ public class RequirementRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedRequirement_IdIsNotNull() {
+    void testSave_InsertedRequirement_IdIsNotNull() {
         // given
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
@@ -87,7 +87,7 @@ public class RequirementRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedRequirement_IdIsUuid() {
+    void testSave_InsertedRequirement_IdIsUuid() {
         // given
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
@@ -111,10 +111,12 @@ public class RequirementRepositoryTest {
 
         // then
         UUID.fromString(requirement.getId().toString());
+
+        assertThat(requirement.getId()).isNotNull();
     }
 
     @Test
-    public void testDelete_DeletedRequirement_ReturnNull() {
+    void testDelete_DeletedRequirement_ReturnNull() {
         // given
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);

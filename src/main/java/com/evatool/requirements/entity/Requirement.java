@@ -94,7 +94,7 @@ public class Requirement {
 
     public String toJson(){
         Gson gson = new Gson();
-        return gson.toJson(this.toString());
+        return gson.toJson(this);
     }
 }
 

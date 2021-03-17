@@ -13,10 +13,10 @@ import java.util.Collection;
 import static com.evatool.requirements.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class RequirementPointTest {
+class RequirementPointTest {
 
     @Test
-    public void testSetRequirement_NullValue_ThrowException() {
+    void testSetRequirement_NullValue_ThrowException() {
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
 
@@ -32,7 +32,7 @@ public class RequirementPointTest {
     }
 
     @Test
-    public void testSetRequirementsImpacts_NullValue_ThrowException() {
+    void testSetRequirementsImpacts_NullValue_ThrowException() {
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
 
@@ -49,7 +49,7 @@ public class RequirementPointTest {
 
     @ParameterizedTest
     @ValueSource(ints = {2})
-    public void testSetValue_NullValue_ThrowException(int value) {
+    void testSetValue_NullValue_ThrowException(int value) {
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();

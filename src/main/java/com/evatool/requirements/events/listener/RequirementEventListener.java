@@ -1,13 +1,20 @@
 package com.evatool.requirements.events.listener;
 
+import com.evatool.global.event.analysis.AnalysisCreatedEvent;
+import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.dimension.DimensionCreatedEvent;
 import com.evatool.global.event.dimension.DimensionDeletedEvent;
 import com.evatool.global.event.dimension.DimensionUpdatedEvent;
 import com.evatool.global.event.impact.ImpactCreatedEvent;
 import com.evatool.global.event.impact.ImpactDeletedEvent;
 import com.evatool.global.event.impact.ImpactUpdatedEvent;
+import com.evatool.global.event.variants.VariantCreatedEvent;
+import com.evatool.global.event.variants.VariantDeletedEvent;
+import com.evatool.global.event.variants.VariantUpdatedEvent;
 import com.evatool.requirements.entity.RequirementDimension;
+import com.evatool.requirements.entity.RequirementsAnalysis;
 import com.evatool.requirements.entity.RequirementsImpact;
+import com.evatool.requirements.entity.RequirementsVariant;
 import com.evatool.requirements.error.exceptions.EventEntityAlreadyExistsException;
 import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.repository.RequirementAnalysisRepository;
@@ -24,6 +31,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RequirementEventListener {
 
+    private static final String DEBUGFORMAT = "EVENT: %s With Payload %s";
     final Logger logger = LoggerFactory.getLogger(RequirementEventListener.class);
 
     @Autowired
@@ -39,7 +47,7 @@ public class RequirementEventListener {
     @Async
     public void impactCreated(ImpactCreatedEvent event) {
         logger.info("impact created event ");
-        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
 
         if (requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityAlreadyExistsException();
@@ -51,7 +59,7 @@ public class RequirementEventListener {
     @Async
     public void impactUpdated(ImpactUpdatedEvent event) {
         logger.info("Impact updated event");
-        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         if (!requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
@@ -62,7 +70,7 @@ public class RequirementEventListener {
     @Async
     public void impactDeleted(ImpactDeletedEvent event) {
         logger.info("Impact deleted event");
-        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         if (!requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
@@ -72,7 +80,7 @@ public class RequirementEventListener {
     @Async
     public void dimensionCreated(DimensionCreatedEvent event) {
         logger.info("dimension created event");
-        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         if (requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityAlreadyExistsException();
         }
@@ -83,7 +91,7 @@ public class RequirementEventListener {
     @Async
     public void dimensionUpdated(DimensionUpdatedEvent event) {
         logger.info("dimension updated event");
-        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         if (!requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
@@ -94,60 +102,66 @@ public class RequirementEventListener {
     @Async
     public void dimensionDeleted(DimensionDeletedEvent event) {
         logger.info("dimension deleted event");
-        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         if (!requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
         requirementDimensionRepository.delete(RequirementDimension.fromJson(event.getJsonPayload()));
     }
 
+     @EventListener
+     @Async
+        public void variantsCreated(VariantCreatedEvent event){
+        logger.info("Variant created event");
+         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getVariantJson()));
+        if (requirementsVariantsRepository.existsById(RequirementsVariant.fromJson(event.getVariantJson()).getId())) {
+            throw new EventEntityAlreadyExistsException();
+        }
+        requirementsVariantsRepository.save(RequirementsVariant.fromJson(event.getVariantJson()));
+     }
 
-    //events do not exist at the moment
+     @EventListener
+     @Async
+        public void variantsUpdated (VariantUpdatedEvent event){
+        logger.info("variant updated event");
+         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getVariantJson()));
+        if (!requirementsVariantsRepository.existsById(RequirementsVariant.fromJson(event.getVariantJson()).getId())) {
+            throw new EventEntityDoesNotExistException();
+        }
+        requirementsVariantsRepository.save(RequirementsVariant.fromJson(event.getVariantJson()));
+     }
 
-/*
- @EventListener
- @Async
-    public void variantsCreated(ApplicationEvent event){
-    logger.info("dimension deleted event");
-    logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
-    requirementsVariantsRepository.save(RequirementsVariant.fromJson(event.getJsonPayload()));
-    }
- @EventListener
- @Async
-    public void variantsUpdated (ApplicationEvent event){
-    logger.info("dimension deleted event");
-    logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
-    requirementsVariantsRepository.save(RequirementsVariant.fromJson(event.getJsonPayload()));
-    }
- @EventListener
- @Async
-    public void variantsDeleted(ApplicationEvent event){
-    logger.info("dimension deleted event");
-    logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
-    requirementsVariantsRepository.delete(RequirementsVariant.fromJson(event.getJsonPayload()));
-    }
-*/
-    /*
+     @EventListener
+     @Async
+        public void variantsDeleted(VariantDeletedEvent event){
+        logger.info("variant deleted event");
+         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getVariantJson()));
+        if (!requirementsVariantsRepository.existsById(RequirementsVariant.fromJson(event.getVariantJson()).getId())) {
+             throw new EventEntityDoesNotExistException();
+        }
+        requirementsVariantsRepository.delete(RequirementsVariant.fromJson(event.getVariantJson()));
+     }
+
     @EventListener
     @Async
     public void analyseCreated(AnalysisCreatedEvent event){
         logger.info("analyse created event");
-        logger.debug("Event " + event.getClass() + " With Payload: " + event.getMessage() );
-        if (requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
+        if (requirementAnalysisRepository.existsById(RequirementsAnalysis.fromJson(event.getJsonPayload()).getAnalysisId())) {
             throw new EventEntityAlreadyExistsException();
         }
-        requirementAnalysisRepository.save(RequirementsAnalysis.fromJson(event.getMessage()));
+        requirementAnalysisRepository.save(RequirementsAnalysis.fromJson(event.getJsonPayload()));
 
     }
-    */
-/*
+
     @EventListener
     @Async
-    public void analyseDeleted(AnalysisDeletedEvent analysisDeletedEvent){
+    public void analyseDeleted(AnalysisDeletedEvent event){
         logger.info("analyse deleted event");
-        logger.debug("Event " + analysisDeletedEvent.getClass() + " With Payload: " + analysisDeletedEvent.getMessage() );
-
-
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getSource().toString() ));
+        if (!requirementAnalysisRepository.existsById(RequirementsAnalysis.fromJson(event.getJsonPayload()).getAnalysisId())) {
+            throw new EventEntityDoesNotExistException();
+        }
+        requirementAnalysisRepository.delete(RequirementsAnalysis.fromJson(event.getJsonPayload()));
     }
-*/
 }

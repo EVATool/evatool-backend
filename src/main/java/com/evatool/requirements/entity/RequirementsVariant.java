@@ -16,16 +16,12 @@ public class RequirementsVariant {
     private String title;
     private String description;
 
-
     public RequirementsVariant() {
     }
 
     public static RequirementsVariant fromJson(String json) {
-
         return new Gson().fromJson(json, RequirementsVariant.class);
-
     }
-
 
     public RequirementsVariant(String title, String description) {
         this.title = title;

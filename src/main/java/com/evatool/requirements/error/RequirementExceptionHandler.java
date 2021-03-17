@@ -16,18 +16,16 @@ import org.springframework.web.context.request.WebRequest;
 public class RequirementExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(RequirementExceptionHandler.class);
 
-
-
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<RequirementsErrorMessage> handleEntityNotFoundException(EntityNotFoundException exception, WebRequest webRequest) {
-        logger.info("{} handled. Returning HttpStatus NOT_FOUND (404)", exception.getClass().getSimpleName());
+        logger.error("{} handled. Returning HttpStatus NOT_FOUND (404)", exception.getClass().getSimpleName());
         RequirementsErrorMessage errorMessage = new RequirementsErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalDtoValueExcpetion.class)
     public ResponseEntity<RequirementsErrorMessage> handleIllegalDtoValueExcpetion(IllegalDtoValueExcpetion exception, WebRequest webRequest) {
-        logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
+        logger.error("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
         RequirementsErrorMessage errorMessage = new RequirementsErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
         return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
     }
