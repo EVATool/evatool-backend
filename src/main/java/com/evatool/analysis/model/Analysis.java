@@ -20,7 +20,6 @@ public class Analysis {
     @Id
     @Getter
     @Setter
-    @Type(type = "uuid-char")
     @Column(columnDefinition = "CHAR(36)")
     private UUID analysisId = UUID.randomUUID();
 

@@ -19,7 +19,7 @@ public class Variant extends RepresentationModel<Variant> {
 
     @ApiModelProperty(notes = "Uuid of a Variant", name = "uuid", required = true)
     @Id
-    @Type(type = "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
