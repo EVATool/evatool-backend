@@ -32,6 +32,9 @@ class ImpactRepositoryTest {
     @Autowired
     ImpactAnalysisRepository impactAnalysisRepository;
 
+    @Autowired
+    NumericIdRepository numericIdRepository;
+
     @BeforeEach
     @AfterAll
     private void clearDatabase() {
@@ -77,5 +80,44 @@ class ImpactRepositoryTest {
         // then
         var impactsOfAnalysis = impactRepository.findAllByAnalysisId(impact1.getAnalysis().getId());
         assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(impact1, impact2));
+    }
+
+    @Test
+    void testNumericIdChild_InsertMultipleImpacts_NumericIdIncrements() {
+        // given
+        var impact1 = saveFullDummyImpact();
+        var impact2 = saveFullDummyImpact();
+
+        // when
+        impactRepository.save(impact1);
+        impactRepository.save(impact2);
+
+        // then
+        assertThat(impact2.getNumericId().getId()).isEqualTo(impact1.getNumericId().getId() + 1);
+    }
+
+    @Test
+    void testNumericIdChild_CreateOperation_NumericIdCascades() {
+        // given
+        var impact = saveFullDummyImpact();
+
+        // when
+
+        // then
+        assertThat(impact.getNumericId().getId()).isNotNull();
+    }
+
+    @Test
+    void testNumericIdChild_DeleteOperation_NumericIdCascades() {
+        // given
+        var impact = saveFullDummyImpact();
+        var impactNumericId = impact.getNumericId().getId();
+
+        // when
+        impactRepository.delete(impact);
+
+        // then
+
+        assertThat(numericIdRepository.findById(impactNumericId)).isNotPresent();
     }
 }
