@@ -91,8 +91,7 @@ class ImpactRepositoryTest {
         impact = impactRepository.save(impact);
 
         // then
-        System.out.println(impact);
-        assertThat(impact.getNumericId()).isNotNull();
+        assertThat(impact.getNumericId().getNumericId()).isNotNull();
     }
 
     @Test
