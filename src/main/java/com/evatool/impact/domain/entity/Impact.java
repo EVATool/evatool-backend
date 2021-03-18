@@ -90,7 +90,7 @@ public class Impact extends SuperEntity {
         if (numericId == null) {
             logger.error("Attempted to set numericId to null");
             throw new IllegalArgumentException("NumericId cannot be null.");
-        } else if (this.numericId != null && this.numericId.getNumericId() != null) {
+        } else if (this.numericId != null && this.numericId.getId() != null) {
             logger.error("Attempted to set existing numericId");
             throw new IllegalArgumentException("NumericId Cannot be changed.");
         }

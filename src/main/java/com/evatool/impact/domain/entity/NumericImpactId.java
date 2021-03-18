@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 
-@Table(name = "IMP_NUMERIC_IMPACT_ID")
-@Entity(name = "IMP_NUMERIC_IMPACT_ID")
+@Table(name = "IMP_NUMERIC_ID")
+@Entity(name = "IMP_NUMERIC_ID")
 @EqualsAndHashCode
 public class NumericImpactId {
 
@@ -19,5 +19,5 @@ public class NumericImpactId {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Getter
     @Setter
-    private Integer numericId;
+    private Integer id;
 }
