@@ -42,4 +42,31 @@ class ImpactDtoMapperTest {
         // then
         assertThat(impactDto).isEqualTo(recreatedImpactDto);
     }
+
+    @Test
+    void testFromDto_NumericId_MappingToEntity() {
+        // given
+        var impactDto = createDummyImpactDto();
+        impactDto.setNumericId(1);
+
+        // when
+        var impact = fromDto(impactDto);
+
+        // then
+        assertThat(impactDto.getNumericId()).isEqualTo(impact.getNumericId().getNumericId());
+    }
+
+    @Test
+    void testFromDto_RecreateImpactDto_IncludeNumericIdMappingToEntity() {
+        // given
+        var impactDto = createDummyImpactDto();
+        impactDto.setNumericId(1);
+
+        // when
+        var impact = fromDto(impactDto);
+        var recreatedImpactDto = toDto(impact);
+
+        // then
+        assertThat(impactDto).isEqualTo(recreatedImpactDto);
+    }
 }

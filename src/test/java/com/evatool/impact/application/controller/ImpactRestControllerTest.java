@@ -222,6 +222,20 @@ public class ImpactRestControllerTest {
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
+
+//        @Test
+//        void testUpdate_UpdateNumericId_ReturnHttpStatusUnprocessableEntity() {
+//            // given
+//            var impactDto = saveFullDummyImpactDto();
+//
+//            // when
+//            impactDto.setNumericId(impactDto.getNumericId() + 1);
+//            var httpEntity = new HttpEntity<>(impactDto);
+//            var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, httpEntity, ImpactDto.class);
+//
+//            // then
+//            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+//        }
     }
 
     @Nested

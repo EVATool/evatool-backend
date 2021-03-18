@@ -32,6 +32,9 @@ class ImpactRepositoryTest {
     @Autowired
     ImpactAnalysisRepository impactAnalysisRepository;
 
+    @Autowired
+    NumericIdRepository numericIdRepository;
+
     @BeforeEach
     @AfterAll
     private void clearDatabase() {
@@ -77,5 +80,31 @@ class ImpactRepositoryTest {
         // then
         var impactsOfAnalysis = impactRepository.findAllByAnalysisId(impact1.getAnalysis().getId());
         assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(impact1, impact2));
+    }
+
+    @Test
+    void testSave_NumericId_Assigned() {
+        // given
+        var impact = saveFullDummyImpact();
+
+        // when
+        impact = impactRepository.save(impact);
+
+        // then
+        System.out.println(impact);
+        assertThat(impact.getNumericId()).isNotNull();
+    }
+
+    @Test
+    void testSave_NumericIdNull_Assigned() {
+        // given
+        var impact = saveFullDummyImpact();
+
+        // when
+        impact = impactRepository.save(impact);
+        var numericId = numericIdRepository.findById(impact.getNumericId().getNumericId());
+
+        // then
+        assertThat(numericId).isPresent();
     }
 }

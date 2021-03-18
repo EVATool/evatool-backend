@@ -1,13 +1,14 @@
 package com.evatool.impact.domain.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
+import org.yaml.snakeyaml.DumperOptions;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Table(name = "IMP_IMPACT")
@@ -15,6 +16,11 @@ import java.util.Objects;
 public class Impact extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(Impact.class);
+
+    @Getter
+    @OneToOne(cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
+    @JoinColumn(name = "numeric_id_numeric_id")
+    private NumericImpactId numericId;
 
     @Column(name = "VALUE", nullable = false)
     @Getter
@@ -54,6 +60,7 @@ public class Impact extends SuperEntity {
     public String toString() {
         return "Impact{" +
                 "id=" + this.id +
+                ", numericId=" + this.numericId +
                 ", value=" + this.value +
                 ", description='" + this.description + '\'' +
                 ", dimension=" + this.dimension +
@@ -68,6 +75,7 @@ public class Impact extends SuperEntity {
         if (o == null || this.getClass() != o.getClass()) return false;
         var that = (Impact) o;
         return super.equals(that)
+                && Objects.equals(this.numericId, that.numericId)
                 && Double.compare(this.value, that.value) == 0
                 && Objects.equals(this.description, that.description)
                 && Objects.equals(this.dimension, that.dimension)
@@ -78,6 +86,16 @@ public class Impact extends SuperEntity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), this.value, this.description, this.dimension, this.stakeholder, this.analysis);
+    }
+
+    // TODO add tests
+    public void setNumericId(NumericImpactId numericId) {
+        logger.debug("Set NumericId");
+        if (numericId == null) {
+            logger.error("Attempted to set numericId to null");
+            throw new IllegalArgumentException("NumericId cannot be null.");
+        }
+        this.numericId = numericId;
     }
 
     public void setValue(double value) {
