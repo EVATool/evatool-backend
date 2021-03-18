@@ -1,6 +1,7 @@
 package com.evatool.requirements.entity;
 
 import com.google.gson.Gson;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,20 +13,17 @@ import java.util.UUID;
 public class RequirementsVariant {
 
     @Id
+    @Type(type = "uuid-char")
     private UUID id = UUID.randomUUID();
     private String title;
     private String description;
-
 
     public RequirementsVariant() {
     }
 
     public static RequirementsVariant fromJson(String json) {
-
         return new Gson().fromJson(json, RequirementsVariant.class);
-
     }
-
 
     public RequirementsVariant(String title, String description) {
         this.title = title;

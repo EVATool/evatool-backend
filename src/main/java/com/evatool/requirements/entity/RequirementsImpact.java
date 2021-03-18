@@ -4,6 +4,7 @@ package com.evatool.requirements.entity;
 
 
 import com.google.gson.Gson;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -13,8 +14,8 @@ import java.util.UUID;
 public class RequirementsImpact {
 
     @Id
+    @Type(type = "uuid-char")
     private UUID id = UUID.randomUUID();
-    private String title;
     private String description;
     private int value;
 
@@ -29,23 +30,12 @@ public class RequirementsImpact {
 
     }
 
-    public RequirementsImpact(String title, String description, int value, RequirementDimension requirementDimension) {
-        this.title = title;
+    public RequirementsImpact(String description, int value, RequirementDimension requirementDimension) {
         this.description = description;
         this.value = value;
         this.requirementDimension = requirementDimension;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        if (title == null) {
-            throw new IllegalArgumentException("Title cannot be null.");
-        }
-        this.title = title;
-    }
 
     public String getDescription() {
         return description;

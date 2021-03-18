@@ -1,6 +1,7 @@
 package com.evatool.requirements.entity;
 
 import com.google.gson.Gson;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,12 +13,13 @@ import java.util.UUID;
 public class RequirementDimension {
 
     @Id
+    @Type(type = "uuid-char")
     private UUID id = UUID.randomUUID();
 
-    private String title;
+    private String name;
 
-    public RequirementDimension(String title) {
-        this.title = title;
+    public RequirementDimension(String name) {
+        this.name = name;
     }
 
     public RequirementDimension() {
@@ -28,15 +30,15 @@ public class RequirementDimension {
         return  new Gson().fromJson(json, RequirementDimension.class);
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        if (title == null) {
+    public void setName(String name) {
+        if (name == null) {
             throw new IllegalArgumentException("Title cannot be null.");
         }
-        this.title = title;
+        this.name = name;
     }
 
     public UUID getId() {

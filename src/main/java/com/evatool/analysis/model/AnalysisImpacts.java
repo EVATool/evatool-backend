@@ -3,6 +3,7 @@ package com.evatool.analysis.model;
 import com.evatool.analysis.enums.Dimension;
 import com.google.gson.Gson;
 import lombok.Getter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import java.util.UUID;
 public class AnalysisImpacts {
 
     @Id
+    @Type(type = "uuid-char")
     private UUID id = UUID.randomUUID();
     private String title;
     private double value;

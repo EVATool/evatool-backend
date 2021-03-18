@@ -16,7 +16,7 @@ import java.util.List;
 public class RequirementMapper {
 
     @Autowired
-    RequirementPointController requirement_grController;
+    RequirementPointController requirementPointController;
 
     public List<RequirementDTO> mapList(Collection<Requirement> resultList) {
         List<RequirementDTO> requirementDTOList = new ArrayList<>();
@@ -30,16 +30,14 @@ public class RequirementMapper {
         RequirementDTO requirementDTO = new RequirementDTO();
         requirementDTO.setRequirementTitle(requirement.getTitle());
         requirementDTO.setRootEntityId(requirement.getId());
-        requirementDTO.setProjectID(requirement.getRequirementsAnalysis().getId());
+        requirementDTO.setProjectID(requirement.getRequirementsAnalysis().getAnalysisId());
         requirementDTO.setRequirementDescription(requirement.getDescription());
-        requirement.getVariants().forEach(variants->{
-            requirementDTO.getVariantsTitle().put(variants.getId(),variants.getTitle());
-        });
-        Collection<RequirementsImpact> requirementsImpactList = requirement_grController.getRequirementImpactByRequirement(requirement.getId());
+        requirement.getVariants().forEach(variants-> requirementDTO.getVariantsTitle().put(variants.getId(),variants.getTitle()));
+        Collection<RequirementsImpact> requirementsImpactList = requirementPointController.getRequirementImpactByRequirement(requirement.getId());
         requirementsImpactList.forEach(impact -> {
-            requirementDTO.getImpactTitles().put(impact.getId(),impact.getTitle());
-            requirementDTO.getDimensions().add(impact.getRequirementDimension().getTitle());
-            RequirementPoint requirementPoint = requirement_grController.getRequirementPointByRequirementAndRequirementsImpact(requirement,impact);
+            requirementDTO.getImpactDescription().put(impact.getId(),impact.getDescription());
+            requirementDTO.getDimensions().add(impact.getRequirementDimension().getName());
+            RequirementPoint requirementPoint = requirementPointController.getRequirementPointByRequirementAndRequirementsImpact(requirement,impact);
             requirementDTO.getRequirementImpactPoints().put(impact.getId(),requirementPoint.getPoints());
         });
 

@@ -16,7 +16,7 @@ class ImpactStakeholderJsonMapperTest {
     void testFromJsonString_ImpactStakeholderFromJson_EqualsImpactStakeholder() {
         // given
         var stakeholder = createDummyStakeholder();
-        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", stakeholder.getId(), stakeholder.getName());
+        var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", stakeholder.getId(), stakeholder.getName());
 
         // when
         var eventStakeholder = fromJson(json);
@@ -52,7 +52,7 @@ class ImpactStakeholderJsonMapperTest {
         var name = "name";
 
         // when
-        var json = String.format("{\"id\"\"%s\",\"name\":\"%s\"}", id, name);
+        var json = String.format("{\"stakeholderId\"\"%s\",\"stakeholderName\":\"%s\"}", id, name);
 
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
@@ -62,7 +62,7 @@ class ImpactStakeholderJsonMapperTest {
     void testFromJsonString_JsonHasNotRequiredFields_EqualsImpactStakeholder() {
         // given
         var stakeholder = createDummyStakeholder();
-        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"not required\":\"useless\"}", stakeholder.getId(), stakeholder.getName());
+        var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\",\"not required\":\"useless\"}", stakeholder.getId(), stakeholder.getName());
 
         // when
         var eventStakeholder = fromJson(json);
@@ -77,7 +77,7 @@ class ImpactStakeholderJsonMapperTest {
         var name = "name";
 
         // when
-        var json = String.format("{\"name\":\"%s\"}", name);
+        var json = String.format("{\"stakeholderName\":\"%s\"}", name);
 
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
@@ -89,7 +89,7 @@ class ImpactStakeholderJsonMapperTest {
         var id = UUID.randomUUID().toString();
 
         // when
-        var json = String.format("{\"id\":\"%s\"}", id);
+        var json = String.format("{\"stakeholderId\":\"%s\"}", id);
 
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
@@ -101,7 +101,7 @@ class ImpactStakeholderJsonMapperTest {
         var name = "name";
 
         // when
-        var json = String.format("{\"id\":null,\"name\":\"%s\"}", name);
+        var json = String.format("{\"stakeholderId\":null,\"stakeholderName\":\"%s\"}", name);
 
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
@@ -113,7 +113,7 @@ class ImpactStakeholderJsonMapperTest {
         var id = UUID.randomUUID().toString();
 
         // when
-        var json = String.format("{\"id\":\"%s\",\"name\":null}", id);
+        var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":null}", id);
 
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));

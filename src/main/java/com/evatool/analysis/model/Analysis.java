@@ -1,8 +1,10 @@
 package com.evatool.analysis.model;
 
+import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
@@ -18,6 +20,8 @@ public class Analysis {
     @Id
     @Getter
     @Setter
+    @Type(type= "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
     private UUID analysisId = UUID.randomUUID();
 
     /**
@@ -69,5 +73,10 @@ public class Analysis {
             throw new IllegalArgumentException("description cannot be null.");
         }
         this.description = description;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

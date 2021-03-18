@@ -10,9 +10,9 @@ import java.util.Collection;
 import static com.evatool.requirements.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class RequirementTest {
+class RequirementTest {
     @Test
-    public void testSetDescription_NullValue_ThrowException() {
+    void testSetDescription_NullValue_ThrowException() {
         // given
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         Collection<RequirementsVariant> requirementsVariant = getRequirementsVariants();
@@ -25,7 +25,7 @@ public class RequirementTest {
     }
 
     @Test
-    public void testSetTitle_NullValue_ThrowException() {
+    void testSetTitle_NullValue_ThrowException() {
         // given
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         Collection<RequirementsVariant> requirementsVariant = getRequirementsVariants();
@@ -38,7 +38,7 @@ public class RequirementTest {
     }
 
     @Test
-    public void testSetVariants_NullValue_ThrowException() {
+    void testSetVariants_NullValue_ThrowException() {
         // given
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         Collection<RequirementsVariant> requirementsVariant = getRequirementsVariants();
@@ -53,7 +53,7 @@ public class RequirementTest {
 
 
     @Test
-    public void testSetRequirementsAnalysis_NullValue_ThrowException() {
+    void testSetRequirementsAnalysis_NullValue_ThrowException() {
         // given
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         Collection<RequirementsVariant> requirementsVariant = getRequirementsVariants();

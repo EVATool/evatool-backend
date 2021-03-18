@@ -1,16 +1,16 @@
 #!/bin/bash
 echo ------------------------------
-echo DOCKER BUILD
-docker build -t evatoolapp_image /home/evauser/evatool
+echo BUILD DOCKER IMAGE
+docker build -t evatoolapp_image /home/evauser/evatool/backend/docker
 echo ------------------------------
 echo RUNNING CONTAINERS
 docker ps
 echo ------------------------------
-echo STOP DOCKER IMAGE
+echo STOP DOCKER CONTAINER
 docker stop evatoolapp_container
 echo ------------------------------
-echo START DOCKER IMAGE
-docker run --name evatoolapp_container -d --rm -p 443:8080 evatoolapp_image --server.port=8080
+echo START DOCKER CONTAINER
+docker run --name evatoolapp_container --net=host -d --rm evatoolapp_image --server.port=443
 echo ------------------------------
 echo RUNNING CONTAINERS
 docker ps
@@ -24,4 +24,3 @@ echo ------------------------------
 echo ALL DOCKER IMAGES
 docker images
 echo ------------------------------
-

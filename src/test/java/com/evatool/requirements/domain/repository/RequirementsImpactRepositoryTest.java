@@ -15,7 +15,7 @@ import static com.evatool.requirements.common.TestDataGenerator.getRequirementsI
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class RequirementsImpactRepositoryTest {
+class RequirementsImpactRepositoryTest {
 
     @Autowired
     private RequirementsImpactsRepository requirementsImpactsRepository;
@@ -24,7 +24,7 @@ public class RequirementsImpactRepositoryTest {
     private RequirementDimensionRepository requirementDimensionRepository;
 
     @Test
-    public void testFindById_InsertedImpact_ReturnImpact() {
+    void testFindById_InsertedImpact_ReturnImpact() {
 
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
@@ -41,7 +41,7 @@ public class RequirementsImpactRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedImpact_IdIsNotNull() {
+    void testSave_InsertedImpact_IdIsNotNull() {
 
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
@@ -56,7 +56,7 @@ public class RequirementsImpactRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedImpact_IdIsUuid() {
+    void testSave_InsertedImpact_IdIsUuid() {
 
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
@@ -68,10 +68,13 @@ public class RequirementsImpactRepositoryTest {
 
         // then
         UUID.fromString(requirementsImpact.getId().toString());
+
+        assertThat(requirementsImpact.getId()).isNotNull();
+
     }
 
     @Test
-    public void testDelete_DeletedImpact_ReturnNull() {
+    void testDelete_DeletedImpact_ReturnNull() {
 
         // given
         RequirementDimension requirementDimension = getRequirementDimension();

@@ -16,7 +16,7 @@ class ImpactAnalysisJsonMapperTest {
     void testFromJsonString_ImpactAnalysisFromJson_EqualsImpactAnalysis() {
         // given
         var analysis = createDummyAnalysis();
-        var json = String.format("{\"id\":\"%s\"}", analysis.getId());
+        var json = String.format("{\"analysisId\":\"%s\"}", analysis.getId());
 
         // when
         var eventAnalysis = fromJson(json);
@@ -51,7 +51,7 @@ class ImpactAnalysisJsonMapperTest {
         var id = UUID.randomUUID().toString();
 
         // when
-        var json = String.format("{\"id\"\"%s\"}", id);
+        var json = String.format("{\"analysisId\"\"%s\"}", id);
 
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
@@ -61,7 +61,7 @@ class ImpactAnalysisJsonMapperTest {
     void testFromJsonString_JsonHasNotRequiredFields_EqualsImpactAnalysis() {
         // given
         var analysis = createDummyAnalysis();
-        var json = String.format("{\"id\":\"%s\",\"not required\":\"useless\"}", analysis.getId());
+        var json = String.format("{\"analysisId\":\"%s\",\"not required\":\"useless\"}", analysis.getId());
 
         // when
         var eventAnalysis = fromJson(json);
@@ -86,7 +86,7 @@ class ImpactAnalysisJsonMapperTest {
         // given
 
         // when
-        var json = "{\"id\":null}";
+        var json = "{\"analysisId\":null}";
 
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));

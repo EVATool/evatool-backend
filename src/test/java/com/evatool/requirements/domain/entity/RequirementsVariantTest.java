@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import static com.evatool.requirements.common.TestDataGenerator.getRequirementsVariant;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class RequirementsVariantTest {
+class RequirementsVariantTest {
     @Test
-    public void testSetDescription_NullValue_ThrowException() {
+    void testSetDescription_NullValue_ThrowException() {
         // given
         RequirementsVariant requirementsVariant = getRequirementsVariant();
 
@@ -19,7 +19,7 @@ public class RequirementsVariantTest {
     }
 
     @Test
-    public void testSetTitle_NullValue_ThrowException() {
+    void testSetTitle_NullValue_ThrowException() {
         // given
         RequirementsVariant requirementsVariant = getRequirementsVariant();
 
