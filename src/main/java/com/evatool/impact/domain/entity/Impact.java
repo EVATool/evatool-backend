@@ -14,8 +14,7 @@ public class Impact extends SuperEntity {
     private static final Logger logger = LoggerFactory.getLogger(Impact.class);
 
     @Getter
-    @OneToOne(optional = false, orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "imp_numeric_id_numeric_id_numeric_id")
+    @OneToOne(optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
     private NumericImpactId numericId;
 
     @Column(name = "VALUE", nullable = false)

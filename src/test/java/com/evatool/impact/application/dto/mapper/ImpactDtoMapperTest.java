@@ -60,7 +60,7 @@ class ImpactDtoMapperTest {
     void testFromDto_RecreateImpactDto_IncludeNumericIdMappingToEntity() {
         // given
         var impactDto = createDummyImpactDto();
-        impactDto.setNumericId(1);
+        impactDto.setNumericId(1337);
 
         // when
         var impact = fromDto(impactDto);

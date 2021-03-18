@@ -20,7 +20,4 @@ public class NumericImpactId {
     @Getter
     @Setter
     private Integer numericId;
-
-    @OneToOne(optional = false, fetch = FetchType.LAZY, mappedBy = "numericId")
-    private Impact impact;
 }
