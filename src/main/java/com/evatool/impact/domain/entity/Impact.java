@@ -84,7 +84,6 @@ public class Impact extends SuperEntity {
         return Objects.hash(super.hashCode(), this.value, this.description, this.dimension, this.stakeholder, this.analysis);
     }
 
-    // TODO add tests
     public void setNumericId(NumericImpactId numericId) {
         logger.debug("Set NumericId");
         if (numericId == null) {

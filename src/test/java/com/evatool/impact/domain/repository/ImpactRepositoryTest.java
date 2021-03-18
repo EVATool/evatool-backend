@@ -1,9 +1,6 @@
 package com.evatool.impact.domain.repository;
 
-import com.evatool.impact.domain.entity.Dimension;
-import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.entity.ImpactAnalysis;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
+import com.evatool.impact.domain.entity.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +12,7 @@ import java.util.Arrays;
 
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -80,6 +78,17 @@ class ImpactRepositoryTest {
         // then
         var impactsOfAnalysis = impactRepository.findAllByAnalysisId(impact1.getAnalysis().getId());
         assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(impact1, impact2));
+    }
+
+    @Test
+    void testSetNumericId_SavedImpact_CannotChangeNumericId() {
+        // given
+        var impact = saveFullDummyImpact();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setNumericId(new NumericImpactId()));
     }
 
     @Test

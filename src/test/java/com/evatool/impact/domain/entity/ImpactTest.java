@@ -67,4 +67,15 @@ class ImpactTest {
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setStakeholder(null));
     }
+
+    @Test
+    void testSetNumericId_SetToNul_ThrowIllegalArgumentException() {
+        // given
+        var impact = createDummyImpact();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setNumericId(null));
+    }
 }
