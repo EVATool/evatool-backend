@@ -32,35 +32,10 @@ class ImpactDtoMapperTest {
         // given
         var impactDto = createDummyImpactDto();
         impactDto.setId(UUID.randomUUID());
+        impactDto.setNumericId(1337);
         impactDto.setDimension(createDummyDimensionDto());
         impactDto.setStakeholder(createDummyStakeholderDto());
-
-        // when
-        var impact = fromDto(impactDto);
-        var recreatedImpactDto = toDto(impact);
-
-        // then
-        assertThat(impactDto).isEqualTo(recreatedImpactDto);
-    }
-
-    @Test
-    void testFromDto_NumericId_MappingToEntity() {
-        // given
-        var impactDto = createDummyImpactDto();
-        impactDto.setNumericId(1);
-
-        // when
-        var impact = fromDto(impactDto);
-
-        // then
-        assertThat(impactDto.getNumericId()).isEqualTo(impact.getNumericId().getNumericId());
-    }
-
-    @Test
-    void testFromDto_RecreateImpactDto_IncludeNumericIdMappingToEntity() {
-        // given
-        var impactDto = createDummyImpactDto();
-        impactDto.setNumericId(1337);
+        impactDto.setAnalysis(createDummyAnalysisDto());
 
         // when
         var impact = fromDto(impactDto);
