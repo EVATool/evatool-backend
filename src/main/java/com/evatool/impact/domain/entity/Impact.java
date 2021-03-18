@@ -1,12 +1,8 @@
 package com.evatool.impact.domain.entity;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
-import org.yaml.snakeyaml.DumperOptions;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -18,8 +14,8 @@ public class Impact extends SuperEntity {
     private static final Logger logger = LoggerFactory.getLogger(Impact.class);
 
     @Getter
-    @OneToOne(cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
-    @JoinColumn(name = "numeric_id_numeric_id")
+    @OneToOne(optional = false, orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "imp_numeric_id_numeric_id_numeric_id")
     private NumericImpactId numericId;
 
     @Column(name = "VALUE", nullable = false)
@@ -44,6 +40,7 @@ public class Impact extends SuperEntity {
 
     public Impact() {
         super();
+        numericId = new NumericImpactId();
         logger.debug("{} created", Impact.class.getSimpleName());
     }
 
