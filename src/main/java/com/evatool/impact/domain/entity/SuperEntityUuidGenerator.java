@@ -21,7 +21,7 @@ public class SuperEntityUuidGenerator extends UUIDGenerator {
             System.out.println("-------------------------------------------------------------------------------------");
             System.out.println(impact);
 
-            var max = session.createQuery("select MAX(a.numericId) from IMP_IMPACT a", Integer.class).getResultList().get(0);
+            var max = session.createQuery("select MAX(a.numericId) from IMP_IMPACT a where a.id='" + impact.getAnalysis().getId()+"'", Integer.class).getResultList().get(0);
 
             if (max == null) {
                 impact.setNumericId(1);
