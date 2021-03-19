@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Table(name = "IMP_NUMERIC_ID")
 @Entity(name = "IMP_NUMERIC_ID")
-@EqualsAndHashCode
+@EqualsAndHashCode // TODO Use this in all classes and test if its adequate
 public class NumericId {
 
     private static final Logger logger = LoggerFactory.getLogger(NumericId.class);
