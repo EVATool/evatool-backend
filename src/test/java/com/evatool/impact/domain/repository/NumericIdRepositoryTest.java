@@ -49,10 +49,12 @@ class NumericIdRepositoryTest {
         // when
 
         // then
+        System.out.println(numericId);
         assertThat(numericId._getReadableId()).isNotNull();
     }
 
-    void testFindById_SavedNumericId_ReadableIdAvailable() {
+    @Test
+    void testFindById_SavedNumericId_NumericIdAvailable() {
         // given
         var numericId = saveFullDummyNumericId();
 
@@ -60,6 +62,17 @@ class NumericIdRepositoryTest {
 
         // then
         assertThat(numericId.getNumericId()).isNotNull();
+    }
+
+    @Test
+    void testFindById_SavedNumericId_ReadableIdAvailable() {
+        // given
+        var numericId = saveFullDummyNumericId();
+
+        // when
+
+        // then
+        assertThat(numericId._getReadableId()).isNotNull();
     }
 
     @Test

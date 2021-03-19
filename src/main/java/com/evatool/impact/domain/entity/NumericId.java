@@ -6,13 +6,12 @@ import lombok.Getter;
 import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import javax.persistence.*;
 
 @Table(name = "IMP_NUMERIC_ID")
 @Entity(name = "IMP_NUMERIC_ID")
-@EqualsAndHashCode // TODO Use this in all classes and test if its adequate
+@EqualsAndHashCode // TODO [philipp] Use this in all classes and test if its adequate
 @ToString
 public class NumericId {
 
@@ -28,15 +27,16 @@ public class NumericId {
     @Column(name = "READABLE_ID")
     private String readableId;
 
+    public NumericId() {
+
+    }
+
     public void setNumericId(Integer numericId) {
         if (this.numericIdAlreadySet()) {
             logger.error("Attempted to set existing numericId");
             throw new IllegalArgumentException("NumericId Cannot be changed.");
         }
         this.numericId = numericId;
-        if (!this.readableIdAlreadySet()) {
-            this.readableId = PREFIX + this.numericId;
-        }
     }
 
     private boolean numericIdAlreadySet() {
@@ -48,16 +48,16 @@ public class NumericId {
     }
 
     public String _getReadableId() { // Not prefixing this method with '_' causes some tests to fail.
-        if (this.numericId != null) {
-            return PREFIX + this.numericId;
-        }
-        return null;
+        return this.readableId;
     }
 
     @PrePersist
-    void prePersist(){
-        if(this.numericId != null){
+    void prePersist() {
+        if (this.numericId != null) {
             throw new NumericIdMustBeNullException(this.getClass().getSimpleName());
+        }
+        if (!this.readableIdAlreadySet()) {
+            this.readableId = PREFIX + this.numericId;
         }
     }
 }

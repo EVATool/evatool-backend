@@ -4,10 +4,7 @@ import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -84,65 +81,68 @@ class ImpactRepositoryTest {
         assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(impact1, impact2));
     }
 
-    @Test
-    void testSetNumericId_UnsavedImpact_CannotSetNumericId() {
-        // given
-        var impact = createDummyImpact();
+    @Nested
+    class NumericIdChild {
 
-        // when
-        impact.getNumericId().setNumericId(1);
+        @Test
+        void testSetNumericId_UnsavedImpact_CannotSetNumericId() {
+            // given
+            var impact = createDummyImpact();
 
-        // then
-        assertThatExceptionOfType(InvalidDataAccessApiUsageException.class).isThrownBy(() -> impactRepository.save(impact));
-    }
+            // when
+            impact.getNumericId().setNumericId(1);
 
-    @Test
-    void testSetNumericId_SavedImpact_CannotChangeNumericId() {
-        // given
-        var impact = saveFullDummyImpact();
+            // then
+            assertThatExceptionOfType(InvalidDataAccessApiUsageException.class).isThrownBy(() -> impactRepository.save(impact));
+        }
 
-        // when
+        @Test
+        void testSetNumericId_SavedImpact_CannotChangeNumericId() {
+            // given
+            var impact = saveFullDummyImpact();
 
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.getNumericId().setNumericId(1));
-    }
+            // when
 
-    @Test
-    void testNumericIdChild_InsertMultipleImpacts_NumericIdIncrements() {
-        // given
-        var impact1 = saveFullDummyImpact();
-        var impact2 = saveFullDummyImpact();
+            // then
+            assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.getNumericId().setNumericId(1));
+        }
 
-        // when
-        impactRepository.save(impact1);
-        impactRepository.save(impact2);
+        @Test
+        void testNumericIdChild_InsertMultipleImpacts_NumericIdIncrements() {
+            // given
+            var impact1 = saveFullDummyImpact();
+            var impact2 = saveFullDummyImpact();
 
-        // then
-        assertThat(impact2.getNumericId().getNumericId()).isEqualTo(impact1.getNumericId().getNumericId() + 1);
-    }
+            // when
+            impactRepository.save(impact1);
+            impactRepository.save(impact2);
 
-    @Test
-    void testNumericIdChild_CreateOperation_NumericIdCascades() {
-        // given
-        var impact = saveFullDummyImpact();
+            // then
+            assertThat(impact2.getNumericId().getNumericId()).isEqualTo(impact1.getNumericId().getNumericId() + 1);
+        }
 
-        // when
+        @Test
+        void testNumericIdChild_CreateOperation_NumericIdCascades() {
+            // given
+            var impact = saveFullDummyImpact();
 
-        // then
-        assertThat(impact.getNumericId().getNumericId()).isNotNull();
-    }
+            // when
 
-    @Test
-    void testNumericIdChild_DeleteOperation_NumericIdCascades() {
-        // given
-        var impact = saveFullDummyImpact();
-        var impactNumericId = impact.getNumericId().getNumericId();
+            // then
+            assertThat(impact.getNumericId().getNumericId()).isNotNull();
+        }
 
-        // when
-        impactRepository.delete(impact);
+        @Test
+        void testNumericIdChild_DeleteOperation_NumericIdCascades() {
+            // given
+            var impact = saveFullDummyImpact();
+            var impactNumericId = impact.getNumericId().getNumericId();
 
-        // then
+            // when
+            impactRepository.delete(impact);
 
-        assertThat(numericIdRepository.findById(impactNumericId)).isNotPresent();
+            // then
+            assertThat(numericIdRepository.findById(impactNumericId)).isNotPresent();
+        }
     }
 }

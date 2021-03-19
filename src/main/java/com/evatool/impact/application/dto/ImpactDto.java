@@ -20,6 +20,7 @@ public class ImpactDto {
     @Setter
     private UUID id;
 
+    // TODO [philipp] readableId
     @ApiModelProperty
     @Getter
     @Setter
