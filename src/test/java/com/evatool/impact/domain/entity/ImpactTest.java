@@ -5,8 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.fromDto;
-import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
-import static com.evatool.impact.common.TestDataGenerator.createDummyImpactDto;
+import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -68,6 +67,28 @@ class ImpactTest {
 
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setStakeholder(null));
+    }
+
+    @Test
+    void testSetAnalysis_NullValue_ThrowIllegalArgumentException() {
+        // given
+        var impact = createDummyImpact();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setAnalysis(null));
+    }
+
+    @Test
+    void testSetAnalysis_ExistingValue_ThrowIllegalArgumentException() {
+        // given
+        var impact = createDummyImpact();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setAnalysis(createDummyAnalysis()));
     }
 
     @Test

@@ -87,20 +87,42 @@ class ImpactRepositoryTest {
     class NumericId {
 
         @Test
-        void testNumericId_InsertMultipleImpacts_NumericIdIncrements() {
+        void testNumericId_InsertedImpact_NumericIdIsGenerated() {
             // given
-            var analysis = saveDummyAnalysis();
-            var impact1 = saveFullDummyImpact(analysis);
-            var impact2 = saveFullDummyImpact(analysis);
+            var impact1 = saveFullDummyImpact();
 
             // when
 
             // then
+            assertThat(impact1.getNumericId()).isNotNull();
+        }
 
+        @Test
+        void testNumericId_InsertMultipleImpactsWithTheSameAnalysis_NumericIdIncrements() {
+            // given
+            var analysis = saveDummyAnalysis();
+
+            // when
+            var impact1 = saveFullDummyImpact(analysis);
+            var impact2 = saveFullDummyImpact(analysis);
+
+            // then
             System.out.println(impact1);
             System.out.println(impact2);
 
             assertThat(impact2.getNumericId()).isEqualTo(impact1.getNumericId() + 1);
+        }
+
+        @Test
+        void testNumericId_InsertMultipleImpactsWithDifferentAnalyses_NumericIdIncrements() {
+            // given
+            var impact1 = saveFullDummyImpact();
+            var impact2 = saveFullDummyImpact();
+
+            // when
+
+            // then
+            assertThat(impact2.getNumericId()).isEqualTo(impact1.getNumericId());
         }
     }
 }
