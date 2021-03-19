@@ -6,6 +6,7 @@ import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.application.service.ImpactService;
+import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
@@ -56,10 +57,10 @@ public class ImpactRestControllerTest {
     }
 
     private ImpactDto saveFullDummyImpactDto() {
-        var impact = createDummyImpact();
+        var analysis = analysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
+        var impact = createDummyImpact(analysis);
         impact.setDimension(dimensionRepository.save(impact.getDimension()));
         impact.setStakeholder(stakeholderRepository.save(impact.getStakeholder()));
-        impact.setAnalysis(analysisRepository.save(impact.getAnalysis()));
         return impactService.create(toDto(impact));
     }
 

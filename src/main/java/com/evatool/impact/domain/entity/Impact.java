@@ -1,11 +1,13 @@
 package com.evatool.impact.domain.entity;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Table(name = "IMP_IMPACT")
@@ -133,15 +135,11 @@ public class Impact extends SuperEntity {
 
     public void setAnalysis(ImpactAnalysis analysis) {
         logger.debug("Set Analysis");
-        if (analysis == null) {
-            logger.error("Attempted to set analysis to null");
-            throw new IllegalArgumentException("Analysis cannot be null.");
-        }
 
-//        if (this.analysis != null) {
-//            logger.error("Attempted to set existing analysis");
-//            throw new IllegalArgumentException("Existing analysis cannot be set.");
-//        }
+        if (this.analysis != null) {
+            logger.error("Attempted to set existing analysis");
+            throw new IllegalArgumentException("Existing analysis cannot be set.");
+        }
 
         this.analysis = analysis;
     }
