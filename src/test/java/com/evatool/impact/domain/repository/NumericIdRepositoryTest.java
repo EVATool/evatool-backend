@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.repository;
 
-import com.evatool.impact.domain.entity.AnalysisImpactId;
 import com.evatool.impact.domain.entity.NumericId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -92,6 +91,22 @@ class NumericIdRepositoryTest {
     void testSave_GenerateNumericId_GenerateForEachAnalysisId() {
         // given
         var numericIdAnalysis1 = new NumericId();
+        var numericIdAnalysis2 = new NumericId();
+
+        //numericIdAnalysis1.setAnalysisId("ana1");
+        //numericIdAnalysis2.setAnalysisId("ana2");
+
+        numericIdAnalysis1 = numericIdRepository.save(numericIdAnalysis1);
+        numericIdAnalysis2 = numericIdRepository.save(numericIdAnalysis2);
+
+
+        System.out.println(numericIdAnalysis1);
+        System.out.println(numericIdAnalysis2);
+
+
+        // when
+
+        // then
 
     }
 }

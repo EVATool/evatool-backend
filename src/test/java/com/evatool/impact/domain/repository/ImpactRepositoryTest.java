@@ -139,7 +139,7 @@ class ImpactRepositoryTest {
             impactRepository.delete(impact);
 
             // then
-            assertThat(numericIdRepository.findById(new AnalysisImpactId(impactNumericId.getNumericId()))).isNotPresent();
+            assertThat(numericIdRepository.findById(impactNumericId.getNumericId())).isNotPresent();
         }
     }
 }
