@@ -137,6 +137,12 @@ public class Impact extends SuperEntity {
             logger.error("Attempted to set analysis to null");
             throw new IllegalArgumentException("Analysis cannot be null.");
         }
+
+//        if (this.analysis != null) {
+//            logger.error("Attempted to set existing analysis");
+//            throw new IllegalArgumentException("Existing analysis cannot be set.");
+//        }
+
         this.analysis = analysis;
     }
 }

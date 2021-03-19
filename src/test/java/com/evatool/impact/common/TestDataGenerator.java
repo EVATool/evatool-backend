@@ -26,6 +26,10 @@ public class TestDataGenerator {
         return new Impact(0.0, "dummyImpactDescription", createDummyDimension(), createDummyStakeholder(), createDummyAnalysis());
     }
 
+    public static Impact createDummyImpact(ImpactAnalysis analysis) {
+        return new Impact(0.0, "dummyImpactDescription", createDummyDimension(), createDummyStakeholder(), analysis);
+    }
+
     public static ImpactAnalysis createDummyAnalysis() {
         return new ImpactAnalysis(UUID.randomUUID());
     }

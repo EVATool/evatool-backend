@@ -4,10 +4,7 @@ import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -45,10 +42,18 @@ class ImpactRepositoryTest {
         var dimension = saveDummyDimension();
         var stakeholder = saveDummyStakeholder();
         var analysis = saveDummyAnalysis();
-        var impact = createDummyImpact();
+        var impact = createDummyImpact(analysis);
         impact.setDimension(dimension);
         impact.setStakeholder(stakeholder);
-        impact.setAnalysis(analysis);
+        return impactRepository.save(impact);
+    }
+
+    private Impact saveFullDummyImpact(ImpactAnalysis analysis) {
+        var dimension = saveDummyDimension();
+        var stakeholder = saveDummyStakeholder();
+        var impact = createDummyImpact(analysis);
+        impact.setDimension(dimension);
+        impact.setStakeholder(stakeholder);
         return impactRepository.save(impact);
     }
 
@@ -67,15 +72,35 @@ class ImpactRepositoryTest {
     @Test
     void testFindAllByAnalysisId_AnalysisWithTwoImpacts_ReturnImpactsByAnalysisId() {
         // given
-        var impact1 = saveFullDummyImpact();
-        var impact2 = saveFullDummyImpact();
+        var analysis = saveDummyAnalysis();
+        var impact1 = saveFullDummyImpact(analysis);
+        var impact2 = saveFullDummyImpact(analysis);
 
         // when
-        impact2.setAnalysis(impact1.getAnalysis());
-        impactRepository.save(impact2);
 
         // then
         var impactsOfAnalysis = impactRepository.findAllByAnalysisId(impact1.getAnalysis().getId());
         assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(impact1, impact2));
+    }
+
+    @Nested
+    class NumericId {
+
+        @Test
+        void testNumericId_InsertMultipleImpacts_NumericIdIncrements() {
+            // given
+            var analysis = saveDummyAnalysis();
+            var impact1 = saveFullDummyImpact(analysis);
+            var impact2 = saveFullDummyImpact(analysis);
+
+            // when
+
+            // then
+
+            System.out.println(impact1);
+            System.out.println(impact2);
+
+            assertThat(impact2.getNumericId()).isEqualTo(impact1.getNumericId() + 1);
+        }
     }
 }
