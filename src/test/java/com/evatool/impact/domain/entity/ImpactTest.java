@@ -94,13 +94,12 @@ class ImpactTest {
     @Test
     void testSetNumericId_ExistingNumericId_ThrowIllegalArgumentException() {
         // given
-        var impactDto = createDummyImpactDto();
-        impactDto.setNumericId(1337);
+        var impact = createDummyImpact();
 
         // when
-        var impact = fromDto(impactDto);
+        impact.setNumericId(1337);
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setNumericId(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setNumericId(9));
     }
 }
