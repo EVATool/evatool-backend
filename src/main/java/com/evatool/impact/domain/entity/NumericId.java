@@ -23,12 +23,18 @@ public class NumericId {
     @Getter
     private Integer numericId;
 
+    @Column(name = "READABLE_ID")
+    private String readableId;
+
     public void setNumericId(Integer numericId) {
         if (idAlreadySet()) {
             logger.error("Attempted to set existing numericId");
             throw new IllegalArgumentException("NumericId Cannot be changed.");
         }
         this.numericId = numericId;
+        if (idAlreadySet()) {
+            this.readableId = PREFIX + this.numericId;
+        }
     }
 
     private boolean idAlreadySet() {
