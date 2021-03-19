@@ -2,7 +2,6 @@ package com.evatool.impact.domain.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.slf4j.Logger;
@@ -22,13 +21,10 @@ public class NumericId {
     private static final String PREFIX = "IMP";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "UniqueImpactAnalysisIdGenerator")
+    @GenericGenerator(name = "UniqueImpactAnalysisIdGenerator", strategy = "com.evatool.impact.domain.entity.UniqueImpactAnalysisIdGenerator")
     @Getter
     private Integer numericId;
-
-    public NumericId() {
-
-    }
 
     public void setNumericId(Integer numericId) {
         if (this.numericIdAlreadySet()) {
