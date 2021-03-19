@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.exception.NumericIdMustBeNullException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -12,6 +11,7 @@ import javax.persistence.*;
 
 @Table(name = "IMP_NUMERIC_ID")
 @Entity(name = "IMP_NUMERIC_ID")
+@IdClass(AnalysisImpactId.class)
 @EqualsAndHashCode // TODO [philipp] Use this in all classes and test if its adequate
 @ToString
 public class NumericId {
@@ -21,9 +21,11 @@ public class NumericId {
     private static final String PREFIX = "IMP";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Getter
     private Integer numericId;
+
+    @Id
+    private String analysisId = "lol";
 
     @Column(name = "READABLE_ID")
     private String readableId;
