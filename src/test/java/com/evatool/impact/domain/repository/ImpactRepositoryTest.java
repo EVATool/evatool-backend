@@ -133,13 +133,13 @@ class ImpactRepositoryTest {
         void testNumericIdChild_DeleteOperation_NumericIdCascades() {
             // given
             var impact = saveFullDummyImpact();
-            var impactNumericId = impact.getNumericId().getNumericId();
+            var impactNumericId = impact.getNumericId();
 
             // when
             impactRepository.delete(impact);
 
             // then
-            assertThat(numericIdRepository.findById(new AnalysisImpactId(impactNumericId, "lol"))).isNotPresent();
+            assertThat(numericIdRepository.findById(new AnalysisImpactId(impactNumericId.getNumericId(), impactNumericId.getAnalysisId()))).isNotPresent();
         }
     }
 }
