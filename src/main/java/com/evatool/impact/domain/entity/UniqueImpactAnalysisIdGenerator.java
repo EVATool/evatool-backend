@@ -21,7 +21,8 @@ public class UniqueImpactAnalysisIdGenerator extends SequenceStyleGenerator {
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
         logger.debug("Generating new AnalysisImpactId");
 
-        System.out.println(session);
+        System.out.println(object);
+        System.out.println(session.getEntityPersister(NumericId.class.getSimpleName(), object));
 
         Serializable id = session.getEntityPersister(null, object).getClassMetadata().getIdentifier(object, session);
         return id != null ? id : super.generate(session, object);
