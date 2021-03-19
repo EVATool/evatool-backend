@@ -88,8 +88,8 @@ class ImpactRepositoryTest {
             var impact2 = saveFullDummyImpact();
 
             // when
-            impactRepository.save(impact1);
-            impactRepository.save(impact2);
+            //impactRepository.save(impact1);
+            //impactRepository.save(impact2);
 
             // then
             assertThat(impact2.getNumericId().getNumericId()).isEqualTo(impact1.getNumericId().getNumericId() + 1);
