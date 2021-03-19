@@ -39,7 +39,7 @@ public class Impact extends SuperEntity {
 
     public Impact() {
         super();
-        this.setNumericId(new NumericImpactId());
+        this.numericId = new NumericImpactId();
         logger.debug("{} created", Impact.class.getSimpleName());
     }
 
@@ -84,16 +84,13 @@ public class Impact extends SuperEntity {
         return Objects.hash(super.hashCode(), this.value, this.description, this.dimension, this.stakeholder, this.analysis);
     }
 
-    public void setNumericId(NumericImpactId numericId) {
+    public void setNumericId(Integer numericId) {
         logger.debug("Set NumericId");
-        if (numericId == null) {
-            logger.error("Attempted to set numericId to null");
-            throw new IllegalArgumentException("NumericId cannot be null.");
-        } else if (this.numericId != null && this.numericId.getId() != null) {
+        if (this.numericId.getId() != null) {
             logger.error("Attempted to set existing numericId");
             throw new IllegalArgumentException("NumericId Cannot be changed.");
         }
-        this.numericId = numericId;
+        this.numericId.setId(numericId);
     }
 
     public void setValue(double value) {

@@ -88,7 +88,7 @@ class ImpactRepositoryTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setNumericId(new NumericImpactId()));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setNumericId(1));
     }
 
     @Test
