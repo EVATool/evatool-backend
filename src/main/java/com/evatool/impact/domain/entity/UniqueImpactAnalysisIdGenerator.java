@@ -22,7 +22,12 @@ public class UniqueImpactAnalysisIdGenerator extends SequenceStyleGenerator {
         logger.debug("Generating new AnalysisImpactId");
 
         System.out.println(object);
-        System.out.println(session.getEntityPersister(NumericId.class.getSimpleName(), object));
+        var persistor = session.getEntityPersister(NumericId.class.getSimpleName(), object);
+        System.out.println(persistor);
+
+        var entities = session.createQuery("select a from IMP_NUMERIC_ID a", NumericId.class).getResultList();
+        System.out.println(entities);
+
 
         Serializable id = session.getEntityPersister(null, object).getClassMetadata().getIdentifier(object, session);
         return id != null ? id : super.generate(session, object);
