@@ -2,7 +2,6 @@ package com.evatool.impact.domain.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +17,17 @@ public class NumericId {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Getter
-    @Setter
     private Integer id;
+
+    public void setId(Integer id) {
+        if (idAlreadySet()) {
+            logger.error("Attempted to set existing numericId");
+            throw new IllegalArgumentException("NumericId Cannot be changed.");
+        }
+        this.id = id;
+    }
+
+    private boolean idAlreadySet() {
+        return this.id != null;
+    }
 }

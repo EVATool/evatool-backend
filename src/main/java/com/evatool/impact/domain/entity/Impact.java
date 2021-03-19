@@ -85,14 +85,10 @@ public class Impact extends SuperEntity {
     }
 
     // TODO [phillip] Write tests in service and rest controller that validate this behavior.
-    //  - Expeptions are thrown
+    //  - Correct Exceptions are thrown
     //  - Correct Http Return Codes
     public void setNumericId(Integer numericId) {
         logger.debug("Set NumericId");
-        if (this.numericId.getId() != null) {
-            logger.error("Attempted to set existing numericId");
-            throw new IllegalArgumentException("NumericId Cannot be changed.");
-        }
         this.numericId.setId(numericId);
     }
 
