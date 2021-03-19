@@ -11,11 +11,11 @@ import java.util.UUID;
 @Setter
 public class VariantDto {
 
-    private UUID uuid;
+    private UUID id;
+    private String guiId;
     private String title;
     private String description;
-    private Boolean stFlagsPot;
-    private Boolean stFlagsReal;
     private CollectionModel<Variant> subVariant;
     private UUID analysisId;
+    private Boolean archived = false;
 }

@@ -17,12 +17,12 @@ public class ImpactExceptionHandler {
 
     @ExceptionHandler(IllegalAnalysisException.class)
     public ResponseEntity<VariantsErrorMessage> handleEntityNotFoundException(IllegalAnalysisException exception, WebRequest webRequest) {
-        return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+        return createErrorResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(VariantsEntityNotFoundException.class)
     public ResponseEntity<VariantsErrorMessage> handleEntityNotFoundException(VariantsEntityNotFoundException exception, WebRequest webRequest) {
-        return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+        return createErrorResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
     }
 
 

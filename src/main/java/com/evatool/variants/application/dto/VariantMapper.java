@@ -34,11 +34,10 @@ public class VariantMapper {
 
     public VariantDto toDto(Variant variant) {
         VariantDto variantDto = new VariantDto();
-        variantDto.setUuid(variant.getId());
+        variantDto.setId(variant.getId());
+        variantDto.setGuiId(variant.getGuiId());
         variantDto.setTitle(variant.getTitle());
         variantDto.setDescription(variant.getDescription());
-        variantDto.setStFlagsPot(variant.getStFlagsPot());
-        variantDto.setStFlagsReal(variant.getStFlagsReal());
         if (variant.getSubVariant() != null) {
             Link subVariantLink = linkTo(methodOn(VariantController.class).getAllVariants()).withSelfRel();
             List<Variant> variantList = new ArrayList<>();
@@ -47,25 +46,25 @@ public class VariantMapper {
             subVariantCollectionModel.add(subVariantLink);
         }
         variantDto.setAnalysisId(variant.getVariantsAnalysis().getAnalysisId());
+        variantDto.setArchived(variant.getArchived());
         return variantDto;
     }
 
     public Variant fromDto(VariantDto variantDto) {
         Variant variant = new Variant();
-        variant.setId(variantDto.getUuid());
+        variant.setId(variantDto.getId());
+        variant.setGuiId(variantDto.getGuiId());
         variant.setTitle(variantDto.getTitle());
         if (variantDto.getSubVariant() != null) {
             variant.setSubVariant(variantDto.getSubVariant().getContent().stream().collect(Collectors.toList()));
         }
         variant.setDescription(variantDto.getDescription());
-        variant.setStFlagsPot(variantDto.getStFlagsPot());
-        variant.setStFlagsReal(variantDto.getStFlagsReal());
-        System.out.println(variantDto.getAnalysisId());
         Optional<VariantsAnalysis> variantsAnalysis = variantsAnalysisRepository.findById(variantDto.getAnalysisId());
         if (variantsAnalysis.isEmpty()) {
             throw new IllegalAnalysisException(variantDto.getAnalysisId().toString());
         }
         variantsAnalysis.ifPresent(variant::setVariantsAnalysis);
+        variant.setArchived(variantDto.getArchived());
         return variant;
     }
 
