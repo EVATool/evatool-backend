@@ -10,7 +10,7 @@ echo STOP DOCKER IMAGE
 docker stop evatoolapp_container
 echo ------------------------------
 echo START DOCKER IMAGE
-docker run --name evatoolapp_container -d --rm -p 443:8080 evatoolapp_image --server.port=8080
+docker run --name evatoolapp_container --net=host -d --rm evatoolapp_image --server.port=443
 echo ------------------------------
 echo RUNNING CONTAINERS
 docker ps
