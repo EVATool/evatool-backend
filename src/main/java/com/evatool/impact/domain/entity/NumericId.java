@@ -27,18 +27,22 @@ public class NumericId {
     private String readableId;
 
     public void setNumericId(Integer numericId) {
-        if (idAlreadySet()) {
+        if (this.numericIdAlreadySet()) {
             logger.error("Attempted to set existing numericId");
             throw new IllegalArgumentException("NumericId Cannot be changed.");
         }
         this.numericId = numericId;
-        if (idAlreadySet()) {
+        if (!this.readableIdAlreadySet()) {
             this.readableId = PREFIX + this.numericId;
         }
     }
 
-    private boolean idAlreadySet() {
+    private boolean numericIdAlreadySet() {
         return this.numericId != null;
+    }
+
+    private boolean readableIdAlreadySet() {
+        return this.readableId != null;
     }
 
     public String _getReadableId() { // Not prefixing this method with '_' causes some tests to fail.
