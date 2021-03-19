@@ -26,11 +26,6 @@ public class TestDataGenerator {
         return new Impact(0.0, "dummyImpactDescription", createDummyDimension(), createDummyStakeholder(), createDummyAnalysis());
     }
 
-    public static NumericId createDummyNumericId(){
-        return new NumericId();
-    }
-
-
     public static ImpactAnalysis createDummyAnalysis() {
         return new ImpactAnalysis(UUID.randomUUID());
     }

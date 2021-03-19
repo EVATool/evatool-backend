@@ -1,16 +1,20 @@
 package com.evatool.impact.domain.repository;
 
-import com.evatool.impact.domain.entity.*;
-import org.junit.jupiter.api.*;
+import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.domain.entity.Impact;
+import com.evatool.impact.domain.entity.ImpactAnalysis;
+import com.evatool.impact.domain.entity.ImpactStakeholder;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import java.util.Arrays;
 
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -27,9 +31,6 @@ class ImpactRepositoryTest {
 
     @Autowired
     ImpactAnalysisRepository impactAnalysisRepository;
-
-    @Autowired
-    NumericIdRepository numericIdRepository;
 
     @BeforeEach
     @AfterAll
@@ -76,47 +77,5 @@ class ImpactRepositoryTest {
         // then
         var impactsOfAnalysis = impactRepository.findAllByAnalysisId(impact1.getAnalysis().getId());
         assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(impact1, impact2));
-    }
-
-    @Nested
-    class NumericIdChild {
-
-        @Test
-        void testNumericIdChild_InsertMultipleImpacts_NumericIdIncrements() {
-            // given
-            var impact1 = saveFullDummyImpact();
-            var impact2 = saveFullDummyImpact();
-
-            // when
-            //impactRepository.save(impact1);
-            //impactRepository.save(impact2);
-
-            // then
-            assertThat(impact2.getNumericId().getNumericId()).isEqualTo(impact1.getNumericId().getNumericId() + 1);
-        }
-
-        @Test
-        void testNumericIdChild_CreateOperation_NumericIdCascades() {
-            // given
-            var impact = saveFullDummyImpact();
-
-            // when
-
-            // then
-            assertThat(impact.getNumericId().getNumericId()).isNotNull();
-        }
-
-        @Test
-        void testNumericIdChild_DeleteOperation_NumericIdCascades() {
-            // given
-            var impact = saveFullDummyImpact();
-            var impactNumericId = impact.getNumericId();
-
-            // when
-            impactRepository.delete(impact);
-
-            // then
-            assertThat(numericIdRepository.findById(impactNumericId.getNumericId())).isNotPresent();
-        }
     }
 }

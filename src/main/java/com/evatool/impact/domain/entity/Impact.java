@@ -15,8 +15,7 @@ public class Impact extends SuperEntity {
     private static final Logger logger = LoggerFactory.getLogger(Impact.class);
 
     @Getter
-    @OneToOne(optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
-    private NumericId numericId;
+    private Integer numericId;
 
     @Column(name = "VALUE", nullable = false)
     @Getter
@@ -40,7 +39,6 @@ public class Impact extends SuperEntity {
 
     public Impact() {
         super();
-        this.numericId = new NumericId();
         logger.debug("{} created", Impact.class.getSimpleName());
     }
 
@@ -88,11 +86,11 @@ public class Impact extends SuperEntity {
     // TODO [philipp] Write tests in service and rest controller that validate this behavior.
     //  - Correct Exceptions are thrown
     //  - Correct Http Return Codes
-    public void setNumericId(NumericId numericId) {
+    public void setNumericId(Integer numericId) {
         logger.debug("Set NumericId");
-        if (numericId == null) {
-            logger.error("Attempted to set value outside its valid range");
-            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+        if (this.numericId != null) {
+            logger.error("Attempted to set existing numericId");
+            throw new IllegalArgumentException("Existing numericId cannot be set.");
         }
         this.numericId = numericId;
     }

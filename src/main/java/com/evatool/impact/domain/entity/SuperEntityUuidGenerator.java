@@ -15,6 +15,22 @@ public class SuperEntityUuidGenerator extends UUIDGenerator {
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
         logger.debug("Generating new SuperEntityUuid");
+
+        if (object.getClass() == Impact.class) {
+            var impact = (Impact) object;
+            System.out.println("-------------------------------------------------------------------------------------");
+            System.out.println(impact);
+
+            var max = session.createQuery("select MAX(a.numericId) from IMP_IMPACT a", Integer.class).getResultList().get(0);
+
+            if (max == null) {
+                impact.setNumericId(1);
+            } else {
+                impact.setNumericId(max + 1);
+            }
+            System.out.println(impact);
+        }
+
         Serializable id = session.getEntityPersister(null, object).getClassMetadata().getIdentifier(object, session);
         return id != null ? id : super.generate(session, object);
     }
