@@ -1,6 +1,7 @@
 package com.evatool.impact.domain.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,9 +88,13 @@ public class Impact extends SuperEntity {
     // TODO [phillip] Write tests in service and rest controller that validate this behavior.
     //  - Correct Exceptions are thrown
     //  - Correct Http Return Codes
-    public void setNumericId(Integer numericId) {
+    public void setNumericId(NumericId numericId) {
         logger.debug("Set NumericId");
-        this.numericId.setId(numericId);
+        if (numericId == null) {
+            logger.error("Attempted to set value outside its valid range");
+            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+        }
+        this.numericId = numericId;
     }
 
     public void setValue(double value) {
