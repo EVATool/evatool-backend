@@ -1,6 +1,6 @@
 package com.evatool.impact.domain.repository;
 
-import com.evatool.impact.common.exception.NumericIdMustBeNullException;
+import com.evatool.impact.domain.entity.AnalysisImpactId;
 import com.evatool.impact.domain.entity.NumericId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,28 +32,6 @@ class NumericIdRepositoryTest {
     }
 
     @Test
-    void testSave_SaveNewNumericId_NumericIdGenerated() {
-        // given
-        var numericId = saveFullDummyNumericId();
-
-        // when
-
-        // then
-        assertThat(numericId.getNumericId()).isNotNull();
-    }
-
-    @Test
-    void testSave_SaveNewNumericId_ReadableIdGenerated() {
-        // given
-        var numericId = saveFullDummyNumericId();
-
-        // when
-
-        // then
-        assertThat(numericId._getReadableId()).isNotNull();
-    }
-
-    @Test
     void testSetNumericId_UnsavedNumericId_CannotSetNumericId() {
         // given
         var numericId = createDummyNumericId();
@@ -74,5 +52,46 @@ class NumericIdRepositoryTest {
 
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> numericId.setNumericId(1));
+    }
+
+    @Test
+    void testSave_SaveNewNumericId_NumericIdNotNull() {
+        // given
+        var numericId = saveFullDummyNumericId();
+
+        // when
+
+        // then
+        System.out.println(numericId);
+        assertThat(numericId.getNumericId()).isNotNull();
+    }
+
+    @Test
+    void testSave_SaveNewNumericId_ReadableIdNotNull() {
+        // given
+        var numericId = saveFullDummyNumericId();
+
+        // when
+
+        // then
+        assertThat(numericId._getReadableId()).isNotNull();
+    }
+
+    @Test
+    void testSave_SaveNewNumericId_ReadableIdCorrectValue() {
+        // given
+        var numericId = saveFullDummyNumericId();
+
+        // when
+
+        // then
+        assertThat(numericId._getReadableId()).isEqualTo("IMP" + numericId.getNumericId());
+    }
+
+    @Test
+    void testSave_GenerateNumericId_GenerateForEachAnalysisId() {
+        // given
+        var numericIdAnalysis1 = new NumericId();
+
     }
 }

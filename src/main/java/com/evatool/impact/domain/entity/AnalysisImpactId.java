@@ -2,12 +2,13 @@ package com.evatool.impact.domain.entity;
 
 
 import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table
 public class AnalysisImpactId implements Serializable {
 
     @Id
@@ -15,15 +16,13 @@ public class AnalysisImpactId implements Serializable {
     @Getter
     private Integer numericId;
 
-    @Id
-    private String analysisId = "lol";
 
     public AnalysisImpactId() {
 
     }
 
-    public AnalysisImpactId(Integer numericId, String analysisId) {
+    public AnalysisImpactId(Integer numericId) {
         this.numericId = numericId;
-        this.analysisId = analysisId;
+        //this.analysisId = analysisId;
     }
 }

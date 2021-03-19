@@ -24,12 +24,6 @@ public class NumericId {
     @Getter
     private Integer numericId;
 
-    @Id
-    private String analysisId = "lol";
-
-    @Column(name = "READABLE_ID")
-    private String readableId;
-
     public NumericId() {
 
     }
@@ -46,21 +40,18 @@ public class NumericId {
         return this.numericId != null;
     }
 
-    private boolean readableIdAlreadySet() {
-        return this.readableId != null;
-    }
-
     public String _getReadableId() { // Not prefixing this method with '_' causes some tests to fail.
-        return this.readableId;
+        if (numericIdAlreadySet()) {
+            return PREFIX + this.numericId;
+        } else {
+            return null;
+        }
     }
 
     @PrePersist
     void prePersist() {
         if (this.numericId != null) {
             throw new InvalidDataAccessApiUsageException(this.getClass().getSimpleName());
-        }
-        if (!this.readableIdAlreadySet()) {
-            this.readableId = PREFIX + this.numericId;
         }
     }
 }
