@@ -79,7 +79,7 @@ public class ImpactServiceImpl implements ImpactService {
         if (impactDto.getId() != null) {
             throw new EntityIdMustBeNullException(Impact.class.getSimpleName());
         }
-        if (impactDto.getNumericId() != null) {
+        if (impactDto.getUniqueString() != null) {
             throw new NumericIdMustBeNullException(Impact.class.getSimpleName());
         }
         this.assertImpactChildrenExist(impactDto);
@@ -92,7 +92,7 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto update(ImpactDto impactDto) {
         logger.info("Update Impact");
         var persisted = this.findById(impactDto.getId());
-        if (!persisted.getNumericId().equals(impactDto.getNumericId())) {
+        if (!persisted.getUniqueString().equals(impactDto.getUniqueString())) {
             throw new NumericIdCannotBeUpdatedException(Impact.class.getSimpleName());
         }
         this.assertImpactChildrenExist(impactDto);

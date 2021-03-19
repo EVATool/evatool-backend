@@ -120,9 +120,6 @@ class SuperEntityUuidGeneratorTest {
             var impact2 = saveFullDummyImpact(analysis);
 
             // then
-            System.out.println(impact1);
-            System.out.println(impact2);
-
             assertThat(impact2.getNumericId()).isEqualTo(impact1.getNumericId() + 1);
         }
 

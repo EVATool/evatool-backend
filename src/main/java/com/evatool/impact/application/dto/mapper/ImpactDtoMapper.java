@@ -17,7 +17,13 @@ public class ImpactDtoMapper {
 
     public static Impact fromDto(ImpactDto impactDto) {
         logger.info("Mapping Dto to Entity");
-        return modelMapper.map(impactDto, Impact.class);
+        var impact = modelMapper.map(impactDto, Impact.class);
+        if (impactDto.getUniqueString() != null) {
+            var prefixRemoved = impactDto.getUniqueString().replace("IMP", "");
+            var intValue = Integer.valueOf(prefixRemoved);
+            impact.setNumericId(intValue);
+        }
+        return impact;
     }
 
     public static ImpactDto toDto(Impact impact) {

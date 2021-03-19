@@ -24,7 +24,6 @@ class ImpactDtoMapperTest {
 
         // then
         assertThat(impact).isEqualTo(recreatedImpact);
-
     }
 
     @Test
@@ -32,7 +31,7 @@ class ImpactDtoMapperTest {
         // given
         var impactDto = createDummyImpactDto();
         impactDto.setId(UUID.randomUUID());
-        impactDto.setNumericId(1337);
+        impactDto.setUniqueString("IMP1337");
         impactDto.setDimension(createDummyDimensionDto());
         impactDto.setStakeholder(createDummyStakeholderDto());
         impactDto.setAnalysis(createDummyAnalysisDto());

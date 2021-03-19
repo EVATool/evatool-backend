@@ -20,12 +20,10 @@ public class ImpactDto {
     @Setter
     private UUID id;
 
-    // TODO [philipp] readableId
     @ApiModelProperty
     @Getter
     @Setter
-    @Nullable
-    private Integer numericId;
+    private String uniqueString;
 
     @ApiModelProperty(required = true, allowableValues = "range[-1.0,1.0]")
     @Getter
@@ -62,7 +60,7 @@ public class ImpactDto {
     public String toString() {
         return "ImpactDto{" +
                 "id='" + id + '\'' +
-                ", numericId=" + numericId +
+                ", uniqueString=" + uniqueString +
                 ", value=" + value +
                 ", description='" + description + '\'' +
                 ", dimension=" + dimension +
@@ -78,7 +76,7 @@ public class ImpactDto {
         ImpactDto that = (ImpactDto) o;
         return Double.compare(that.value, value) == 0
                 && Objects.equals(id, that.id)
-                && Objects.equals(numericId, that.numericId)
+                && Objects.equals(uniqueString, that.uniqueString)
                 && Objects.equals(description, that.description)
                 && Objects.equals(stakeholder, that.stakeholder)
                 && Objects.equals(dimension, that.dimension)
@@ -87,6 +85,6 @@ public class ImpactDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numericId, value, description, stakeholder, dimension, analysis);
+        return Objects.hash(id, uniqueString, value, description, stakeholder, dimension, analysis);
     }
 }

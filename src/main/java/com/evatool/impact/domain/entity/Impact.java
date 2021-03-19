@@ -97,7 +97,7 @@ public class Impact extends SuperEntity {
         this.numericId = numericId;
     }
 
-    public String _getPrefixedNumericId() { // This method has to be prefixed with '_' to not confuse ModelMapper.
+    public String getUniqueString() { // This method has to be prefixed with '_' to not confuse ModelMapper.
         if (this.numericId != null) {
             return "IMP" + this.getNumericId();
         } else {
