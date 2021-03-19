@@ -2,7 +2,6 @@ package com.evatool.impact.application.dto.mapper;
 
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.entity.NumericImpactId;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

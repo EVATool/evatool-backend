@@ -11,9 +11,9 @@ import javax.persistence.*;
 @Table(name = "IMP_NUMERIC_ID")
 @Entity(name = "IMP_NUMERIC_ID")
 @EqualsAndHashCode
-public class NumericImpactId {
+public class NumericId {
 
-    private static final Logger logger = LoggerFactory.getLogger(NumericImpactId.class);
+    private static final Logger logger = LoggerFactory.getLogger(NumericId.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
