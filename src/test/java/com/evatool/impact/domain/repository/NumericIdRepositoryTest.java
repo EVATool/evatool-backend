@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyNumericId;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,29 +50,6 @@ class NumericIdRepositoryTest {
         // when
 
         // then
-        System.out.println(numericId);
-        assertThat(numericId._getReadableId()).isNotNull();
-    }
-
-    @Test
-    void testFindById_SavedNumericId_NumericIdAvailable() {
-        // given
-        var numericId = saveFullDummyNumericId();
-
-        // when
-
-        // then
-        assertThat(numericId.getNumericId()).isNotNull();
-    }
-
-    @Test
-    void testFindById_SavedNumericId_ReadableIdAvailable() {
-        // given
-        var numericId = saveFullDummyNumericId();
-
-        // when
-
-        // then
         assertThat(numericId._getReadableId()).isNotNull();
     }
 
@@ -84,7 +62,7 @@ class NumericIdRepositoryTest {
         numericId.setNumericId(1);
 
         // then
-        assertThatExceptionOfType(NumericIdMustBeNullException.class).isThrownBy(() -> numericIdRepository.save(numericId));
+        assertThatExceptionOfType(InvalidDataAccessApiUsageException.class).isThrownBy(() -> numericIdRepository.save(numericId));
     }
 
     @Test

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import javax.persistence.*;
 
@@ -54,7 +55,7 @@ public class NumericId {
     @PrePersist
     void prePersist() {
         if (this.numericId != null) {
-            throw new NumericIdMustBeNullException(this.getClass().getSimpleName());
+            throw new InvalidDataAccessApiUsageException(this.getClass().getSimpleName());
         }
         if (!this.readableIdAlreadySet()) {
             this.readableId = PREFIX + this.numericId;
