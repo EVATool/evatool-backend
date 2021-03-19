@@ -7,10 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+
+import static com.evatool.impact.common.TestDataGenerator.createDummyNumericId;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class NumericIdRepositoryTest {
+class NumericIdRepositoryTest {
 
     @Autowired
     NumericIdRepository numericIdRepository;
@@ -26,12 +31,57 @@ public class NumericIdRepositoryTest {
     }
 
     @Test
-    void testSave_NumericIdGenerated() {
+    void testSave_SaveNewNumericId_NumericIdGenerated() {
         // given
         var numericId = saveFullDummyNumericId();
 
         // when
 
         // then
+        assertThat(numericId.getNumericId()).isNotNull();
+    }
+
+    @Test
+    void testSave_SaveNewNumericId_ReadableIdGenerated() {
+        // given
+        var numericId = saveFullDummyNumericId();
+
+        // when
+
+        // then
+        assertThat(numericId._getReadableId()).isNotNull();
+    }
+
+    void testFindById_SavedNumericId_ReadableIdAvailable() {
+        // given
+        var numericId = saveFullDummyNumericId();
+
+        // when
+
+        // then
+        assertThat(numericId.getNumericId()).isNotNull();
+    }
+
+    @Test
+    void testSetNumericId_UnsavedNumericId_CannotSetNumericId() {
+        // given
+        var numericId = createDummyNumericId();
+
+        // when
+        numericId.setNumericId(1);
+
+        // then
+        assertThatExceptionOfType(InvalidDataAccessApiUsageException.class).isThrownBy(() -> numericIdRepository.save(numericId));
+    }
+
+    @Test
+    void testSetNumericId_SavedNumericId_CannotChangeNumericId() {
+        // given
+        var numericId = saveFullDummyNumericId();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> numericId.setNumericId(1));
     }
 }
