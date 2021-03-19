@@ -21,23 +21,23 @@ public class NumericId {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Getter
-    private Integer id;
+    private Integer numericId;
 
-    public void setId(Integer id) {
+    public void setNumericId(Integer numericId) {
         if (idAlreadySet()) {
             logger.error("Attempted to set existing numericId");
             throw new IllegalArgumentException("NumericId Cannot be changed.");
         }
-        this.id = id;
+        this.numericId = numericId;
     }
 
     private boolean idAlreadySet() {
-        return this.id != null;
+        return this.numericId != null;
     }
 
     public String _getReadableId() { // Not prefixing this method with '_' causes some tests to fail.
-        if (this.id != null) {
-            return PREFIX + this.id;
+        if (this.numericId != null) {
+            return PREFIX + this.numericId;
         }
         return null;
     }

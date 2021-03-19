@@ -90,7 +90,7 @@ class ImpactRepositoryTest {
         var impact = createDummyImpact();
 
         // when
-        impact.getNumericId().setId(1);
+        impact.getNumericId().setNumericId(1);
 
         // then
         assertThatExceptionOfType(InvalidDataAccessApiUsageException.class).isThrownBy(() -> impactRepository.save(impact));
@@ -104,7 +104,7 @@ class ImpactRepositoryTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.getNumericId().setId(1));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.getNumericId().setNumericId(1));
     }
 
     @Test
@@ -118,7 +118,7 @@ class ImpactRepositoryTest {
         impactRepository.save(impact2);
 
         // then
-        assertThat(impact2.getNumericId().getId()).isEqualTo(impact1.getNumericId().getId() + 1);
+        assertThat(impact2.getNumericId().getNumericId()).isEqualTo(impact1.getNumericId().getNumericId() + 1);
     }
 
     @Test
@@ -129,14 +129,14 @@ class ImpactRepositoryTest {
         // when
 
         // then
-        assertThat(impact.getNumericId().getId()).isNotNull();
+        assertThat(impact.getNumericId().getNumericId()).isNotNull();
     }
 
     @Test
     void testNumericIdChild_DeleteOperation_NumericIdCascades() {
         // given
         var impact = saveFullDummyImpact();
-        var impactNumericId = impact.getNumericId().getId();
+        var impactNumericId = impact.getNumericId().getNumericId();
 
         // when
         impactRepository.delete(impact);
