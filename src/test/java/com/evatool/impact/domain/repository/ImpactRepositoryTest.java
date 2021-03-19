@@ -1,12 +1,16 @@
 package com.evatool.impact.domain.repository;
 
-import com.evatool.impact.domain.entity.*;
+import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.domain.entity.Impact;
+import com.evatool.impact.domain.entity.ImpactAnalysis;
+import com.evatool.impact.domain.entity.ImpactStakeholder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import java.util.Arrays;
 
@@ -78,6 +82,18 @@ class ImpactRepositoryTest {
         // then
         var impactsOfAnalysis = impactRepository.findAllByAnalysisId(impact1.getAnalysis().getId());
         assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(impact1, impact2));
+    }
+
+    @Test
+    void testSetNumericId_UnsavedImpact_CannotSetNumericId() {
+        // given
+        var impact = createDummyImpact();
+
+        // when
+        impact.getNumericId().setId(1);
+
+        // then
+        assertThatExceptionOfType(InvalidDataAccessApiUsageException.class).isThrownBy(() -> impactRepository.save(impact));
     }
 
     @Test
