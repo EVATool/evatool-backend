@@ -1,10 +1,12 @@
 package com.evatool.impact.domain.entity;
 
+import com.evatool.impact.common.exception.NumericIdMustBeNullException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import javax.persistence.*;
 
@@ -50,5 +52,12 @@ public class NumericId {
             return PREFIX + this.numericId;
         }
         return null;
+    }
+
+    @PrePersist
+    void prePersist(){
+        if(this.numericId != null){
+            throw new NumericIdMustBeNullException(this.getClass().getSimpleName());
+        }
     }
 }

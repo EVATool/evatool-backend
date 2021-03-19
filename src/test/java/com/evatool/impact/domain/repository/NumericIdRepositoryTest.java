@@ -1,5 +1,6 @@
 package com.evatool.impact.domain.repository;
 
+import com.evatool.impact.common.exception.NumericIdMustBeNullException;
 import com.evatool.impact.domain.entity.NumericId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyNumericId;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,7 +71,7 @@ class NumericIdRepositoryTest {
         numericId.setNumericId(1);
 
         // then
-        assertThatExceptionOfType(InvalidDataAccessApiUsageException.class).isThrownBy(() -> numericIdRepository.save(numericId));
+        assertThatExceptionOfType(NumericIdMustBeNullException.class).isThrownBy(() -> numericIdRepository.save(numericId));
     }
 
     @Test
