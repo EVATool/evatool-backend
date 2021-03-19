@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.fromDto;
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
+import static com.evatool.impact.common.TestDataGenerator.createDummyImpactDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -69,11 +71,13 @@ class ImpactTest {
     }
 
     @Test
-    void testSetNumericId_SetToNul_ThrowIllegalArgumentException() {
+    void testSetNumericId_ExistingNumericId_ThrowIllegalArgumentException() {
         // given
-        var impact = createDummyImpact();
+        var impactDto = createDummyImpactDto();
+        impactDto.setNumericId(1337);
 
         // when
+        var impact = fromDto(impactDto);
 
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setNumericId(null));
