@@ -21,15 +21,16 @@ public class UniqueImpactAnalysisIdGenerator extends SequenceStyleGenerator {
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
         logger.debug("Generating new AnalysisImpactId");
 
-        System.out.println(object);
-        var persistor = session.getEntityPersister(NumericId.class.getSimpleName(), object);
-        System.out.println(persistor);
-
-        var entities = session.createQuery("select a from IMP_NUMERIC_ID a", NumericId.class).getResultList();
+        var entities = session.createQuery("select a.numericId from IMP_NUMERIC_ID a", Integer.class).getResultList();
         System.out.println(entities);
 
+        var max = session.createQuery("select MAX(a.numericId) from IMP_NUMERIC_ID a", Integer.class).getResultList();
+        System.out.println(max);
 
-        Serializable id = session.getEntityPersister(null, object).getClassMetadata().getIdentifier(object, session);
-        return id != null ? id : super.generate(session, object);
+        if (max.get(0) == null) { // First entity.
+            return 1;
+        } else {
+            return max.get(0) + 1;
+        }
     }
 }

@@ -92,9 +92,11 @@ class NumericIdRepositoryTest {
         // given
         var numericIdAnalysis1 = new NumericId();
         var numericIdAnalysis2 = new NumericId();
+        var numericIdAnalysis3 = new NumericId();
 
         numericIdAnalysis1 = numericIdRepository.save(numericIdAnalysis1);
-        //numericIdAnalysis2 = numericIdRepository.save(numericIdAnalysis2);
+        numericIdAnalysis2 = numericIdRepository.save(numericIdAnalysis2);
+        numericIdAnalysis3 = numericIdRepository.save(numericIdAnalysis3);
 
         //System.out.println(numericIdAnalysis1);
         //System.out.println(numericIdAnalysis2);
