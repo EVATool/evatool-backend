@@ -58,12 +58,7 @@ class ImpactServiceImplTest {
 
     private Impact saveFullDummyImpact() {
         var analysis = saveDummyAnalysis();
-        var dimension = saveDummyDimension();
-        var stakeholder = saveDummyStakeholder();
-        var impact = createDummyImpact(analysis);
-        impact.setDimension(dimension);
-        impact.setStakeholder(stakeholder);
-        return impactRepository.save(impact);
+        return saveFullDummyImpact(analysis);
     }
 
     private Impact saveFullDummyImpact(ImpactAnalysis analysis) {
