@@ -15,7 +15,7 @@ public class Impact extends SuperEntity {
 
     @Getter
     @OneToOne(optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
-    private NumericImpactId numericId;
+    private NumericId numericId;
 
     @Column(name = "VALUE", nullable = false)
     @Getter
@@ -39,7 +39,7 @@ public class Impact extends SuperEntity {
 
     public Impact() {
         super();
-        this.numericId = new NumericImpactId();
+        this.numericId = new NumericId();
         logger.debug("{} created", Impact.class.getSimpleName());
     }
 
@@ -84,6 +84,9 @@ public class Impact extends SuperEntity {
         return Objects.hash(super.hashCode(), this.value, this.description, this.dimension, this.stakeholder, this.analysis);
     }
 
+    // TODO [phillip] Write tests in service and rest controller that validate this behavior.
+    //  - Expeptions are thrown
+    //  - Correct Http Return Codes
     public void setNumericId(Integer numericId) {
         logger.debug("Set NumericId");
         if (this.numericId.getId() != null) {
