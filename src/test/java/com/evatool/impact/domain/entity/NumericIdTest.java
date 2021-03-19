@@ -19,6 +19,18 @@ class NumericIdTest {
     }
 
     @Test
+    void testSetNumericId_ExistingId_ReadableIdIsInferred() {
+        // given
+        var numericId = createDummyNumericId();
+
+        // when
+        numericId.setNumericId(1);
+
+        // then
+        assertThat(numericId._getReadableId()).isEqualTo("IMP" + numericId.getNumericId());
+    }
+
+    @Test
     void testSetNumericId_ExistingId_ThrowNewIllegalArgumentException() {
         // given
         var numericId = createDummyNumericId();

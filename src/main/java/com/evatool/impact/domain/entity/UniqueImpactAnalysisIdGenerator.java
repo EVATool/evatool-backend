@@ -6,19 +6,23 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import java.io.Serializable;
 
+@Configurable
 public class UniqueImpactAnalysisIdGenerator extends SequenceStyleGenerator {
     private static final Logger logger = LoggerFactory.getLogger(UniqueImpactAnalysisIdGenerator.class);
 
-    @Autowired
+    //@Autowired
     ImpactRepository impactRepository;
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
         logger.debug("Generating new AnalysisImpactId");
+
+        System.out.println(session);
+
         Serializable id = session.getEntityPersister(null, object).getClassMetadata().getIdentifier(object, session);
         return id != null ? id : super.generate(session, object);
     }

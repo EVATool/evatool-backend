@@ -82,29 +82,6 @@ class ImpactRepositoryTest {
     class NumericIdChild {
 
         @Test
-        void testSetNumericId_UnsavedImpact_CannotSetNumericId() {
-            // given
-            var impact = createDummyImpact();
-
-            // when
-            impact.getNumericId().setNumericId(1);
-
-            // then
-            assertThatExceptionOfType(InvalidDataAccessApiUsageException.class).isThrownBy(() -> impactRepository.save(impact));
-        }
-
-        @Test
-        void testSetNumericId_SavedImpact_CannotChangeNumericId() {
-            // given
-            var impact = saveFullDummyImpact();
-
-            // when
-
-            // then
-            assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.getNumericId().setNumericId(1));
-        }
-
-        @Test
         void testNumericIdChild_InsertMultipleImpacts_NumericIdIncrements() {
             // given
             var impact1 = saveFullDummyImpact();
