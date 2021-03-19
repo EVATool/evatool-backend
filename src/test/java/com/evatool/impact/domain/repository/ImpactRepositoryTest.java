@@ -4,7 +4,10 @@ import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -81,48 +84,5 @@ class ImpactRepositoryTest {
         // then
         var impactsOfAnalysis = impactRepository.findAllByAnalysisId(impact1.getAnalysis().getId());
         assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(impact1, impact2));
-    }
-
-    @Nested
-    class NumericId {
-
-        @Test
-        void testNumericId_InsertedImpact_NumericIdIsGenerated() {
-            // given
-            var impact1 = saveFullDummyImpact();
-
-            // when
-
-            // then
-            assertThat(impact1.getNumericId()).isNotNull();
-        }
-
-        @Test
-        void testNumericId_InsertMultipleImpactsWithTheSameAnalysis_NumericIdIncrements() {
-            // given
-            var analysis = saveDummyAnalysis();
-
-            // when
-            var impact1 = saveFullDummyImpact(analysis);
-            var impact2 = saveFullDummyImpact(analysis);
-
-            // then
-            System.out.println(impact1);
-            System.out.println(impact2);
-
-            assertThat(impact2.getNumericId()).isEqualTo(impact1.getNumericId() + 1);
-        }
-
-        @Test
-        void testNumericId_InsertMultipleImpactsWithDifferentAnalyses_NumericIdIncrements() {
-            // given
-            var impact1 = saveFullDummyImpact();
-            var impact2 = saveFullDummyImpact();
-
-            // when
-
-            // then
-            assertThat(impact2.getNumericId()).isEqualTo(impact1.getNumericId());
-        }
     }
 }
