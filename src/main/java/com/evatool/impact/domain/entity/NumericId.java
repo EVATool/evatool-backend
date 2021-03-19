@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Table(name = "IMP_NUMERIC_ID")
 @Entity(name = "IMP_NUMERIC_ID")
@@ -24,17 +23,12 @@ public class NumericId {
     @Getter
     private Integer id;
 
-    private String readableId;
-
     public void setId(Integer id) {
         if (idAlreadySet()) {
             logger.error("Attempted to set existing numericId");
             throw new IllegalArgumentException("NumericId Cannot be changed.");
         }
         this.id = id;
-        if (this.id != null) {
-            this.readableId = PREFIX + this.id;
-        }
     }
 
     private boolean idAlreadySet() {
@@ -42,6 +36,9 @@ public class NumericId {
     }
 
     public String _getReadableId() { // Not prefixing this method with '_' causes some tests to fail.
-        return this.readableId;
+        if (this.id != null) {
+            return PREFIX + this.id;
+        }
+        return null;
     }
 }
