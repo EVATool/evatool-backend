@@ -1,15 +1,15 @@
 package com.evatool.analysis.application.controller;
 
 
-import com.evatool.analysis.api.interfaces.StakeholderController;
-import com.evatool.analysis.dto.StakeholderDTO;
-import com.evatool.analysis.enums.Dimension;
-import com.evatool.analysis.enums.StakeholderLevel;
-import com.evatool.analysis.error.exceptions.EntityNotFoundException;
-import com.evatool.analysis.model.AnalysisImpacts;
-import com.evatool.analysis.model.Stakeholder;
-import com.evatool.analysis.repository.AnalysisImpactRepository;
-import com.evatool.analysis.repository.StakeholderRepository;
+import com.evatool.analysis.application.interfaces.StakeholderController;
+import com.evatool.analysis.application.dto.StakeholderDTO;
+import com.evatool.analysis.domain.enums.Dimension;
+import com.evatool.analysis.domain.enums.StakeholderLevel;
+import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
+import com.evatool.analysis.domain.model.AnalysisImpacts;
+import com.evatool.analysis.domain.model.Stakeholder;
+import com.evatool.analysis.domain.repository.AnalysisImpactRepository;
+import com.evatool.analysis.domain.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

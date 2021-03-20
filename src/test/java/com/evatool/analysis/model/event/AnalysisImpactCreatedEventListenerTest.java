@@ -1,10 +1,10 @@
 package com.evatool.analysis.model.event;
 
-import com.evatool.analysis.error.exceptions.EventEntityAlreadyExistsException;
-import com.evatool.analysis.error.exceptions.InvalidEventPayloadException;
-import com.evatool.analysis.events.listener.AnalysisEventListener;
-import com.evatool.analysis.model.AnalysisImpacts;
-import com.evatool.analysis.repository.AnalysisImpactRepository;
+import com.evatool.analysis.common.error.execptions.EventEntityAlreadyExistsException;
+import com.evatool.analysis.common.error.execptions.InvalidEventPayloadException;
+import com.evatool.analysis.domain.events.listener.AnalysisEventListener;
+import com.evatool.analysis.domain.model.AnalysisImpacts;
+import com.evatool.analysis.domain.repository.AnalysisImpactRepository;
 import com.evatool.global.event.impact.ImpactCreatedEvent;
 import org.json.JSONException;
 import org.json.JSONObject;

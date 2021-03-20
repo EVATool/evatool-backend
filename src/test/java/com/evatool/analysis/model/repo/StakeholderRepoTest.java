@@ -1,9 +1,7 @@
 package com.evatool.analysis.model.repo;
 import com.evatool.analysis.common.TestDataGenerator;
-import com.evatool.analysis.model.Stakeholder;
-import com.evatool.analysis.model.User;
-import com.evatool.analysis.repository.StakeholderRepository;
-import com.evatool.analysis.repository.UserRepository;
+import com.evatool.analysis.domain.model.Stakeholder;
+import com.evatool.analysis.domain.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

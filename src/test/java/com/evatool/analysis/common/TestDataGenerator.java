@@ -1,14 +1,13 @@
 package com.evatool.analysis.common;
 
-import com.evatool.analysis.dto.AnalysisDTO;
-import com.evatool.analysis.dto.StakeholderDTO;
-import com.evatool.analysis.dto.UserDTO;
-import com.evatool.analysis.enums.Dimension;
-import com.evatool.analysis.enums.StakeholderLevel;
-import com.evatool.analysis.model.Analysis;
-import com.evatool.analysis.model.AnalysisImpacts;
-import com.evatool.analysis.model.Stakeholder;
-import com.evatool.analysis.model.User;
+import com.evatool.analysis.application.dto.AnalysisDTO;
+import com.evatool.analysis.application.dto.StakeholderDTO;
+import com.evatool.analysis.domain.enums.Dimension;
+import com.evatool.analysis.domain.enums.StakeholderLevel;
+import com.evatool.analysis.domain.model.Analysis;
+import com.evatool.analysis.domain.model.AnalysisImpacts;
+import com.evatool.analysis.domain.model.Stakeholder;
+import com.evatool.analysis.domain.model.User;
 
 public class TestDataGenerator {
 
@@ -20,9 +19,7 @@ public class TestDataGenerator {
         return new Stakeholder("StakeholderName", Integer.valueOf(10), StakeholderLevel.NATURAL_PERSON);
     }
 
-    public static User getUser() {
-        return new User("UserName", "1234", "TestMail@gamil.com");
-    }
+
 
     public static AnalysisDTO getAnalysisDTO(String name, String description) {
 
@@ -40,7 +37,6 @@ public class TestDataGenerator {
         stakeholderDTO.setStakeholderName(stakeholderName);
         stakeholderDTO.setPriority(priority);
         stakeholderDTO.setStakeholderLevel(stakeholderLevel);
-        stakeholderDTO.setImpacts(impacts);
 
         return stakeholderDTO;
     }
@@ -49,12 +45,4 @@ public class TestDataGenerator {
         return new AnalysisImpacts("title", "description", 1, dimension);
     }
 
-    public static UserDTO getUserDTO(String userName, String userPassword, String userEmail){
-        var userDTO = new UserDTO();
-
-        userDTO.setUserName(userName);
-        userDTO.setPassword(userPassword);
-        userDTO.setEmail(userEmail);
-        return userDTO;
-    }
 }

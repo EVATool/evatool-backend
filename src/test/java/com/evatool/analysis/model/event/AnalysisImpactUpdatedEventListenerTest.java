@@ -1,9 +1,9 @@
 package com.evatool.analysis.model.event;
 
-import com.evatool.analysis.error.exceptions.EventEntityDoesNotExistException;
-import com.evatool.analysis.events.listener.AnalysisEventListener;
-import com.evatool.analysis.model.AnalysisImpacts;
-import com.evatool.analysis.repository.AnalysisImpactRepository;
+import com.evatool.analysis.common.error.execptions.EventEntityDoesNotExistException;
+import com.evatool.analysis.domain.events.listener.AnalysisEventListener;
+import com.evatool.analysis.domain.model.AnalysisImpacts;
+import com.evatool.analysis.domain.repository.AnalysisImpactRepository;
 import com.evatool.global.event.impact.ImpactUpdatedEvent;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
