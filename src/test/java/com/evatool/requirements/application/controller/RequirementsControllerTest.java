@@ -1,11 +1,10 @@
 package com.evatool.requirements.application.controller;
 
 
-import com.evatool.requirements.controller.RequirementsController;
-import com.evatool.requirements.dto.RequirementDTO;
-import com.evatool.requirements.entity.*;
-import com.evatool.requirements.error.exceptions.EntityNotFoundException;
-import com.evatool.requirements.repository.*;
+import com.evatool.requirements.application.dto.RequirementDTO;
+import com.evatool.requirements.domain.entity.*;
+import com.evatool.requirements.common.exceptions.EntityNotFoundException;
+import com.evatool.requirements.domain.repository.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +65,7 @@ class RequirementsControllerTest {
         Map<UUID,String> variantsTitle = new HashMap<>();
         variantsTitle.put(requirementsVariant.getId(),requirementsVariant.getTitle());
 
-        RequirementDTO requirementDTO = getRequirementDTO(requirementImpactPoints,impactTitles,requirementsAnalysis.getId(),variantsTitle);
+        RequirementDTO requirementDTO = getRequirementDTO(requirementImpactPoints,impactTitles,requirementsAnalysis.getAnalysisId(),variantsTitle);
         //RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getId(),variantsTitle);
 
         //create requirement

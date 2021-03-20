@@ -1,7 +1,6 @@
 package com.evatool.analysis.api.interfaces;
 
 import com.evatool.analysis.dto.AnalysisDTO;
-import com.evatool.analysis.model.Analysis;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -9,13 +8,10 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-@Api(description = "API-endpoint for a analysis")
+@Api("API-endpoint for a analysis")
 public interface AnalysisController {
 
     // das ist ein kommentar
@@ -33,7 +29,7 @@ public interface AnalysisController {
             @ApiResponse(code = 404, message = "The entity was not found")})
     public EntityModel<AnalysisDTO> getAnalysisById(@PathVariable UUID id);
 
-    @PostMapping("/addAnalysis")
+    @PostMapping("/analysis")
     @ApiOperation(value = "This method add an analysis")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "The entity is inserted"),

@@ -11,8 +11,5 @@ public class RequirementCreatedEvent extends ApplicationEvent {
     public RequirementCreatedEvent(String jsonPayload) {
         super(jsonPayload);
         this.jsonPayload = jsonPayload;
-
     }
-
-
 }

@@ -1,11 +1,11 @@
 package com.evatool.requirements.domain.event;
 
 import com.evatool.global.event.variants.VariantCreatedEvent;
-import com.evatool.requirements.entity.RequirementsVariant;
-import com.evatool.requirements.error.exceptions.EventEntityAlreadyExistsException;
-import com.evatool.requirements.error.exceptions.InvalidEventPayloadException;
-import com.evatool.requirements.events.listener.RequirementEventListener;
-import com.evatool.requirements.repository.RequirementsVariantsRepository;
+import com.evatool.requirements.domain.entity.RequirementsVariant;
+import com.evatool.requirements.common.exceptions.EventEntityAlreadyExistsException;
+import com.evatool.requirements.common.exceptions.InvalidEventPayloadException;
+import com.evatool.requirements.domain.events.listener.RequirementEventListener;
+import com.evatool.requirements.domain.repository.RequirementsVariantsRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ class RequirementsVariantsCreateEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", id.toString(),title,description);
 
         // when
-        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(requirementEventListener,json);
+        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(json);
         requirementEventListener.variantsCreated(variantCreatedEvent);
 
         // then
@@ -73,7 +73,7 @@ class RequirementsVariantsCreateEventListenerTest {
         requirementsVariantsRepository.save(requirementsVariant);
 
         // when
-        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(requirementEventListener,json);
+        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(json);
 
         // then
         assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.variantsCreated(variantCreatedEvent));

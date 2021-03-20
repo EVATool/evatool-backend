@@ -2,10 +2,10 @@ package com.evatool.analysis.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
@@ -23,6 +23,8 @@ public class User {
     @Id
     @Getter
     @Setter
+    @Type(type= "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
     private UUID userId = UUID.randomUUID();
 
     /**

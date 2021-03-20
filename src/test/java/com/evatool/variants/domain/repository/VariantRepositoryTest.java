@@ -1,7 +1,7 @@
 package com.evatool.variants.domain.repository;
 
-import com.evatool.variants.entities.Variant;
-import com.evatool.variants.repositories.VariantRepository;
+import com.evatool.variants.domain.entities.Variant;
+import com.evatool.variants.domain.repositories.VariantRepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

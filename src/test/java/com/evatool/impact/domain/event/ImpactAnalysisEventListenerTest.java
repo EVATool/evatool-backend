@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.UUID;
 
@@ -20,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
-@ActiveProfiles(profiles = "non-async")
 public class ImpactAnalysisEventListenerTest {
 
     @Autowired
@@ -41,7 +39,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisCreatedEvent_PublishEvent_AnalysisCreated() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             // when
             var analysisCreatedEvent = new AnalysisCreatedEvent(json);
@@ -57,7 +55,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisCreatedEvent_AnalysisAlreadyExists_ThrowEventEntityAlreadyExistsException() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             var analysis = new ImpactAnalysis(id);
             analysisRepository.save(analysis);
@@ -77,8 +75,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisDeletedEvent_PublishEvent_AnalysisDeleted() {
             // given
             var id = UUID.randomUUID();
-            // TODO [hbuhl] See actual jsonPayload published by the analysis domain
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             var analysis = new ImpactAnalysis(id);
             analysisRepository.save(analysis);
@@ -96,50 +93,13 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisDeletedEvent_AnalysisDoesNotExist_ThrowEventEntityDoesNotExistException() {
             // given
             var id = UUID.randomUUID();
-            // TODO [hbuhl] See actual jsonPayload published by the analysis domain
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             // when
             AnalysisDeletedEvent analysisDeletedEvent = new AnalysisDeletedEvent(json);
 
             // then
             assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisDeletedEvent(analysisDeletedEvent));
-        }
-    }
-
-    @Nested
-    class Updated {
-
-        @Test
-        void testOnAnalysisUpdatedEvent_PublishEvent_AnalysisUpdated() {
-            // given
-            var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
-
-            var analysis = new ImpactAnalysis(id);
-            analysisRepository.save(analysis);
-
-            // when
-            AnalysisUpdatedEvent analysisUpdatedEvent =  new AnalysisUpdatedEvent(json);
-            impactAnalysisEventListener.onAnalysisUpdatedEvent(analysisUpdatedEvent);
-
-            // then
-            var updatedByEventAnalysis = analysisRepository.findById(id);
-            assertThat(updatedByEventAnalysis).isPresent();
-            assertThat(updatedByEventAnalysis.get().getId()).isEqualTo(id);
-        }
-
-        @Test
-        void testOnAnalysisUpdatedEvent_AnalysisDoesNotExists_ThrowEventEntityDoesNotExistException() {
-            // given
-            var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
-
-            // when
-            AnalysisUpdatedEvent analysisUpdatedEvent = new AnalysisUpdatedEvent(json);
-
-            // then
-            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisUpdatedEvent(analysisUpdatedEvent));
         }
     }
 }

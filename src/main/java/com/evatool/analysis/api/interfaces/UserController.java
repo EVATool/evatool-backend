@@ -1,8 +1,6 @@
 package com.evatool.analysis.api.interfaces;
 
-import com.evatool.analysis.dto.AnalysisDTO;
 import com.evatool.analysis.dto.UserDTO;
-import com.evatool.analysis.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -11,11 +9,10 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 
-@Api(description = "API-endpoint for user")
+@Api("API-endpoint for user")
 public interface UserController {
 
     @GetMapping("/user")

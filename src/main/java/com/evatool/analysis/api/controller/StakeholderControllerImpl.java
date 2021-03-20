@@ -45,9 +45,9 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     @Override
     public List<EntityModel<StakeholderDTO>> getStakeholderList() {
-        logger.info("[GET] /stakeholder");
+        logger.info("[GET] /stakeholders");
         List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
-        if (stakeholderList.size() == 0){
+        if (stakeholderList.isEmpty()){
             return Arrays.asList();
         }
         return generateLinks(stakeholderDTOService.findAll(stakeholderList));
@@ -65,9 +65,9 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     @Override
     public EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
-        logger.info("[POST] /addStakeholder");
+        logger.info("[POST] /stakeholder");
         Stakeholder stakeholder = stakeholderRepository.save(stakeholderDTOService.create(stakeholderDTO));
-        stakeholderEventPublisher.publishEvent(new StakeholderCreatedEvent(this, stakeholder.toString()));
+        stakeholderEventPublisher.publishEvent(new StakeholderCreatedEvent(this, stakeholder.toJson()));
         return getStakeholderById(stakeholder.getStakeholderId());
     }
 
@@ -80,7 +80,7 @@ public class StakeholderControllerImpl implements StakeholderController {
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
         stakeholder.setPriority(stakeholderDTO.getPriority());
         analysisImpactRepository.findAllById(stakeholderDTO.getImpactsTitles().keySet());
-        stakeholderEventPublisher.publishEvent(new StakeholderUpdatedEvent(this, stakeholderDTO.toString()));
+        stakeholderEventPublisher.publishEvent(new StakeholderUpdatedEvent(this, stakeholder.toJson()));
         return getStakeholderById(stakeholderDTO.getRootEntityID());
     }
 
@@ -93,7 +93,7 @@ public class StakeholderControllerImpl implements StakeholderController {
         }
         Stakeholder stakeholder = stakeholderOptional.get();
         stakeholderRepository.deleteById(id);
-        stakeholderEventPublisher.publishEvent(new StakeholderDeletedEvent(this, stakeholder.toString()));
+        stakeholderEventPublisher.publishEvent(new StakeholderDeletedEvent(this, stakeholder.toJson()));
         return ResponseEntity.ok().build();
     }
 

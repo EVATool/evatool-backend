@@ -1,10 +1,10 @@
 package com.evatool.requirements.domain.event;
 
 import com.evatool.global.event.variants.VariantDeletedEvent;
-import com.evatool.requirements.entity.RequirementsVariant;
-import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
-import com.evatool.requirements.events.listener.RequirementEventListener;
-import com.evatool.requirements.repository.RequirementsVariantsRepository;
+import com.evatool.requirements.domain.entity.RequirementsVariant;
+import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
+import com.evatool.requirements.domain.events.listener.RequirementEventListener;
+import com.evatool.requirements.domain.repository.RequirementsVariantsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,7 +38,7 @@ class RequirementsVariantsDeletedEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", tempId,title,description);
 
         // when
-        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(requirementEventListener, json);
+        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(json);
         requirementEventListener.variantsDeleted(variantDeletedEvent);
 
         // then
@@ -55,7 +55,7 @@ class RequirementsVariantsDeletedEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", id,title,description);
 
         // when
-        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(requirementEventListener, json);
+        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(json);
 
         // then
         assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.variantsDeleted(variantDeletedEvent));

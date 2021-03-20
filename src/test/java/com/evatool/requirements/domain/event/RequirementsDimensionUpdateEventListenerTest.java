@@ -1,10 +1,10 @@
 package com.evatool.requirements.domain.event;
 
 import com.evatool.global.event.dimension.DimensionUpdatedEvent;
-import com.evatool.requirements.entity.RequirementDimension;
-import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
-import com.evatool.requirements.events.listener.RequirementEventListener;
-import com.evatool.requirements.repository.RequirementDimensionRepository;
+import com.evatool.requirements.domain.entity.RequirementDimension;
+import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
+import com.evatool.requirements.domain.events.listener.RequirementEventListener;
+import com.evatool.requirements.domain.repository.RequirementDimensionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

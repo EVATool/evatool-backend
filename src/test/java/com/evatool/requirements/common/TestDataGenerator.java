@@ -1,7 +1,7 @@
 package com.evatool.requirements.common;
 
-import com.evatool.requirements.dto.RequirementDTO;
-import com.evatool.requirements.entity.*;
+import com.evatool.requirements.application.dto.RequirementDTO;
+import com.evatool.requirements.domain.entity.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,12 +42,12 @@ public class TestDataGenerator {
 
     public static RequirementPoint getRequirementGR(Requirement requirement, RequirementsImpact requirementsImpact) {
 
-        return new RequirementPoint(requirementsImpact, requirement, 3);
+        return new RequirementPoint(requirementsImpact, 3);
     }
 
     public static RequirementPoint getRequirementGR(RequirementDimension requirementDimension,RequirementsAnalysis requirementsAnalysis, Collection<RequirementsVariant> variants) {
 
-        return new RequirementPoint(getRequirementsImpacts(requirementDimension), getRequirement(requirementsAnalysis,variants), 3F);
+        return new RequirementPoint(getRequirementsImpacts(requirementDimension), 3F);
     }
 
     public static RequirementDTO getRequirementDTO(Map<UUID,String> impactTitles,UUID projectID,Map<UUID,String> variantsTitle) {

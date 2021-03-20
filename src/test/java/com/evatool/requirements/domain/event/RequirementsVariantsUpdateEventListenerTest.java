@@ -1,10 +1,10 @@
 package com.evatool.requirements.domain.event;
 
 import com.evatool.global.event.variants.VariantUpdatedEvent;
-import com.evatool.requirements.entity.RequirementsVariant;
-import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
-import com.evatool.requirements.events.listener.RequirementEventListener;
-import com.evatool.requirements.repository.RequirementsVariantsRepository;
+import com.evatool.requirements.domain.entity.RequirementsVariant;
+import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
+import com.evatool.requirements.domain.events.listener.RequirementEventListener;
+import com.evatool.requirements.domain.repository.RequirementsVariantsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,7 +37,7 @@ class RequirementsVariantsUpdateEventListenerTest {
         UUID tempId = requirementsVariant.getId();
 
         // when
-        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(requirementEventListener, json);
+        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(json);
         requirementEventListener.variantsUpdated(variantUpdatedEvent);
 
         // then
@@ -58,7 +58,7 @@ class RequirementsVariantsUpdateEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", id.toString(),newTitle,newDescription);
 
         // when
-        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(requirementEventListener, json);
+        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(json);
 
         // then
         assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.variantsUpdated(variantUpdatedEvent));

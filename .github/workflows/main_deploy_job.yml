@@ -20,24 +20,20 @@ jobs:
         with:
           java-version: 11
 
-      - name: Build with Maven
-        run: mvn -B clean install --file pom.xml
+      - name: Test
+        run: |
+          mvn test --file pom.xml
 
-      - name: Transfer docker file to remote server
+      - name: Build
+        run: |
+          sed -i 's/DB_PASSWORD_PLACEHOLDER/${{ secrets.DB_PASSWORD }}/g' src/main/resources/application-prod.properties
+          mvn clean install -P prod -Dmaven.test.skip=true --file pom.xml
+
+      - name: Transfer docker folder to remote server
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: docker/Dockerfile
-          remote: evatool/Dockerfile
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          privatekey: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-
-      - name: Transfer docker script to remote server
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: docker/deploy.sh
-          remote: evatool/deploy.sh
+          local: docker
+          remote: evatool/backend/docker
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           privatekey: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -47,7 +43,7 @@ jobs:
         uses: garygrossgarten/github-action-scp@release
         with:
           local: target/evatool-0.0.1-SNAPSHOT.jar
-          remote: evatool/evatoolapp.jar
+          remote: evatool/backend/docker/evatoolapp.jar
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           privatekey: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -60,4 +56,4 @@ jobs:
           USERNAME: ${{ secrets.USER }}
           KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           PORT: ${{ secrets.PORT }}
-          SCRIPT: sh evatool/deploy.sh
+          SCRIPT: sh evatool/backend/docker/deploy.sh

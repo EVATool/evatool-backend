@@ -1,7 +1,5 @@
 package com.evatool.requirements.domain.entity;
 
-import com.evatool.requirements.entity.RequirementDimension;
-import com.evatool.requirements.entity.RequirementsImpact;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

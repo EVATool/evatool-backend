@@ -1,8 +1,6 @@
 package com.evatool.analysis.services;
 
-import com.evatool.analysis.dto.StakeholderDTO;
 import com.evatool.analysis.dto.UserDTO;
-import com.evatool.analysis.model.Stakeholder;
 import com.evatool.analysis.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
