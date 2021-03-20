@@ -39,31 +39,20 @@ public class RequirementPointController {
 		requirementPointRepository.saveAll(requirementPoint);
 	}
 
+	public void deleteRequirementPoint(Collection<RequirementPoint> requirementPoint) {
+		logger.debug("updateRequirementPoint [{}]",requirementPoint);
+		requirementPointRepository.deleteAll(requirementPoint);
+	}
+
 	public void deleteRequirementPoint(RequirementPoint requirementPoint) {
 		logger.debug("deleteRequirementPoint [{}]",requirementPoint);
 		requirementPointRepository.delete(requirementPoint);
-	}
-
-	public Collection<RequirementsImpact> getRequirementImpactByRequirement(UUID id) {
-		logger.debug("getRequirementImpactByRequirement [{}]",id);
-		Optional<Requirement> requirement = requirementRepository.findById(id);
-		if(requirement.isEmpty()) return Collections.emptyList();
-		List<RequirementsImpact> requirementsImpactList = new ArrayList<>();
-		requirementPointRepository.findByRequirement(requirement.get()).forEach(e-> requirementsImpactList.add(e.getRequirementsImpact()));
-		return requirementsImpactList;
-	}
-
-	public RequirementPoint getRequirementPointByRequirementAndRequirementsImpact(Requirement requirement, RequirementsImpact requirementsImpact)
-	{
-		logger.debug("getRequirementPointByRequirementAndRequirementsImpact [{}] [{}]",requirement, requirementsImpact);
-		return requirementPointRepository.findByRequirementAndRequirementsImpact(requirement, requirementsImpact);
 	}
 
 	public Requirement createPoints(Requirement requirement, RequirementDTO requirementDTO) {
 		Collection<RequirementPoint> requirementPointCollection = new ArrayList<>();
 		for( Map.Entry<UUID, Integer> entry:requirementDTO.getRequirementImpactPoints().entrySet()) {
 			RequirementPoint requirementPoint = new RequirementPoint();
-			requirementPoint.setRequirement(requirement);
 			requirementPoint.setPoints(entry.getValue());
 			Optional<RequirementsImpact> requirementsImpact = requirementsImpactsRepository.findById(entry.getKey());
 			if(requirementsImpact.isEmpty()){
@@ -72,19 +61,20 @@ public class RequirementPointController {
 			requirementPoint.setRequirementsImpact(requirementsImpact.get());
 			requirementPointCollection.add(requirementPoint);
 		}
-		requirementRepository.save(requirement);
 		this.newRequirementPoint(requirementPointCollection);
+		requirement.getRequirementPointCollection().addAll(requirementPointCollection);
 		return requirement;
 	}
 
-	public void updatePoints(Requirement requirement, RequirementDTO requirementDTO) {
+	public Requirement updatePoints(Requirement requirement, RequirementDTO requirementDTO) {
 		logger.debug("updatePoints [{}] [{}]",requirement,requirementDTO);
-		Collection<RequirementPoint> requirementPointCollectionFromEntity = requirementPointRepository.findByRequirement(requirement);
+		Collection<RequirementPoint> requirementPointCollectionFromEntity = requirement.getRequirementPointCollection();
 		Collection<RequirementPoint> updateList = new ArrayList<>();
+		Collection<RequirementPoint> deleteList = new ArrayList<>();
 		Map<UUID, Integer> requirementImpactPointsMap=requirementDTO.getRequirementImpactPoints();
 		for (RequirementPoint requirementPoint:requirementPointCollectionFromEntity){
 			if(requirementImpactPointsMap.get(requirementPoint.getId())==null) {
-				this.deleteRequirementPoint(requirementPoint);
+				deleteList.add(requirementPoint);
 			}
 			else if(requirementImpactPointsMap.get(requirementPoint.getId())!=requirementPoint.getPoints()){
 				requirementPoint.setPoints(requirementImpactPointsMap.get(requirementPoint.getId()));
@@ -92,13 +82,18 @@ public class RequirementPointController {
 				requirementDTO.getRequirementImpactPoints().remove(requirementPoint.getId());
 			}
 		}
+		requirement.getRequirementPointCollection().removeAll(deleteList);
+		requirement = this.requirementRepository.save(requirement);
 		this.updateRequirementPoint(updateList);
+		this.deleteRequirementPoint(updateList);
 		this.createPoints(requirement,requirementDTO);
+		return requirement;
 	}
 
 	public void deletePointsForRequirement(Requirement requirement) {
 		logger.debug("deletePointsForRequirement [{}]",requirement);
-		Collection<RequirementPoint> collection = requirementPointRepository.findByRequirement(requirement);
+		Collection<RequirementPoint> collection = requirement.getRequirementPointCollection();
 		requirementPointRepository.deleteAll(collection);
+		requirement.getRequirementPointCollection().clear();
 	}
 }

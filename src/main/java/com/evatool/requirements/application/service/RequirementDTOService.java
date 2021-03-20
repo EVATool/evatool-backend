@@ -67,8 +67,8 @@ public class RequirementDTOService {
         Optional<Requirement> requirementOptional = requirementRepository.findById(id);
         if(requirementOptional.isEmpty()) throw new EntityNotFoundException(Requirement.class, id);
         Requirement requirement = requirementOptional.get();
-        requirementPointController.deletePointsForRequirement(requirement);
         requirementRepository.deleteById(id);
+        requirementPointController.deletePointsForRequirement(requirement);
         eventPublisher.publishEvent(new RequirementDeletedEvent(requirement.toJson()));
     }
 
@@ -112,15 +112,8 @@ public class RequirementDTOService {
         }
         requirement.setVariants(requirementsVariantCollection);
         requirementPointController.createPoints(requirement,requirementDTO);
+        requirementRepository.save(requirement);
         eventPublisher.publishEvent(new RequirementCreatedEvent(requirement.toJson()));
         return requirement.getId();
-    }
-
-    public void checkDto(RequirementDTO requirementDTO) {
-        if(requirementDTO.getProjectID()==null){
-            throw new IllegalArgumentException("RequirementsAnalysis cannot be null.");
-        }else if(requirementDTO.getRequirementImpactPoints()==null || requirementDTO.getRequirementImpactPoints().size()==0){
-            throw new IllegalArgumentException("RequirementImpactPoints cannot be empty.");
-        }
     }
 }

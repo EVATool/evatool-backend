@@ -93,20 +93,6 @@ class RequirementDTOServiceTest {
         assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> requirementDTOService.findById(uuidRootId));
     }
 
-    @Test
-    void testRequirementDTOService_checkDto_ThrowException() {
-        RequirementDTO requirementDTO = new RequirementDTO();
-
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTOService.checkDto(requirementDTO));
-        requirementDTO.setProjectID(UUID.randomUUID());
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTOService.checkDto(requirementDTO));
-
-        Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
-        requirementDTO.setRequirementImpactPoints(requirementImpactPoints);
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTOService.checkDto(requirementDTO));
-
-    }
-
 
 
 }

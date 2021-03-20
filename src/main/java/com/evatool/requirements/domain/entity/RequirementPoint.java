@@ -18,16 +18,13 @@ public class RequirementPoint {
     private final UUID id = UUID.randomUUID();
     @ManyToOne
     private RequirementsImpact requirementsImpact;
-    @ManyToOne
-    private Requirement requirement;
     private int points;
 
     public RequirementPoint() {
     }
 
-    public RequirementPoint(RequirementsImpact requirementsImpact, Requirement requirement, int points) {
+    public RequirementPoint(RequirementsImpact requirementsImpact, int points) {
         this.requirementsImpact = requirementsImpact;
-        this.requirement = requirement;
         this.points = points;
     }
 
@@ -41,17 +38,6 @@ public class RequirementPoint {
         }
 
         this.requirementsImpact = requirementsImpact;
-    }
-
-    public Requirement getRequirement() {
-        return requirement;
-    }
-
-    public void setRequirement(Requirement requirement) throws IllegalArgumentException {
-        if (requirement == null) {
-            throw new IllegalArgumentException("Requirement cannot be null.");
-        }
-        this.requirement = requirement;
     }
 
     public int getPoints() {

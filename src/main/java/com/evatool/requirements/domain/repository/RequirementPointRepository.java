@@ -12,11 +12,5 @@ import java.util.UUID;
 
 @Repository
 public interface RequirementPointRepository extends JpaRepository<RequirementPoint, UUID> {
-
-    Collection<RequirementPoint> findByRequirementsImpact(RequirementsImpact requirementsImpact);
-
-    Collection<RequirementPoint> findByRequirement(Requirement requirement);
-    RequirementPoint findByRequirementAndRequirementsImpact(Requirement requirement, RequirementsImpact requirementsImpact);
-
 }
 

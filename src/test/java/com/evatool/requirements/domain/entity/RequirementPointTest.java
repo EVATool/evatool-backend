@@ -11,21 +11,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class RequirementPointTest {
 
-    @Test
-    void testSetRequirement_NullValue_ThrowException() {
-        // given
-        RequirementDimension requirementDimension = getRequirementDimension();
-
-        RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
-        Collection<RequirementsVariant > requirementsVariants = getRequirementsVariants();
-
-        RequirementPoint requirementPoint = getRequirementGR(requirementDimension,requirementsAnalysis,requirementsVariants);
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementPoint.setRequirement(null));
-    }
 
     @Test
     void testSetRequirementsImpacts_NullValue_ThrowException() {

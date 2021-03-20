@@ -2,6 +2,8 @@
 package com.evatool.requirements.domain.entity;
 
 import com.google.gson.Gson;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -19,8 +21,12 @@ public class Requirement {
     private final UUID id = UUID.randomUUID();
     private String title;
     private String description;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<RequirementsVariant> variants = new ArrayList<>();
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Collection<RequirementPoint> requirementPointCollection = new ArrayList<>();
 
     @ManyToOne
     private RequirementsAnalysis requirementsAnalysis;
@@ -98,6 +104,14 @@ public class Requirement {
     public String toJson(){
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public Collection<RequirementPoint> getRequirementPointCollection() {
+        return requirementPointCollection;
+    }
+
+    public void setRequirementPointCollection(Collection<RequirementPoint> requirementPointCollection) {
+        this.requirementPointCollection = requirementPointCollection;
     }
 }
 
