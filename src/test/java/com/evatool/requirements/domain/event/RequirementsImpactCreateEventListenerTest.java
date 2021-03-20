@@ -1,11 +1,11 @@
 package com.evatool.requirements.domain.event;
 
 import com.evatool.global.event.impact.ImpactCreatedEvent;
-import com.evatool.requirements.entity.RequirementsImpact;
-import com.evatool.requirements.error.exceptions.EventEntityAlreadyExistsException;
-import com.evatool.requirements.error.exceptions.InvalidEventPayloadException;
-import com.evatool.requirements.events.listener.RequirementEventListener;
-import com.evatool.requirements.repository.RequirementsImpactsRepository;
+import com.evatool.requirements.domain.entity.RequirementsImpact;
+import com.evatool.requirements.common.exceptions.EventEntityAlreadyExistsException;
+import com.evatool.requirements.common.exceptions.InvalidEventPayloadException;
+import com.evatool.requirements.domain.events.listener.RequirementEventListener;
+import com.evatool.requirements.domain.repository.RequirementsImpactsRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;

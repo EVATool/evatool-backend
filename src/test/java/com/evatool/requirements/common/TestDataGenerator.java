@@ -1,7 +1,7 @@
 package com.evatool.requirements.common;
 
-import com.evatool.requirements.dto.RequirementDTO;
-import com.evatool.requirements.entity.*;
+import com.evatool.requirements.application.dto.RequirementDTO;
+import com.evatool.requirements.domain.entity.*;
 
 import java.util.ArrayList;
 import java.util.Collection;

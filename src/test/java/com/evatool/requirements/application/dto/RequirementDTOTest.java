@@ -1,6 +1,5 @@
 package com.evatool.requirements.application.dto;
 
-import com.evatool.requirements.dto.RequirementDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

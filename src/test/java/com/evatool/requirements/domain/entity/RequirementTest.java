@@ -1,8 +1,5 @@
 package com.evatool.requirements.domain.entity;
 
-import com.evatool.requirements.entity.Requirement;
-import com.evatool.requirements.entity.RequirementsAnalysis;
-import com.evatool.requirements.entity.RequirementsVariant;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;

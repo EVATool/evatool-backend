@@ -1,6 +1,5 @@
 package com.evatool.requirements.domain.entity;
 
-import com.evatool.requirements.entity.RequirementDimension;
 import org.junit.jupiter.api.Test;
 
 import static com.evatool.requirements.common.TestDataGenerator.getRequirementDimension;

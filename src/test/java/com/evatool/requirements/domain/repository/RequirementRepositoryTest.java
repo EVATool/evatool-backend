@@ -1,12 +1,9 @@
 package com.evatool.requirements.domain.repository;
 
 import com.evatool.requirements.common.TestDataGenerator;
-import com.evatool.requirements.entity.Requirement;
-import com.evatool.requirements.entity.RequirementsAnalysis;
-import com.evatool.requirements.entity.RequirementsVariant;
-import com.evatool.requirements.repository.RequirementAnalysisRepository;
-import com.evatool.requirements.repository.RequirementRepository;
-import com.evatool.requirements.repository.RequirementsVariantsRepository;
+import com.evatool.requirements.domain.entity.Requirement;
+import com.evatool.requirements.domain.entity.RequirementsAnalysis;
+import com.evatool.requirements.domain.entity.RequirementsVariant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
