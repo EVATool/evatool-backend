@@ -1,6 +1,5 @@
 package com.evatool.impact.application.dto;
 
-import com.sun.istack.Nullable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -30,7 +29,7 @@ public class ImpactDto {
     @Setter
     @DecimalMin("-1.0")
     @DecimalMax("1.0")
-    private double value;
+    private Double value;
 
     @ApiModelProperty(required = true)
     @Getter

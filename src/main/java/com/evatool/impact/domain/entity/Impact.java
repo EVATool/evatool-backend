@@ -21,7 +21,7 @@ public class Impact extends SuperEntity {
 
     @Column(name = "VALUE", nullable = false)
     @Getter
-    private double value;
+    private Double value;
 
     @Column(name = "DESCRIPTION", nullable = false)
     @Getter
@@ -105,7 +105,7 @@ public class Impact extends SuperEntity {
         }
     }
 
-    public void setValue(double value) {
+    public void setValue(Double value) {
         logger.debug("Set Value");
         if (value < -1.0 || value > 1.0) {
             logger.error("Attempted to set value outside its valid range");
