@@ -60,8 +60,8 @@ class RequirementsControllerTest {
         Collection<RequirementsVariant> requirementsVariants = new ArrayList<>();
         requirementsVariants.add(requirementsVariant);
 
-        Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
-        requirementImpactPoints.put(requirementsImpact.getId(),1);
+        Map<UUID, Float> requirementImpactPoints = new HashMap<>();
+        requirementImpactPoints.put(requirementsImpact.getId(), 1F);
 
         Map<UUID,String> variantsTitle = new HashMap<>();
         variantsTitle.put(requirementsVariant.getId(),requirementsVariant.getTitle());

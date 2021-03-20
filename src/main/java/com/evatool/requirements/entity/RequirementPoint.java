@@ -17,12 +17,12 @@ public class RequirementPoint {
     private RequirementsImpact requirementsImpact;
     @ManyToOne
     private Requirement requirement;
-    private int points;
+    private float points;
 
     public RequirementPoint() {
     }
 
-    public RequirementPoint(RequirementsImpact requirementsImpact, Requirement requirement, int points) {
+    public RequirementPoint(RequirementsImpact requirementsImpact, Requirement requirement, float points) {
         this.requirementsImpact = requirementsImpact;
         this.requirement = requirement;
         this.points = points;
@@ -51,11 +51,11 @@ public class RequirementPoint {
         this.requirement = requirement;
     }
 
-    public int getPoints() {
+    public float getPoints() {
         return points;
     }
 
-    public void setPoints(int points) throws IllegalArgumentException {
+    public void setPoints(Float points) throws IllegalArgumentException {
         if (points < -1 || points > 1) {
             throw new IllegalDtoValueExcpetion("Value must be in range [-1, 1]");
         }

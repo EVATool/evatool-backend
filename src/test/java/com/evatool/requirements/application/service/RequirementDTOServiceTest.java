@@ -102,12 +102,9 @@ class RequirementDTOServiceTest {
         requirementDTO.setProjectID(UUID.randomUUID());
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTOService.checkDto(requirementDTO));
 
-        Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
+        Map<UUID, Float> requirementImpactPoints = new HashMap<>();
         requirementDTO.setRequirementImpactPoints(requirementImpactPoints);
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTOService.checkDto(requirementDTO));
 
     }
-
-
-
 }

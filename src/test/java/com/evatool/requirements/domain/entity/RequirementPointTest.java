@@ -49,7 +49,7 @@ class RequirementPointTest {
 
     @ParameterizedTest
     @ValueSource(ints = {2})
-    void testSetValue_NullValue_ThrowException(int value) {
+    void testSetValue_NullValue_ThrowException(Float value) {
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();

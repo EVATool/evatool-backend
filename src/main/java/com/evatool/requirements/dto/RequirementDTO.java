@@ -11,7 +11,7 @@ public class RequirementDTO {
     private String requirementTitle;
     private String requirementDescription;
     private Set<String> dimensions = new HashSet<>();
-    private Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
+    private Map<UUID, Float> requirementImpactPoints = new HashMap<>();
     private Map<UUID,String> variantsTitle = new HashMap<>();
 
     public UUID getRootEntityId() {
@@ -80,11 +80,11 @@ public class RequirementDTO {
         this.variantsTitle = variantsTitle;
     }
 
-    public Map<UUID, Integer> getRequirementImpactPoints() {
+    public Map<UUID, Float> getRequirementImpactPoints() {
         return requirementImpactPoints;
     }
 
-    public void setRequirementImpactPoints(Map<UUID, Integer> requirementImpactPoints) {
+    public void setRequirementImpactPoints(Map<UUID, Float> requirementImpactPoints) {
         if (requirementImpactPoints == null) {
             throw new IllegalArgumentException("Requirement Impact Points cannot be null.");
         }
