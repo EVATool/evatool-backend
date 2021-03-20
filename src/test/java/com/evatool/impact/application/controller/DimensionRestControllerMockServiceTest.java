@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import static com.evatool.impact.application.controller.UriUtil.*;
+import static com.evatool.impact.application.controller.UriUtil.DIMENSIONS;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -76,14 +76,10 @@ class DimensionRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.links").isNotEmpty())
-                    .andExpect(jsonPath("$.links", hasSize(3)))
+                    .andExpect(jsonPath("$.links", hasSize(1)))
                     .andExpect(jsonPath("$.links[*].rel").value(containsInAnyOrder(
-                            "self",
-                            UPDATE_DIMENSION,
-                            DELETE_DIMENSION)))
+                            "self")))
                     .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
-                            "http://localhost" + DIMENSIONS,
-                            "http://localhost" + DIMENSIONS + "/" + dimensionDto.getId(),
                             "http://localhost" + DIMENSIONS + "/" + dimensionDto.getId())));
         }
 
