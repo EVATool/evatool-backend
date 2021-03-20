@@ -31,17 +31,6 @@ class RequirementDTOTest {
     }
 
     @Test
-    void testSetRequirementDescription_NullValue_ThrowException() {
-        // given
-        RequirementDTO requirementDTO = new RequirementDTO();
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTO.setRequirementDescription(null));
-    }
-
-    @Test
     void testSetDimensions_NullValue_ThrowException() {
         // given
         RequirementDTO requirementDTO = new RequirementDTO();

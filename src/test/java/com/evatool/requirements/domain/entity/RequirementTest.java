@@ -8,18 +8,6 @@ import static com.evatool.requirements.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class RequirementTest {
-    @Test
-    void testSetDescription_NullValue_ThrowException() {
-        // given
-        RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
-        Collection<RequirementsVariant> requirementsVariant = getRequirementsVariants();
-        Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariant);
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirement.setDescription(null));
-    }
 
     @Test
     void testSetTitle_NullValue_ThrowException() {

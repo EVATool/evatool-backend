@@ -56,11 +56,7 @@ public class Requirement {
         return description;
     }
 
-    public void setDescription(String description) throws IllegalArgumentException {
-        if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null.");
-        }
-
+    public void setDescription(String description){
         this.description = description;
     }
 

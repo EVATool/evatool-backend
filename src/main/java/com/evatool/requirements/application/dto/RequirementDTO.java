@@ -41,9 +41,6 @@ public class RequirementDTO {
     }
 
     public void setRequirementDescription(String requirementDescription) {
-        if (requirementDescription == null) {
-            throw new IllegalArgumentException("Requirement description cannot be null.");
-        }
         this.requirementDescription = requirementDescription;
     }
 
