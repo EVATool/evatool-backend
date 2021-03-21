@@ -29,6 +29,7 @@ public class ImpactDto {
     @Setter
     @DecimalMin("-1.0")
     @DecimalMax("1.0")
+    @NotNull
     private Double value;
 
     @ApiModelProperty(required = true)

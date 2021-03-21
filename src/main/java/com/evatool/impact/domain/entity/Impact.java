@@ -21,7 +21,7 @@ public class Impact extends SuperEntity {
 
     @Column(name = "VALUE", nullable = false)
     @Getter
-    private Double value;
+    private double value;
 
     @Column(name = "DESCRIPTION", nullable = false)
     @Getter
