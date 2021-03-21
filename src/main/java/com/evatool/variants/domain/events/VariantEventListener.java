@@ -3,6 +3,9 @@ package com.evatool.variants.domain.events;
 
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
+import com.evatool.global.event.requirements.RequirementCreatedEvent;
+import com.evatool.global.event.requirements.RequirementDeletedEvent;
+import com.evatool.global.event.requirements.RequirementUpdatedEvent;
 import com.evatool.variants.common.error.exceptions.IllegalEventPayloadException;
 import com.evatool.variants.domain.entities.VariantsAnalysis;
 import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
@@ -51,6 +54,28 @@ public class VariantEventListener {
         catch (Exception e){
             throw new IllegalEventPayloadException(event.getJsonPayload());
         }
-
     }
+
+    @EventListener
+    @Async
+    public void requirementCreated(RequirementCreatedEvent event){
+        logger.info("requirement created event");
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
+    }
+
+    @EventListener
+    @Async
+    public void requirementUpdated(RequirementUpdatedEvent event){
+        logger.info("requirement updated event");
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
+    }
+
+    @EventListener
+    @Async
+    public void requirementDeleted(RequirementDeletedEvent event){
+        logger.info("requirement deleted event");
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
+    }
+
+
 }
