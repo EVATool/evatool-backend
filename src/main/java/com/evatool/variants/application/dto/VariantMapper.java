@@ -90,9 +90,6 @@ public class VariantMapper {
 
 
     private String generateGuiId(UUID analysisId) {
-        if (analysisId == null){
-            throw new IllegalArgumentException();
-        }
         List<Variant> variants = variantRepository.findAll();
         variants.removeIf(variant -> !variant.getVariantsAnalysis().getAnalysisId().equals(analysisId));
         return String.format("VAR%d", variants.size() + 1);
