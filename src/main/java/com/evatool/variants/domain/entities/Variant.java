@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity(name = "Var_VARIANT")
+@Entity(name = "VAR_VARIANT")
 @Getter
 @Setter
 public class Variant extends RepresentationModel<Variant> {

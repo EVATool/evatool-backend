@@ -1,5 +1,7 @@
 package com.evatool.variants.application.services;
 
+import com.evatool.analysis.api.interfaces.AnalysisController;
+import com.evatool.analysis.dto.AnalysisDTO;
 import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
@@ -14,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
@@ -71,15 +74,11 @@ public class VariantService {
      *
      * @return Collection of VariantDTO
      */
-    public CollectionModel<VariantDto> getVariantsByAnalysis(UUID id) {
+    public List<VariantDto> getVariantsByAnalysis(UUID id) {
         logger.debug("findByAnalysisId [{}]",id);
         List<Variant> variants = variantRepository.findAll();
         variants.removeIf(variant -> !variant.getVariantsAnalysis().getAnalysisId().equals(id));
-        variants.forEach(variant -> variant.add(linkTo(VariantController.class).slash(variant.getId()).withSelfRel()));
-        Link variantsLink = linkTo(methodOn(VariantController.class).getAllVariants()).withSelfRel();
-        CollectionModel<VariantDto> variantCollectionModel = CollectionModel.of(variantMapper.mapAll(variants));
-        variantCollectionModel.add(variantsLink);
-        return variantCollectionModel;
+        return variantMapper.mapAll(variants);
     }
 
 
@@ -88,14 +87,10 @@ public class VariantService {
      *
      * @return Collection of VariantDTO
      */
-    public CollectionModel<VariantDto> getAllVariants() {
+    public List<VariantDto> getAllVariants() {
         logger.info("getAllVariants");
         List<Variant> variants = variantRepository.findAll();
-        variants.forEach(variant -> variant.add(linkTo(VariantController.class).slash(variant.getId()).withSelfRel()));
-        Link variantsLink = linkTo(methodOn(VariantController.class).getAllVariants()).withSelfRel();
-        CollectionModel<VariantDto> variantCollectionModel = CollectionModel.of(variantMapper.mapAll(variants));
-        variantCollectionModel.add(variantsLink);
-        return variantCollectionModel;
+        return variantMapper.mapAll(variants);
     }
 
     /**
@@ -144,4 +139,7 @@ public class VariantService {
         variantsEventPublisher.publishEvent(new VariantCreatedEvent(newVariant.toJson()));
         return variantMapper.toDto(newVariant);
     }
+
+
+
 }
