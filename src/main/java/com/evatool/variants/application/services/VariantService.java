@@ -45,7 +45,7 @@ public class VariantService {
     VariantMapper variantMapper;
 
     public List<VariantDto> findAll(List<Variant> variantList){
-        logger.info("Find all Variants ");
+        logger.info("Find all Variants");
         return variantMapper.mapAll(variantList);
     }
 
@@ -56,6 +56,7 @@ public class VariantService {
      * @return VariantDTO
      */
     public VariantDto getVariant(UUID id) {
+        logger.debug("findById [{}]",id);
         Variant variant = variantRepository.findVariantById(id);
         if (variant == null) {
             throw new VariantsEntityNotFoundException(id.toString());
@@ -66,31 +67,48 @@ public class VariantService {
 
 
     /**
+     * Returns all Variants from the Repository by analysis id
+     *
+     * @return Collection of VariantDTO
+     */
+    public CollectionModel<VariantDto> getVariantsByAnalysis(UUID id) {
+        logger.debug("findByAnalysisId [{}]",id);
+        List<Variant> variants = variantRepository.findAll();
+        variants.removeIf(variant -> !variant.getVariantsAnalysis().getAnalysisId().equals(id));
+        variants.forEach(variant -> variant.add(linkTo(VariantController.class).slash(variant.getId()).withSelfRel()));
+        Link variantsLink = linkTo(methodOn(VariantController.class).getAllVariants()).withSelfRel();
+        CollectionModel<VariantDto> variantCollectionModel = CollectionModel.of(variantMapper.mapAll(variants));
+        variantCollectionModel.add(variantsLink);
+        return variantCollectionModel;
+    }
+
+
+    /**
      * Returns all Variants from the Repository
      *
      * @return Collection of VariantDTO
      */
     public CollectionModel<VariantDto> getAllVariants() {
+        logger.info("getAllVariants");
         List<Variant> variants = variantRepository.findAll();
         variants.forEach(variant -> variant.add(linkTo(VariantController.class).slash(variant.getId()).withSelfRel()));
         Link variantsLink = linkTo(methodOn(VariantController.class).getAllVariants()).withSelfRel();
         CollectionModel<VariantDto> variantCollectionModel = CollectionModel.of(variantMapper.mapAll(variants));
         variantCollectionModel.add(variantsLink);
         return variantCollectionModel;
-
     }
 
     /**
      * Updates an existing Variant from the Repository and publishes a corresponding event
      *
-     * @param id             Existing id for updating related Variant
      * @param updatedVariant Overwrites the Variant that will be updated
      * @return VariantDTO
      */
-    public VariantDto updateVariant(UUID id, VariantDto updatedVariant) {
-        Variant variant = variantRepository.findVariantById(id);
+    public VariantDto updateVariant(VariantDto updatedVariant) {
+        logger.debug("update [{}]",updatedVariant);
+        Variant variant = variantRepository.findVariantById(updatedVariant.getId());
         if (variant == null) {
-            throw new VariantsEntityNotFoundException(id.toString());
+            throw new VariantsEntityNotFoundException(updatedVariant.getId().toString());
         } else {
             Variant savedVariant = variantRepository.save(variantMapper.fromDto(updatedVariant));
             variantsEventPublisher.publishEvent(new VariantUpdatedEvent(savedVariant.toJson()));
@@ -104,6 +122,7 @@ public class VariantService {
      * @param id Existing id for deleting related Variant
      */
     public void deleteVariant(UUID id) {
+        logger.debug("delete [{}]",id);
         Variant variant = variantRepository.findVariantById(id);
         if (variant == null) {
             throw new VariantsEntityNotFoundException(id.toString());
@@ -120,6 +139,7 @@ public class VariantService {
      * @return VariantDTO
      */
     public VariantDto createVariant(VariantDto newVariantDto) {
+        logger.debug("create [{}]",newVariantDto);
         Variant newVariant = variantRepository.save(variantMapper.fromDto(newVariantDto));
         variantsEventPublisher.publishEvent(new VariantCreatedEvent(newVariant.toJson()));
         return variantMapper.toDto(newVariant);
