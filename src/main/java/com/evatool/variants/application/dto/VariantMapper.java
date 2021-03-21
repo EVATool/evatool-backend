@@ -3,6 +3,7 @@ package com.evatool.variants.application.dto;
 import com.evatool.variants.application.controller.VariantController;
 import com.evatool.variants.common.error.exceptions.IllegalAnalysisException;
 import com.evatool.variants.domain.entities.*;
+import com.evatool.variants.domain.repositories.VariantRepository;
 import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -21,6 +23,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class VariantMapper {
     @Autowired
     VariantController variantController;
+
+    @Autowired
+    VariantRepository variantRepository;
+
     @Autowired
     VariantsAnalysisRepository variantsAnalysisRepository;
 
@@ -53,7 +59,7 @@ public class VariantMapper {
     public Variant fromDto(VariantDto variantDto) {
         Variant variant = new Variant();
         variant.setId(variantDto.getId());
-        variant.setGuiId(variantDto.getGuiId());
+
         variant.setTitle(variantDto.getTitle());
         if (variantDto.getSubVariant() != null) {
             variant.setSubVariant(variantDto.getSubVariant().getContent().stream().collect(Collectors.toList()));
@@ -64,8 +70,16 @@ public class VariantMapper {
             throw new IllegalAnalysisException(variantDto.getAnalysisId().toString());
         }
         variantsAnalysis.ifPresent(variant::setVariantsAnalysis);
+        if(variantDto.getGuiId().equals(""))variant.setGuiId(generateGuiId(variantDto.getAnalysisId()));
         variant.setArchived(variantDto.getArchived());
         return variant;
+    }
+
+
+    private String generateGuiId(UUID analysisId){
+        List<Variant> variants = variantRepository.findAll();
+        variants.removeIf(variant -> !variant.getVariantsAnalysis().getAnalysisId().equals(analysisId));
+        return String.format("VAR%d", variants.size()+ 1);
     }
 
 }
