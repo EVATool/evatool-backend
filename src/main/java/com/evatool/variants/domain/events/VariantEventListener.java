@@ -30,6 +30,7 @@ public class VariantEventListener {
     @Autowired
     VariantsAnalysisRepository variantsAnalysisRepository;
 
+    @Autowired
     VariantRequirementsRepository variantRequirementsRepository;
 
     @EventListener
