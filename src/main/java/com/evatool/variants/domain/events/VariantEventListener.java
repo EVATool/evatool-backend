@@ -3,8 +3,13 @@ package com.evatool.variants.domain.events;
 
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
+import com.evatool.global.event.requirements.RequirementCreatedEvent;
+import com.evatool.global.event.requirements.RequirementDeletedEvent;
+import com.evatool.global.event.requirements.RequirementUpdatedEvent;
 import com.evatool.variants.common.error.exceptions.IllegalEventPayloadException;
 import com.evatool.variants.domain.entities.VariantsAnalysis;
+import com.evatool.variants.domain.entities.VariantsRequirements;
+import com.evatool.variants.domain.repositories.VariantRequirementsRepository;
 import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
@@ -24,6 +29,9 @@ public class VariantEventListener {
 
     @Autowired
     VariantsAnalysisRepository variantsAnalysisRepository;
+
+    @Autowired
+    VariantRequirementsRepository variantRequirementsRepository;
 
     @EventListener
     @Async
@@ -51,6 +59,51 @@ public class VariantEventListener {
         catch (Exception e){
             throw new IllegalEventPayloadException(event.getJsonPayload());
         }
-
     }
+
+    @EventListener
+    @Async
+    public void requirementCreated(RequirementCreatedEvent requirementCreatedEvent){
+        logger.info("requirement created event");
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,requirementCreatedEvent.getClass(), requirementCreatedEvent.getJsonPayload()));
+        try {
+            VariantsRequirements variantsRequirements = gson.fromJson(requirementCreatedEvent.getJsonPayload(), VariantsRequirements.class);
+            variantRequirementsRepository.save(variantsRequirements);
+        }
+        catch (Exception e){
+            throw new IllegalEventPayloadException(requirementCreatedEvent.getJsonPayload());
+        }
+    }
+
+    @EventListener
+    @Async
+    public void requirementUpdated(RequirementUpdatedEvent requirementUpdatedEvent){
+        logger.info("requirement updated event");
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,requirementUpdatedEvent.getClass(), requirementUpdatedEvent.getJsonPayload()));
+        try {
+            VariantsRequirements variantsRequirements = gson.fromJson(requirementUpdatedEvent.getJsonPayload(), VariantsRequirements.class);
+            variantRequirementsRepository.save(variantsRequirements);
+        }
+        catch (Exception e){
+            throw new IllegalEventPayloadException(requirementUpdatedEvent.getJsonPayload());
+        }
+    }
+
+    @EventListener
+    @Async
+    public void requirementDeleted(RequirementDeletedEvent event){
+        logger.info("requirement deleted event");
+        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
+        try {
+            VariantsRequirements variantsRequirements = gson.fromJson(event.getJsonPayload(), VariantsRequirements.class);
+            variantRequirementsRepository.delete(variantsRequirements);
+        }
+        catch (Exception e){
+            throw new IllegalEventPayloadException(event.getJsonPayload());
+        }
+    }
+
+
+
+
 }
