@@ -41,16 +41,6 @@ class ImpactRepositoryTest {
         impactAnalysisRepository.deleteAll();
     }
 
-    private Impact saveFullDummyImpact() {
-        var dimension = saveDummyDimension();
-        var stakeholder = saveDummyStakeholder();
-        var analysis = saveDummyAnalysis();
-        var impact = createDummyImpact(analysis);
-        impact.setDimension(dimension);
-        impact.setStakeholder(stakeholder);
-        return impactRepository.save(impact);
-    }
-
     private Impact saveFullDummyImpact(ImpactAnalysis analysis) {
         var dimension = saveDummyDimension();
         var stakeholder = saveDummyStakeholder();
