@@ -18,12 +18,12 @@ public class RequirementPoint {
     private final UUID id = UUID.randomUUID();
     @ManyToOne
     private RequirementsImpact requirementsImpact;
-    private float points;
+    private Double points;
 
     public RequirementPoint() {
     }
 
-    public RequirementPoint(RequirementsImpact requirementsImpact, float points) {
+    public RequirementPoint(RequirementsImpact requirementsImpact, Double points) {
         this.requirementsImpact = requirementsImpact;
         this.points = points;
     }
@@ -40,11 +40,11 @@ public class RequirementPoint {
         this.requirementsImpact = requirementsImpact;
     }
 
-    public float getPoints() {
+    public Double getPoints() {
         return points;
     }
 
-    public void setPoints(float points) throws IllegalArgumentException {
+    public void setPoints(Double points) throws IllegalArgumentException {
         if (points < -1 || points > 1) {
             throw new IllegalDtoValueExcpetion("Value must be in range [-1, 1]");
         }

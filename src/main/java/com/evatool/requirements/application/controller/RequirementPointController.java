@@ -51,7 +51,7 @@ public class RequirementPointController {
 
 	public Requirement createPoints(Requirement requirement, RequirementDTO requirementDTO) {
 		Collection<RequirementPoint> requirementPointCollection = new ArrayList<>();
-		for( Map.Entry<UUID, Float> entry:requirementDTO.getRequirementImpactPoints().entrySet()) {
+		for( Map.Entry<UUID, Double> entry:requirementDTO.getRequirementImpactPoints().entrySet()) {
 			RequirementPoint requirementPoint = new RequirementPoint();
 			requirementPoint.setPoints(entry.getValue());
 			Optional<RequirementsImpact> requirementsImpact = requirementsImpactsRepository.findById(entry.getKey());
@@ -71,7 +71,7 @@ public class RequirementPointController {
 		Collection<RequirementPoint> requirementPointCollectionFromEntity = requirement.getRequirementPointCollection();
 		Collection<RequirementPoint> updateList = new ArrayList<>();
 		Collection<RequirementPoint> deleteList = new ArrayList<>();
-		Map<UUID, Float> requirementImpactPointsMap=requirementDTO.getRequirementImpactPoints();
+		Map<UUID, Double> requirementImpactPointsMap=requirementDTO.getRequirementImpactPoints();
 		for (RequirementPoint requirementPoint:requirementPointCollectionFromEntity){
 			if(requirementImpactPointsMap.get(requirementPoint.getId())==null) {
 				deleteList.add(requirementPoint);

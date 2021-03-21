@@ -18,7 +18,7 @@ public class RequirementsImpact {
     @Column(columnDefinition = "CHAR(36)")
     private UUID id = UUID.randomUUID();
     private String description;
-    private int value;
+    private Double value;
 
     @ManyToOne
     private RequirementDimension requirementDimension;
@@ -31,7 +31,7 @@ public class RequirementsImpact {
 
     }
 
-    public RequirementsImpact(String description, int value, RequirementDimension requirementDimension) {
+    public RequirementsImpact(String description, Double value, RequirementDimension requirementDimension) {
         this.description = description;
         this.value = value;
         this.requirementDimension = requirementDimension;
@@ -49,11 +49,11 @@ public class RequirementsImpact {
         this.description = description;
     }
 
-    public int getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(Double value) {
         if (value < -1 || value > 1) {
             throw new IllegalArgumentException("Value must be in range [-1, 1]");
         }

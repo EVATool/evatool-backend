@@ -32,7 +32,7 @@ class RequirementsImpactDeletedEventListenerTest {
     @Test
     void testOnApplicationEvent_PublishEvent_ImpactDeleted() {
         // given
-        RequirementsImpact requirementsImpact = new RequirementsImpact("Description",10,null);
+        RequirementsImpact requirementsImpact = new RequirementsImpact("Description",10d,null);
         requirementsImpactsRepository.save(requirementsImpact);
         UUID tempId = requirementsImpact.getId();
         String json = String.format("{\"id\":\"%s\",\"description\":\"%s\"}", requirementsImpact.getId().toString(), requirementsImpact.getDescription());

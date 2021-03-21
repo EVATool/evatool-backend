@@ -31,7 +31,7 @@ class RequirementsImpactUpdateEventListenerTest {
     @Test
     void testOnApplicationEvent_PublishEvent_ImpactUpdated() {
         // given
-        RequirementsImpact requirementsImpact = new RequirementsImpact("Description",10,null);
+        RequirementsImpact requirementsImpact = new RequirementsImpact("Description",10d,null);
         requirementsImpactsRepository.save(requirementsImpact);
         String newDescription = "newDescription";
 

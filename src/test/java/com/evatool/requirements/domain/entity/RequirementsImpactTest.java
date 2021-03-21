@@ -24,8 +24,8 @@ class RequirementsImpactTest {
 
 
     @ParameterizedTest
-    @ValueSource(ints = {3,2,4})
-    void testSetValue_NullValue_ThrowException(int value) {
+    @ValueSource(doubles = {3,2,-4})
+    void testSetValue_NullValue_ThrowException(Double value) {
         // given
         RequirementDimension requirementDimension = getRequirementDimension();
         RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);

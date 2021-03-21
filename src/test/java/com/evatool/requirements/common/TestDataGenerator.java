@@ -19,7 +19,7 @@ public class TestDataGenerator {
     }
 
     public static RequirementsImpact getRequirementsImpacts(RequirementDimension requirementDimension) {
-        return new RequirementsImpact("Description",10, requirementDimension);
+        return new RequirementsImpact("Description",10d, requirementDimension);
     }
 
     public static RequirementsVariant getRequirementsVariant() {
@@ -42,12 +42,12 @@ public class TestDataGenerator {
 
     public static RequirementPoint getRequirementGR(Requirement requirement, RequirementsImpact requirementsImpact) {
 
-        return new RequirementPoint(requirementsImpact, 3);
+        return new RequirementPoint(requirementsImpact, 3d);
     }
 
     public static RequirementPoint getRequirementGR(RequirementDimension requirementDimension,RequirementsAnalysis requirementsAnalysis, Collection<RequirementsVariant> variants) {
 
-        return new RequirementPoint(getRequirementsImpacts(requirementDimension), 3F);
+        return new RequirementPoint(getRequirementsImpacts(requirementDimension), 3d);
     }
 
     public static RequirementDTO getRequirementDTO(Map<UUID,String> impactTitles,UUID projectID,Map<UUID,String> variantsTitle) {
@@ -63,7 +63,7 @@ public class TestDataGenerator {
         return requirementDTO;
     }
 
-    public static RequirementDTO getRequirementDTO(Map<UUID, Float> requirementImpactPoints, Map<UUID,String> impactTitles, UUID projectID, Map<UUID,String> variantsTitle) {
+    public static RequirementDTO getRequirementDTO(Map<UUID, Double> requirementImpactPoints, Map<UUID,String> impactTitles, UUID projectID, Map<UUID,String> variantsTitle) {
         var requirementDTO = new RequirementDTO();
 
         requirementDTO.setImpactDescription(impactTitles);

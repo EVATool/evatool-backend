@@ -63,7 +63,7 @@ class RequirementPointControllerTest {
         requirementsImpactsRepository.save(requirementsImpact);
 
         //update
-        RequirementPoint requirementPoint = new RequirementPoint(requirementsImpact,1.0F);
+        RequirementPoint requirementPoint = new RequirementPoint(requirementsImpact,1.0d);
         requirementPointController.newRequirementPoint(Arrays.asList(requirementPoint));
         requirement.getRequirementPointCollection().add(requirementPoint);
         requirementRepository.save(requirement);
@@ -71,7 +71,7 @@ class RequirementPointControllerTest {
         RequirementPoint requirementPoint1 = ((List<RequirementPoint>)requirement.getRequirementPointCollection()).get(0);
         assertThat(requirementPoint1.getId()).isEqualTo(requirementPoint.getId());
 
-        Float newPoint = -1F;
+        Double newPoint = -1d;
         requirementPoint1.setPoints(newPoint);
         requirementPointController.updateRequirementPoint(Arrays.asList(requirementPoint1));
 
@@ -108,8 +108,8 @@ class RequirementPointControllerTest {
         Collection<RequirementsVariant> requirementsVariants = new ArrayList<>();
         requirementsVariants.add(requirementsVariant);
 
-        Map<UUID, Float> requirementImpactPoints = new HashMap<>();
-        requirementImpactPoints.put(requirementsImpact.getId(), 1F);
+        Map<UUID, Double> requirementImpactPoints = new HashMap<>();
+        requirementImpactPoints.put(requirementsImpact.getId(), 1d);
 
         Map<UUID,String> variantsTitle = new HashMap<>();
         variantsTitle.put(requirementsVariant.getId(),requirementsVariant.getTitle());
@@ -129,8 +129,8 @@ class RequirementPointControllerTest {
         assertThat(requirementPoint1.getPoints()).isEqualTo(requirementDTO.getRequirementImpactPoints().get(requirementPoint1.getRequirementsImpact().getId()));
 
 
-        Map<UUID,Float> requirementImpactPoints2 = new HashMap<>();
-        float newPoint = -1F;
+        Map<UUID,Double> requirementImpactPoints2 = new HashMap<>();
+        Double newPoint = -1d;
         requirementImpactPoints2.put(requirementsImpact.getId(),newPoint);
 
         requirementDTOObj.setRequirementImpactPoints(requirementImpactPoints2);
