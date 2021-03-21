@@ -5,6 +5,7 @@ import com.evatool.variants.common.error.exceptions.IllegalAnalysisException;
 import com.evatool.variants.domain.entities.*;
 import com.evatool.variants.domain.repositories.VariantRepository;
 import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
+import com.google.common.annotations.VisibleForTesting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
@@ -36,6 +37,7 @@ public class VariantMapper {
             variantDtoList.add(toDto(variant));
         }
         return variantDtoList;
+
     }
 
     public VariantDto toDto(Variant variant) {
@@ -70,13 +72,16 @@ public class VariantMapper {
             throw new IllegalAnalysisException(variantDto.getAnalysisId().toString());
         }
         variantsAnalysis.ifPresent(variant::setVariantsAnalysis);
-        if(variantDto.getGuiId().equals(""))variant.setGuiId(generateGuiId(variantDto.getAnalysisId()));
+        if(variantDto.getGuiId() == null || variantDto.getGuiId().equals(""))variant.setGuiId(generateGuiId(variantDto.getAnalysisId()));
         variant.setArchived(variantDto.getArchived());
         return variant;
     }
 
 
     private String generateGuiId(UUID analysisId){
+        if (analysisId == null){
+            throw new IllegalArgumentException();
+        }
         List<Variant> variants = variantRepository.findAll();
         variants.removeIf(variant -> !variant.getVariantsAnalysis().getAnalysisId().equals(analysisId));
         return String.format("VAR%d", variants.size()+ 1);
