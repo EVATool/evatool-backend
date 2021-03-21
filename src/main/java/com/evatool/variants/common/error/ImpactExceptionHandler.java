@@ -1,6 +1,7 @@
 package com.evatool.variants.common.error;
 
 import com.evatool.variants.common.error.exceptions.IllegalAnalysisException;
+import com.evatool.variants.common.error.exceptions.VariantNotArchivedException;
 import com.evatool.variants.common.error.exceptions.VariantsEntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,12 @@ public class ImpactExceptionHandler {
     public ResponseEntity<VariantsErrorMessage> handleEntityNotFoundException(VariantsEntityNotFoundException exception, WebRequest webRequest) {
         return createErrorResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(VariantNotArchivedException.class)
+    public ResponseEntity<VariantsErrorMessage> handleEntityNotFoundException(VariantNotArchivedException exception, WebRequest webRequest) {
+        return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
 
 
     private ResponseEntity<VariantsErrorMessage> createErrorResponseEntity(Exception exception, WebRequest webRequest, HttpStatus httpStatus) {

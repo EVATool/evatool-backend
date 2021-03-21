@@ -2,6 +2,7 @@ package com.evatool.variants.application.dto;
 
 import com.evatool.variants.application.controller.VariantController;
 import com.evatool.variants.common.error.exceptions.IllegalAnalysisException;
+import com.evatool.variants.common.error.exceptions.VariantNotArchivedException;
 import com.evatool.variants.domain.entities.Variant;
 import com.evatool.variants.domain.entities.VariantsAnalysis;
 import com.evatool.variants.domain.entities.VariantsRequirements;
@@ -12,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -72,14 +75,13 @@ public class VariantMapper {
         }
         variantsAnalysis.ifPresent(variant::setVariantsAnalysis);
         if (variantDto.getGuiId().equals("")) variant.setGuiId(generateGuiId(variantDto.getAnalysisId()));
-        if (variantDto.getArchived()) {
+        if (variantDto.getArchived()){
             if (checkIfArchivable(variantDto.getId())) {
                 variant.setArchived(variantDto.getArchived());
             } else {
-                System.out.println(checkIfArchivable(variantDto.getId()));
+                throw new VariantNotArchivedException();
             }
         }
-
         return variant;
     }
 
@@ -93,7 +95,7 @@ public class VariantMapper {
     private Boolean checkIfArchivable(UUID variantid) {
         List<VariantsRequirements> requirements = variantRequirementsRepository.findAll();
         requirements.forEach(requirement -> {
-            requirement.getVariants().forEach( requirementVariant -> {
+            requirement.getVariants().forEach(requirementVariant -> {
                 if (requirementVariant.getId() == variantid) requirements.remove(requirement);
             });
         });
