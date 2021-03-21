@@ -97,8 +97,6 @@ public class RequirementsController {
 	private EntityModel<RequirementDTO> generateLinks(RequirementDTO requirementDTO){
 		EntityModel<RequirementDTO> requirementDTOEntityModel = EntityModel.of(requirementDTO);
 		requirementDTOEntityModel.add(linkTo(methodOn(RequirementsController.class).getRequirementById(requirementDTO.getRootEntityId())).withSelfRel());
-		requirementDTOEntityModel.add(linkTo(methodOn(RequirementsController.class).deleteRequirement(requirementDTO.getRootEntityId())).withRel("delete"));
-		requirementDTOEntityModel.add(linkTo(methodOn(RequirementsController.class).updateRequirement(requirementDTO)).withRel("update"));
 		return requirementDTOEntityModel;
 	}
 
