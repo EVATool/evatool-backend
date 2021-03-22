@@ -36,6 +36,18 @@ class ImpactTest {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setValue(value));
     }
 
+    @ParameterizedTest
+    @ValueSource(doubles = {-Double.MAX_VALUE, -2.0, -1.5, -1.1, -1.000001, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
+    void testSetValue_NullValue_ThrowIllegalArgumentException(double value) {
+        // given
+        var impact = createDummyImpact();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setValue(null));
+    }
+
     @Test
     void testSetDescription_NullValue_ThrowIllegalArgumentException() {
         // given
