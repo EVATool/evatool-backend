@@ -76,7 +76,14 @@ public class VariantMapper {
             throw new IllegalAnalysisException(variantDto.getAnalysisId().toString());
         }
         variantsAnalysis.ifPresent(variant::setVariantsAnalysis);
-        if (variantDto.getGuiId() == null || variantDto.getGuiId().equals("")) variant.setGuiId(generateGuiId(variantDto.getAnalysisId()));
+        if (variantDto.getGuiId() == null || variantDto.getGuiId().equals(""))
+        {
+            variant.setGuiId(generateGuiId(variantDto.getAnalysisId()));
+        }
+        else
+        {
+            variant.setGuiId(variantDto.getGuiId());
+        }
         if (variantDto.getArchived()){
             if (checkIfArchivable(variantDto.getId())) {
                 variant.setArchived(variantDto.getArchived());
@@ -86,8 +93,6 @@ public class VariantMapper {
         }
         return variant;
     }
-
-
 
     private String generateGuiId(UUID analysisId) {
         List<Variant> variants = variantRepository.findAll();
