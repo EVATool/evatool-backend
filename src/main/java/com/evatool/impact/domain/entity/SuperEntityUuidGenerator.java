@@ -37,10 +37,10 @@ public class SuperEntityUuidGenerator extends UUIDGenerator {
 
                 System.out.println(session.createQuery("select a.impactsPerAnalysis from IMP_IMPACTS_PER_ANALYSIS a where a.analysisId='" + impact.getAnalysis().getId() + "'", Integer.class).getResultList());
             } else {
-                var updateQuery = session.createQuery("update impactsPerAnalysis set IMPACTS_PER_ANALYSIS=?1 where analysisId=?2");
+                var updateQuery = session.createQuery("update IMP_IMPACTS_PER_ANALYSIS set impactsPerAnalysis=?1 where analysisId=?2");
                 System.out.println("Update query: " + updateQuery.getQueryString());
                 updateQuery.setParameter(1, impactsPerAnalysis + 1);
-                updateQuery.setParameter(2, impact.getAnalysis().getId());
+                updateQuery.setParameter(2, impact.getAnalysis().getId().toString());
                 var updateResult = updateQuery.executeUpdate();
                 System.out.println("Update Result: " + updateResult);
             }
