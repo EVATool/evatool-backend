@@ -11,6 +11,7 @@ public class RequirementDeletedEvent extends ApplicationEvent {
 
     public RequirementDeletedEvent(String jsonPayload) {
         super(jsonPayload);
+        this.jsonPayload = jsonPayload;
     }
 
 

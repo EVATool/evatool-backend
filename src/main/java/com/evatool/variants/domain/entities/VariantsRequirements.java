@@ -1,5 +1,6 @@
 package com.evatool.variants.domain.entities;
 
+import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
@@ -24,5 +25,12 @@ public class VariantsRequirements extends RepresentationModel<VariantsRequiremen
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Variant> variants = new ArrayList<>();
 
+    public static VariantsRequirements fromJson(String json) {
+        return new Gson().fromJson(json, VariantsRequirements.class);
+    }
 
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
 }

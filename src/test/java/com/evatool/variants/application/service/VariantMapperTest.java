@@ -1,23 +1,17 @@
 package com.evatool.variants.application.service;
 
-
 import com.evatool.variants.application.dto.VariantDto;
 import com.evatool.variants.application.dto.VariantMapper;
 import com.evatool.variants.common.error.exceptions.IllegalAnalysisException;
 import com.evatool.variants.domain.entities.Variant;
 import com.evatool.variants.domain.entities.VariantsAnalysis;
-import com.evatool.variants.domain.repositories.VariantRequirementsRepository;
 import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
-import com.google.common.annotations.VisibleForTesting;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 
 import javax.transaction.Transactional;
-
-import java.util.UUID;
 
 import static com.evatool.variants.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
