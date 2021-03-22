@@ -60,7 +60,6 @@ public class VariantMapper {
         variant.setDescription(variantDto.getDescription());
         variant.setStFlagsPot(variantDto.getStFlagsPot());
         variant.setStFlagsReal(variantDto.getStFlagsReal());
-        System.out.println(variantDto.getAnalysisId());
         Optional<VariantsAnalysis> variantsAnalysis = variantsAnalysisRepository.findById(variantDto.getAnalysisId());
         if (variantsAnalysis.isEmpty()) {
             throw new IllegalAnalysisException(variantDto.getAnalysisId().toString());
