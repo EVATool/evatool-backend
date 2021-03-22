@@ -19,6 +19,7 @@ public class SuperEntityUuidGenerator extends UUIDGenerator {
         if (object.getClass() == Impact.class) {
             var impact = (Impact) object;
 
+            // Check existing impacts for given analysis.
             var impactsPerAnalysisQuery = session.createQuery("select a.impactsPerAnalysis from IMP_IMPACTS_PER_ANALYSIS a where a.analysisId=?1", Integer.class);
             System.out.println("Select query: " + impactsPerAnalysisQuery.getQueryString());
             impactsPerAnalysisQuery.setParameter(1, impact.getAnalysis().getId().toString());
@@ -35,7 +36,6 @@ public class SuperEntityUuidGenerator extends UUIDGenerator {
                 System.out.println("Insert Result: " + insertResult);
 
                 System.out.println(session.createQuery("select a.impactsPerAnalysis from IMP_IMPACTS_PER_ANALYSIS a where a.analysisId='" + impact.getAnalysis().getId() + "'", Integer.class).getResultList());
-
             } else {
                 var updateQuery = session.createQuery("update impactsPerAnalysis set IMPACTS_PER_ANALYSIS=?1 where analysisId=?2");
                 System.out.println("Update query: " + updateQuery.getQueryString());

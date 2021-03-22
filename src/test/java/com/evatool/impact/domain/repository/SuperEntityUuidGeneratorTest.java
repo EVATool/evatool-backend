@@ -134,5 +134,8 @@ class SuperEntityUuidGeneratorTest {
             // then
             assertThat(impact2.getNumericId()).isEqualTo(impact1.getNumericId());
         }
+
+        // add test for new 'delete highest imp and insert new one' scenario...
+
     }
 }
