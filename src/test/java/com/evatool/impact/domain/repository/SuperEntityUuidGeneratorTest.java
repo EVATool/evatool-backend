@@ -124,7 +124,7 @@ class SuperEntityUuidGeneratorTest {
         }
 
         @Test
-        void testNumericId_InsertMultipleImpactsWithDifferentAnalyses_NumericIdIncrements() {
+        void testNumericId_InsertMultipleImpactsWithDifferentAnalyses_NumericIdIncrementsSeparately() {
             // given
             var impact1 = saveFullDummyImpact();
             var impact2 = saveFullDummyImpact();

@@ -15,7 +15,7 @@ public class ImpactIdPerAnalysis {
     private int id;
 
     @Getter
-    @Type(type = "uuid-char")
+    //@Type(type = "uuid-char")
     @Column(name = "ANALYSIS_ID", updatable = false, nullable = false)
     private String analysisId;
     //@Column(name = "ANALYSIS_ID", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
