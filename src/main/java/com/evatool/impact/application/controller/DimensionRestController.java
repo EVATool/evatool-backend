@@ -114,8 +114,6 @@ public class DimensionRestController {
         logger.debug("Adding HATEOAS Rest Level 3 links");
         var entityModel = EntityModel.of(dimensionDto);
         entityModel.add(linkTo(methodOn(DimensionRestController.class).findById(dimensionDto.getId())).withSelfRel());
-        entityModel.add(linkTo(methodOn(DimensionRestController.class).update(dimensionDto)).withRel(UPDATE_DIMENSION));
-        entityModel.add(linkTo(methodOn(DimensionRestController.class).deleteById(dimensionDto.getId())).withRel(DELETE_DIMENSION));
         return entityModel;
     }
 
