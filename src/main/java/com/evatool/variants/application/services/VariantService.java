@@ -1,12 +1,11 @@
 package com.evatool.variants.application.services;
 
-import com.evatool.analysis.api.interfaces.AnalysisController;
-import com.evatool.analysis.dto.AnalysisDTO;
 import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
 import com.evatool.variants.application.controller.VariantController;
 import com.evatool.variants.application.dto.VariantMapper;
+import com.evatool.variants.common.error.exceptions.VariantStillReferredException;
 import com.evatool.variants.common.error.exceptions.VariantsEntityNotFoundException;
 import com.evatool.variants.domain.entities.Variant;
 import com.evatool.variants.application.dto.VariantDto;
@@ -15,16 +14,12 @@ import com.evatool.variants.domain.repositories.VariantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 /**
  * VariantService serves the VariantController
@@ -119,6 +114,9 @@ public class VariantService {
     public void deleteVariant(UUID id) {
         logger.debug("delete [{}]",id);
         Variant variant = variantRepository.findVariantById(id);
+        if(!variantMapper.checkIfArchivable(id)){
+            throw new VariantStillReferredException();
+        }
         if (variant == null) {
             throw new VariantsEntityNotFoundException(id.toString());
         } else {

@@ -2,7 +2,7 @@ package com.evatool.variants.application.dto;
 
 import com.evatool.variants.application.controller.VariantController;
 import com.evatool.variants.common.error.exceptions.IllegalAnalysisException;
-import com.evatool.variants.common.error.exceptions.VariantNotArchivedException;
+import com.evatool.variants.common.error.exceptions.VariantStillReferredException;
 import com.evatool.variants.domain.entities.Variant;
 import com.evatool.variants.domain.entities.VariantsAnalysis;
 import com.evatool.variants.domain.entities.VariantsRequirements;
@@ -79,7 +79,7 @@ public class VariantMapper {
             if (checkIfArchivable(variantDto.getId())) {
                 variant.setArchived(variantDto.getArchived());
             } else {
-                throw new VariantNotArchivedException();
+                throw new VariantStillReferredException();
             }
         }
         return variant;
@@ -92,7 +92,7 @@ public class VariantMapper {
         return String.format("VAR%d", variants.size() + 1);
     }
 
-    private Boolean checkIfArchivable(UUID variantid) {
+    public Boolean checkIfArchivable(UUID variantid) {
         List<VariantsRequirements> requirements = variantRequirementsRepository.findAll();
         requirements.forEach(requirement -> {
             requirement.getVariants().forEach(requirementVariant -> {
