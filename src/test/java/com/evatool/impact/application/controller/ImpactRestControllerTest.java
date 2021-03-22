@@ -1,12 +1,12 @@
 package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
+import com.evatool.analysis.application.dto.ValueDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.application.service.ImpactService;
-import com.evatool.impact.domain.repository.DimensionRepository;
+import com.evatool.analysis.domain.repository.ValueRepository;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.*;
@@ -38,7 +38,7 @@ public class ImpactRestControllerTest {
     private ImpactService impactService;
 
     @Autowired
-    private DimensionRepository dimensionRepository;
+    private ValueRepository dimensionRepository;
 
     @Autowired
     private ImpactStakeholderRepository stakeholderRepository;
@@ -57,7 +57,7 @@ public class ImpactRestControllerTest {
 
     private ImpactDto saveFullDummyImpactDto() {
         var impact = createDummyImpact();
-        impact.setDimension(dimensionRepository.save(impact.getDimension()));
+        //impact.setDimension(dimensionRepository.save(impact.getDimension()));
         impact.setStakeholder(stakeholderRepository.save(impact.getStakeholder()));
         impact.setAnalysis(analysisRepository.save(impact.getAnalysis()));
         return impactService.create(toDto(impact));
@@ -66,7 +66,7 @@ public class ImpactRestControllerTest {
     private ImpactDto saveDummyImpactDtoChildren() {
         var impactDto = createDummyImpactDto();
         impactDto.getDimension().setId(UUID.randomUUID());
-        dimensionRepository.save(DimensionDtoMapper.fromDto(impactDto.getDimension()));
+        dimensionRepository.save(ValueDtoMapper.fromDto(impactDto.getDimension()));
         stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder()));
         analysisRepository.save(ImpactAnalysisDtoMapper.fromDto(impactDto.getAnalysis()));
         return impactDto;

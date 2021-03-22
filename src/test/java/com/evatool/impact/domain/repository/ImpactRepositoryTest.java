@@ -1,5 +1,6 @@
 package com.evatool.impact.domain.repository;
 
+import com.evatool.analysis.domain.repository.ValueRepository;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
@@ -24,7 +25,7 @@ class ImpactRepositoryTest {
     ImpactRepository impactRepository;
 
     @Autowired
-    DimensionRepository dimensionRepository;
+    ValueRepository dimensionRepository;
 
     @Autowired
     ImpactStakeholderRepository stakeholderRepository;
@@ -42,19 +43,19 @@ class ImpactRepositoryTest {
     }
 
     private Impact saveFullDummyImpact() {
-        var dimension = saveDummyDimension();
+       // var dimension = saveDummyDimension();
         var stakeholder = saveDummyStakeholder();
         var analysis = saveDummyAnalysis();
         var impact = createDummyImpact();
-        impact.setDimension(dimension);
+        //impact.setDimension(dimension);
         impact.setStakeholder(stakeholder);
         impact.setAnalysis(analysis);
         return impactRepository.save(impact);
     }
 
-    private Dimension saveDummyDimension() {
-        return dimensionRepository.save(createDummyDimension());
-    }
+//    private Dimension saveDummyDimension() {
+//        return dimensionRepository.save(createDummyDimension());
+//    }
 
     private ImpactStakeholder saveDummyStakeholder() {
         return stakeholderRepository.save(createDummyStakeholder());

@@ -1,5 +1,6 @@
 package com.evatool.impact.application.dto;
 
+import com.evatool.analysis.application.dto.ValueDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -36,7 +37,7 @@ public class ImpactDto {
     @Getter
     @Setter
     @NotNull
-    private DimensionDto dimension;
+    private ValueDto dimension;
 
     @ApiModelProperty(required = true)
     @Getter

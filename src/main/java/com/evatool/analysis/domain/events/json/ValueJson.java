@@ -1,12 +1,12 @@
-package com.evatool.impact.domain.event.json;
+package com.evatool.analysis.domain.events.json;
 
-import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.analysis.domain.model.Value;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Objects;
 
-public class DimensionJson {
+public class ValueJson {
 
     @Getter
     @Setter
@@ -24,7 +24,7 @@ public class DimensionJson {
     @Setter
     private String description;
 
-    public boolean equalsEntity(Dimension that) {
+    public boolean equalsEntity(Value that) {
         if (that == null) return false;
         return Objects.equals(this.id, that.getId().toString())
                 && Objects.equals(this.name, that.getName())

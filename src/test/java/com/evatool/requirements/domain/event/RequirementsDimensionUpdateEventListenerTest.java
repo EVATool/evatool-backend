@@ -1,6 +1,6 @@
 package com.evatool.requirements.domain.event;
 
-import com.evatool.global.event.dimension.DimensionUpdatedEvent;
+import com.evatool.global.event.value.ValueUpdatedEvent;
 import com.evatool.requirements.entity.RequirementDimension;
 import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.events.listener.RequirementEventListener;
@@ -37,7 +37,7 @@ class RequirementsDimensionUpdateEventListenerTest {
         UUID tempId = requirementDimension.getId();
 
         // when
-        DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(requirementEventListener, json);
+        ValueUpdatedEvent dimensionUpdatedEvent = new ValueUpdatedEvent(requirementEventListener, json);
         requirementEventListener.dimensionUpdated(dimensionUpdatedEvent);
 
         // then
@@ -56,7 +56,7 @@ class RequirementsDimensionUpdateEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), name);
 
         // when
-        DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(requirementEventListener, json);
+        ValueUpdatedEvent dimensionUpdatedEvent = new ValueUpdatedEvent(requirementEventListener, json);
 
         // then
         assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.dimensionUpdated(dimensionUpdatedEvent));

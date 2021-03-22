@@ -1,10 +1,8 @@
 package com.evatool.impact.common;
 
-import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.ImpactAnalysisDto;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.ImpactStakeholderDto;
-import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
@@ -33,9 +31,6 @@ public class TestDataGenerator {
         return new ImpactAnalysis(UUID.randomUUID());
     }
 
-    public static DimensionDto createDummyDimensionDto() {
-        return DimensionDtoMapper.toDto(createDummyDimension());
-    }
 
     public static ImpactStakeholderDto createDummyStakeholderDto() {
         return ImpactStakeholderDtoMapper.toDto(createDummyStakeholder());

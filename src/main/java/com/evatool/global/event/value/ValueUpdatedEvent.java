@@ -1,14 +1,14 @@
-package com.evatool.global.event.dimension;
+package com.evatool.global.event.value;
 
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
-public class DimensionDeletedEvent extends ApplicationEvent {
+public class ValueUpdatedEvent extends ApplicationEvent {
 
     @Getter
     private final String jsonPayload;
 
-    public DimensionDeletedEvent(Object source, String jsonPayload) {
+    public ValueUpdatedEvent(Object source, String jsonPayload) {
         super(source);
         this.jsonPayload = jsonPayload;
     }

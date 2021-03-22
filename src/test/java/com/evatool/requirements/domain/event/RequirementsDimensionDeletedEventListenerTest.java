@@ -1,6 +1,6 @@
 package com.evatool.requirements.domain.event;
 
-import com.evatool.global.event.dimension.DimensionDeletedEvent;
+import com.evatool.global.event.value.ValueDeletedEvent;
 import com.evatool.requirements.entity.RequirementDimension;
 import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.events.listener.RequirementEventListener;
@@ -37,7 +37,7 @@ class RequirementsDimensionDeletedEventListenerTest {
         UUID tempId = requirementDimension.getId();
 
         // when
-        DimensionDeletedEvent dimensionDeletedEvent = new DimensionDeletedEvent(requirementEventListener, json);
+        ValueDeletedEvent dimensionDeletedEvent = new ValueDeletedEvent(requirementEventListener, json);
         requirementEventListener.dimensionDeleted(dimensionDeletedEvent);
 
         // then
@@ -53,7 +53,7 @@ class RequirementsDimensionDeletedEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
 
         // when
-        DimensionDeletedEvent dimensionDeletedEvent = new DimensionDeletedEvent(requirementEventListener, json);
+        ValueDeletedEvent dimensionDeletedEvent = new ValueDeletedEvent(requirementEventListener, json);
 
         // then
         assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.dimensionDeleted(dimensionDeletedEvent));

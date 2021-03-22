@@ -1,5 +1,6 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.analysis.application.services.ValueService;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
@@ -23,7 +24,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     private final ImpactRepository impactRepository;
 
-    private final DimensionService dimensionService;
+    private final ValueService dimensionService;
 
     private final ImpactStakeholderService impactStakeholderService;
 
@@ -31,7 +32,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     private final ImpactEventPublisher impactEventPublisher;
 
-    public ImpactServiceImpl(ImpactRepository impactRepository, DimensionService dimensionService, ImpactStakeholderService impactStakeholderService, ImpactAnalysisService impactAnalysisService, ImpactEventPublisher impactEventPublisher) {
+    public ImpactServiceImpl(ImpactRepository impactRepository, ValueService dimensionService, ImpactStakeholderService impactStakeholderService, ImpactAnalysisService impactAnalysisService, ImpactEventPublisher impactEventPublisher) {
         this.impactRepository = impactRepository;
         this.dimensionService = dimensionService;
         this.impactStakeholderService = impactStakeholderService;

@@ -1,6 +1,6 @@
-package com.evatool.impact.application.dto;
+package com.evatool.analysis.application.dto;
 
-import com.evatool.impact.common.DimensionType;
+import com.evatool.analysis.common.error.ValueType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.UUID;
 
-@ApiModel(value = "Dimension", description = "Dimension of an impact")
-public class DimensionDto {
+@ApiModel(value = "Value", description = "Value of an Values")
+public class ValueDto {
 
     @ApiModelProperty
     @Getter
@@ -28,7 +28,7 @@ public class DimensionDto {
     @Getter
     @Setter
     @NotNull
-    private DimensionType type;
+    private ValueType type;
 
     @ApiModelProperty(required = true)
     @Getter
@@ -50,7 +50,7 @@ public class DimensionDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DimensionDto that = (DimensionDto) o;
+        ValueDto that = (ValueDto) o;
         return Objects.equals(id, that.id) && Objects.equals(name, that.name) && type == that.type && Objects.equals(description, that.description);
     }
 

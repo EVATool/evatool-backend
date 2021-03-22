@@ -1,6 +1,6 @@
 package com.evatool.requirements.domain.event;
 
-import com.evatool.global.event.dimension.DimensionCreatedEvent;
+import com.evatool.global.event.value.ValueCreatedEvent;
 import com.evatool.requirements.entity.RequirementDimension;
 import com.evatool.requirements.error.exceptions.EventEntityAlreadyExistsException;
 import com.evatool.requirements.error.exceptions.InvalidEventPayloadException;
@@ -38,7 +38,7 @@ class RequirementsDimensionCreateEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
         // when
-        DimensionCreatedEvent dimensionCreatedEvent = new DimensionCreatedEvent(requirementEventListener, json);
+        ValueCreatedEvent dimensionCreatedEvent = new ValueCreatedEvent(requirementEventListener, json);
         requirementEventListener.dimensionCreated(dimensionCreatedEvent);
 
         // then
@@ -70,7 +70,7 @@ class RequirementsDimensionCreateEventListenerTest {
         requirementDimensionRepository.save(requirementDimension);
 
         // when
-        DimensionCreatedEvent dimensionCreatedEvent = new DimensionCreatedEvent(requirementEventListener, json);
+        ValueCreatedEvent dimensionCreatedEvent = new ValueCreatedEvent(requirementEventListener, json);
 
         // then
         assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.dimensionCreated(dimensionCreatedEvent));

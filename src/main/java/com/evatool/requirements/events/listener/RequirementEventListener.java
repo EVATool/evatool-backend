@@ -2,9 +2,9 @@ package com.evatool.requirements.events.listener;
 
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
-import com.evatool.global.event.dimension.DimensionCreatedEvent;
-import com.evatool.global.event.dimension.DimensionDeletedEvent;
-import com.evatool.global.event.dimension.DimensionUpdatedEvent;
+import com.evatool.global.event.value.ValueCreatedEvent;
+import com.evatool.global.event.value.ValueDeletedEvent;
+import com.evatool.global.event.value.ValueUpdatedEvent;
 import com.evatool.global.event.impact.ImpactCreatedEvent;
 import com.evatool.global.event.impact.ImpactDeletedEvent;
 import com.evatool.global.event.impact.ImpactUpdatedEvent;
@@ -78,7 +78,7 @@ public class RequirementEventListener {
     }
     @EventListener
     @Async
-    public void dimensionCreated(DimensionCreatedEvent event) {
+    public void dimensionCreated(ValueCreatedEvent event) {
         logger.info("dimension created event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         if (requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
@@ -89,7 +89,7 @@ public class RequirementEventListener {
 
     @EventListener
     @Async
-    public void dimensionUpdated(DimensionUpdatedEvent event) {
+    public void dimensionUpdated(ValueUpdatedEvent event) {
         logger.info("dimension updated event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         if (!requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
@@ -100,7 +100,7 @@ public class RequirementEventListener {
 
     @EventListener
     @Async
-    public void dimensionDeleted(DimensionDeletedEvent event) {
+    public void dimensionDeleted(ValueDeletedEvent event) {
         logger.info("dimension deleted event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         if (!requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
