@@ -1,5 +1,7 @@
 package com.evatool.variants.domain.entities;
 
+import com.evatool.requirements.entity.RequirementsAnalysis;
+import com.google.gson.Gson;
 import lombok.Getter;
 import org.hibernate.annotations.Type;
 import org.springframework.hateoas.RepresentationModel;
@@ -40,5 +42,9 @@ public class VariantsAnalysis extends RepresentationModel<VariantsAnalysis> {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), analysisId);
+    }
+
+    public static VariantsAnalysis fromJson(String json) {
+        return new Gson().fromJson(json, VariantsAnalysis.class);
     }
 }
