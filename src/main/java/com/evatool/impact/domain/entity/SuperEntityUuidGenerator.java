@@ -18,6 +18,15 @@ public class SuperEntityUuidGenerator extends UUIDGenerator {
 
         if (object.getClass() == Impact.class) {
             var impact = (Impact) object;
+
+            var injectTest = session.createNativeQuery("insert into IMP_IMPACTS_PER_ANALYSIS (ANALYSIS_ID, IMPACTS_PER_ANALYSIS) values ('lol', 1)").executeUpdate();
+
+            var impactsPerAnalysis = session.createQuery("select a.impactsPerAnalysis from IMP_IMPACTS_PER_ANALYSIS a", Integer.class).getResultList();
+
+            System.out.println(impactsPerAnalysis);
+
+
+
             var query = session.createQuery("select MAX(a.numericId) from IMP_IMPACT a where a.analysis.id=(?1)", Integer.class);
             query.setParameter(1, impact.getAnalysis().getId());
             var max = query.getResultList().get(0);
