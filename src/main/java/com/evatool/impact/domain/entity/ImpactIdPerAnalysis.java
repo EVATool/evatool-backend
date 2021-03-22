@@ -16,10 +16,10 @@ public class ImpactIdPerAnalysis {
 
     @Getter
     @Type(type = "uuid-char")
-    @Column(name = "a", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
-    private UUID a;
+    @Column(name = "ANALYSIS_ID", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
+    private UUID analysisId;
 
     @Getter
-    @Column(name = "b", updatable = false, nullable = false)
-    private Integer b;
+    @Column(name = "IMPACTS_PER_ANALYSIS", updatable = false, nullable = false)
+    private Integer impactsPerAnalysis;
 }
