@@ -44,7 +44,6 @@ public class RequirementEventListener {
     RequirementAnalysisRepository requirementAnalysisRepository;
 
     @EventListener
-    @Async
     public void impactCreated(ImpactCreatedEvent event) {
         logger.info("impact created event ");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
@@ -56,7 +55,6 @@ public class RequirementEventListener {
     }
 
     @EventListener
-    @Async
     public void impactUpdated(ImpactUpdatedEvent event) {
         logger.info("Impact updated event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
@@ -67,7 +65,6 @@ public class RequirementEventListener {
     }
 
     @EventListener
-    @Async
     public void impactDeleted(ImpactDeletedEvent event) {
         logger.info("Impact deleted event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
@@ -77,7 +74,6 @@ public class RequirementEventListener {
         requirementsImpactsRepository.delete(RequirementsImpact.fromJson(event.getJsonPayload()));
     }
     @EventListener
-    @Async
     public void dimensionCreated(DimensionCreatedEvent event) {
         logger.info("dimension created event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
@@ -88,7 +84,6 @@ public class RequirementEventListener {
     }
 
     @EventListener
-    @Async
     public void dimensionUpdated(DimensionUpdatedEvent event) {
         logger.info("dimension updated event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
@@ -99,7 +94,6 @@ public class RequirementEventListener {
     }
 
     @EventListener
-    @Async
     public void dimensionDeleted(DimensionDeletedEvent event) {
         logger.info("dimension deleted event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
@@ -110,7 +104,6 @@ public class RequirementEventListener {
     }
 
      @EventListener
-     @Async
         public void variantsCreated(VariantCreatedEvent event){
         logger.info("Variant created event");
          if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getVariantJson()));
@@ -121,7 +114,6 @@ public class RequirementEventListener {
      }
 
      @EventListener
-     @Async
         public void variantsUpdated (VariantUpdatedEvent event){
         logger.info("variant updated event");
          if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getVariantJson()));
@@ -132,7 +124,6 @@ public class RequirementEventListener {
      }
 
      @EventListener
-     @Async
         public void variantsDeleted(VariantDeletedEvent event){
         logger.info("variant deleted event");
          if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getVariantJson()));
@@ -143,7 +134,6 @@ public class RequirementEventListener {
      }
 
     @EventListener
-    @Async
     public void analyseCreated(AnalysisCreatedEvent event){
         logger.info("analyse created event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
@@ -151,11 +141,9 @@ public class RequirementEventListener {
             throw new EventEntityAlreadyExistsException();
         }
         requirementAnalysisRepository.save(RequirementsAnalysis.fromJson(event.getJsonPayload()));
-
     }
 
     @EventListener
-    @Async
     public void analyseDeleted(AnalysisDeletedEvent event){
         logger.info("analyse deleted event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getSource().toString() ));

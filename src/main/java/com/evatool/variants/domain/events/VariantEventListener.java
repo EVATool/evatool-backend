@@ -26,7 +26,6 @@ public class VariantEventListener {
     VariantsAnalysisRepository variantsAnalysisRepository;
 
     @EventListener
-    @Async
     public void analyseCreated(AnalysisCreatedEvent event){
         logger.info("analyse created event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
@@ -40,7 +39,6 @@ public class VariantEventListener {
     }
 
     @EventListener
-    @Async
     public void analyseDeleted(AnalysisDeletedEvent event){
         logger.info("analyse created event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
