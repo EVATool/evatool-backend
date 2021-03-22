@@ -20,7 +20,8 @@ public class Stakeholder {
     @Id
     @Getter
     @Setter
-    @Type(type = "uuid-char")
+    @Type(type= "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
     private UUID stakeholderId = UUID.randomUUID();
 
     /**

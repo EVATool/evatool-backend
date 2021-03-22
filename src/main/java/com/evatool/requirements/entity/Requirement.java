@@ -14,7 +14,8 @@ import java.util.UUID;
 public class Requirement {
 
     @Id
-    @Type(type = "uuid-char")
+    @Type(type= "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
     private final UUID id = UUID.randomUUID();
     private String title;
     private String description;

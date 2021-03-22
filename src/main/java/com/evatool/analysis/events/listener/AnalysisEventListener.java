@@ -28,7 +28,6 @@ public class AnalysisEventListener {
     AnalysisImpactRepository analysisImpactRepository;
 
     @EventListener
-    @Async
     public void impactCreated(ImpactCreatedEvent event) {
         logger.info("impact created event ");
         logger.debug(EVENT_MESSAGE + event.getSource() + PAYLOAD_MESSAGE + event.getSource().toString());
@@ -40,7 +39,6 @@ public class AnalysisEventListener {
     }
 
     @EventListener
-    @Async
     public void impactUpdated(ImpactUpdatedEvent event) {
         logger.info("Impact updated event");
         logger.debug(EVENT_MESSAGE + event.getSource() + PAYLOAD_MESSAGE + event.getSource().toString());
@@ -52,7 +50,6 @@ public class AnalysisEventListener {
     }
 
     @EventListener
-    @Async
     public void impactDeleted(ImpactDeletedEvent event) {
         logger.info("Impact deleted event");
         logger.debug(EVENT_MESSAGE + event.getSource() + PAYLOAD_MESSAGE + event.getSource().toString());

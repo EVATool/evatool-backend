@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -22,7 +23,8 @@ public class User {
     @Id
     @Getter
     @Setter
-    @Type(type = "uuid-char")
+    @Type(type= "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
     private UUID userId = UUID.randomUUID();
 
     /**

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import lombok.Getter;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -16,7 +17,8 @@ import java.util.UUID;
 public class AnalysisImpacts {
 
     @Id
-    @Type(type = "uuid-char")
+    @Type(type= "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
     private UUID id = UUID.randomUUID();
     private String title;
     private double value;
