@@ -135,7 +135,20 @@ class SuperEntityUuidGeneratorTest {
             assertThat(impact2.getNumericId()).isEqualTo(impact1.getNumericId());
         }
 
-        // add test for new 'delete highest imp and insert new one' scenario...
+        @Test
+        void testNumericId_InsertMultipleImpactsWithTheSameAnalysisAndDeleteHighestIdImpact_NumericIdIncrementsFromEverHighest() {
+            // given
+            var analysis = saveDummyAnalysis();
+            var impact1 = saveFullDummyImpact(analysis);
+            var impact2 = saveFullDummyImpact(analysis);
+
+            // when
+            impactRepository.delete(impact2);
+            var impact3 = saveFullDummyImpact(analysis);
+
+            // then
+            assertThat(impact3.getNumericId()).isEqualTo(impact1.getNumericId() + 2);
+        }
 
     }
 }

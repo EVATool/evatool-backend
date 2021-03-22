@@ -28,31 +28,26 @@ public class SuperEntityUuidGenerator extends UUIDGenerator {
             System.out.println("Existing impacts: " + impactsPerAnalysis);
 
             if (impactsPerAnalysis == 0) { // First impact for that analysis
+                impactsPerAnalysis = 1;
                 var insertQuery = session.createNativeQuery("insert into IMP_IMPACTS_PER_ANALYSIS (ANALYSIS_ID, IMPACTS_PER_ANALYSIS) values (?1, ?2)");
                 System.out.println("Insert query: " + insertQuery.getQueryString());
                 insertQuery.setParameter(1, impact.getAnalysis().getId().toString());
-                insertQuery.setParameter(2, 1);
+                insertQuery.setParameter(2, impactsPerAnalysis);
                 var insertResult = insertQuery.executeUpdate();
                 System.out.println("Insert Result: " + insertResult);
 
                 System.out.println(session.createQuery("select a.impactsPerAnalysis from IMP_IMPACTS_PER_ANALYSIS a where a.analysisId='" + impact.getAnalysis().getId() + "'", Integer.class).getResultList());
             } else {
+                impactsPerAnalysis += 1;
                 var updateQuery = session.createQuery("update IMP_IMPACTS_PER_ANALYSIS set impactsPerAnalysis=?1 where analysisId=?2");
                 System.out.println("Update query: " + updateQuery.getQueryString());
-                updateQuery.setParameter(1, impactsPerAnalysis + 1);
+                updateQuery.setParameter(1, impactsPerAnalysis);
                 updateQuery.setParameter(2, impact.getAnalysis().getId().toString());
                 var updateResult = updateQuery.executeUpdate();
                 System.out.println("Update Result: " + updateResult);
             }
 
-            var query = session.createQuery("select MAX(a.numericId) from IMP_IMPACT a where a.analysis.id=(?1)", Integer.class);
-            query.setParameter(1, impact.getAnalysis().getId());
-            var max = query.getResultList().get(0);
-            if (max == null) {
-                impact.setNumericId(1);
-            } else {
-                impact.setNumericId(max + 1);
-            }
+            impact.setNumericId(impactsPerAnalysis);
         }
 
         Serializable id = session.getEntityPersister(null, object).getClassMetadata().getIdentifier(object, session);
