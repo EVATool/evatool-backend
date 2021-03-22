@@ -30,14 +30,11 @@ class RequirementsAnalysisCreateEventListenerTest {
     @Autowired
     private RequirementEventListener requirementEventListener;
 
-
     @Test
-    @Disabled
     void testOnApplicationEvent_PublishEvent_AnalysisCreated() {
-
         // given
         UUID id = UUID.randomUUID();
-        String json = String.format("{\"id\":\"%s\"}", id.toString());
+        String json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
         // when
         AnalysisCreatedEvent analysisCreatedEvent = new AnalysisCreatedEvent(json);
@@ -50,19 +47,17 @@ class RequirementsAnalysisCreateEventListenerTest {
     }
 
     @Test
-    @Disabled
     void testOnApplicationEvent_AnalysisAlreadyExists_ThrowEventEntityAlreadyExistsException() {
-
         // given
         UUID id = UUID.randomUUID();
-        String json = String.format("{\"id\":\"%s\"}", id.toString());
+        String json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
         RequirementsAnalysis requirementsAnalysis;
 
         try {
             JSONObject jsonObject = new JSONObject(json);
             requirementsAnalysis = new RequirementsAnalysis();
-            requirementsAnalysis.setAnalysisId(UUID.fromString(jsonObject.getString("id")));
+            requirementsAnalysis.setAnalysisId(UUID.fromString(jsonObject.getString("analysisId")));
         } catch (JSONException jex) {
             throw new InvalidEventPayloadException(json, jex);
         }
@@ -74,6 +69,5 @@ class RequirementsAnalysisCreateEventListenerTest {
 
         // then
         assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.analyseCreated(analysisCreatedEvent));
-
     }
 }
