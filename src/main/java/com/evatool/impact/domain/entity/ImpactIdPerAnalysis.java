@@ -1,7 +1,6 @@
 package com.evatool.impact.domain.entity;
 
 import lombok.Getter;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -15,11 +14,8 @@ public class ImpactIdPerAnalysis {
     private int id;
 
     @Getter
-    //@Type(type = "uuid-char")
     @Column(name = "ANALYSIS_ID", updatable = false, nullable = false)
     private String analysisId;
-    //@Column(name = "ANALYSIS_ID", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
-    //private UUID analysisId;
 
     @Getter
     @Column(name = "IMPACTS_PER_ANALYSIS", updatable = false, nullable = false)
