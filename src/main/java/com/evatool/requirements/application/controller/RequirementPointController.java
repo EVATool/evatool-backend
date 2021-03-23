@@ -1,6 +1,7 @@
 package com.evatool.requirements.application.controller;
 
 import com.evatool.requirements.application.dto.RequirementDTO;
+import com.evatool.requirements.application.dto.RequirementPointDTO;
 import com.evatool.requirements.domain.entity.RequirementsImpact;
 import com.evatool.requirements.domain.entity.Requirement;
 import com.evatool.requirements.domain.entity.RequirementPoint;
@@ -11,6 +12,7 @@ import com.evatool.requirements.domain.repository.RequirementPointRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -51,9 +53,9 @@ public class RequirementPointController {
 
 	public Requirement createPoints(Requirement requirement, RequirementDTO requirementDTO) {
 		Collection<RequirementPoint> requirementPointCollection = new ArrayList<>();
-		for( Map.Entry<UUID, Double> entry:requirementDTO.getRequirementImpactPoints().entrySet()) {
+		for( Map.Entry<UUID, EntityModel<RequirementPointDTO>> entry:requirementDTO.getRequirementImpactPoints().entrySet()) {
 			RequirementPoint requirementPoint = new RequirementPoint();
-			requirementPoint.setPoints(entry.getValue());
+			requirementPoint.setPoints(entry.getValue().getContent().getPoints());
 			Optional<RequirementsImpact> requirementsImpact = requirementsImpactsRepository.findById(entry.getKey());
 			if(requirementsImpact.isEmpty()){
 				throw new EntityNotFoundException(RequirementsImpact.class,entry.getKey());
@@ -71,13 +73,13 @@ public class RequirementPointController {
 		Collection<RequirementPoint> requirementPointCollectionFromEntity = requirement.getRequirementPointCollection();
 		Collection<RequirementPoint> updateList = new ArrayList<>();
 		Collection<RequirementPoint> deleteList = new ArrayList<>();
-		Map<UUID, Double> requirementImpactPointsMap=requirementDTO.getRequirementImpactPoints();
+		Map<UUID, EntityModel<RequirementPointDTO>> requirementImpactPointsMap=requirementDTO.getRequirementImpactPoints();
 		for (RequirementPoint requirementPoint:requirementPointCollectionFromEntity){
 			if(requirementImpactPointsMap.get(requirementPoint.getId())==null) {
 				deleteList.add(requirementPoint);
 			}
-			else if(requirementImpactPointsMap.get(requirementPoint.getId())!=requirementPoint.getPoints()){
-				requirementPoint.setPoints(requirementImpactPointsMap.get(requirementPoint.getId()));
+			else if(requirementImpactPointsMap.get(requirementPoint.getId()).getContent().getPoints()!=requirementPoint.getPoints()){
+				requirementPoint.setPoints(requirementImpactPointsMap.get(requirementPoint.getId()).getContent().getPoints());
 				updateList.add(requirementPoint);
 				requirementDTO.getRequirementImpactPoints().remove(requirementPoint.getId());
 			}

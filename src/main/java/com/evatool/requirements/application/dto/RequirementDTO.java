@@ -1,18 +1,18 @@
 package com.evatool.requirements.application.dto;
 import com.google.gson.Gson;
+import org.springframework.hateoas.EntityModel;
 
 import java.util.*;
 
 public class RequirementDTO {
 
-    private Map<UUID,String> impactDescription = new HashMap<>();
     private UUID rootEntityId;
     private UUID projectID;
     private String requirementTitle;
     private String requirementDescription;
-    private Set<String> dimensions = new HashSet<>();
-    private Map<UUID, Double> requirementImpactPoints = new HashMap<>();
-    private Map<UUID,String> variantsTitle = new HashMap<>();
+    private Set<EntityModel<DimensionDTO>> dimensions = new HashSet<>();
+    private Map<UUID, EntityModel<RequirementPointDTO>> requirementPointDTOMap = new HashMap<>();
+    private Map<UUID,EntityModel<VariantsDTO>> variantsTitle = new HashMap<>();
 
     public UUID getRootEntityId() {
         return rootEntityId;
@@ -44,48 +44,38 @@ public class RequirementDTO {
         this.requirementDescription = requirementDescription;
     }
 
-    public Map<UUID,String> getImpactDescription() {
-        return impactDescription;
-    }
 
-    public void setImpactDescription(Map<UUID,String> impactDescription) {
-        if (impactDescription == null) {
-            throw new IllegalArgumentException("Impact description cannot be null.");
-        }
-        this.impactDescription = impactDescription;
-    }
-
-    public Set<String> getDimensions() {
+    public Set<EntityModel<DimensionDTO>> getDimensions() {
         return dimensions;
     }
 
-    public void setDimensions(Set<String> dimensions) {
+    public void setDimensions(Set<EntityModel<DimensionDTO>> dimensions) {
         if (dimensions == null) {
             throw new IllegalArgumentException("Dimensions cannot be null.");
         }
         this.dimensions = dimensions;
     }
 
-    public Map<UUID, String> getVariantsTitle() {
+    public Map<UUID, EntityModel<VariantsDTO>> getVariantsTitle() {
         return variantsTitle;
     }
 
-    public void setVariantsTitle(Map<UUID, String> variantsTitle) {
+    public void setVariantsTitle(Map<UUID, EntityModel<VariantsDTO>> variantsTitle) {
         if (variantsTitle == null) {
             throw new IllegalArgumentException("Variants title cannot be null.");
         }
         this.variantsTitle = variantsTitle;
     }
 
-    public Map<UUID, Double> getRequirementImpactPoints() {
-        return requirementImpactPoints;
+    public Map<UUID, EntityModel<RequirementPointDTO>> getRequirementImpactPoints() {
+        return requirementPointDTOMap;
     }
 
-    public void setRequirementImpactPoints(Map<UUID, Double> requirementImpactPoints) {
-        if (requirementImpactPoints == null) {
+    public void setRequirementImpactPoints(Map<UUID, EntityModel<RequirementPointDTO>> requirementPointDTOMap) {
+        if (requirementPointDTOMap == null) {
             throw new IllegalArgumentException("Requirement Impact Points cannot be null.");
         }
-        this.requirementImpactPoints = requirementImpactPoints;
+        this.requirementPointDTOMap = requirementPointDTOMap;
     }
 
     public UUID getProjectID() {

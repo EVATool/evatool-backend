@@ -5,6 +5,7 @@ import com.evatool.global.event.requirements.RequirementDeletedEvent;
 import com.evatool.global.event.requirements.RequirementUpdatedEvent;
 import com.evatool.requirements.application.controller.RequirementPointController;
 import com.evatool.requirements.application.dto.RequirementDTO;
+import com.evatool.requirements.application.dto.VariantsDTO;
 import com.evatool.requirements.domain.entity.Requirement;
 import com.evatool.requirements.domain.entity.RequirementsAnalysis;
 import com.evatool.requirements.domain.entity.RequirementsVariant;
@@ -16,6 +17,7 @@ import com.evatool.requirements.domain.repository.RequirementsVariantsRepository
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -105,7 +107,7 @@ public class RequirementDTOService {
             requirement.setRequirementsAnalysis(requirementsAnalysis.get());
         }
         Collection<RequirementsVariant> requirementsVariantCollection = new ArrayList<>();
-        for( Map.Entry<UUID, String> entry:requirementDTO.getVariantsTitle().entrySet()) {
+        for( Map.Entry<UUID, EntityModel<VariantsDTO>> entry:requirementDTO.getVariantsTitle().entrySet()) {
             Optional<RequirementsVariant> requirementsVariant = requirementsVariantsRepository.findById(entry.getKey());
             if(requirementsVariant.isEmpty()) throw new EntityNotFoundException(RequirementsVariant.class,entry.getKey());
             requirementsVariantCollection.add(requirementsVariant.get());

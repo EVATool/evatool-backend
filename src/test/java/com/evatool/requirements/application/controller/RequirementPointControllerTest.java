@@ -1,11 +1,15 @@
 package com.evatool.requirements.application.controller;
 
 import com.evatool.requirements.application.dto.RequirementDTO;
+import com.evatool.requirements.application.dto.RequirementPointDTO;
+import com.evatool.requirements.application.dto.VariantsDTO;
 import com.evatool.requirements.domain.entity.*;
 import com.evatool.requirements.domain.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.hateoas.EntityModel;
+
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.*;
@@ -108,13 +112,13 @@ class RequirementPointControllerTest {
         Collection<RequirementsVariant> requirementsVariants = new ArrayList<>();
         requirementsVariants.add(requirementsVariant);
 
-        Map<UUID, Double> requirementImpactPoints = new HashMap<>();
-        requirementImpactPoints.put(requirementsImpact.getId(), 1d);
+        Map<UUID, EntityModel<RequirementPointDTO>> requirementImpactPoints = new HashMap<>();
+        requirementImpactPoints.put(requirementsImpact.getId(),RequirementPointDTO.generateLinks(new RequirementPointDTO(requirementsImpact.getId(), requirementsImpact.getDescription(),1d)));
 
-        Map<UUID,String> variantsTitle = new HashMap<>();
-        variantsTitle.put(requirementsVariant.getId(),requirementsVariant.getTitle());
+        Map<UUID, EntityModel<VariantsDTO>> variantsTitle = new HashMap<>();
+        variantsTitle.put(requirementsVariant.getId(), VariantsDTO.generateLinks(new VariantsDTO(requirementsVariant.getId(),requirementsVariant.getTitle())));
 
-        RequirementDTO requirementDTO = getRequirementDTO(requirementImpactPoints,impactTitles,requirementsAnalysis.getAnalysisId(),variantsTitle);
+        RequirementDTO requirementDTO = getRequirementDTO(requirementImpactPoints,requirementsAnalysis.getAnalysisId(),variantsTitle);
         RequirementDTO requirementDTOObj = requirementsController.newRequirement(requirementDTO).getBody().getContent();
 
         Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariants);
@@ -126,11 +130,11 @@ class RequirementPointControllerTest {
         RequirementPoint requirementPoint1 = ((List<RequirementPoint>)requirement.getRequirementPointCollection()).get(0);
 
         assertThat(requirementPoint1).isNotNull();
-        assertThat(requirementPoint1.getPoints()).isEqualTo(requirementDTO.getRequirementImpactPoints().get(requirementPoint1.getRequirementsImpact().getId()));
+        assertThat(requirementPoint1.getPoints()).isEqualTo(requirementDTO.getRequirementImpactPoints().get(requirementPoint1.getRequirementsImpact().getId()).getContent().getPoints());
 
 
-        Map<UUID,Double> requirementImpactPoints2 = new HashMap<>();
-        Double newPoint = -1d;
+        Map<UUID,EntityModel<RequirementPointDTO>> requirementImpactPoints2 = new HashMap<>();
+        EntityModel<RequirementPointDTO> newPoint = RequirementPointDTO.generateLinks(new RequirementPointDTO(requirementsImpact.getId(),requirementsImpact.getDescription(),-1d));
         requirementImpactPoints2.put(requirementsImpact.getId(),newPoint);
 
         requirementDTOObj.setRequirementImpactPoints(requirementImpactPoints2);
@@ -139,8 +143,8 @@ class RequirementPointControllerTest {
         RequirementPoint requirementPointUpdated = ((List<RequirementPoint>)requirement1.getRequirementPointCollection()).get(0);;
 
         assertThat(requirementPointUpdated).isNotNull();
-        assertThat(requirementPointUpdated.getPoints()).isEqualTo(requirementDTOObj.getRequirementImpactPoints().get(requirementPointUpdated.getRequirementsImpact().getId()));
-        assertThat(requirementPointUpdated.getPoints()).isEqualTo(newPoint);
+        assertThat(requirementPointUpdated.getPoints()).isEqualTo(requirementDTOObj.getRequirementImpactPoints().get(requirementPointUpdated.getRequirementsImpact().getId()).getContent().getPoints());
+        assertThat(requirementPointUpdated.getPoints()).isEqualTo(newPoint.getContent().getPoints());
 
         requirementPointController.deletePointsForRequirement(requirement1);
         assertThat(requirement1.getRequirementPointCollection().size()).isEqualTo(0);
