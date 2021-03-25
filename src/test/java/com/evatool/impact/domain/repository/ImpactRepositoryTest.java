@@ -1,17 +1,9 @@
 package com.evatool.impact.domain.repository;
 
-import com.evatool.impact.domain.entity.Dimension;
-import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.entity.ImpactAnalysis;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 
-import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ImpactRepositoryTest extends RepositoryTest {
