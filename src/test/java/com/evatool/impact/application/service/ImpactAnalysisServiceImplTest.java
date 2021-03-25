@@ -1,14 +1,10 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.domain.entity.ImpactAnalysis;
-import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper.toDto;
@@ -17,23 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
-public class ImpactAnalysisServiceImplTest {
-
-    @Autowired
-    ImpactAnalysisService analysisService;
-
-    @Autowired
-    ImpactAnalysisRepository impactAnalysisRepository;
-
-    @BeforeEach
-    void clearDatabase() {
-        analysisService.deleteAll();
-    }
-
-    private ImpactAnalysis saveFullDummyImpactAnalysis() {
-        var analysis = createDummyAnalysis();
-        return impactAnalysisRepository.save(analysis);
-    }
+public class ImpactAnalysisServiceImplTest extends ServiceTest {
 
     @Nested
     class FindById {
@@ -41,7 +21,7 @@ public class ImpactAnalysisServiceImplTest {
         @Test
         void testFindById_ExistingAnalysis_ReturnAnalysis() {
             // given
-            var analysis = saveFullDummyImpactAnalysis();
+            var analysis = saveFullDummyAnalysis();
 
             // when
             var analysisDto = analysisService.findById(analysis.getId());
@@ -71,7 +51,7 @@ public class ImpactAnalysisServiceImplTest {
         void testDeleteAll_ExistingAnalyses_ReturnNoAnalyses(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                saveFullDummyImpactAnalysis();
+                saveFullDummyAnalysis();
             }
 
             // when
