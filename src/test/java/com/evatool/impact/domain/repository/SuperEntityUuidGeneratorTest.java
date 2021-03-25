@@ -1,15 +1,11 @@
 package com.evatool.impact.domain.repository;
 
-import com.evatool.impact.domain.entity.Dimension;
-import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.entity.ImpactAnalysis;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.*;
+import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SuperEntityUuidGeneratorTest extends RepositoryTest {

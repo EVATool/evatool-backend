@@ -2,7 +2,6 @@ package com.evatool.impact.domain.repository;
 
 import com.evatool.impact.common.DimensionType;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static org.assertj.core.api.Assertions.assertThat;
