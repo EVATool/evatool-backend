@@ -1,21 +1,11 @@
 package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
-import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
-import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
-import com.evatool.impact.application.service.ImpactService;
-import com.evatool.impact.domain.entity.ImpactAnalysis;
-import com.evatool.impact.domain.repository.DimensionRepository;
-import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
-import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -23,55 +13,11 @@ import org.springframework.http.HttpStatus;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.IMPACTS;
-import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpactDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ImpactRestControllerTest {
-
-    @Autowired
-    private TestRestTemplate testRestTemplate;
-
-    @Autowired
-    private ImpactService impactService;
-
-    @Autowired
-    private DimensionRepository dimensionRepository;
-
-    @Autowired
-    private ImpactStakeholderRepository stakeholderRepository;
-
-    @Autowired
-    private ImpactAnalysisRepository analysisRepository;
-
-    @BeforeEach
-    @AfterAll
-    private void clearDatabase() {
-        impactService.deleteAll();
-        stakeholderRepository.deleteAll();
-        dimensionRepository.deleteAll();
-        analysisRepository.deleteAll();
-    }
-
-    private ImpactDto saveFullDummyImpactDto() {
-        var analysis = analysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
-        var impact = createDummyImpact(analysis);
-        impact.setDimension(dimensionRepository.save(impact.getDimension()));
-        impact.setStakeholder(stakeholderRepository.save(impact.getStakeholder()));
-        return impactService.create(toDto(impact));
-    }
-
-    private ImpactDto saveDummyImpactDtoChildren() {
-        var impactDto = createDummyImpactDto();
-        impactDto.getDimension().setId(UUID.randomUUID());
-        dimensionRepository.save(DimensionDtoMapper.fromDto(impactDto.getDimension()));
-        stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder()));
-        analysisRepository.save(ImpactAnalysisDtoMapper.fromDto(impactDto.getAnalysis()));
-        return impactDto;
-    }
+public class ImpactRestControllerTest extends ControllerTest {
 
     @Nested
     class FindById {

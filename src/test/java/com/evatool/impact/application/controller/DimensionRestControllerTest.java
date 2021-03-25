@@ -25,25 +25,8 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDt
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-class DimensionRestControllerTest {
+class DimensionRestControllerTest extends ControllerTest {
 
-    @Autowired
-    private TestRestTemplate testRestTemplate;
-
-    @Autowired
-    private DimensionService dimensionService;
-
-    @BeforeEach
-    public void clearDatabase() {
-        dimensionService.deleteAll();
-    }
-
-    private DimensionDto saveFullDummyDimensionDto() {
-        var dimension = createDummyDimension();
-        var dimensionDto = toDto(dimension);
-        return dimensionService.create(dimensionDto);
-
-    }
 
     @Nested
     class FindById {
