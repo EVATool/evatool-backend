@@ -85,9 +85,6 @@ public class Impact extends SuperEntity {
         return Objects.hash(super.hashCode(), this.value, this.description, this.dimension, this.stakeholder, this.analysis);
     }
 
-    // TODO [philipp] Write tests in service and rest controller that validate this behavior.
-    //  - Correct Exceptions are thrown
-    //  - Correct Http Return Codes
     public void setNumericId(Integer numericId) {
         logger.debug("Set NumericId");
         if (this.numericId != null) {

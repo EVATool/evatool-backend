@@ -174,6 +174,21 @@ public class ImpactRestControllerTest {
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
+
+        @Test
+        void testCreate_NotNullUniqueString_ReturnHttpStatusUnprocessableEntity() {
+            // given
+            var impactDto = saveDummyImpactDtoChildren();
+
+            // when
+            impactDto.setUniqueString("here but shouldn't");
+            var httpEntity = new HttpEntity<>(impactDto);
+            var response = testRestTemplate.postForEntity(
+                    IMPACTS, httpEntity, ImpactDto.class);
+
+            // then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
     @Nested
@@ -224,19 +239,19 @@ public class ImpactRestControllerTest {
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
-//        @Test
-//        void testUpdate_UpdateNumericId_ReturnHttpStatusUnprocessableEntity() {
-//            // given
-//            var impactDto = saveFullDummyImpactDto();
-//
-//            // when
-//            impactDto.setNumericId(impactDto.getNumericId() + 1);
-//            var httpEntity = new HttpEntity<>(impactDto);
-//            var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, httpEntity, ImpactDto.class);
-//
-//            // then
-//            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
-//        }
+        @Test
+        void testUpdate_UpdateNumericId_ReturnHttpStatusUnprocessableEntity() {
+            // given
+            var impactDto = saveFullDummyImpactDto();
+
+            // when
+            impactDto.setUniqueString(impactDto.getUniqueString() + "/");
+            var httpEntity = new HttpEntity<>(impactDto);
+            var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, httpEntity, ImpactDto.class);
+
+            // then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
     @Nested

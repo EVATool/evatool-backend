@@ -3,9 +3,7 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
-import com.evatool.impact.common.exception.EntityIdMustBeNullException;
-import com.evatool.impact.common.exception.EntityIdRequiredException;
-import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.*;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
@@ -172,6 +170,19 @@ class ImpactServiceImplTest {
             // then
             assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> impactService.create(impactDto));
         }
+
+        @Test
+        void testCreate_ExistingUniqueString_ThrowUniqueStringMustBeNullException() {
+            // given
+            var impactDto = createDummyImpactDto();
+
+            // when
+            impactDto.setUniqueString("IMP42");
+
+            // then
+            assertThatExceptionOfType(UniqueStringMustBeNullException.class)
+                    .isThrownBy(() -> impactService.create(impactDto));
+        }
     }
 
     @Nested
@@ -213,6 +224,19 @@ class ImpactServiceImplTest {
 
             // then
             assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> impactService.update(impactDto));
+        }
+
+        @Test
+        void testUpdate_UpdateUniqueString_ThrowUniqueStringCannotBeUpdatedException() {
+            // given
+            var impactDto = toDto(saveFullDummyImpact());
+
+            // when
+            impactDto.setUniqueString(impactDto.getUniqueString() + "0");
+
+            // then
+            assertThatExceptionOfType(UniqueStringCannotBeUpdatedException.class)
+                    .isThrownBy(() -> impactService.update(impactDto));
         }
     }
 
