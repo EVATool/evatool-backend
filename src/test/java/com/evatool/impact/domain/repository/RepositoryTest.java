@@ -37,7 +37,7 @@ public class RepositoryTest {
         impactAnalysisRepository.deleteAll();
     }
 
-    private Impact saveFullDummyImpact() {
+    protected Impact saveFullDummyImpact() {
         var dimension = saveDummyDimension();
         var stakeholder = saveDummyStakeholder();
         var analysis = saveDummyAnalysis();
@@ -47,7 +47,7 @@ public class RepositoryTest {
         return impactRepository.save(impact);
     }
 
-    private Impact saveFullDummyImpact(ImpactAnalysis analysis) {
+    protected Impact saveFullDummyImpact(ImpactAnalysis analysis) {
         var dimension = saveDummyDimension();
         var stakeholder = saveDummyStakeholder();
         var impact = createDummyImpact(analysis);
@@ -56,15 +56,15 @@ public class RepositoryTest {
         return impactRepository.save(impact);
     }
 
-    private Dimension saveDummyDimension() {
+    protected Dimension saveDummyDimension() {
         return dimensionRepository.save(createDummyDimension());
     }
 
-    private ImpactStakeholder saveDummyStakeholder() {
+    protected ImpactStakeholder saveDummyStakeholder() {
         return stakeholderRepository.save(createDummyStakeholder());
     }
 
-    private ImpactAnalysis saveDummyAnalysis() {
+    protected ImpactAnalysis saveDummyAnalysis() {
         return impactAnalysisRepository.save(createDummyAnalysis());
     }
 }

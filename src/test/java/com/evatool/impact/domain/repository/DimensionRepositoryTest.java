@@ -9,9 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DimensionRepositoryTest extends RepositoryTest {
 
-    @Autowired
-    private DimensionRepository dimensionRepository;
-
     @Test
     void testFindAllByType_ExistingDimensions_ReturnDimensionsByType() {
         // given
