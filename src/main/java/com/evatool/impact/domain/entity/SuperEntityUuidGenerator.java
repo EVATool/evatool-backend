@@ -30,11 +30,13 @@ public class SuperEntityUuidGenerator extends UUIDGenerator {
                 var insertQuery = session.createNativeQuery("insert into IMP_IMPACTS_PER_ANALYSIS (ANALYSIS_ID, IMPACTS_PER_ANALYSIS) values (?1, ?2)");
                 insertQuery.setParameter(1, impact.getAnalysis().getId().toString());
                 insertQuery.setParameter(2, impactsPerAnalysis);
+                insertQuery.executeUpdate();
             } else {
                 impactsPerAnalysis += 1;
                 var updateQuery = session.createQuery("update IMP_IMPACTS_PER_ANALYSIS set impactsPerAnalysis=?1 where analysisId=?2");
                 updateQuery.setParameter(1, impactsPerAnalysis);
                 updateQuery.setParameter(2, impact.getAnalysis().getId().toString());
+                updateQuery.executeUpdate();
             }
 
             impact.setNumericId(impactsPerAnalysis);
