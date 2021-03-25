@@ -4,14 +4,10 @@ import com.evatool.impact.common.DimensionType;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.domain.entity.Dimension;
-import com.evatool.impact.domain.repository.DimensionRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
@@ -24,23 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
-class DimensionServiceImplTest {
-
-    @Autowired
-    DimensionService dimensionService;
-
-    @Autowired
-    DimensionRepository dimensionRepository;
-
-    @BeforeEach
-    void clearDatabase() {
-        dimensionService.deleteAll();
-    }
-
-    private Dimension saveFullDummyDimension() {
-        var dimension = createDummyDimension();
-        return dimensionRepository.save(dimension);
-    }
+class DimensionServiceImplTest extends ServiceTest {
 
     @Nested
     class FindById {
