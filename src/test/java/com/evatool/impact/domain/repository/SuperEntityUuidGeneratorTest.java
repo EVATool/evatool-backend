@@ -6,16 +6,13 @@ import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SuperEntityUuidGeneratorTest {
+class SuperEntityUuidGeneratorTest extends RepositoryTest {
 
     @Autowired
     ImpactRepository impactRepository;

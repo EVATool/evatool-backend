@@ -6,15 +6,15 @@ import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Arrays;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static com.evatool.impact.common.TestDataGenerator.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
-class ImpactRepositoryTest extends RepositoryTest {
+@DataJpaTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class RepositoryTest {
 
     @Autowired
     ImpactRepository impactRepository;
@@ -37,6 +37,16 @@ class ImpactRepositoryTest extends RepositoryTest {
         impactAnalysisRepository.deleteAll();
     }
 
+    private Impact saveFullDummyImpact() {
+        var dimension = saveDummyDimension();
+        var stakeholder = saveDummyStakeholder();
+        var analysis = saveDummyAnalysis();
+        var impact = createDummyImpact(analysis);
+        impact.setDimension(dimension);
+        impact.setStakeholder(stakeholder);
+        return impactRepository.save(impact);
+    }
+
     private Impact saveFullDummyImpact(ImpactAnalysis analysis) {
         var dimension = saveDummyDimension();
         var stakeholder = saveDummyStakeholder();
@@ -56,19 +66,5 @@ class ImpactRepositoryTest extends RepositoryTest {
 
     private ImpactAnalysis saveDummyAnalysis() {
         return impactAnalysisRepository.save(createDummyAnalysis());
-    }
-
-    @Test
-    void testFindAllByAnalysisId_AnalysisWithTwoImpacts_ReturnImpactsByAnalysisId() {
-        // given
-        var analysis = saveDummyAnalysis();
-        var impact1 = saveFullDummyImpact(analysis);
-        var impact2 = saveFullDummyImpact(analysis);
-
-        // when
-
-        // then
-        var impactsOfAnalysis = impactRepository.findAllByAnalysisId(impact1.getAnalysis().getId());
-        assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(impact1, impact2));
     }
 }
