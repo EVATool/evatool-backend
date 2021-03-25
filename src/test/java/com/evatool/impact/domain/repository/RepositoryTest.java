@@ -17,16 +17,16 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 public class RepositoryTest {
 
     @Autowired
-    ImpactRepository impactRepository;
+    protected ImpactRepository impactRepository;
 
     @Autowired
-    DimensionRepository dimensionRepository;
+    protected DimensionRepository dimensionRepository;
 
     @Autowired
-    ImpactStakeholderRepository stakeholderRepository;
+    protected ImpactStakeholderRepository stakeholderRepository;
 
     @Autowired
-    ImpactAnalysisRepository impactAnalysisRepository;
+    protected ImpactAnalysisRepository impactAnalysisRepository;
 
     @BeforeEach
     @AfterAll

@@ -21,28 +21,28 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 public class ServiceTest {
 
     @Autowired
-    ImpactService impactService;
+    protected ImpactService impactService;
 
     @Autowired
-    ImpactRepository impactRepository;
+    protected ImpactRepository impactRepository;
 
     @Autowired
-    DimensionRepository dimensionRepository;
+    protected DimensionRepository dimensionRepository;
 
     @Autowired
-    ImpactStakeholderRepository stakeholderRepository;
+    protected ImpactStakeholderRepository stakeholderRepository;
 
     @Autowired
-    ImpactAnalysisRepository impactAnalysisRepository;
+    protected ImpactAnalysisRepository impactAnalysisRepository;
 
     @Autowired
-    ImpactStakeholderService stakeholderService;
+    protected ImpactStakeholderService stakeholderService;
 
     @Autowired
-    ImpactAnalysisService analysisService;
+    protected ImpactAnalysisService analysisService;
 
     @Autowired
-    DimensionService dimensionService;
+    protected DimensionService dimensionService;
 
     @BeforeEach
     @AfterAll
