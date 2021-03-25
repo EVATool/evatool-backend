@@ -1,17 +1,20 @@
 package com.evatool.impact.domain.entity;
 
 import com.evatool.impact.common.DimensionType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @Entity(name = "IMP_DIMENSION")
 @Table(name = "IMP_DIMENSION")
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Dimension extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(Dimension.class);
@@ -38,32 +41,6 @@ public class Dimension extends SuperEntity {
         this.setName(name);
         this.setType(type);
         this.setDescription(description);
-    }
-
-    @Override
-    public String toString() {
-        return "Dimension{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        var that = (Dimension) o;
-        return super.equals(that)
-                && Objects.equals(this.name, that.name)
-                && this.type == that.type
-                && Objects.equals(this.description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), this.name, this.type, this.description);
     }
 
     public void setName(String name) {

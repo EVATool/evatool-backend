@@ -1,6 +1,8 @@
 package com.evatool.impact.domain.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,10 +10,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @Table(name = "IMP_IMPACT")
 @Entity(name = "IMP_IMPACT")
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Impact extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(Impact.class);
@@ -51,38 +54,6 @@ public class Impact extends SuperEntity {
         this.setDimension(dimension);
         this.setStakeholder(stakeholder);
         this.setAnalysis(analysis);
-    }
-
-    @Override
-    public String toString() {
-        return "Impact{" +
-                "id=" + this.id +
-                ", numericId=" + this.numericId +
-                ", value=" + this.value +
-                ", description='" + this.description + '\'' +
-                ", dimension=" + this.dimension +
-                ", stakeholder=" + this.stakeholder +
-                ", analysis=" + this.analysis +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        var that = (Impact) o;
-        return super.equals(that)
-                && Objects.equals(this.numericId, that.numericId)
-                && Double.compare(this.value, that.value) == 0
-                && Objects.equals(this.description, that.description)
-                && Objects.equals(this.dimension, that.dimension)
-                && Objects.equals(this.stakeholder, that.stakeholder)
-                && Objects.equals(this.analysis, that.analysis);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), this.value, this.description, this.dimension, this.stakeholder, this.analysis);
     }
 
     public void setNumericId(Integer numericId) {

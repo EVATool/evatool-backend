@@ -1,11 +1,15 @@
 package com.evatool.impact.domain.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Table(name = "IMP_IMPACTS_PER_ANALYSIS")
 @Entity(name = "IMP_IMPACTS_PER_ANALYSIS")
+@EqualsAndHashCode
+@ToString
 public class ImpactIdPerAnalysis {
 
     @Id
