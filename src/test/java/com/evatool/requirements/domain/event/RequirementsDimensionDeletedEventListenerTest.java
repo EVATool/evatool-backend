@@ -1,10 +1,10 @@
 package com.evatool.requirements.domain.event;
 
+import com.evatool.analysis.common.error.execptions.EventEntityDoesNotExistException;
 import com.evatool.global.event.value.ValueDeletedEvent;
-import com.evatool.requirements.entity.RequirementDimension;
-import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
-import com.evatool.requirements.events.listener.RequirementEventListener;
-import com.evatool.requirements.repository.RequirementDimensionRepository;
+import com.evatool.requirements.domain.entity.RequirementValue;
+import com.evatool.requirements.domain.events.listener.RequirementEventListener;
+import com.evatool.requirements.domain.repository.RequirementValueRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class RequirementsDimensionDeletedEventListenerTest {
 
     @Autowired
-    private RequirementDimensionRepository requirementDimensionRepository;
+    private RequirementValueRepository requirementDimensionRepository;
 
     @Autowired
     private RequirementEventListener requirementEventListener;
@@ -30,23 +30,23 @@ class RequirementsDimensionDeletedEventListenerTest {
     @Test
     void testOnApplicationEvent_PublishEvent_DimensionDeleted() {
         // given
-        RequirementDimension requirementDimension = new RequirementDimension("Title");
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = new RequirementValue("Title");
+        requirementDimensionRepository.save(requirementValue);
 
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", requirementDimension.getId().toString(), "Title");
-        UUID tempId = requirementDimension.getId();
+        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", requirementValue.getId().toString(), "Title");
+        UUID tempId = requirementValue.getId();
 
         // when
         ValueDeletedEvent dimensionDeletedEvent = new ValueDeletedEvent(requirementEventListener, json);
-        requirementEventListener.dimensionDeleted(dimensionDeletedEvent);
+        requirementEventListener.valueDeleted(dimensionDeletedEvent);
 
         // then
-        Optional<RequirementDimension> optionalRequirementDimension = requirementDimensionRepository.findById(tempId);
+        Optional<RequirementValue> optionalRequirementDimension = requirementDimensionRepository.findById(tempId);
         assertThat(optionalRequirementDimension).isNotPresent();
     }
 
     @Test
-    void testOnApplicationEvent_DimensionDoesNotExist_ThrowEventEntityDoesNotExistException() {
+    void testOnApplicationEvent_ValueDoesNotExist_ThrowEventEntityDoesNotExistException() {
         // given
         UUID id = UUID.randomUUID();
         String title = "title";
@@ -56,7 +56,7 @@ class RequirementsDimensionDeletedEventListenerTest {
         ValueDeletedEvent dimensionDeletedEvent = new ValueDeletedEvent(requirementEventListener, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.dimensionDeleted(dimensionDeletedEvent));
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.valueDeleted(dimensionDeletedEvent));
     }
 
 }

@@ -6,7 +6,6 @@ import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
-import com.evatool.analysis.domain.repository.AnalysisImpactRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
 import com.evatool.analysis.application.services.StakeholderDTOService;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
@@ -37,8 +36,6 @@ public class StakeholderControllerImpl implements StakeholderController {
     @Autowired
     private AnalysisEventPublisher stakeholderEventPublisher;
 
-    @Autowired
-    private AnalysisImpactRepository analysisImpactRepository;
 
     Logger logger = LoggerFactory.getLogger(StakeholderControllerImpl.class);
 

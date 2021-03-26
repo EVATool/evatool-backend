@@ -38,7 +38,7 @@ class RequirementPointControllerTest {
     private RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
-    private RequirementDimensionRepository requirementDimensionRepository;
+    private RequirementValueRepository requirementDimensionRepository;
 
     @Test
     void testRequirementPointController_ThrowException() {
@@ -60,10 +60,10 @@ class RequirementPointControllerTest {
         Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariants);
         requirementRepository.save(requirement);
 
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementDimension();
+        requirementDimensionRepository.save(requirementValue);
 
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(requirementsImpact);
 
         //update
@@ -95,10 +95,10 @@ class RequirementPointControllerTest {
     @Test
     void testRequirementPointController_createPoints_DTO() {
 
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementDimension();
+        requirementDimensionRepository.save(requirementValue);
 
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(requirementsImpact);
 
         Map<UUID,String> impactTitles = new HashMap<>();

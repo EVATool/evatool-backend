@@ -1,6 +1,5 @@
 package com.evatool.variants.domain.entities;
 
-import com.evatool.requirements.entity.RequirementsAnalysis;
 import com.google.gson.Gson;
 import lombok.Getter;
 import org.hibernate.annotations.Type;

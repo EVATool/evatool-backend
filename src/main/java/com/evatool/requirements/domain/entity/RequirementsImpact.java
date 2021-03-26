@@ -21,7 +21,7 @@ public class RequirementsImpact {
     private Double value;
 
     @ManyToOne
-    private RequirementDimension requirementDimension;
+    private RequirementValue requirementValue;
 
     public RequirementsImpact() {
     }
@@ -31,10 +31,10 @@ public class RequirementsImpact {
 
     }
 
-    public RequirementsImpact(String description, Double value, RequirementDimension requirementDimension) {
+    public RequirementsImpact(String description, Double value, RequirementValue requirementValue) {
         this.description = description;
         this.value = value;
-        this.requirementDimension = requirementDimension;
+        this.requirementValue = requirementValue;
     }
 
 
@@ -60,15 +60,15 @@ public class RequirementsImpact {
         this.value = value;
     }
 
-    public RequirementDimension getRequirementDimension() {
-        return requirementDimension;
+    public RequirementValue getRequirementDimension() {
+        return requirementValue;
     }
 
-    public void setRequirementDimension(RequirementDimension requirementDimension) {
-        if (requirementDimension == null) {
+    public void setRequirementDimension(RequirementValue requirementValue) {
+        if (requirementValue == null) {
             throw new IllegalArgumentException("RequirementDimension cannot be null.");
         }
-        this.requirementDimension = requirementDimension;
+        this.requirementValue = requirementValue;
     }
 
     public UUID getId() {

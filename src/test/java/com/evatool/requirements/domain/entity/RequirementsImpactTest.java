@@ -13,8 +13,8 @@ class RequirementsImpactTest {
     @Test
     void testSetDescription_NullValue_ThrowException() {
         // given
-        RequirementDimension requirementDimension = getRequirementDimension();
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementValue requirementValue = getRequirementDimension();
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
 
         // when
 
@@ -27,8 +27,8 @@ class RequirementsImpactTest {
     @ValueSource(doubles = {3,2,-4})
     void testSetValue_NullValue_ThrowException(Double value) {
         // given
-        RequirementDimension requirementDimension = getRequirementDimension();
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementValue requirementValue = getRequirementDimension();
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
 
         // when
 
@@ -39,8 +39,8 @@ class RequirementsImpactTest {
     @Test
     void testSetRequirementDimension_NullValue_ThrowException() {
         // given
-        RequirementDimension requirementDimension = getRequirementDimension();
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementValue requirementValue = getRequirementDimension();
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         // when
 
         // then

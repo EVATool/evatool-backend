@@ -1,11 +1,12 @@
 package com.evatool.requirements.domain.event;
 
 import com.evatool.global.event.value.ValueCreatedEvent;
-import com.evatool.requirements.entity.RequirementDimension;
-import com.evatool.requirements.error.exceptions.EventEntityAlreadyExistsException;
-import com.evatool.requirements.error.exceptions.InvalidEventPayloadException;
-import com.evatool.requirements.events.listener.RequirementEventListener;
-import com.evatool.requirements.repository.RequirementDimensionRepository;
+
+import com.evatool.requirements.common.exceptions.EventEntityAlreadyExistsException;
+import com.evatool.requirements.common.exceptions.InvalidEventPayloadException;
+import com.evatool.requirements.domain.entity.RequirementValue;
+import com.evatool.requirements.domain.events.listener.RequirementEventListener;
+import com.evatool.requirements.domain.repository.RequirementValueRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class RequirementsDimensionCreateEventListenerTest {
 
     @Autowired
-    private RequirementDimensionRepository requirementDimensionRepository;
+    private RequirementValueRepository requirementDimensionRepository;
 
     @Autowired
     private RequirementEventListener requirementEventListener;
@@ -39,10 +40,10 @@ class RequirementsDimensionCreateEventListenerTest {
 
         // when
         ValueCreatedEvent dimensionCreatedEvent = new ValueCreatedEvent(requirementEventListener, json);
-        requirementEventListener.dimensionCreated(dimensionCreatedEvent);
+        requirementEventListener.valueCreated(dimensionCreatedEvent);
 
         // then
-        Optional<RequirementDimension> createdByEvent = requirementDimensionRepository.findById(id);
+        Optional<RequirementValue> createdByEvent = requirementDimensionRepository.findById(id);
         assertThat(createdByEvent).isPresent();
         assertThat(createdByEvent.get().getName()).isEqualTo(name);
     }
@@ -56,24 +57,24 @@ class RequirementsDimensionCreateEventListenerTest {
         String name = "name";
         String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
-        RequirementDimension requirementDimension;
+        RequirementValue requirementValue;
 
         try {
             JSONObject jsonObject = new JSONObject(json);
-            requirementDimension = new RequirementDimension();
-            requirementDimension.setName(jsonObject.getString("name"));
-            requirementDimension.setId(UUID.fromString(jsonObject.getString("id")));
+            requirementValue = new RequirementValue();
+            requirementValue.setName(jsonObject.getString("name"));
+            requirementValue.setId(UUID.fromString(jsonObject.getString("id")));
         } catch (JSONException jex) {
             throw new InvalidEventPayloadException(json, jex);
         }
 
-        requirementDimensionRepository.save(requirementDimension);
+        requirementDimensionRepository.save(requirementValue);
 
         // when
         ValueCreatedEvent dimensionCreatedEvent = new ValueCreatedEvent(requirementEventListener, json);
 
         // then
-        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.dimensionCreated(dimensionCreatedEvent));
+        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.valueCreated(dimensionCreatedEvent));
 
     }
 

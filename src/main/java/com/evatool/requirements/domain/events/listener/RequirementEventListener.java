@@ -11,14 +11,14 @@ import com.evatool.global.event.impact.ImpactUpdatedEvent;
 import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
-import com.evatool.requirements.domain.entity.RequirementDimension;
+import com.evatool.requirements.domain.entity.RequirementValue;
 import com.evatool.requirements.domain.entity.RequirementsAnalysis;
 import com.evatool.requirements.domain.entity.RequirementsImpact;
 import com.evatool.requirements.domain.entity.RequirementsVariant;
 import com.evatool.requirements.common.exceptions.EventEntityAlreadyExistsException;
 import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.domain.repository.RequirementAnalysisRepository;
-import com.evatool.requirements.domain.repository.RequirementDimensionRepository;
+import com.evatool.requirements.domain.repository.RequirementValueRepository;
 import com.evatool.requirements.domain.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.domain.repository.RequirementsVariantsRepository;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class RequirementEventListener {
     @Autowired
     RequirementsVariantsRepository requirementsVariantsRepository;
     @Autowired
-    RequirementDimensionRepository requirementDimensionRepository;
+    RequirementValueRepository requirementValueRepository;
     @Autowired
     RequirementAnalysisRepository requirementAnalysisRepository;
 
@@ -78,35 +78,35 @@ public class RequirementEventListener {
     }
     @EventListener
     @Async
-    public void dimensionCreated(ValueCreatedEvent event) {
-        logger.info("dimension created event");
+    public void valueCreated(ValueCreatedEvent event) {
+        logger.info("value created event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
-        if (requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
+        if (requirementValueRepository.existsById(RequirementValue.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityAlreadyExistsException();
         }
-        requirementDimensionRepository.save(RequirementDimension.fromJson(event.getJsonPayload()));
+        requirementValueRepository.save(RequirementValue.fromJson(event.getJsonPayload()));
     }
 
     @EventListener
     @Async
-    public void dimensionUpdated(ValueUpdatedEvent event) {
-        logger.info("dimension updated event");
+    public void valueUpdated(ValueUpdatedEvent event) {
+        logger.info("value updated event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
-        if (!requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
+        if (!requirementValueRepository.existsById(RequirementValue.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
-        requirementDimensionRepository.save(RequirementDimension.fromJson(event.getJsonPayload()));
+        requirementValueRepository.save(RequirementValue.fromJson(event.getJsonPayload()));
     }
 
     @EventListener
     @Async
-    public void dimensionDeleted(ValueDeletedEvent event) {
-        logger.info("dimension deleted event");
+    public void valueDeleted(ValueDeletedEvent event) {
+        logger.info("value deleted event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
-        if (!requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
+        if (!requirementValueRepository.existsById(RequirementValue.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
-        requirementDimensionRepository.delete(RequirementDimension.fromJson(event.getJsonPayload()));
+        requirementValueRepository.delete(RequirementValue.fromJson(event.getJsonPayload()));
     }
 
      @EventListener

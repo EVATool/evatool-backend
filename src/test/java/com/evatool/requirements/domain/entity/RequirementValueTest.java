@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test;
 import static com.evatool.requirements.common.TestDataGenerator.getRequirementDimension;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-class RequirementDimensionTest {
+class RequirementValueTest {
 
     @Test
     void testSetTitle_NullValue_ThrowException() {
         // given
-        RequirementDimension requirementDimension = getRequirementDimension();
+        RequirementValue requirementValue = getRequirementDimension();
 
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDimension.setName(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementValue.setName(null));
     }
 }

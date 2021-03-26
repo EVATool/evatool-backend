@@ -94,7 +94,7 @@ public class ValueControllerImpl {
             @ApiResponse(code = 200, message = "Deleted"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    public ResponseEntity<Void> deleteById(@ApiParam("Dimension ID") @Valid @PathVariable UUID id) {
+    public ResponseEntity<Void> deleteById(@ApiParam("Value ID") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + "/values/{id}");
         valueService.deleteById(id);
         return ResponseEntity.ok().build();

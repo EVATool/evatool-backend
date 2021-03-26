@@ -30,7 +30,7 @@ public class TestDataGenerator {
 
     }
 
-    public static StakeholderDTO getStakeholderDTO(String stakeholderName, int priority, StakeholderLevel stakeholderLevel, AnalysisImpacts impacts) {
+    public static StakeholderDTO getStakeholderDTO(String stakeholderName, int priority, StakeholderLevel stakeholderLevel) {
         var stakeholderDTO = new StakeholderDTO();
 
         stakeholderDTO.setStakeholderName(stakeholderName);
@@ -40,9 +40,6 @@ public class TestDataGenerator {
         return stakeholderDTO;
     }
 
-    public static AnalysisImpacts getAnalysisImpacts(Value value) {
-        return new AnalysisImpacts("title", "description", 1, value);
-    }
 
     public static Value createDummyValue() {
         return new Value("dummyValue", ValueType.ECONOMIC, "dummyValueDescription");

@@ -15,13 +15,13 @@ import java.util.UUID;
 @Api ("API-endpoint for Stakeholder")
 public interface StakeholderController {
 
-    @GetMapping("/stakeholdera")
+    @GetMapping("/stakeholder")
     @ApiOperation(value = "This method returns a list of stakeholder")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All entities returned")})
     public List<EntityModel<StakeholderDTO>> getStakeholderList();
 
-    @GetMapping("/stakeholdera/{id}")
+    @GetMapping("/stakeholder/{id}")
     @ApiOperation(value = "This method returns an optional of an Stakeholder by his ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "The entity was found"),
@@ -37,7 +37,7 @@ public interface StakeholderController {
             @ApiResponse(code = 404, message = "The entity is not found")})
     public EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO);
 
-    @PutMapping("/stakeholders/{id}")
+    @PutMapping("/stakeholders")
     @ApiOperation(value = "This method updated an stakeholder by his id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity is deleted"),

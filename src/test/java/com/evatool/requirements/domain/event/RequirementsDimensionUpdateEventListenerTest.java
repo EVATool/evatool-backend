@@ -1,10 +1,10 @@
 package com.evatool.requirements.domain.event;
 
 import com.evatool.global.event.value.ValueUpdatedEvent;
-import com.evatool.requirements.entity.RequirementDimension;
-import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
-import com.evatool.requirements.events.listener.RequirementEventListener;
-import com.evatool.requirements.repository.RequirementDimensionRepository;
+import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
+import com.evatool.requirements.domain.entity.RequirementValue;
+import com.evatool.requirements.domain.events.listener.RequirementEventListener;
+import com.evatool.requirements.domain.repository.RequirementValueRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,34 +21,34 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class RequirementsDimensionUpdateEventListenerTest {
 
     @Autowired
-    private RequirementDimensionRepository requirementDimensionRepository;
+    private RequirementValueRepository requirementValueRepository;
 
     @Autowired
     private RequirementEventListener requirementEventListener;
 
 
     @Test
-    void testOnApplicationEvent_PublishEvent_DimensionUpdated() {
+    void testOnApplicationEvent_PublishEvent_ValueUpdated() {
         // given
-        RequirementDimension requirementDimension = new RequirementDimension("Name");
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = new RequirementValue("Name");
+        requirementValueRepository.save(requirementValue);
         String newName = "newName";
-        String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", requirementDimension.getId().toString(), newName);
-        UUID tempId = requirementDimension.getId();
+        String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", requirementValue.getId().toString(), newName);
+        UUID tempId = requirementValue.getId();
 
         // when
-        ValueUpdatedEvent dimensionUpdatedEvent = new ValueUpdatedEvent(requirementEventListener, json);
-        requirementEventListener.dimensionUpdated(dimensionUpdatedEvent);
+        ValueUpdatedEvent valueUpdatedEvent = new ValueUpdatedEvent(requirementEventListener, json);
+        requirementEventListener.valueUpdated(valueUpdatedEvent);
 
         // then
-        Optional<RequirementDimension> optionalRequirementDimension = requirementDimensionRepository.findById(tempId);
-        assertThat(optionalRequirementDimension).isPresent();
-        assertThat(optionalRequirementDimension.get().getId()).isEqualTo(tempId);
-        assertThat(optionalRequirementDimension.get().getName()).isEqualTo(newName);
+        Optional<RequirementValue> optionalRequirementValue = requirementValueRepository.findById(tempId);
+        assertThat(optionalRequirementValue).isPresent();
+        assertThat(optionalRequirementValue.get().getId()).isEqualTo(tempId);
+        assertThat(optionalRequirementValue.get().getName()).isEqualTo(newName);
     }
 
     @Test
-    void testOnApplicationEvent_DimensionDoesNotExists_ThrowEventEntityDoesNotExistException() {
+    void testOnApplicationEvent_ValueDoesNotExists_ThrowEventEntityDoesNotExistException() {
 
         // given
         UUID id = UUID.randomUUID();
@@ -56,10 +56,10 @@ class RequirementsDimensionUpdateEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), name);
 
         // when
-        ValueUpdatedEvent dimensionUpdatedEvent = new ValueUpdatedEvent(requirementEventListener, json);
+        ValueUpdatedEvent valueUpdatedEvent = new ValueUpdatedEvent(requirementEventListener, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.dimensionUpdated(dimensionUpdatedEvent));
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.valueUpdated(valueUpdatedEvent));
 
     }
 

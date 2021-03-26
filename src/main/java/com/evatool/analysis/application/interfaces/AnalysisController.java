@@ -37,7 +37,7 @@ public interface AnalysisController {
             @ApiResponse(code = 404, message = "The entity is not found")})
     public EntityModel<AnalysisDTO> addAnalysis(@RequestBody AnalysisDTO analysisDTO);
 
-    @PutMapping("/analysis/{id}")
+    @PutMapping("/analysis")
     @ApiOperation(value = "This method updated an Analysis by his ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity is deleted"),

@@ -1,6 +1,6 @@
 package com.evatool.requirements.domain.repository;
 
-import com.evatool.requirements.domain.entity.RequirementDimension;
+import com.evatool.requirements.domain.entity.RequirementValue;
 import com.evatool.requirements.domain.entity.RequirementsImpact;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +19,16 @@ class RequirementsImpactRepositoryTest {
     private RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
-    private RequirementDimensionRepository requirementDimensionRepository;
+    private RequirementValueRepository requirementDimensionRepository;
 
     @Test
     void testFindById_InsertedImpact_ReturnImpact() {
 
         // given
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementDimension();
+        requirementDimensionRepository.save(requirementValue);
 
-        RequirementsImpact impact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact impact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(impact);
 
         // when
@@ -42,9 +42,9 @@ class RequirementsImpactRepositoryTest {
     void testSave_InsertedImpact_IdIsNotNull() {
 
         // given
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementValue requirementValue = getRequirementDimension();
+        requirementDimensionRepository.save(requirementValue);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
 
         // when
         requirementsImpactsRepository.save(requirementsImpact);
@@ -57,9 +57,9 @@ class RequirementsImpactRepositoryTest {
     void testSave_InsertedImpact_IdIsUuid() {
 
         // given
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementValue requirementValue = getRequirementDimension();
+        requirementDimensionRepository.save(requirementValue);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
 
         // when
         requirementsImpactsRepository.save(requirementsImpact);
@@ -75,10 +75,10 @@ class RequirementsImpactRepositoryTest {
     void testDelete_DeletedImpact_ReturnNull() {
 
         // given
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementDimension();
+        requirementDimensionRepository.save(requirementValue);
 
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(requirementsImpact);
 
         // when

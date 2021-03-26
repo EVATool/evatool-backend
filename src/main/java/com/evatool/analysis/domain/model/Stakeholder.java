@@ -40,12 +40,6 @@ public class Stakeholder {
     @Enumerated(EnumType.STRING)
     private StakeholderLevel stakeholderLevel;
 
-    @Getter
-    @Setter
-    @OneToOne
-    private AnalysisImpacts analysisImpacts;
-
-
     public Stakeholder(String stakeholderName, Integer priority, StakeholderLevel stakeholderLevel) {
         this.stakeholderName = stakeholderName;
         this.priority = priority;
@@ -83,7 +77,6 @@ public class Stakeholder {
                 ", stakeholderName='" + stakeholderName + '\'' +
                 ", priority=" + priority +
                 ", stakeholderLevel=" + stakeholderLevel +
-                ", analysisImpacts=" + analysisImpacts +
                 '}';
     }
 

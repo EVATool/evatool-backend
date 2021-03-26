@@ -10,8 +10,8 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name = "REQ_Dimension")
-public class RequirementDimension {
+@Table(name = "REQ_VALUE")
+public class RequirementValue {
 
     @Id
     @Type(type= "uuid-char")
@@ -20,16 +20,16 @@ public class RequirementDimension {
 
     private String name;
 
-    public RequirementDimension(String name) {
+    public RequirementValue(String name) {
         this.name = name;
     }
 
-    public RequirementDimension() {
+    public RequirementValue() {
 
     }
 
-    public static  RequirementDimension fromJson(String json){
-        return  new Gson().fromJson(json, RequirementDimension.class);
+    public static RequirementValue fromJson(String json){
+        return  new Gson().fromJson(json, RequirementValue.class);
     }
 
     public String getName() {

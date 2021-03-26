@@ -34,7 +34,7 @@ class RequirementsControllerTest {
     RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
-    RequirementDimensionRepository requirementDimensionRepository;
+    RequirementValueRepository requirementDimensionRepository;
 
     @Autowired
     RequirementPointRepository requirementPointRepository;
@@ -45,10 +45,10 @@ class RequirementsControllerTest {
     @Test
     void testRequirementController_ThrowException() {
 
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementDimension();
+        requirementDimensionRepository.save(requirementValue);
 
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(requirementsImpact);
 
         Map<UUID,String> impactTitles = new HashMap<>();

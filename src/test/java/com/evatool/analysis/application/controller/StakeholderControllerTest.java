@@ -3,14 +3,9 @@ package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.application.dto.StakeholderDTO;
-import com.evatool.analysis.common.error.ValueType;
-import com.evatool.analysis.domain.enums.Dimension;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
-import com.evatool.analysis.domain.model.AnalysisImpacts;
 import com.evatool.analysis.domain.model.Stakeholder;
-import com.evatool.analysis.domain.model.Value;
-import com.evatool.analysis.domain.repository.AnalysisImpactRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +24,16 @@ public class StakeholderControllerTest {
     private StakeholderController stakeholderController;
 
     @Autowired
-    private AnalysisImpactRepository analysisImpactRepository;
-
-    @Autowired
     private StakeholderRepository stakeholderRepository;
 
     @Test
     public void testStakeholderController_ThrowException() {
 
-        AnalysisImpacts analysisImpacts = getAnalysisImpacts(new Value());
-        analysisImpactRepository.save(analysisImpacts);
 
         Stakeholder stakeholder = new Stakeholder("TestName", 1, StakeholderLevel.NATURAL_PERSON);
 
         //create stakeholder
-        StakeholderDTO stakeholderDTO = getStakeholderDTO(stakeholder.getStakeholderName(), stakeholder.getPriority(), stakeholder.getStakeholderLevel(), stakeholder.getAnalysisImpacts());
+        StakeholderDTO stakeholderDTO = getStakeholderDTO(stakeholder.getStakeholderName(), stakeholder.getPriority(), stakeholder.getStakeholderLevel());
         StakeholderDTO stakeholderDTOObj = stakeholderController.addStakeholder(stakeholderDTO).getContent();
 
         //check is stakeholder created

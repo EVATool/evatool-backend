@@ -15,9 +15,6 @@ public class StakeholderDTO {
     private Float value;
 
     public void setRootEntityID(UUID rootEntityID) {
-        if (rootEntityID == null) {
-            throw new IllegalArgumentException("RootEntityId cannot be null.");
-        }
         this.rootEntityID = rootEntityID;
     }
 
