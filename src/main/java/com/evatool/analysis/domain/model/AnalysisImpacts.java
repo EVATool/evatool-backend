@@ -4,9 +4,7 @@ import com.evatool.analysis.domain.enums.Dimension;
 import com.google.gson.Gson;
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -17,17 +15,18 @@ public class AnalysisImpacts {
     @Id
     private UUID id = UUID.randomUUID();
     private String title;
-    private double value;
+    private double impactValue;
     private String description;
-    private Dimension dimension;
+    @ManyToOne(optional = false)
+    private Value value;
 
     public AnalysisImpacts(){}
 
-    public AnalysisImpacts(String title, String description, double value, Dimension dimension) {
+    public AnalysisImpacts(String title, String description, double impactValue, Value value) {
         this.title = title;
         this.description = description;
+        this.impactValue = impactValue;
         this.value = value;
-        this.dimension = dimension;
     }
 
     public static AnalysisImpacts fromJson(String json){
@@ -57,15 +56,15 @@ public class AnalysisImpacts {
         this.description = description;
     }
 
-    public double getValue() {
-        return value;
+    public double getImpactValue() {
+        return impactValue;
     }
 
-    public void setValue(int value) {
+    public void setImpactValue(int value) {
         if (value < -1 || value > 1) {
             throw new IllegalArgumentException("Value must be in range [-1, 1]");
         }
-        this.value = value;
+        this.impactValue = value;
     }
 
     public UUID getId() {

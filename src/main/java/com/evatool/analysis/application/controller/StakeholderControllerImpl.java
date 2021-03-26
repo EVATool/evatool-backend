@@ -99,8 +99,6 @@ public class StakeholderControllerImpl implements StakeholderController {
     private EntityModel<StakeholderDTO> generateLinks(StakeholderDTO stakeholderDTO){
         EntityModel<StakeholderDTO> stakeholderDTOEntityModel = EntityModel.of(stakeholderDTO);
         stakeholderDTOEntityModel.add(linkTo(methodOn(StakeholderController.class).getStakeholderById(stakeholderDTO.getRootEntityID())).withSelfRel());
-        stakeholderDTOEntityModel.add(linkTo(methodOn(StakeholderController.class).deleteStakeholder(stakeholderDTO.getRootEntityID())).withRel("Deleted"));
-        stakeholderDTOEntityModel.add(linkTo(methodOn(StakeholderController.class).updateStakeholder(stakeholderDTO)).withRel("update"));
         return stakeholderDTOEntityModel;
     }
 

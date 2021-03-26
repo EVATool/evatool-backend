@@ -97,8 +97,6 @@ public class AnalysisControllerImpl implements AnalysisController {
     private EntityModel<AnalysisDTO> generateLinks(AnalysisDTO analysisDTO){
         EntityModel<AnalysisDTO> analysisDTOEntityModel = EntityModel.of(analysisDTO);
         analysisDTOEntityModel.add(linkTo(methodOn(AnalysisController.class).getAnalysisById(analysisDTO.getRootEntityID())).withSelfRel());
-        analysisDTOEntityModel.add(linkTo(methodOn(AnalysisController.class).deleteAnalysis(analysisDTO.getRootEntityID())).withRel("Deleted"));
-        analysisDTOEntityModel.add(linkTo(methodOn(AnalysisController.class).updateAnalysis(analysisDTO)).withRel("update"));
         return analysisDTOEntityModel;
     }
 

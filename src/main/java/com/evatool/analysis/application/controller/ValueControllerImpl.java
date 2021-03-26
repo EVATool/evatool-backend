@@ -113,8 +113,6 @@ public class ValueControllerImpl {
         logger.debug("Adding HATEOAS Rest Level 3 links");
         var entityModel = EntityModel.of(valueDto);
         entityModel.add(linkTo(methodOn(ValueControllerImpl.class).findById(valueDto.getId())).withSelfRel());
-        entityModel.add(linkTo(methodOn(ValueControllerImpl.class).update(valueDto)).withRel("update value"));
-        entityModel.add(linkTo(methodOn(ValueControllerImpl.class).deleteById(valueDto.getId())).withRel("delete value"));
         return entityModel;
     }
 

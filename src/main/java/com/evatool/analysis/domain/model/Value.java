@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "ANA_DIMENSION")
+@Table(name = "ANA_VALUE")
 public class Value {
 
     private static final Logger logger = LoggerFactory.getLogger(Value.class);

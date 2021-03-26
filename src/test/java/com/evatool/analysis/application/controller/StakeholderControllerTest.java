@@ -3,11 +3,13 @@ package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.application.dto.StakeholderDTO;
+import com.evatool.analysis.common.error.ValueType;
 import com.evatool.analysis.domain.enums.Dimension;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.domain.model.AnalysisImpacts;
 import com.evatool.analysis.domain.model.Stakeholder;
+import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.AnalysisImpactRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
@@ -35,7 +37,7 @@ public class StakeholderControllerTest {
     @Test
     public void testStakeholderController_ThrowException() {
 
-        AnalysisImpacts analysisImpacts = getAnalysisImpacts(Dimension.SAFETY);
+        AnalysisImpacts analysisImpacts = getAnalysisImpacts(new Value());
         analysisImpactRepository.save(analysisImpacts);
 
         Stakeholder stakeholder = new Stakeholder("TestName", 1, StakeholderLevel.NATURAL_PERSON);
