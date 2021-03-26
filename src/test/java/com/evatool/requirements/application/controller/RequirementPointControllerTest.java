@@ -115,7 +115,7 @@ class RequirementPointControllerTest {
         Map<UUID,String> variantsTitle = new HashMap<>();
         variantsTitle.put(requirementsVariant.getId(),requirementsVariant.getTitle());
 
-        RequirementDTO requirementDTO = getRequirementDTO(requirementImpactPoints,impactTitles,requirementsAnalysis.getId(),variantsTitle);
+        RequirementDTO requirementDTO = getRequirementDTO(requirementImpactPoints,impactTitles,requirementsAnalysis.getAnalysisId(),variantsTitle);
         RequirementDTO requirementDTOObj = requirementsController.newRequirement(requirementDTO).getBody().getContent();
 
         Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariants);

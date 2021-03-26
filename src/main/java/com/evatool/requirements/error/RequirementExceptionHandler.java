@@ -30,13 +30,6 @@ public class RequirementExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<RequirementsErrorMessage> handleIllegalArgumentExcpetion(IllegalArgumentException exception, WebRequest webRequest) {
-        logger.error("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
-        RequirementsErrorMessage errorMessage = new RequirementsErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
-        return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
-    }
-
     private String getUri(WebRequest webRequest) {
         return ((ServletWebRequest) webRequest).getRequest().getRequestURI();
     }

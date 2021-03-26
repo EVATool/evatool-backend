@@ -39,7 +39,7 @@ class RequirementsVariantsCreateEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", id.toString(),title,description);
 
         // when
-        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(requirementEventListener,json);
+        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(json);
         requirementEventListener.variantsCreated(variantCreatedEvent);
 
         // then
@@ -73,7 +73,7 @@ class RequirementsVariantsCreateEventListenerTest {
         requirementsVariantsRepository.save(requirementsVariant);
 
         // when
-        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(requirementEventListener,json);
+        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(json);
 
         // then
         assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.variantsCreated(variantCreatedEvent));

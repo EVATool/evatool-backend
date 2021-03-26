@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static com.evatool.impact.common.TestDataGenerator.createDummyAnalysis;
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -33,6 +34,18 @@ class ImpactTest {
 
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setValue(value));
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {-Double.MAX_VALUE, -2.0, -1.5, -1.1, -1.000001, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
+    void testSetValue_NullValue_ThrowIllegalArgumentException(double value) {
+        // given
+        var impact = createDummyImpact();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setValue(null));
     }
 
     @Test
@@ -66,5 +79,40 @@ class ImpactTest {
 
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setStakeholder(null));
+    }
+
+    @Test
+    void testSetAnalysis_NullValue_ThrowIllegalArgumentException() {
+        // given
+        var impact = createDummyImpact();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setAnalysis(null));
+    }
+
+    @Test
+    void testSetAnalysis_ExistingValue_ThrowIllegalArgumentException() {
+        // given
+        var impact = createDummyImpact();
+
+        // when
+        var analysis = createDummyAnalysis();
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setAnalysis(analysis));
+    }
+
+    @Test
+    void testSetNumericId_ExistingNumericId_ThrowIllegalArgumentException() {
+        // given
+        var impact = createDummyImpact();
+
+        // when
+        impact.setNumericId(1337);
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setNumericId(9));
     }
 }

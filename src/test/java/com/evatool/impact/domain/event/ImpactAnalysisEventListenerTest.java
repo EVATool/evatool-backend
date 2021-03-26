@@ -2,7 +2,6 @@ package com.evatool.impact.domain.event;
 
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
-import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
@@ -39,7 +38,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisCreatedEvent_PublishEvent_AnalysisCreated() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             // when
             var analysisCreatedEvent = new AnalysisCreatedEvent(json);
@@ -55,7 +54,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisCreatedEvent_AnalysisAlreadyExists_ThrowEventEntityAlreadyExistsException() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             var analysis = new ImpactAnalysis(id);
             analysisRepository.save(analysis);
@@ -75,7 +74,7 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisDeletedEvent_PublishEvent_AnalysisDeleted() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             var analysis = new ImpactAnalysis(id);
             analysisRepository.save(analysis);
@@ -93,49 +92,13 @@ public class ImpactAnalysisEventListenerTest {
         void testOnAnalysisDeletedEvent_AnalysisDoesNotExist_ThrowEventEntityDoesNotExistException() {
             // given
             var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
+            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
             // when
             AnalysisDeletedEvent analysisDeletedEvent = new AnalysisDeletedEvent(json);
 
             // then
             assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisDeletedEvent(analysisDeletedEvent));
-        }
-    }
-
-    @Nested
-    class Updated {
-
-        @Test
-        void testOnAnalysisUpdatedEvent_PublishEvent_AnalysisUpdated() {
-            // given
-            var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
-
-            var analysis = new ImpactAnalysis(id);
-            analysisRepository.save(analysis);
-
-            // when
-            AnalysisUpdatedEvent analysisUpdatedEvent =  new AnalysisUpdatedEvent(json);
-            impactAnalysisEventListener.onAnalysisUpdatedEvent(analysisUpdatedEvent);
-
-            // then
-            var updatedByEventAnalysis = analysisRepository.findById(id);
-            assertThat(updatedByEventAnalysis).isPresent();
-            assertThat(updatedByEventAnalysis.get().getId()).isEqualTo(id);
-        }
-
-        @Test
-        void testOnAnalysisUpdatedEvent_AnalysisDoesNotExists_ThrowEventEntityDoesNotExistException() {
-            // given
-            var id = UUID.randomUUID();
-            var json = String.format("{\"id\":\"%s\"}", id.toString());
-
-            // when
-            AnalysisUpdatedEvent analysisUpdatedEvent = new AnalysisUpdatedEvent(json);
-
-            // then
-            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisUpdatedEvent(analysisUpdatedEvent));
         }
     }
 }

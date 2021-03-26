@@ -1,8 +1,6 @@
 package com.evatool.impact.common.exception.handle;
 
-import com.evatool.impact.common.exception.EntityIdMustBeNullException;
-import com.evatool.impact.common.exception.EntityIdRequiredException;
-import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -29,6 +27,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityIdMustBeNullException.class)
     public ResponseEntity<ErrorMessage> handleEntityIdMustBeNullException(EntityIdMustBeNullException exception, WebRequest webRequest) {
+        return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(NumericIdMustBeNullException.class)
+    public ResponseEntity<ErrorMessage> handleNumericIdMustBeNullException(NumericIdMustBeNullException exception, WebRequest webRequest) {
+        return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(NumericIdCannotBeUpdatedException.class)
+    public ResponseEntity<ErrorMessage> handleNumericIdCannotBeUpdatedException(NumericIdCannotBeUpdatedException exception, WebRequest webRequest) {
         return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 

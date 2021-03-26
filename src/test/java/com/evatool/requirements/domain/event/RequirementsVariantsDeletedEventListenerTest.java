@@ -38,7 +38,7 @@ class RequirementsVariantsDeletedEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", tempId,title,description);
 
         // when
-        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(requirementEventListener, json);
+        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(json);
         requirementEventListener.variantsDeleted(variantDeletedEvent);
 
         // then
@@ -55,7 +55,7 @@ class RequirementsVariantsDeletedEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", id,title,description);
 
         // when
-        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(requirementEventListener, json);
+        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(json);
 
         // then
         assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.variantsDeleted(variantDeletedEvent));

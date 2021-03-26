@@ -1,6 +1,5 @@
 package com.evatool.global.event.variants;
 
-import com.evatool.variants.entities.Variant;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
@@ -8,8 +7,8 @@ import org.springframework.context.ApplicationEvent;
 public class VariantDeletedEvent extends ApplicationEvent {
     private final String variantJson;
 
-    public VariantDeletedEvent(Object source, String variantJson) {
-        super(source);
+    public VariantDeletedEvent( String variantJson) {
+        super(variantJson);
         this.variantJson = variantJson;
     }
 }

@@ -2,7 +2,6 @@ package com.evatool.impact.domain.event;
 
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
-import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
@@ -46,17 +45,5 @@ public class ImpactAnalysisEventListener {
         }
         analysisRepository.delete(analysis);
         logger.info("Analysis deleted event successfully processed");
-    }
-
-    @EventListener
-    public void onAnalysisUpdatedEvent(final AnalysisUpdatedEvent event) {
-        logger.info("Analysis updated event received");
-        var jsonPayload = event.getJsonPayload();
-        var analysis = ImpactAnalysisJsonMapper.fromJson(jsonPayload);
-        if (!analysisRepository.existsById(analysis.getId())) {
-            throw new EventEntityDoesNotExistException(ImpactAnalysis.class.getSimpleName());
-        }
-        analysisRepository.save(analysis);
-        logger.info("Analysis updated event successfully processed");
     }
 }

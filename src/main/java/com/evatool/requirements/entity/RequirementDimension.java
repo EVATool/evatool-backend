@@ -1,7 +1,9 @@
 package com.evatool.requirements.entity;
 
 import com.google.gson.Gson;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,6 +14,8 @@ import java.util.UUID;
 public class RequirementDimension {
 
     @Id
+    @Type(type= "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
     private UUID id = UUID.randomUUID();
 
     private String name;
