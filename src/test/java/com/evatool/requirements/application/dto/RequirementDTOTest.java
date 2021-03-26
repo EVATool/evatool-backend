@@ -1,6 +1,5 @@
 package com.evatool.requirements.application.dto;
 
-import com.evatool.requirements.dto.RequirementDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -29,17 +28,6 @@ class RequirementDTOTest {
 
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTO.setRequirementTitle(null));
-    }
-
-    @Test
-    void testSetRequirementDescription_NullValue_ThrowException() {
-        // given
-        RequirementDTO requirementDTO = new RequirementDTO();
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTO.setRequirementDescription(null));
     }
 
     @Test

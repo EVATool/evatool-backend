@@ -1,13 +1,14 @@
 package com.evatool.requirements.application.service;
 
-import com.evatool.requirements.dto.RequirementDTO;
-import com.evatool.requirements.entity.*;
-import com.evatool.requirements.error.exceptions.EntityNotFoundException;
-import com.evatool.requirements.repository.*;
-import com.evatool.requirements.service.RequirementDTOService;
+import com.evatool.requirements.application.dto.RequirementDTO;
+import com.evatool.requirements.application.dto.VariantsDTO;
+import com.evatool.requirements.domain.entity.*;
+import com.evatool.requirements.common.exceptions.EntityNotFoundException;
+import com.evatool.requirements.domain.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.hateoas.EntityModel;
 
 import java.util.*;
 
@@ -62,10 +63,10 @@ class RequirementDTOServiceTest {
         Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
         requirementImpactPoints.put(requirementsImpact.getId(),1);
 
-        Map<UUID,String> variantsTitle = new HashMap<>();
-        variantsTitle.put(requirementsVariant.getId(),requirementsVariant.getTitle());
+        Map<UUID, EntityModel<VariantsDTO>> variantsTitle = new HashMap<>();
+        variantsTitle.put(requirementsVariant.getId(),VariantsDTO.generateLinks(new VariantsDTO(requirementsVariant.getId(),requirementsVariant.getTitle())));
 
-        RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getAnalysisId(),variantsTitle);
+        RequirementDTO requirementDTO = getRequirementDTO(requirementsAnalysis.getAnalysisId(),variantsTitle);
 
         //create
         UUID uuidRequirement = requirementDTOService.create(requirementDTO);
@@ -92,20 +93,6 @@ class RequirementDTOServiceTest {
         UUID uuidRootId = requirementDTOList.get(0).getRootEntityId();
 
         assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> requirementDTOService.findById(uuidRootId));
-    }
-
-    @Test
-    void testRequirementDTOService_checkDto_ThrowException() {
-        RequirementDTO requirementDTO = new RequirementDTO();
-
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTOService.checkDto(requirementDTO));
-        requirementDTO.setProjectID(UUID.randomUUID());
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTOService.checkDto(requirementDTO));
-
-        Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
-        requirementDTO.setRequirementImpactPoints(requirementImpactPoints);
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTOService.checkDto(requirementDTO));
-
     }
 
 

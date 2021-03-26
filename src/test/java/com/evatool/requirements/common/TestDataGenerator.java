@@ -1,7 +1,10 @@
 package com.evatool.requirements.common;
 
-import com.evatool.requirements.dto.RequirementDTO;
-import com.evatool.requirements.entity.*;
+import com.evatool.requirements.application.dto.RequirementDTO;
+import com.evatool.requirements.application.dto.RequirementPointDTO;
+import com.evatool.requirements.application.dto.VariantsDTO;
+import com.evatool.requirements.domain.entity.*;
+import org.springframework.hateoas.EntityModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +22,7 @@ public class TestDataGenerator {
     }
 
     public static RequirementsImpact getRequirementsImpacts(RequirementDimension requirementDimension) {
-        return new RequirementsImpact("Description",10, requirementDimension);
+        return new RequirementsImpact("Description",10d, requirementDimension);
     }
 
     public static RequirementsVariant getRequirementsVariant() {
@@ -42,18 +45,17 @@ public class TestDataGenerator {
 
     public static RequirementPoint getRequirementGR(Requirement requirement, RequirementsImpact requirementsImpact) {
 
-        return new RequirementPoint(requirementsImpact, requirement, 3);
+        return new RequirementPoint(requirementsImpact, 3d);
     }
 
     public static RequirementPoint getRequirementGR(RequirementDimension requirementDimension,RequirementsAnalysis requirementsAnalysis, Collection<RequirementsVariant> variants) {
 
-        return new RequirementPoint(getRequirementsImpacts(requirementDimension), getRequirement(requirementsAnalysis,variants), 3);
+        return new RequirementPoint(getRequirementsImpacts(requirementDimension), 3d);
     }
 
-    public static RequirementDTO getRequirementDTO(Map<UUID,String> impactTitles,UUID projectID,Map<UUID,String> variantsTitle) {
+    public static RequirementDTO getRequirementDTO(UUID projectID,Map<UUID, EntityModel<VariantsDTO>> variantsTitle) {
         var requirementDTO = new RequirementDTO();
 
-        requirementDTO.setImpactDescription(impactTitles);
         requirementDTO.setProjectID(projectID);
 
         requirementDTO.setRequirementTitle("Title");
@@ -63,10 +65,9 @@ public class TestDataGenerator {
         return requirementDTO;
     }
 
-    public static RequirementDTO getRequirementDTO(Map<UUID,Integer> requirementImpactPoints,Map<UUID,String> impactTitles,UUID projectID,Map<UUID,String> variantsTitle) {
+    public static RequirementDTO getRequirementDTO(Map<UUID, EntityModel<RequirementPointDTO>> requirementImpactPoints, UUID projectID, Map<UUID,EntityModel<VariantsDTO>> variantsTitle) {
         var requirementDTO = new RequirementDTO();
 
-        requirementDTO.setImpactDescription(impactTitles);
         requirementDTO.setProjectID(projectID);
 
         requirementDTO.setRequirementTitle("Title");
