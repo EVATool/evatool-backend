@@ -82,7 +82,7 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     @Override
     public ResponseEntity<Void> deleteStakeholder(UUID id) {
-        logger.info("[DELETE] /stakeholder/{id}");
+        logger.info("[DELETE] /stakeholders/{id}");
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(id);
         if (stakeholderOptional.isEmpty()){
             throw new EntityNotFoundException(Analysis.class, id);
