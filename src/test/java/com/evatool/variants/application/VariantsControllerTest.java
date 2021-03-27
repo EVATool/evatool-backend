@@ -1,18 +1,30 @@
 package com.evatool.variants.application;
 
 import com.evatool.variants.application.controller.VariantController;
-import com.evatool.variants.domain.entities.Variant;
+import com.evatool.variants.application.dto.VariantDto;
+import com.evatool.variants.common.error.exceptions.VariantsEntityNotFoundException;
+import com.evatool.variants.domain.entities.VariantsAnalysis;
 import com.evatool.variants.domain.repositories.VariantRepository;
-import com.evatool.variants.application.dto.VariantMapper;
-import org.junit.jupiter.api.Assertions;
+import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.annotation.Profile;
+import org.springframework.hateoas.EntityModel;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+import static com.evatool.variants.common.TestDataGenerator.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest
+@Transactional
+@Profile("!non-async")
 class VariantsControllerTest {
 
     @Autowired
@@ -22,70 +34,39 @@ class VariantsControllerTest {
     private VariantRepository variantRepository;
 
     @Autowired
-    private VariantMapper variantMapper;
-
- /*   @Test
-    void testGetAllVariants(){
-        // Get new variant into database
-        var variant = variantRepository.save(new Variant());
-
-        // Get all Variants and filter by id
-        var savedVariants = Objects.requireNonNull(variantController.getAllVariants().getBody()).getContent()
-                .stream().filter(var -> var.getUuid().equals(variant.getId())).toArray();
-
-        // Check if variant is contained in list of all variants
-        Assertions.assertEquals(1, savedVariants.length);
-    }
+    private VariantsAnalysisRepository variantsAnalysisRepository;
 
     @Test
-    void testGetVariantById(){
-        // Get new variant into database
-        var variant = variantRepository.save(new Variant());
+    void testVariantsController_ThrowException() {
 
-        // Get variant out of the system
-        var response = variantController.getVariant(variant.getId());
+        VariantsAnalysis variantsAnalysis = new VariantsAnalysis(UUID.randomUUID());
+        variantsAnalysis = variantsAnalysisRepository.save(variantsAnalysis);
+        assertThat(variantsAnalysis).isNotNull();
 
-        // Check if returned variant is equal to the saved one
-        Assertions.assertEquals(Objects.requireNonNull(response.getBody()).getUuid(), variant.getId());
+        VariantDto variantDto = getVariantDto(variantsAnalysis);
+
+        VariantDto variant = Objects.requireNonNull(variantController.createVariant(variantDto).getBody()).getContent();
+        assertThat(variant).isNotNull();
+
+        List<EntityModel<VariantDto>> variantList = variantController.getAllVariants().getBody();
+        assertThat(variantList).isNotNull().isNotEmpty();
+
+        List<EntityModel<VariantDto>> variantList1 = variantController.getAllVariants().getBody();
+        assertThat(variantList1).isNotNull().isNotEmpty();
+
+        VariantDto variant1 = Objects.requireNonNull(variantController.getVariant(variant.getId()).getBody()).getContent();
+        assertThat(variant1).isNotNull();
+
+        String newTitle = "new Title";
+        variant1.setTitle(newTitle);
+
+        VariantDto updatedVariant = Objects.requireNonNull(variantController.updateVariant(variant1).getBody()).getContent();
+
+        assertThat(updatedVariant).isNotNull();
+        assertThat(updatedVariant.getTitle()).isEqualTo(newTitle);
+        UUID tempId = updatedVariant.getId();
+        variantController.deleteVariant(updatedVariant.getId());
+
+        assertThrows(VariantsEntityNotFoundException.class, ()-> variantController.getVariant(tempId));
     }
-
-    @Test
-    void testPostVariant(){
-        // Get new variant into database
-     var variant = new Variant();
-
-        variant.setTitle("Test");
-        var response = variantController.createVariant(variantMapper.toDto(variant));
-
-        // Check if variant was created correctly
-        Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
-
-        Assertions.assertEquals(variant.getTitle(), Objects.requireNonNull(response.getBody()).getTitle());
-    }
-
-    @Test
-    void testUpdateVariant(){
-        // Get new variant into database
-        var variant = variantRepository.save(new Variant());
-        variant.setTitle("Test");
-
-        // Update Variant
-        var updatedVariant = variantController.updateVariant(variant.getId(), variantMapper.toDto(variant)).getBody();
-
-        // Check if Variant was successfully updated
-        assert updatedVariant != null;
-        Assertions.assertEquals(updatedVariant.getTitle(), variant.getTitle());
-    }
-
-    @Test
-    void testDeleteVariant(){
-        // Get new variant into database
-        var variant = variantRepository.save(new Variant());
-        // Delete Variant
-        variantController.deleteVariant(variant.getId());
-        var deleted = variantRepository.findVariantById(variant.getId());
-
-        // Check if entry was successfully deleted
-        Assertions.assertNull(deleted);
-    }*/
 }
