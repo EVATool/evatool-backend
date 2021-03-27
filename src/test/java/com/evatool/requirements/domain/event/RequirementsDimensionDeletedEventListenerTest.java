@@ -1,7 +1,7 @@
 package com.evatool.requirements.domain.event;
 
-import com.evatool.analysis.common.error.execptions.EventEntityDoesNotExistException;
 import com.evatool.global.event.value.ValueDeletedEvent;
+import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.domain.entity.RequirementValue;
 import com.evatool.requirements.domain.events.listener.RequirementEventListener;
 import com.evatool.requirements.domain.repository.RequirementValueRepository;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class RequirementsDimensionDeletedEventListenerTest {
 
     @Autowired
-    private RequirementValueRepository requirementDimensionRepository;
+    private RequirementValueRepository requirementValueRepository;
 
     @Autowired
     private RequirementEventListener requirementEventListener;
@@ -31,7 +31,7 @@ class RequirementsDimensionDeletedEventListenerTest {
     void testOnApplicationEvent_PublishEvent_DimensionDeleted() {
         // given
         RequirementValue requirementValue = new RequirementValue("Title");
-        requirementDimensionRepository.save(requirementValue);
+        requirementValueRepository.save(requirementValue);
 
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", requirementValue.getId().toString(), "Title");
         UUID tempId = requirementValue.getId();
@@ -41,7 +41,7 @@ class RequirementsDimensionDeletedEventListenerTest {
         requirementEventListener.valueDeleted(dimensionDeletedEvent);
 
         // then
-        Optional<RequirementValue> optionalRequirementDimension = requirementDimensionRepository.findById(tempId);
+        Optional<RequirementValue> optionalRequirementDimension = requirementValueRepository.findById(tempId);
         assertThat(optionalRequirementDimension).isNotPresent();
     }
 

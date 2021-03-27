@@ -1,6 +1,6 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.DimensionType;
+import com.evatool.impact.common.ValueType;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +12,9 @@ import java.util.Objects;
 
 @Entity(name = "IMP_DIMENSION")
 @Table(name = "IMP_DIMENSION")
-public class Dimension extends SuperEntity {
+public class Value extends SuperEntity {
 
-    private static final Logger logger = LoggerFactory.getLogger(Dimension.class);
+    private static final Logger logger = LoggerFactory.getLogger(Value.class);
 
     @Getter
     @Column(name = "NAME", nullable = false)
@@ -22,18 +22,18 @@ public class Dimension extends SuperEntity {
 
     @Getter
     @Column(name = "TYPE", nullable = false)
-    private DimensionType type;
+    private ValueType type;
 
     @Getter
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    public Dimension() {
+    public Value() {
         super();
-        logger.debug("{} created", Dimension.class.getSimpleName());
+        logger.debug("{} created", Value.class.getSimpleName());
     }
 
-    public Dimension(String name, DimensionType type, String description) {
+    public Value(String name, ValueType type, String description) {
         this();
         this.setName(name);
         this.setType(type);
@@ -54,7 +54,7 @@ public class Dimension extends SuperEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
-        var that = (Dimension) o;
+        var that = (Value) o;
         return super.equals(that)
                 && Objects.equals(this.name, that.name)
                 && this.type == that.type
@@ -75,7 +75,7 @@ public class Dimension extends SuperEntity {
         this.name = name;
     }
 
-    public void setType(DimensionType type) {
+    public void setType(ValueType type) {
         if (type == null) {
             logger.error("Attempted to set type to null");
             throw new IllegalArgumentException("Type cannot be null.");

@@ -1,14 +1,14 @@
 package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.analysis.application.dto.ValueDtoMapper;
+import com.evatool.impact.application.dto.ValueDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.application.service.ImpactService;
-import com.evatool.analysis.domain.repository.ValueRepository;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
+import com.evatool.impact.domain.repository.ValueRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -38,7 +38,7 @@ public class ImpactRestControllerTest {
     private ImpactService impactService;
 
     @Autowired
-    private ValueRepository dimensionRepository;
+    private ValueRepository valueRepository;
 
     @Autowired
     private ImpactStakeholderRepository stakeholderRepository;
@@ -51,13 +51,13 @@ public class ImpactRestControllerTest {
     private void clearDatabase() {
         impactService.deleteAll();
         stakeholderRepository.deleteAll();
-        dimensionRepository.deleteAll();
+        valueRepository.deleteAll();
         analysisRepository.deleteAll();
     }
 
     private ImpactDto saveFullDummyImpactDto() {
         var impact = createDummyImpact();
-        //impact.setDimension(dimensionRepository.save(impact.getDimension()));
+        impact.setValueEntity(valueRepository.save(impact.getValueEntity()));
         impact.setStakeholder(stakeholderRepository.save(impact.getStakeholder()));
         impact.setAnalysis(analysisRepository.save(impact.getAnalysis()));
         return impactService.create(toDto(impact));
@@ -65,8 +65,8 @@ public class ImpactRestControllerTest {
 
     private ImpactDto saveDummyImpactDtoChildren() {
         var impactDto = createDummyImpactDto();
-        impactDto.getDimension().setId(UUID.randomUUID());
-        dimensionRepository.save(ValueDtoMapper.fromDto(impactDto.getDimension()));
+        impactDto.getValueDto().setId(UUID.randomUUID());
+        valueRepository.save(ValueDtoMapper.fromDto(impactDto.getValueDto()));
         stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder()));
         analysisRepository.save(ImpactAnalysisDtoMapper.fromDto(impactDto.getAnalysis()));
         return impactDto;

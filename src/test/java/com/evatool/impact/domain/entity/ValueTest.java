@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-class DimensionTest {
+class ValueTest {
 
     @Test
     void testSetName_NullValue_ThrowIllegalArgumentException() {

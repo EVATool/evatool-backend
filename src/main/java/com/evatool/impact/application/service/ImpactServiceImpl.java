@@ -1,6 +1,5 @@
 package com.evatool.impact.application.service;
 
-import com.evatool.analysis.application.services.ValueService;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
@@ -26,7 +25,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     private final ImpactRepository impactRepository;
 
-    private final ValueService dimensionService;
+    private final ValueService valueService;
 
     private final ImpactStakeholderService impactStakeholderService;
 
@@ -36,7 +35,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     public ImpactServiceImpl(ImpactRepository impactRepository, ValueService dimensionService, ImpactStakeholderService impactStakeholderService, ImpactAnalysisService impactAnalysisService, ImpactEventPublisher impactEventPublisher) {
         this.impactRepository = impactRepository;
-        this.dimensionService = dimensionService;
+        this.valueService = dimensionService;
         this.impactStakeholderService = impactStakeholderService;
         this.impactAnalysisService = impactAnalysisService;
         this.impactEventPublisher = impactEventPublisher;
@@ -119,7 +118,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     private void assertImpactChildrenExist(ImpactDto impactDto) {
         this.impactStakeholderService.findById(impactDto.getStakeholder().getId());
-        this.dimensionService.findById(impactDto.getDimension().getId());
+        this.valueService.findById(impactDto.getValueDto().getId());
         this.impactAnalysisService.findById(impactDto.getAnalysis().getId());
     }
 }

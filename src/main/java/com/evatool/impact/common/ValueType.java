@@ -1,6 +1,6 @@
 package com.evatool.impact.common;
 
-public enum DimensionType {
+public enum ValueType {
 
     SOCIAL,
     ECONOMIC

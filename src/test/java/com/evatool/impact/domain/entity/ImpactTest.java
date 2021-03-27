@@ -13,7 +13,7 @@ class ImpactTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {-1.0, -0.5, 0.0, 0.5, 1.0})
-    void testSetValue_LegalValue_DoNotThrowException(double value) {
+    void testSetValue_LegalValue_DoNotThrowException(Double value) {
         // given
         var impact = createDummyImpact();
 
@@ -67,7 +67,7 @@ class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setDimension(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setValue(null));
     }
 
     @Test

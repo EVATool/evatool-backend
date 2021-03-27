@@ -37,7 +37,7 @@ public class ImpactJson {
         return Objects.equals(this.id, that.getId().toString())
                 && Double.compare(this.value, that.getValue()) == 0
                 && Objects.equals(this.description, that.getDescription())
-                && Objects.equals(this.dimensionId, that.getDimension().getId().toString())
+                && Objects.equals(this.dimensionId, that.getValueEntity().getId().toString())
                 && Objects.equals(this.stakeholderId, that.getStakeholder().getId().toString())
                 && Objects.equals(this.analysisId, that.getAnalysis().getId().toString());
     }

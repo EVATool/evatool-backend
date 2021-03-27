@@ -12,8 +12,8 @@ import java.util.UUID;
 
 public class TestDataGenerator {
 
-    public static Dimension createDummyDimension() {
-        return new Dimension("dummyDimension", DimensionType.ECONOMIC, "dummyDimensionDescription");
+    public static Value createDummyDimension() {
+        return new Value("dummyDimension", ValueType.ECONOMIC, "dummyDimensionDescription");
     }
 
     public static ImpactStakeholder createDummyStakeholder() {

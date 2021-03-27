@@ -29,7 +29,7 @@ public class Impact extends SuperEntity {
 
     @Getter
     @ManyToOne(optional = false)
-    private Dimension dimension;
+    private Value valueEntity;
 
     @Getter
     @ManyToOne(optional = false)
@@ -44,11 +44,11 @@ public class Impact extends SuperEntity {
         logger.debug("{} created", Impact.class.getSimpleName());
     }
 
-    public Impact(double value, String description, Dimension dimension, ImpactStakeholder stakeholder, ImpactAnalysis analysis) {
+    public Impact(double value, String description, Value valueEntity, ImpactStakeholder stakeholder, ImpactAnalysis analysis) {
         this();
         this.setValue(value);
         this.setDescription(description);
-        this.setDimension(dimension);
+        this.setValueEntity(valueEntity);
         this.setStakeholder(stakeholder);
         this.setAnalysis(analysis);
     }
@@ -60,7 +60,7 @@ public class Impact extends SuperEntity {
                 ", numericId=" + this.numericId +
                 ", value=" + this.value +
                 ", description='" + this.description + '\'' +
-                ", dimension=" + this.dimension +
+                ", dimension=" + this.value +
                 ", stakeholder=" + this.stakeholder +
                 ", analysis=" + this.analysis +
                 '}';
@@ -75,14 +75,14 @@ public class Impact extends SuperEntity {
                 && Objects.equals(this.numericId, that.numericId)
                 && Double.compare(this.value, that.value) == 0
                 && Objects.equals(this.description, that.description)
-                && Objects.equals(this.dimension, that.dimension)
+                && Objects.equals(this.value, that.value)
                 && Objects.equals(this.stakeholder, that.stakeholder)
                 && Objects.equals(this.analysis, that.analysis);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), this.value, this.description, this.dimension, this.stakeholder, this.analysis);
+        return Objects.hash(super.hashCode(), this.value, this.description, this.value, this.stakeholder, this.analysis);
     }
 
     // TODO [philipp] Write tests in service and rest controller that validate this behavior.
@@ -126,13 +126,13 @@ public class Impact extends SuperEntity {
         this.description = description;
     }
 
-    public void setDimension(Dimension dimension) {
-        logger.debug("Set Dimension");
-        if (dimension == null) {
-            logger.error("Attempted to set dimension description to null");
-            throw new IllegalArgumentException("Dimension cannot be null.");
+    public void setValueEntity(Value value) {
+        logger.debug("Set Value (Dimension)");
+        if (value == null) {
+            logger.error("Attempted to set Value description to null");
+            throw new IllegalArgumentException("Value cannot be null.");
         }
-        this.dimension = dimension;
+        this.valueEntity = value;
     }
 
     public void setStakeholder(ImpactStakeholder stakeholder) {

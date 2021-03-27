@@ -31,24 +31,6 @@ public class Analysis {
     @Getter
     private String description;
 
-    /**
-     * The User of the Analysis {@link java.util.List<User>}
-     * Referenz zum User
-     *  @Getter
-     *     @Setter
-     *     @OneToMany
-     *     private Set<User> analysisUserId;
-     */
-
-
-    /**
-     * The Stakeholder of the Analysis {@link java.util.List<Stakeholder>}
-     * Referenz zum Stakholder
-     *  @Getter
-     *     @Setter
-     *     @OneToMany
-     *     private Set<Stakeholder> analysisStakeholderId;
-     */
 
 
     public Analysis(String analysisName, String description) {
