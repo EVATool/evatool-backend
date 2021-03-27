@@ -13,6 +13,7 @@ public class StakeholderDTO {
     private StakeholderLevel stakeholderLevel;
     private Integer priority;
     private Float value;
+    private String guiId;
 
     public void setRootEntityID(UUID rootEntityID) {
         this.rootEntityID = rootEntityID;
@@ -44,6 +45,13 @@ public class StakeholderDTO {
             throw new IllegalArgumentException("Value cannot be null.");
         }
         this.value = value;
+    }
+
+    public void setGuiId(String guiId) {
+        if (guiId == null) {
+            throw new IllegalArgumentException("GuiId cannot be null.");
+        }
+        this.guiId = guiId;
     }
 
     @Override
