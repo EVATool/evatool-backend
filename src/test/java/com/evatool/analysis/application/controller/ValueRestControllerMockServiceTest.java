@@ -61,7 +61,7 @@ class ValueRestControllerMockServiceTest {
         }
 
         @Test
-        void testFindById_ExistingDimension_CorrectRestLevel3() throws Exception {
+        void testFindById_ExistingValue_CorrectRestLevel3() throws Exception {
             // given
             var valueDto = createDummyValueDto();
             valueDto.setId(UUID.randomUUID());
@@ -75,19 +75,15 @@ class ValueRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.links").isNotEmpty())
-                    .andExpect(jsonPath("$.links", hasSize(3)))
+                    .andExpect(jsonPath("$.links", hasSize(1)))
                     .andExpect(jsonPath("$.links[*].rel").value(containsInAnyOrder(
-                            "self",
-                            "update dimension",
-                            "delete dimension")))
+                            "self")))
                     .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
-                            "http://localhost" + "/dimensions",
-                            "http://localhost" + "/dimensions" + "/" + valueDto.getId(),
-                            "http://localhost" + "/dimensions" + "/" + valueDto.getId())));
+                            "http://localhost" + "/value" + "/" + valueDto.getId())));
         }
 
         @Test
-        void testFindById_NonExistingDimension_ReturnErrorMessage() throws Exception {
+        void testFindById_NonExistingvalue_ReturnErrorMessage() throws Exception {
             // given
             var id = UUID.randomUUID().toString();
 
@@ -95,7 +91,7 @@ class ValueRestControllerMockServiceTest {
             when(valueService.findById(any(UUID.class))).thenThrow(EntityNotFoundException.class);
 
             // then
-            mvc.perform(get("/dimensions" + "/" + id)
+            mvc.perform(get("/values" + "/" + id)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isNotFound())
@@ -114,7 +110,7 @@ class ValueRestControllerMockServiceTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3})
-        void testFindAll_ExistingVaules_ReturnValue(int value) throws Exception {
+        void testFindAll_ExistingValues_ReturnValue(int value) throws Exception {
             var valueDtos = new ArrayList<ValueDto>();
             for (int i = 0; i < value; i++) {
                 // given
@@ -125,7 +121,7 @@ class ValueRestControllerMockServiceTest {
             given(valueService.findAll()).willReturn(valueDtos);
 
             // then
-            mvc.perform(get("/dimensions")
+            mvc.perform(get("/values")
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -158,13 +154,13 @@ class ValueRestControllerMockServiceTest {
             given(valueService.findAllByType(ValueType.ECONOMIC)).willReturn(economicValues);
 
             // then
-            mvc.perform(get("/dimensions").param("type", ValueType.SOCIAL.toString())
+            mvc.perform(get("/values").param("type", ValueType.SOCIAL.toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(socialValues.size())));
 
-            mvc.perform(get("/dimensions" + "?type=" + ValueType.ECONOMIC.toString())
+            mvc.perform(get("/values" + "?type=" + ValueType.ECONOMIC.toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -186,7 +182,7 @@ class ValueRestControllerMockServiceTest {
             when(valueService.create(any(ValueDto.class))).thenReturn(valuesDto);
 
             // then
-            mvc.perform(post("/dimensions").content(new ObjectMapper().writeValueAsString(valuesDto))
+            mvc.perform(post("/values").content(new ObjectMapper().writeValueAsString(valuesDto))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isCreated());
@@ -208,7 +204,7 @@ class ValueRestControllerMockServiceTest {
             when(valueService.update(any(ValueDto.class))).thenReturn(valueDto);
 
             // then
-            mvc.perform(put("/dimensions").content(new ObjectMapper().writeValueAsString(valueDto))
+            mvc.perform(put("/values").content(new ObjectMapper().writeValueAsString(valueDto))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -228,7 +224,7 @@ class ValueRestControllerMockServiceTest {
             doNothing().when(valueService).deleteById(any(UUID.class));
 
             // then
-            mvc.perform(delete("/dimensions" + "/" + UUID.randomUUID().toString())
+            mvc.perform(delete("/values" + "/" + UUID.randomUUID().toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk());
