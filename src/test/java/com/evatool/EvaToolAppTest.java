@@ -12,17 +12,17 @@ import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
-import com.evatool.impact.common.ValueType;
+import com.evatool.impact.common.ImpactValueType;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.entity.Value;
 import com.evatool.impact.domain.event.ImpactEventPublisher;
-import com.evatool.impact.domain.event.json.ValueEventPublisher;
+import com.evatool.impact.domain.event.json.ImpactValueEventPublisher;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
-import com.evatool.impact.domain.repository.ValueRepository;
+import com.evatool.impact.domain.repository.ImpactValueRepository;
 import com.evatool.requirements.domain.repository.RequirementAnalysisRepository;
 import com.evatool.requirements.domain.repository.RequirementValueRepository;
 import com.evatool.requirements.domain.repository.RequirementsImpactsRepository;
@@ -198,10 +198,10 @@ class EvaToolAppTest {
     class ValueEvent {
 
         @Autowired
-        ValueRepository valueRepository;
+        ImpactValueRepository impactValueRepository;
 
         @Autowired
-        ValueEventPublisher valueEventPublisher;
+        ImpactValueEventPublisher impactValueEventPublisher;
 
         @Autowired
         RequirementValueRepository requirementValueRepository;
@@ -210,11 +210,11 @@ class EvaToolAppTest {
         @AfterAll
         void clearDatabase() {
             requirementValueRepository.deleteAll();
-            valueRepository.deleteAll();
+            impactValueRepository.deleteAll();
         }
 
         Value createDummyValue() {
-            return valueRepository.save(new Value("Name", ValueType.SOCIAL, "Description"));
+            return impactValueRepository.save(new Value("Name", ImpactValueType.SOCIAL, "Description"));
         }
 
         // Received by: Requirement
@@ -224,7 +224,7 @@ class EvaToolAppTest {
             var value = createDummyValue();
 
             // when
-            valueEventPublisher.publishValueCreated(value);
+            impactValueEventPublisher.publishValueCreated(value);
             var requirementValue = requirementValueRepository.findById(value.getId()).orElse(null);
 
             // then
@@ -238,11 +238,11 @@ class EvaToolAppTest {
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
             var value = createDummyValue();
-            valueEventPublisher.publishValueCreated(value);
+            impactValueEventPublisher.publishValueCreated(value);
 
             // when
             value.setName("new_name");
-            valueEventPublisher.publishValueUpdated(value);
+            impactValueEventPublisher.publishValueUpdated(value);
             var requirementValue = requirementValueRepository.findById(value.getId()).orElse(null);
 
             // then
@@ -256,10 +256,10 @@ class EvaToolAppTest {
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
             var value = createDummyValue();
-            valueEventPublisher.publishValueCreated(value);
+            impactValueEventPublisher.publishValueCreated(value);
 
             // when
-            valueEventPublisher.publishValueDeleted(value);
+            impactValueEventPublisher.publishValueDeleted(value);
             var requirementValue = requirementValueRepository.findById(value.getId()).orElse(null);
 
             // then
@@ -275,10 +275,10 @@ class EvaToolAppTest {
         ImpactRepository impactRepository;
 
         @Autowired
-        ValueRepository valueRepository;
+        ImpactValueRepository impactValueRepository;
 
         @Autowired
-        ValueEventPublisher valueEventPublisher;
+        ImpactValueEventPublisher impactValueEventPublisher;
 
         @Autowired
         ImpactStakeholderRepository impactStakeholderRepository;
@@ -306,13 +306,13 @@ class EvaToolAppTest {
             requirementDimensionRepository.deleteAll();
 //            analysisImpactRepository.deleteAll();
             impactRepository.deleteAll();
-            valueRepository.deleteAll();
+            impactValueRepository.deleteAll();
             impactStakeholderRepository.deleteAll();
             impactAnalysisRepository.deleteAll();
         }
 
         Impact createDummyImpact() {
-            var value = valueRepository.save(new Value("Name", ValueType.SOCIAL, "Description"));
+            var value = impactValueRepository.save(new Value("Name", ImpactValueType.SOCIAL, "Description"));
 //            valueEventPublisher.publishDimensionCreated(value);
             var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name"));
             var analysis = impactAnalysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));

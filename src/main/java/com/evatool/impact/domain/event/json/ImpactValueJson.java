@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import java.util.Objects;
 
-public class ValueJson {
+public class ImpactValueJson {
 
     @Getter
     @Setter

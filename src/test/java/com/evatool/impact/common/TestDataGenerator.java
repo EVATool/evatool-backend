@@ -13,7 +13,7 @@ import java.util.UUID;
 public class TestDataGenerator {
 
     public static Value createDummyDimension() {
-        return new Value("dummyDimension", ValueType.ECONOMIC, "dummyDimensionDescription");
+        return new Value("dummyDimension", ImpactValueType.ECONOMIC, "dummyDimensionDescription");
     }
 
     public static ImpactStakeholder createDummyStakeholder() {

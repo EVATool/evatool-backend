@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @ApiModel(value = "Value", description = "Value of an Values")
-public class ValueDto {
+public class ImpactValueDto {
 
     @ApiModelProperty
     @Getter
@@ -50,7 +50,7 @@ public class ValueDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ValueDto that = (ValueDto) o;
+        ImpactValueDto that = (ImpactValueDto) o;
         return Objects.equals(id, that.id) && Objects.equals(name, that.name) && value == that.value && Objects.equals(description, that.description);
     }
 

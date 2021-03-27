@@ -66,7 +66,7 @@ public class ImpactRestControllerMockServiceTest {
         void testFindById_ExistingImpact_CorrectRestLevel3() throws Exception {
             // given
             var impactDto = createDummyImpactDto();
-            impactDto.getValueDto().setId(UUID.randomUUID());
+            impactDto.getImpactValueDto().setId(UUID.randomUUID());
             impactDto.getStakeholder().setId(UUID.randomUUID());
             impactDto.setId(UUID.randomUUID());
 
@@ -88,7 +88,7 @@ public class ImpactRestControllerMockServiceTest {
                     .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
                             "http://localhost" + IMPACTS + "/" + impactDto.getId(),
                             "http://localhost" + STAKEHOLDERS + "/" + impactDto.getStakeholder().getId(),
-                            "http://localhost" + DIMENSIONS + "/" + impactDto.getValueDto().getId(),
+                            "http://localhost" + DIMENSIONS + "/" + impactDto.getImpactValueDto().getId(),
                             "http://localhost" + ANALYSES + "/" + impactDto.getAnalysis().getId())));
         }
 

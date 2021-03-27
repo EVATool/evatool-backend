@@ -1,6 +1,6 @@
 package com.evatool.impact.common;
 
-public enum ValueType {
+public enum ImpactValueType {
 
     SOCIAL,
     ECONOMIC

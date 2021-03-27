@@ -104,7 +104,7 @@ public class ImpactRestController {
         var entityModel = EntityModel.of(impactDto);
         entityModel.add(linkTo(methodOn(ImpactRestController.class).findById(impactDto.getId())).withSelfRel());
         entityModel.add(linkTo(ImpactRestController.class).slash(STAKEHOLDERS).slash(impactDto.getStakeholder().getId()).withRel(STAKEHOLDER_NAME));
-        entityModel.add(linkTo(ImpactRestController.class).slash(DIMENSIONS).slash(impactDto.getValueDto().getId()).withRel(DIMENSION_NAME));
+        entityModel.add(linkTo(ImpactRestController.class).slash(DIMENSIONS).slash(impactDto.getImpactValueDto().getId()).withRel(DIMENSION_NAME));
         entityModel.add(linkTo(ImpactRestController.class).slash(ANALYSES).slash(impactDto.getAnalysis().getId()).withRel(ANALYSIS_NAME));
         return entityModel;
     }

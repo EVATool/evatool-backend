@@ -25,7 +25,7 @@ import static com.evatool.analysis.common.TestDataGenerator.*;
 
 
 @SpringBootTest
-class ValueServiceImplTest {
+class ImpactValueServiceImplTest {
 
     @Autowired
     ValueService valueService;

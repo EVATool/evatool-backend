@@ -1,6 +1,6 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.ValueType;
+import com.evatool.impact.common.ImpactValueType;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ public class Value extends SuperEntity {
 
     @Getter
     @Column(name = "TYPE", nullable = false)
-    private ValueType type;
+    private ImpactValueType type;
 
     @Getter
     @Column(name = "DESCRIPTION", nullable = false)
@@ -33,7 +33,7 @@ public class Value extends SuperEntity {
         logger.debug("{} created", Value.class.getSimpleName());
     }
 
-    public Value(String name, ValueType type, String description) {
+    public Value(String name, ImpactValueType type, String description) {
         this();
         this.setName(name);
         this.setType(type);
@@ -75,7 +75,7 @@ public class Value extends SuperEntity {
         this.name = name;
     }
 
-    public void setType(ValueType type) {
+    public void setType(ImpactValueType type) {
         if (type == null) {
             logger.error("Attempted to set type to null");
             throw new IllegalArgumentException("Type cannot be null.");
