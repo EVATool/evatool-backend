@@ -40,6 +40,14 @@ public class Stakeholder {
     @Enumerated(EnumType.STRING)
     private StakeholderLevel stakeholderLevel;
 
+
+    /**
+     * GuiId of the Stakeholder {@link int}
+     */
+    @Getter
+    private String guiId;
+
+
     public Stakeholder(String stakeholderName, Integer priority, StakeholderLevel stakeholderLevel) {
         this.stakeholderName = stakeholderName;
         this.priority = priority;
@@ -70,18 +78,17 @@ public class Stakeholder {
         this.priority = priority;
     }
 
-    @Override
-    public String toString() {
-        return "Stakeholder{" +
-                "stakeholderId=" + stakeholderId +
-                ", stakeholderName='" + stakeholderName + '\'' +
-                ", priority=" + priority +
-                ", stakeholderLevel=" + stakeholderLevel +
-                '}';
+    public void setGuiId(String guiId) {
+        if (guiId == null){
+            throw new IllegalArgumentException("guiId cannot be null.");
+        }
+        this.guiId = guiId;
     }
+
+
 
     public String toJson(){
         Gson gson = new Gson();
-        return gson.toJson(this.toString());
+        return gson.toJson(this);
     }
 }
