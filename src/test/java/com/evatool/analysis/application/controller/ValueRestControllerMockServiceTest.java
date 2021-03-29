@@ -1,6 +1,7 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.EvaToolApp;
+import com.evatool.analysis.application.services.ValueServiceImpl;
 import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.global.config.SwaggerConfig;
