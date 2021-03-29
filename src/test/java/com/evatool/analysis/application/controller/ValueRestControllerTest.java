@@ -52,7 +52,7 @@ class ValueRestControllerTest {
 
             // when
             var response = testRestTemplate.getForEntity(
-                    "/value" + "/" + valueDto.getId().toString(), ValueDto.class);
+                    "/values" + "/" + valueDto.getId().toString(), ValueDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -138,7 +138,7 @@ class ValueRestControllerTest {
 
             // when
             var valueTypes = testRestTemplate.getForEntity(
-                    "/value/types", ValueType[].class);
+                    "/values/types", ValueType[].class);
 
             // then
             assertThat(valueTypes.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -157,7 +157,7 @@ class ValueRestControllerTest {
             // when
             var httpEntity = new HttpEntity<>(valuesDto);
             var response = testRestTemplate.postForEntity(
-                    "/value", httpEntity, ValueDto.class);
+                    "/values", httpEntity, ValueDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -172,10 +172,10 @@ class ValueRestControllerTest {
             // when
             var httpEntity = new HttpEntity<>(valuesDto);
             var response = testRestTemplate.postForEntity(
-                    "/value", httpEntity, ValueDto.class);
+                    "/values", httpEntity, ValueDto.class);
 
             // then
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -190,7 +190,7 @@ class ValueRestControllerTest {
             // when
             valuesDto.setName("new_name");
             var httpEntity = new HttpEntity<>(valuesDto);
-            var response = testRestTemplate.exchange("/value", HttpMethod.PUT, httpEntity, ValueDto.class);
+            var response = testRestTemplate.exchange("/values", HttpMethod.PUT, httpEntity, ValueDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -224,7 +224,7 @@ class ValueRestControllerTest {
                     "/values", HttpMethod.PUT, httpEntity, ValueDto.class);
 
             // then
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -238,7 +238,7 @@ class ValueRestControllerTest {
 
             // when
             var response = testRestTemplate.exchange(
-                    "/value" + "/" + valueDto.getId(), HttpMethod.DELETE, null, Void.class);
+                    "/values" + "/" + valueDto.getId(), HttpMethod.DELETE, null, Void.class);
             var values = valueService.findAll();
 
             // then

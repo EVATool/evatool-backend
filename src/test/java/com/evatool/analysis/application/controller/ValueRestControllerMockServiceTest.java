@@ -53,7 +53,7 @@ class ValueRestControllerMockServiceTest {
             when(valueService.findById(any(UUID.class))).thenReturn(valueDto);
 
             // then
-            mvc.perform(get("/value" + "/" + UUID.randomUUID().toString())
+            mvc.perform(get("/values" + "/" + UUID.randomUUID().toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -70,7 +70,7 @@ class ValueRestControllerMockServiceTest {
             given(valueService.findById(any(UUID.class))).willReturn(valueDto);
 
             // then
-            mvc.perform(get("/value" + "/" + UUID.randomUUID().toString())
+            mvc.perform(get("/values" + "/" + UUID.randomUUID().toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -79,7 +79,7 @@ class ValueRestControllerMockServiceTest {
                     .andExpect(jsonPath("$.links[*].rel").value(containsInAnyOrder(
                             "self")))
                     .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
-                            "http://localhost" + "/value" + "/" + valueDto.getId())));
+                            "http://localhost" + "/values" + "/" + valueDto.getId())));
         }
 
         @Test
@@ -91,7 +91,7 @@ class ValueRestControllerMockServiceTest {
             when(valueService.findById(any(UUID.class))).thenThrow(EntityNotFoundException.class);
 
             // then
-            mvc.perform(get("/value" + "/" + id)
+            mvc.perform(get("/values" + "/" + id)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isNotFound())
@@ -154,13 +154,13 @@ class ValueRestControllerMockServiceTest {
             given(valueService.findAllByType(ValueType.ECONOMIC)).willReturn(economicValues);
 
             // then
-            mvc.perform(get("/value").param("types", ValueType.SOCIAL.toString())
+            mvc.perform(get("/values" + "?types=" + ValueType.SOCIAL.toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(socialValues.size())));
 
-            mvc.perform(get("/value" + "?types=" + ValueType.ECONOMIC.toString())
+            mvc.perform(get("/values" + "?types=" + ValueType.ECONOMIC.toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -182,7 +182,7 @@ class ValueRestControllerMockServiceTest {
             when(valueService.create(any(ValueDto.class))).thenReturn(valuesDto);
 
             // then
-            mvc.perform(post("/value").content(new ObjectMapper().writeValueAsString(valuesDto))
+            mvc.perform(post("/values").content(new ObjectMapper().writeValueAsString(valuesDto))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isCreated());
@@ -204,7 +204,7 @@ class ValueRestControllerMockServiceTest {
             when(valueService.update(any(ValueDto.class))).thenReturn(valueDto);
 
             // then
-            mvc.perform(put("/value").content(new ObjectMapper().writeValueAsString(valueDto))
+            mvc.perform(put("/values").content(new ObjectMapper().writeValueAsString(valueDto))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -224,7 +224,7 @@ class ValueRestControllerMockServiceTest {
             doNothing().when(valueService).deleteById(any(UUID.class));
 
             // then
-            mvc.perform(delete("/value" + "/" + UUID.randomUUID().toString())
+            mvc.perform(delete("/values" + "/" + UUID.randomUUID().toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk());

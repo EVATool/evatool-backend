@@ -1,5 +1,7 @@
 package com.evatool.analysis.common.error;
 
+import com.evatool.analysis.common.error.execptions.EntityIdMustBeNullException;
+import com.evatool.analysis.common.error.execptions.EntityIdRequiredException;
 import com.evatool.analysis.common.error.execptions.IllegalDtoValueExcpetion;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -24,6 +26,18 @@ public class AnalysisExceptionHandler {
     }
     @ExceptionHandler(IllegalDtoValueExcpetion.class)
     public ResponseEntity<AnalysisErrorMessage> handleIllegalDtoValueExcpetion(IllegalDtoValueExcpetion exception, WebRequest webRequest) {
+        logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
+        AnalysisErrorMessage errorMessage = new AnalysisErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+    @ExceptionHandler(EntityIdMustBeNullException.class)
+    public ResponseEntity<AnalysisErrorMessage> handleIllegalDtoValueExcpetion(EntityIdMustBeNullException exception, WebRequest webRequest) {
+        logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
+        AnalysisErrorMessage errorMessage = new AnalysisErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+    @ExceptionHandler(EntityIdRequiredException.class)
+    public ResponseEntity<AnalysisErrorMessage> handleIllegalDtoValueExcpetion(EntityIdRequiredException exception, WebRequest webRequest) {
         logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
         AnalysisErrorMessage errorMessage = new AnalysisErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
         return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);

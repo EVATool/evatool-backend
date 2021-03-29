@@ -33,7 +33,7 @@ public class ValueControllerImpl {
         this.valueService = valueService;
     }
 
-    @GetMapping("/value/{id}")
+    @GetMapping("/values/{id}")
     @ApiOperation(value = "Read value by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
@@ -62,7 +62,7 @@ public class ValueControllerImpl {
         return new ResponseEntity<>(getValueWithLinks(valueDtoList), HttpStatus.OK);
     }
 
-    @PostMapping("/value")
+    @PostMapping("/values")
     @ApiOperation(value = "Create a new value")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Created"),
@@ -75,7 +75,7 @@ public class ValueControllerImpl {
         return new ResponseEntity<>(getValueWithLinks(insertedValueDto), HttpStatus.CREATED);
     }
 
-    @PutMapping("/value")
+    @PutMapping("/values")
     @ApiOperation(value = "Update a value")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Updated"),
@@ -88,7 +88,7 @@ public class ValueControllerImpl {
         return new ResponseEntity<>(getValueWithLinks(updatedValueDto), HttpStatus.OK);
     }
 
-    @DeleteMapping("/value/{id}")
+    @DeleteMapping("/values/{id}")
     @ApiOperation(value = "Delete value by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Deleted"),
@@ -100,7 +100,7 @@ public class ValueControllerImpl {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/value/types")
+    @GetMapping("/values/types")
     @ApiOperation(value = "Read all value types")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK")})
