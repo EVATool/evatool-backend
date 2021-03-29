@@ -17,7 +17,6 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@Disabled
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
 class RequirementsImpactUpdateEventListenerTest {

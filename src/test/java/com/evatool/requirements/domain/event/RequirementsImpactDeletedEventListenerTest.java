@@ -17,7 +17,6 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@Disabled
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
 class RequirementsImpactDeletedEventListenerTest {
@@ -27,7 +26,6 @@ class RequirementsImpactDeletedEventListenerTest {
 
     @Autowired
     private RequirementEventListener requirementEventListener;
-
 
     @Test
     void testOnApplicationEvent_PublishEvent_ImpactDeleted() {
