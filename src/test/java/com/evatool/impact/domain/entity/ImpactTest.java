@@ -60,7 +60,7 @@ class ImpactTest {
     }
 
     @Test
-    void testSetDimension_NullValue_ThrowIllegalArgumentException() {
+    void testSetValue_NullValue_ThrowIllegalArgumentException() {
         // given
         var impact = createDummyImpact();
 

@@ -38,7 +38,7 @@ public class ImpactValueDto {
 
     @Override
     public String toString() {
-        return "DimensionDto{" +
+        return "ValueDto{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + value + '\'' +

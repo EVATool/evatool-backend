@@ -13,8 +13,8 @@ import java.util.UUID;
 
 public class TestDataGenerator {
 
-    public static RequirementValue getRequirementDimension(){
-        return new RequirementValue("DimensionTitle");
+    public static RequirementValue getRequirementValue(){
+        return new RequirementValue("ValuesTitle");
     }
 
     public static Requirement getRequirement(RequirementsAnalysis requirementsAnalysis, Collection<RequirementsVariant> variants) {

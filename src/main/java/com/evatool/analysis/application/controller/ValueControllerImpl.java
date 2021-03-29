@@ -2,7 +2,7 @@ package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.dto.ValueDto;
 import com.evatool.analysis.application.services.ValueService;
-import com.evatool.analysis.common.error.ValueType;
+import com.evatool.analysis.domain.enums.ValueType;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -82,7 +82,7 @@ public class ValueControllerImpl {
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 422, message = "Unprocessable")})
-    public ResponseEntity<EntityModel<ValueDto>> update(@ApiParam("Dimension") @Valid @RequestBody ValueDto valueDto) {
+    public ResponseEntity<EntityModel<ValueDto>> update(@ApiParam("Value") @Valid @RequestBody ValueDto valueDto) {
         logger.info("PUT " + "/value");
         var updatedValueDto = valueService.update(valueDto);
         return new ResponseEntity<>(getValueWithLinks(updatedValueDto), HttpStatus.OK);

@@ -1,7 +1,7 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.EvaToolApp;
-import com.evatool.analysis.common.error.ValueType;
+import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.global.config.SwaggerConfig;
 import com.evatool.analysis.application.dto.ValueDto;
@@ -91,7 +91,7 @@ class ValueRestControllerMockServiceTest {
             when(valueService.findById(any(UUID.class))).thenThrow(EntityNotFoundException.class);
 
             // then
-            mvc.perform(get("/values" + "/" + id)
+            mvc.perform(get("/value" + "/" + id)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isNotFound())
@@ -121,7 +121,7 @@ class ValueRestControllerMockServiceTest {
             given(valueService.findAll()).willReturn(valueDtos);
 
             // then
-            mvc.perform(get("/values")
+            mvc.perform(get("/value")
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -154,13 +154,13 @@ class ValueRestControllerMockServiceTest {
             given(valueService.findAllByType(ValueType.ECONOMIC)).willReturn(economicValues);
 
             // then
-            mvc.perform(get("/values").param("type", ValueType.SOCIAL.toString())
+            mvc.perform(get("/value").param("type", ValueType.SOCIAL.toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(socialValues.size())));
 
-            mvc.perform(get("/values" + "?type=" + ValueType.ECONOMIC.toString())
+            mvc.perform(get("/value" + "?type=" + ValueType.ECONOMIC.toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -182,7 +182,7 @@ class ValueRestControllerMockServiceTest {
             when(valueService.create(any(ValueDto.class))).thenReturn(valuesDto);
 
             // then
-            mvc.perform(post("/values").content(new ObjectMapper().writeValueAsString(valuesDto))
+            mvc.perform(post("/value").content(new ObjectMapper().writeValueAsString(valuesDto))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isCreated());
@@ -204,7 +204,7 @@ class ValueRestControllerMockServiceTest {
             when(valueService.update(any(ValueDto.class))).thenReturn(valueDto);
 
             // then
-            mvc.perform(put("/values").content(new ObjectMapper().writeValueAsString(valueDto))
+            mvc.perform(put("/value").content(new ObjectMapper().writeValueAsString(valueDto))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -224,7 +224,7 @@ class ValueRestControllerMockServiceTest {
             doNothing().when(valueService).deleteById(any(UUID.class));
 
             // then
-            mvc.perform(delete("/values" + "/" + UUID.randomUUID().toString())
+            mvc.perform(delete("/value+" + "/" + UUID.randomUUID().toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk());

@@ -2,7 +2,7 @@ package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.dto.ValueDto;
 import com.evatool.analysis.application.services.ValueService;
-import com.evatool.analysis.common.error.ValueType;
+import com.evatool.analysis.domain.enums.ValueType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -52,7 +52,7 @@ class ValueRestControllerTest {
 
             // when
             var response = testRestTemplate.getForEntity(
-                    "/dimensions" + "/" + valueDto.getId().toString(), ValueDto.class);
+                    "/value" + "/" + valueDto.getId().toString(), ValueDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -63,7 +63,7 @@ class ValueRestControllerTest {
         void testFindById_NonExistingValues_ReturnHttpStatusNotFound() {
             // given
             var response = testRestTemplate.getForEntity(
-                    "/dimensions" + "/" + UUID.randomUUID().toString(), ValueDto.class);
+                    "/values" + "/" + UUID.randomUUID().toString(), ValueDto.class);
 
             // when
 
@@ -85,7 +85,7 @@ class ValueRestControllerTest {
 
             // when
             var response = testRestTemplate.getForEntity(
-                    "/dimensions", ValueDto[].class);
+                    "/value", ValueDto[].class);
             var valueDtoList = response.getBody();
 
             // then
@@ -116,11 +116,11 @@ class ValueRestControllerTest {
 
             // when
             var getSocialResponse = testRestTemplate.getForEntity(
-                    "/dimensions" + "?type=" + ValueType.SOCIAL.toString(), ValueDto[].class);
+                    "/value" + "?type=" + ValueType.SOCIAL.toString(), ValueDto[].class);
             var socialValue = getSocialResponse.getBody();
 
             var getEconomicResponse = testRestTemplate.getForEntity(
-                    "/dimensions" + "?type=" + ValueType.ECONOMIC.toString(), ValueDto[].class);
+                    "/value" + "?type=" + ValueType.ECONOMIC.toString(), ValueDto[].class);
             var economicValue = getEconomicResponse.getBody();
 
             // then
@@ -138,7 +138,7 @@ class ValueRestControllerTest {
 
             // when
             var valueTypes = testRestTemplate.getForEntity(
-                    "/dimensions/types", ValueType[].class);
+                    "/value/types", ValueType[].class);
 
             // then
             assertThat(valueTypes.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -157,7 +157,7 @@ class ValueRestControllerTest {
             // when
             var httpEntity = new HttpEntity<>(valuesDto);
             var response = testRestTemplate.postForEntity(
-                    "/dimensions", httpEntity, ValueDto.class);
+                    "/value", httpEntity, ValueDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -172,7 +172,7 @@ class ValueRestControllerTest {
             // when
             var httpEntity = new HttpEntity<>(valuesDto);
             var response = testRestTemplate.postForEntity(
-                    "/dimensions", httpEntity, ValueDto.class);
+                    "/value", httpEntity, ValueDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
@@ -190,7 +190,7 @@ class ValueRestControllerTest {
             // when
             valuesDto.setName("new_name");
             var httpEntity = new HttpEntity<>(valuesDto);
-            var response = testRestTemplate.exchange("/dimensions", HttpMethod.PUT, httpEntity, ValueDto.class);
+            var response = testRestTemplate.exchange("/value", HttpMethod.PUT, httpEntity, ValueDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -202,12 +202,12 @@ class ValueRestControllerTest {
             // given
             var value = createDummyValue();
             value.setId(UUID.randomUUID());
-            var dimensionDto = toDto(value);
-            var httpEntity = new HttpEntity<>(dimensionDto);
+            var valueDto = toDto(value);
+            var httpEntity = new HttpEntity<>(valueDto);
 
             // when
             var response = testRestTemplate.exchange(
-                    "/dimensions", HttpMethod.PUT, httpEntity, ValueDto.class);
+                    "/values", HttpMethod.PUT, httpEntity, ValueDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -221,7 +221,7 @@ class ValueRestControllerTest {
             // when
             var httpEntity = new HttpEntity<>(valueDto);
             var response = testRestTemplate.exchange(
-                    "/dimensions", HttpMethod.PUT, httpEntity, ValueDto.class);
+                    "/value", HttpMethod.PUT, httpEntity, ValueDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
@@ -232,13 +232,13 @@ class ValueRestControllerTest {
     class DeleteById {
 
         @Test
-        void testDeleteById_ExistingDimension_ReturnHttpStatusOK() {
+        void testDeleteById_ExistingValue_ReturnHttpStatusOK() {
             // given
             var valueDto = saveFullDummyValueDto();
 
             // when
             var response = testRestTemplate.exchange(
-                    "/dimensions" + "/" + valueDto.getId(), HttpMethod.DELETE, null, Void.class);
+                    "/value" + "/" + valueDto.getId(), HttpMethod.DELETE, null, Void.class);
             var values = valueService.findAll();
 
             // then
@@ -254,7 +254,7 @@ class ValueRestControllerTest {
 
             // when
             var response = testRestTemplate.exchange(
-                    "/dimensions" + "/" + valueDto.getId(), HttpMethod.DELETE, null, Void.class);
+                    "/values" + "/" + valueDto.getId(), HttpMethod.DELETE, null, Void.class);
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

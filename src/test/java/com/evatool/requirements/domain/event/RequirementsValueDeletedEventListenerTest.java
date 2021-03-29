@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-class RequirementsDimensionDeletedEventListenerTest {
+class RequirementsValueDeletedEventListenerTest {
 
     @Autowired
     private RequirementValueRepository requirementValueRepository;
@@ -28,7 +28,7 @@ class RequirementsDimensionDeletedEventListenerTest {
 
 
     @Test
-    void testOnApplicationEvent_PublishEvent_DimensionDeleted() {
+    void testOnApplicationEvent_PublishEvent_ValueDeleted() {
         // given
         RequirementValue requirementValue = new RequirementValue("Title");
         requirementValueRepository.save(requirementValue);
@@ -37,12 +37,12 @@ class RequirementsDimensionDeletedEventListenerTest {
         UUID tempId = requirementValue.getId();
 
         // when
-        ValueDeletedEvent dimensionDeletedEvent = new ValueDeletedEvent(requirementEventListener, json);
-        requirementEventListener.valueDeleted(dimensionDeletedEvent);
+        ValueDeletedEvent valueDeletedEvent = new ValueDeletedEvent(requirementEventListener, json);
+        requirementEventListener.valueDeleted(valueDeletedEvent);
 
         // then
-        Optional<RequirementValue> optionalRequirementDimension = requirementValueRepository.findById(tempId);
-        assertThat(optionalRequirementDimension).isNotPresent();
+        Optional<RequirementValue> optionalRequirementValue = requirementValueRepository.findById(tempId);
+        assertThat(optionalRequirementValue).isNotPresent();
     }
 
     @Test
@@ -53,10 +53,10 @@ class RequirementsDimensionDeletedEventListenerTest {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
 
         // when
-        ValueDeletedEvent dimensionDeletedEvent = new ValueDeletedEvent(requirementEventListener, json);
+        ValueDeletedEvent valueDeletedEvent = new ValueDeletedEvent(requirementEventListener, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.valueDeleted(dimensionDeletedEvent));
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.valueDeleted(valueDeletedEvent));
     }
 
 }

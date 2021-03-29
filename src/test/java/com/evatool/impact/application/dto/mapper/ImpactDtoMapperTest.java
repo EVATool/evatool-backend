@@ -32,7 +32,7 @@ class ImpactDtoMapperTest {
         // given
         var impactDto = createDummyImpactDto();
         impactDto.setId(UUID.randomUUID());
-       // impactDto.setDimension(createDummyDimensionDto());
+        impactDto.setValueEntity(createDummyValueDto());
         impactDto.setStakeholder(createDummyStakeholderDto());
 
         // when

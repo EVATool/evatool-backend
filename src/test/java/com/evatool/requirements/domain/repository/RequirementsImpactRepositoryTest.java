@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
-import static com.evatool.requirements.common.TestDataGenerator.getRequirementDimension;
+import static com.evatool.requirements.common.TestDataGenerator.getRequirementValue;
 import static com.evatool.requirements.common.TestDataGenerator.getRequirementsImpacts;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,14 +19,14 @@ class RequirementsImpactRepositoryTest {
     private RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
-    private RequirementValueRepository requirementDimensionRepository;
+    private RequirementValueRepository requirementValueRepository;
 
     @Test
     void testFindById_InsertedImpact_ReturnImpact() {
 
         // given
-        RequirementValue requirementValue = getRequirementDimension();
-        requirementDimensionRepository.save(requirementValue);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsImpact impact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(impact);
@@ -42,8 +42,8 @@ class RequirementsImpactRepositoryTest {
     void testSave_InsertedImpact_IdIsNotNull() {
 
         // given
-        RequirementValue requirementValue = getRequirementDimension();
-        requirementDimensionRepository.save(requirementValue);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
         RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
 
         // when
@@ -57,8 +57,8 @@ class RequirementsImpactRepositoryTest {
     void testSave_InsertedImpact_IdIsUuid() {
 
         // given
-        RequirementValue requirementValue = getRequirementDimension();
-        requirementDimensionRepository.save(requirementValue);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
         RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
 
         // when
@@ -75,8 +75,8 @@ class RequirementsImpactRepositoryTest {
     void testDelete_DeletedImpact_ReturnNull() {
 
         // given
-        RequirementValue requirementValue = getRequirementDimension();
-        requirementDimensionRepository.save(requirementValue);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(requirementsImpact);

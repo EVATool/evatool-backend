@@ -1,6 +1,6 @@
 package com.evatool.analysis.model.repo;
 
-import com.evatool.analysis.common.error.ValueType;
+import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.domain.repository.ValueRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ class ValuesRepositoryTest {
     private ValueRepository valueRepository;
 
     @Test
-    void testFindAllByType_ExistingDimensions_ReturnValueByType() {
+    void testFindAllByType_ExistingValues_ReturnValueByType() {
         // given
         int n_socialValues = 3;
         for (int i = 0; i < n_socialValues; i++) {
@@ -34,10 +34,10 @@ class ValuesRepositoryTest {
 
         // when
         var socialValue = valueRepository.findAllByType(ValueType.SOCIAL);
-        var economicDimension = valueRepository.findAllByType(ValueType.ECONOMIC);
+        var economicValue = valueRepository.findAllByType(ValueType.ECONOMIC);
 
         // then
         assertThat(socialValue.size()).isEqualTo(n_socialValues);
-        assertThat(economicDimension.size()).isEqualTo(n_economicValues);
+        assertThat(economicValue.size()).isEqualTo(n_economicValues);
     }
 }

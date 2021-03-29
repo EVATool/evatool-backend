@@ -1,7 +1,7 @@
 package com.evatool.analysis.application.controller.service;
 
 import com.evatool.analysis.application.services.ValueService;
-import com.evatool.analysis.common.error.ValueType;
+import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.common.error.execptions.EntityIdMustBeNullException;
 import com.evatool.analysis.common.error.execptions.EntityIdRequiredException;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;

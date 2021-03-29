@@ -10,8 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Objects;
 
-@Entity(name = "IMP_DIMENSION")
-@Table(name = "IMP_DIMENSION")
+@Entity(name = "IMP_VALUE")
+@Table(name = "IMP_VALUE")
 public class Value extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(Value.class);
@@ -42,7 +42,7 @@ public class Value extends SuperEntity {
 
     @Override
     public String toString() {
-        return "Dimension{" +
+        return "value{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +

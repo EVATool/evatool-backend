@@ -1,5 +1,6 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.application.dto.ImpactValueDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
@@ -8,9 +9,11 @@ import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
+import com.evatool.impact.domain.entity.Value;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
+import com.evatool.impact.domain.repository.ImpactValueRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -35,8 +38,8 @@ class ImpactServiceImplTest {
     @Autowired
     ImpactRepository impactRepository;
 
-//    @Autowired
-//    ValueRepository dimensionRepository;
+    @Autowired
+    ImpactValueRepository impactValueRepository;
 
     @Autowired
     ImpactStakeholderRepository stakeholderRepository;
@@ -44,29 +47,30 @@ class ImpactServiceImplTest {
     @Autowired
     ImpactAnalysisRepository impactAnalysisRepository;
 
+
     @BeforeEach
     @AfterAll
     private void clearDatabase() {
         impactRepository.deleteAll();
         stakeholderRepository.deleteAll();
-//        dimensionRepository.deleteAll();
+        impactValueRepository.deleteAll();
         impactAnalysisRepository.deleteAll();
     }
 
     private Impact saveFullDummyImpact() {
-//        var dimension = saveDummyDimension();
+        var value = saveDummyValue();
         var stakeholder = saveDummyStakeholder();
         var analysis = saveDummyAnalysis();
         var impact = createDummyImpact();
-//        impact.setDimension(dimension);
+        impact.setValueEntity(value);
         impact.setStakeholder(stakeholder);
         impact.setAnalysis(analysis);
         return impactRepository.save(impact);
     }
 
-//    // private Dimension saveDummyDimension() {
-//        return dimensionRepository.save(createDummyDimension());
-//    }
+     private Value saveDummyValue() {
+        return impactValueRepository.save(createDummyValue());
+    }
 
     private ImpactStakeholder saveDummyStakeholder() {
         return stakeholderRepository.save(createDummyStakeholder());
@@ -144,7 +148,7 @@ class ImpactServiceImplTest {
         void testCreate_CreatedImpact_ReturnCreatedImpact() {
             // given
             var impactDto = createDummyImpactDto();
-           // impactDto.setDimension(ValueDtoMapper.toDto(saveDummyDimension()));
+            impactDto.setValueEntity(ImpactValueDtoMapper.toDto(saveDummyValue()));
             impactDto.setStakeholder(ImpactStakeholderDtoMapper.toDto(saveDummyStakeholder()));
             impactDto.setAnalysis(ImpactAnalysisDtoMapper.toDto(saveDummyAnalysis()));
 

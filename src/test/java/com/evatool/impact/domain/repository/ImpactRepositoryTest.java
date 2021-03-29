@@ -1,9 +1,9 @@
 package com.evatool.impact.domain.repository;
 
-import com.evatool.analysis.domain.repository.ValueRepository;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
+import com.evatool.impact.domain.entity.Value;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,37 +24,37 @@ class ImpactRepositoryTest {
     ImpactRepository impactRepository;
 
     @Autowired
-    ValueRepository dimensionRepository;
-
-    @Autowired
     ImpactStakeholderRepository stakeholderRepository;
 
     @Autowired
     ImpactAnalysisRepository impactAnalysisRepository;
+
+    @Autowired
+    ImpactValueRepository impactValueRepository;
 
     @BeforeEach
     @AfterAll
     private void clearDatabase() {
         impactRepository.deleteAll();
         stakeholderRepository.deleteAll();
-        dimensionRepository.deleteAll();
+        impactValueRepository.deleteAll();
         impactAnalysisRepository.deleteAll();
     }
 
     private Impact saveFullDummyImpact() {
-       // var dimension = saveDummyDimension();
+        var value = saveDummyValue();
         var stakeholder = saveDummyStakeholder();
         var analysis = saveDummyAnalysis();
         var impact = createDummyImpact();
-        //impact.setDimension(dimension);
+        impact.setValueEntity(value);
         impact.setStakeholder(stakeholder);
         impact.setAnalysis(analysis);
         return impactRepository.save(impact);
     }
 
-//    private Dimension saveDummyDimension() {
-//        return dimensionRepository.save(createDummyDimension());
-//    }
+    private Value saveDummyValue() {
+        return impactValueRepository.save(createDummyValue());
+    }
 
     private ImpactStakeholder saveDummyStakeholder() {
         return stakeholderRepository.save(createDummyStakeholder());

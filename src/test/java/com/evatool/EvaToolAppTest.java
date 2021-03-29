@@ -2,6 +2,7 @@ package com.evatool;
 
 import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
+import com.evatool.analysis.domain.events.json.ValueEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
@@ -293,7 +294,8 @@ class EvaToolAppTest {
         RequirementsImpactsRepository requirementsImpactsRepository;
 
         @Autowired
-        RequirementValueRepository requirementDimensionRepository;
+        RequirementValueRepository requirementValueRepository;
+
 
 //        @Autowired
 //        Muss neu gebaut werden
@@ -303,7 +305,7 @@ class EvaToolAppTest {
         @AfterAll
         void clearDatabase() {
             requirementsImpactsRepository.deleteAll();
-            requirementDimensionRepository.deleteAll();
+            requirementValueRepository.deleteAll();
 //            analysisImpactRepository.deleteAll();
             impactRepository.deleteAll();
             impactValueRepository.deleteAll();
@@ -313,7 +315,8 @@ class EvaToolAppTest {
 
         Impact createDummyImpact() {
             var value = impactValueRepository.save(new Value("Name", ImpactValueType.SOCIAL, "Description"));
-//            valueEventPublisher.publishDimensionCreated(value);
+
+            impactValueEventPublisher.publishValueCreated(value);
             var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name"));
             var analysis = impactAnalysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
             return impactRepository.save(new Impact(0.0, "Description", value, stakeholder, analysis));

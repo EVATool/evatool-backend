@@ -60,7 +60,7 @@ public class Impact extends SuperEntity {
                 ", numericId=" + this.numericId +
                 ", value=" + this.value +
                 ", description='" + this.description + '\'' +
-                ", dimension=" + this.value +
+                ", value =" + this.valueEntity +
                 ", stakeholder=" + this.stakeholder +
                 ", analysis=" + this.analysis +
                 '}';
@@ -127,7 +127,7 @@ public class Impact extends SuperEntity {
     }
 
     public void setValueEntity(Value value) {
-        logger.debug("Set Value (Dimension)");
+        logger.debug("Set Value (Value)");
         if (value == null) {
             logger.error("Attempted to set Value description to null");
             throw new IllegalArgumentException("Value cannot be null.");
@@ -146,12 +146,6 @@ public class Impact extends SuperEntity {
 
     public void setAnalysis(ImpactAnalysis analysis) {
         logger.debug("Set Analysis");
-
-        if (this.analysis != null) {
-            logger.error("Attempted to set existing analysis");
-            throw new IllegalArgumentException("Existing analysis cannot be set.");
-        }
-
         this.analysis = analysis;
     }
 }

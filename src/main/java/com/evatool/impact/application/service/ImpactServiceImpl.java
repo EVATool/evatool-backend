@@ -29,9 +29,9 @@ public class ImpactServiceImpl implements ImpactService {
 
     private final ImpactEventPublisher impactEventPublisher;
 
-    public ImpactServiceImpl(ImpactRepository impactRepository, ImpactValueService dimensionService, ImpactStakeholderService impactStakeholderService, ImpactAnalysisService impactAnalysisService, ImpactEventPublisher impactEventPublisher) {
+    public ImpactServiceImpl(ImpactRepository impactRepository, ImpactValueService valueService, ImpactStakeholderService impactStakeholderService, ImpactAnalysisService impactAnalysisService, ImpactEventPublisher impactEventPublisher) {
         this.impactRepository = impactRepository;
-        this.impactValueService = dimensionService;
+        this.impactValueService = valueService;
         this.impactStakeholderService = impactStakeholderService;
         this.impactAnalysisService = impactAnalysisService;
         this.impactEventPublisher = impactEventPublisher;
@@ -114,7 +114,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     private void assertImpactChildrenExist(ImpactDto impactDto) {
         this.impactStakeholderService.findById(impactDto.getStakeholder().getId());
-        this.impactValueService.findById(impactDto.getImpactValueDto().getId());
+        this.impactValueService.findById(impactDto.getValueEntity().getId());
         this.impactAnalysisService.findById(impactDto.getAnalysis().getId());
     }
 }

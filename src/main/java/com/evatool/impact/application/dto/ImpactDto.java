@@ -1,5 +1,7 @@
 package com.evatool.impact.application.dto;
 
+import com.evatool.impact.domain.entity.Impact;
+import com.evatool.impact.domain.entity.Value;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -42,7 +44,7 @@ public class ImpactDto {
     @Getter
     @Setter
     @NotNull
-    private ImpactValueDto impactValueDto;
+    private ImpactValueDto valueEntity;
 
     @ApiModelProperty(required = true)
     @Getter
@@ -63,7 +65,7 @@ public class ImpactDto {
                 ", uniqueString=" + uniqueString +
                 ", value=" + value +
                 ", description='" + description + '\'' +
-                ", dimension=" + impactValueDto +
+                ", value=" + valueEntity +
                 ", stakeholder=" + stakeholder +
                 ", analysis=" + analysis +
                 '}';
@@ -79,12 +81,12 @@ public class ImpactDto {
                 && Objects.equals(uniqueString, that.uniqueString)
                 && Objects.equals(description, that.description)
                 && Objects.equals(stakeholder, that.stakeholder)
-                && Objects.equals(impactValueDto, that.impactValueDto)
+                && Objects.equals(valueEntity, that.valueEntity)
                 && Objects.equals(analysis, that.analysis);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uniqueString, value, description, stakeholder, impactValueDto, analysis);
+        return Objects.hash(id, uniqueString, value, description, stakeholder, valueEntity, analysis);
     }
 }

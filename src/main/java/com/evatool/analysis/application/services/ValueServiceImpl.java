@@ -2,8 +2,7 @@ package com.evatool.analysis.application.services;
 
 import com.evatool.analysis.application.dto.ValueDto;
 import com.evatool.analysis.application.dto.ValueDtoMapper;
-import com.evatool.analysis.common.error.ValueType;
-import com.evatool.analysis.common.error.execptions.EntityIdMustBeNullException;
+import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.common.error.execptions.EntityIdRequiredException;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.domain.events.json.ValueEventPublisher;
@@ -72,9 +71,6 @@ public class ValueServiceImpl implements ValueService {
     @Override
     public ValueDto create(ValueDto valuesDto) {
         logger.info("Create Values");
-        if (valuesDto.getId() != null) {
-            throw new EntityIdMustBeNullException(Value.class.getSimpleName());
-        }
         var values = valueRepository.save(ValueDtoMapper.fromDto(valuesDto));
         valueEventPublisher.publishValueCreated(values);
         return ValueDtoMapper.toDto(values);

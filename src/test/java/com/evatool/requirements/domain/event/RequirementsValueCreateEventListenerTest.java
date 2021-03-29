@@ -22,35 +22,35 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-class RequirementsDimensionCreateEventListenerTest {
+class RequirementsValueCreateEventListenerTest {
 
     @Autowired
-    private RequirementValueRepository requirementDimensionRepository;
+    private RequirementValueRepository requirementValueRepository;
 
     @Autowired
     private RequirementEventListener requirementEventListener;
 
 
     @Test
-    void testOnApplicationEvent_PublishEvent_DimensionCreated() {
+    void testOnApplicationEvent_PublishEvent_ValueCreated() {
         // given
         UUID id = UUID.randomUUID();
         String  name = "name";
         String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
         // when
-        ValueCreatedEvent dimensionCreatedEvent = new ValueCreatedEvent(requirementEventListener, json);
-        requirementEventListener.valueCreated(dimensionCreatedEvent);
+        ValueCreatedEvent valueCreatedEvent = new ValueCreatedEvent(requirementEventListener, json);
+        requirementEventListener.valueCreated(valueCreatedEvent);
 
         // then
-        Optional<RequirementValue> createdByEvent = requirementDimensionRepository.findById(id);
+        Optional<RequirementValue> createdByEvent = requirementValueRepository.findById(id);
         assertThat(createdByEvent).isPresent();
         assertThat(createdByEvent.get().getName()).isEqualTo(name);
     }
 
 
     @Test
-    void testOnApplicationEvent_DimensionAlreadyExists_ThrowEventEntityAlreadyExistsException() {
+    void testOnApplicationEvent_ValueAlreadyExists_ThrowEventEntityAlreadyExistsException() {
 
         // given
         UUID id = UUID.randomUUID();
@@ -68,13 +68,13 @@ class RequirementsDimensionCreateEventListenerTest {
             throw new InvalidEventPayloadException(json, jex);
         }
 
-        requirementDimensionRepository.save(requirementValue);
+        requirementValueRepository.save(requirementValue);
 
         // when
-        ValueCreatedEvent dimensionCreatedEvent = new ValueCreatedEvent(requirementEventListener, json);
+        ValueCreatedEvent valueCreatedEvent = new ValueCreatedEvent(requirementEventListener, json);
 
         // then
-        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.valueCreated(dimensionCreatedEvent));
+        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.valueCreated(valueCreatedEvent));
 
     }
 

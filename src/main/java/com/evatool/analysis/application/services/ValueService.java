@@ -1,7 +1,7 @@
 package com.evatool.analysis.application.services;
 
 import com.evatool.analysis.application.dto.ValueDto;
-import com.evatool.analysis.common.error.ValueType;
+import com.evatool.analysis.domain.enums.ValueType;
 
 import java.util.List;
 import java.util.UUID;

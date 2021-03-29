@@ -34,7 +34,7 @@ class RequirementsControllerTest {
     RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
-    RequirementValueRepository requirementDimensionRepository;
+    RequirementValueRepository requirementValueRepository;
 
     @Autowired
     RequirementPointRepository requirementPointRepository;
@@ -45,8 +45,8 @@ class RequirementsControllerTest {
     @Test
     void testRequirementController_ThrowException() {
 
-        RequirementValue requirementValue = getRequirementDimension();
-        requirementDimensionRepository.save(requirementValue);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(requirementsImpact);

@@ -1,4 +1,4 @@
-package com.evatool.analysis.common.error;
+package com.evatool.analysis.domain.enums;
 
 public enum ValueType {
 

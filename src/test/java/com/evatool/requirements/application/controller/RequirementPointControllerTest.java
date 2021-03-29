@@ -38,7 +38,7 @@ class RequirementPointControllerTest {
     private RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
-    private RequirementValueRepository requirementDimensionRepository;
+    private RequirementValueRepository requirementValueRepository;
 
     @Test
     void testRequirementPointController_ThrowException() {
@@ -60,8 +60,8 @@ class RequirementPointControllerTest {
         Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariants);
         requirementRepository.save(requirement);
 
-        RequirementValue requirementValue = getRequirementDimension();
-        requirementDimensionRepository.save(requirementValue);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(requirementsImpact);
@@ -95,8 +95,8 @@ class RequirementPointControllerTest {
     @Test
     void testRequirementPointController_createPoints_DTO() {
 
-        RequirementValue requirementValue = getRequirementDimension();
-        requirementDimensionRepository.save(requirementValue);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(requirementsImpact);

@@ -1,6 +1,6 @@
 package com.evatool.analysis.domain.repository;
 
-import com.evatool.analysis.common.error.ValueType;
+import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.domain.model.Value;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

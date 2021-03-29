@@ -1,6 +1,6 @@
 package com.evatool.analysis.domain.model;
 
-import com.evatool.analysis.common.error.ValueType;
+import com.evatool.analysis.domain.enums.ValueType;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -42,7 +42,6 @@ public class Value {
     }
 
     public Value(String name, ValueType type, String description) {
-        this();
         this.setName(name);
         this.setType(type);
         this.setDescription(description);
@@ -50,7 +49,7 @@ public class Value {
 
     @Override
     public String toString() {
-        return "Dimension{" +
+        return "Value{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +

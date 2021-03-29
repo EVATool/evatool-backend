@@ -1,6 +1,6 @@
 package com.evatool.analysis.application.dto;
 
-import com.evatool.analysis.common.error.ValueType;
+import com.evatool.analysis.domain.enums.ValueType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -38,7 +38,7 @@ public class ValueDto {
 
     @Override
     public String toString() {
-        return "DimensionDto{" +
+        return "valueDto{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +

@@ -15,7 +15,7 @@ class RequirementPointTest {
     @Test
     void testSetRequirementsImpacts_NullValue_ThrowException() {
         // given
-        RequirementValue requirementValue = getRequirementDimension();
+        RequirementValue requirementValue = getRequirementValue();
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         Collection<RequirementsVariant > requirementsVariants = getRequirementsVariants();
@@ -32,7 +32,7 @@ class RequirementPointTest {
     @ValueSource(doubles = {2})
     void testSetValue_NullValue_ThrowException(Double value) {
         // given
-        RequirementValue requirementValue = getRequirementDimension();
+        RequirementValue requirementValue = getRequirementValue();
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         Collection<RequirementsVariant > requirementsVariants = getRequirementsVariants();
 

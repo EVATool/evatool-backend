@@ -4,7 +4,7 @@ import com.evatool.analysis.application.dto.AnalysisDTO;
 import com.evatool.analysis.application.dto.StakeholderDTO;
 import com.evatool.analysis.application.dto.ValueDto;
 import com.evatool.analysis.application.dto.ValueDtoMapper;
-import com.evatool.analysis.common.error.ValueType;
+import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.evatool.analysis.domain.model.*;
 

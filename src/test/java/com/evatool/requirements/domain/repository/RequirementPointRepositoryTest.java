@@ -25,7 +25,7 @@ class RequirementPointRepositoryTest {
     private RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
-    private RequirementValueRepository requirementDimensionRepository;
+    private RequirementValueRepository requirementValueRepository;
 
     @Autowired
     private RequirementAnalysisRepository requirementAnalysisRepository;
@@ -36,8 +36,8 @@ class RequirementPointRepositoryTest {
     @Test
     void testFindById_ExistingRequirementGR_ReturnRequirement() {
         // given
-        RequirementValue requirementValue = getRequirementDimension();
-        requirementDimensionRepository.save(requirementValue);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
@@ -71,8 +71,8 @@ class RequirementPointRepositoryTest {
     @Test
     void testSave_InsertedRequirementGR_IdIsNotNull() {
 
-        RequirementValue requirementValue = getRequirementDimension();
-        requirementDimensionRepository.save(requirementValue);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
@@ -105,8 +105,8 @@ class RequirementPointRepositoryTest {
     @Test
     void testSave_InsertedRequirementGR_Id_IsUuid() {
 
-        RequirementValue requirementValue = getRequirementDimension();
-        requirementDimensionRepository.save(requirementValue);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
@@ -140,8 +140,8 @@ class RequirementPointRepositoryTest {
     @Test
     void testDelete_DeletedRequirementGR_ReturnNull() {
 
-        RequirementValue requirementValue = getRequirementDimension();
-        requirementDimensionRepository.save(requirementValue);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);

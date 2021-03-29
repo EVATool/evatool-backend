@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-class RequirementsDimensionUpdateEventListenerTest {
+class RequirementsValueUpdateEventListenerTest {
 
     @Autowired
     private RequirementValueRepository requirementValueRepository;

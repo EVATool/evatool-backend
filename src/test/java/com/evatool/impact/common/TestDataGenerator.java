@@ -1,8 +1,6 @@
 package com.evatool.impact.common;
 
-import com.evatool.impact.application.dto.ImpactAnalysisDto;
-import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.dto.ImpactStakeholderDto;
+import com.evatool.impact.application.dto.*;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
@@ -12,8 +10,8 @@ import java.util.UUID;
 
 public class TestDataGenerator {
 
-    public static Value createDummyDimension() {
-        return new Value("dummyDimension", ImpactValueType.ECONOMIC, "dummyDimensionDescription");
+    public static Value createDummyValue() {
+        return new Value("dummyValue", ImpactValueType.ECONOMIC, "dummyValueDescription");
     }
 
     public static ImpactStakeholder createDummyStakeholder() {
@@ -21,11 +19,11 @@ public class TestDataGenerator {
     }
 
     public static Impact createDummyImpact() {
-        return new Impact(0.0, "dummyImpactDescription", createDummyDimension(), createDummyStakeholder(), createDummyAnalysis());
+        return new Impact(0.0, "dummyImpactDescription", createDummyValue(), createDummyStakeholder(), createDummyAnalysis());
     }
 
     public static Impact createDummyImpact(ImpactAnalysis analysis) {
-        return new Impact(0.0, "dummyImpactDescription", createDummyDimension(), createDummyStakeholder(), analysis);
+        return new Impact(0.0, "dummyImpactDescription", createDummyValue(), createDummyStakeholder(), analysis);
     }
 
     public static ImpactAnalysis createDummyAnalysis() {
@@ -45,4 +43,9 @@ public class TestDataGenerator {
     public static ImpactAnalysisDto createDummyAnalysisDto() {
         return ImpactAnalysisDtoMapper.toDto(createDummyAnalysis());
     }
+
+    public static ImpactValueDto createDummyValueDto() {
+        return ImpactValueDtoMapper.toDto(createDummyValue());
+    }
+
 }

@@ -60,13 +60,13 @@ public class RequirementsImpact {
         this.value = value;
     }
 
-    public RequirementValue getRequirementDimension() {
+    public RequirementValue getRequirementValue() {
         return requirementValue;
     }
 
-    public void setRequirementDimension(RequirementValue requirementValue) {
+    public void setRequirementValue(RequirementValue requirementValue) {
         if (requirementValue == null) {
-            throw new IllegalArgumentException("RequirementDimension cannot be null.");
+            throw new IllegalArgumentException("RequirementValue cannot be null.");
         }
         this.requirementValue = requirementValue;
     }

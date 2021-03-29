@@ -2,7 +2,7 @@ package com.evatool.impact.domain.entity;
 
 import org.junit.jupiter.api.Test;
 
-import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
+import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class ValueTest {
@@ -10,33 +10,33 @@ class ValueTest {
     @Test
     void testSetName_NullValue_ThrowIllegalArgumentException() {
         // given
-        var dimension = createDummyDimension();
+        var value = createDummyValue();
 
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> dimension.setName(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> value.setName(null));
     }
 
     @Test
     void testSetTypeString_NullValue_ThrowIllegalArgumentException() {
         // given
-        var dimension = createDummyDimension();
+        var value = createDummyValue();
 
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> dimension.setType(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> value.setType(null));
     }
 
     @Test
     void testSetDescription_NullValue_ThrowIllegalArgumentException() {
         // given
-        var dimension = createDummyDimension();
+        var value = createDummyValue();
 
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> dimension.setDescription(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> value.setDescription(null));
     }
 }
