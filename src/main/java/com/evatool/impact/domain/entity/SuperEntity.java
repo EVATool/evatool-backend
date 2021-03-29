@@ -1,6 +1,8 @@
 package com.evatool.impact.domain.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.slf4j.Logger;
@@ -10,10 +12,11 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import java.util.Objects;
 import java.util.UUID;
 
 @MappedSuperclass
+@EqualsAndHashCode
+@ToString
 public class SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(SuperEntity.class);
@@ -37,18 +40,5 @@ public class SuperEntity {
             throw new IllegalArgumentException("Existing id cannot be set.");
         }
         this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        var that = (SuperEntity) o;
-        return Objects.equals(this.id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id);
     }
 }

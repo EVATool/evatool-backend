@@ -1,17 +1,20 @@
 package com.evatool.impact.domain.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity(name = "IMP_STAKEHOLDER")
 @Table(name = "IMP_STAKEHOLDER")
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class ImpactStakeholder extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholder.class);
@@ -29,28 +32,6 @@ public class ImpactStakeholder extends SuperEntity {
         this();
         this.setId(id);
         this.setName(name);
-    }
-
-    @Override
-    public String toString() {
-        return "Stakeholder{" +
-                "id='" + this.id + '\'' +
-                ", name='" + this.name + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        var that = (ImpactStakeholder) o;
-        return super.equals(that)
-                && Objects.equals(this.name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), this.name);
     }
 
     @Override

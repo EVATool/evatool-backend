@@ -2,11 +2,7 @@ package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
-import com.evatool.impact.common.exception.EntityIdMustBeNullException;
-import com.evatool.impact.common.exception.EntityIdRequiredException;
-import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.NumericIdMustBeNullException;
-import com.evatool.impact.common.exception.NumericIdCannotBeUpdatedException;
+import com.evatool.impact.common.exception.*;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.event.ImpactEventPublisher;
 import com.evatool.impact.domain.repository.ImpactRepository;
@@ -80,7 +76,7 @@ public class ImpactServiceImpl implements ImpactService {
             throw new EntityIdMustBeNullException(Impact.class.getSimpleName());
         }
         if (impactDto.getUniqueString() != null) {
-            throw new NumericIdMustBeNullException(Impact.class.getSimpleName());
+            throw new UniqueStringMustBeNullException(Impact.class.getSimpleName());
         }
         this.assertImpactChildrenExist(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
@@ -93,7 +89,7 @@ public class ImpactServiceImpl implements ImpactService {
         logger.info("Update Impact");
         var persisted = this.findById(impactDto.getId());
         if (!persisted.getUniqueString().equals(impactDto.getUniqueString())) {
-            throw new NumericIdCannotBeUpdatedException(Impact.class.getSimpleName());
+            throw new UniqueStringCannotBeUpdatedException(Impact.class.getSimpleName());
         }
         this.assertImpactChildrenExist(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
