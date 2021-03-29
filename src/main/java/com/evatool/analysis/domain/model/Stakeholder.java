@@ -20,7 +20,7 @@ public class Stakeholder {
     @Type(type= "uuid-char")
     @Column(columnDefinition = "CHAR(36)")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID stakeholderId;
+    private UUID stakeholderId = UUID.randomUUID();
 
     /**
      * Name of the Stakeholder {@link String}

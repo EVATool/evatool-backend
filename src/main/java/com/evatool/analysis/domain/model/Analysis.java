@@ -20,7 +20,7 @@ public class Analysis {
     @Type(type= "uuid-char")
     @Column(columnDefinition = "CHAR(36)")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID analysisId;
+    private UUID analysisId = UUID.randomUUID();
 
     /**
      * Name of the Analysis {@link String}
@@ -76,6 +76,6 @@ public class Analysis {
     }
     public String toJson(){
         Gson gson = new Gson();
-        return gson.toJson(this.toString());
+        return gson.toJson(this);
     }
 }

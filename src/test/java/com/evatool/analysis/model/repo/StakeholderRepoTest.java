@@ -21,7 +21,7 @@ public class StakeholderRepoTest {
 
         // given
         Stakeholder stakeholder = TestDataGenerator.getStakholder();
-        stakeholderRepository.save(stakeholder);
+        stakeholder = stakeholderRepository.save(stakeholder);
 
         // when
         Stakeholder stakeholderFound = stakeholderRepository.findById(stakeholder.getStakeholderId()).orElse(null);

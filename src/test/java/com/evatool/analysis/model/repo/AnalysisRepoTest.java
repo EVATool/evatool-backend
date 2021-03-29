@@ -22,7 +22,7 @@ public class AnalysisRepoTest {
 
         // given
         Analysis analysis = TestDataGenerator.getAnalysis();
-        analysisRepository.save(analysis);
+        analysis = analysisRepository.save(analysis);
 
         // when
         Analysis analysisFound = analysisRepository.findById(analysis.getAnalysisId()).orElse(null);
@@ -37,7 +37,7 @@ public class AnalysisRepoTest {
         Analysis analysis = TestDataGenerator.getAnalysis();
 
         // when
-        analysisRepository.save(analysis);
+        analysis = analysisRepository.save(analysis);
 
         // then
         assertThat(analysis.getAnalysisId()).isNotNull();
@@ -49,7 +49,7 @@ public class AnalysisRepoTest {
         Analysis analysis = TestDataGenerator.getAnalysis();
 
         // when
-        analysisRepository.save(analysis);
+        analysis = analysisRepository.save(analysis);
 
         // then
         UUID.fromString(analysis.getAnalysisId().toString());
