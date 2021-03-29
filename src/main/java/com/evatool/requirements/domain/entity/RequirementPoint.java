@@ -8,7 +8,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "REQ_RequirementPoint")
 @Table(name = "REQ_RequirementPoint")
 public class RequirementPoint {
 

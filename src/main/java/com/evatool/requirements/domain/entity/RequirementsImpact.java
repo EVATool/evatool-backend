@@ -9,7 +9,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "REQ_RequirementImpact")
 @Table(name = "REQ_RequirementImpact")
 public class RequirementsImpact {
 

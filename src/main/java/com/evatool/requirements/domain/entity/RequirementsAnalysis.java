@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "REQ_Analysis")
 @Table(name = "REQ_Analysis")
 public class RequirementsAnalysis {
 
