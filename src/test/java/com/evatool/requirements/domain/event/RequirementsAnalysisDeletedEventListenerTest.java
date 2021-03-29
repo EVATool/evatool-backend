@@ -1,10 +1,12 @@
 package com.evatool.requirements.domain.event;
 
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
+import com.evatool.requirements.domain.entity.RequirementsAnalysis;
 import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.domain.entity.RequirementsAnalysis;
 import com.evatool.requirements.domain.events.listener.RequirementEventListener;
 import com.evatool.requirements.domain.repository.RequirementAnalysisRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
