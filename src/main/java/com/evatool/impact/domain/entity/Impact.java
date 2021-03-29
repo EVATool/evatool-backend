@@ -16,9 +16,12 @@ public class Impact extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(Impact.class);
 
+    @Getter
+    private Integer numericId;
+
     @Column(name = "VALUE", nullable = false)
     @Getter
-    private double value;
+    private Double value;
 
     @Column(name = "DESCRIPTION", nullable = false)
     @Getter
@@ -54,6 +57,7 @@ public class Impact extends SuperEntity {
     public String toString() {
         return "Impact{" +
                 "id=" + this.id +
+                ", numericId=" + this.numericId +
                 ", value=" + this.value +
                 ", description='" + this.description + '\'' +
                 ", dimension=" + this.dimension +
@@ -68,6 +72,7 @@ public class Impact extends SuperEntity {
         if (o == null || this.getClass() != o.getClass()) return false;
         var that = (Impact) o;
         return super.equals(that)
+                && Objects.equals(this.numericId, that.numericId)
                 && Double.compare(this.value, that.value) == 0
                 && Objects.equals(this.description, that.description)
                 && Objects.equals(this.dimension, that.dimension)
@@ -80,9 +85,32 @@ public class Impact extends SuperEntity {
         return Objects.hash(super.hashCode(), this.value, this.description, this.dimension, this.stakeholder, this.analysis);
     }
 
-    public void setValue(double value) {
+    // TODO [philipp] Write tests in service and rest controller that validate this behavior.
+    //  - Correct Exceptions are thrown
+    //  - Correct Http Return Codes
+    public void setNumericId(Integer numericId) {
+        logger.debug("Set NumericId");
+        if (this.numericId != null) {
+            logger.error("Attempted to set existing numericId");
+            throw new IllegalArgumentException("Existing numericId cannot be set.");
+        }
+        this.numericId = numericId;
+    }
+
+    public String getUniqueString() {
+        if (this.numericId != null) {
+            return "IMP" + this.getNumericId();
+        } else {
+            return null;
+        }
+    }
+
+    public void setValue(Double value) {
         logger.debug("Set Value");
-        if (value < -1.0 || value > 1.0) {
+        if (value == null) {
+            logger.error("Attempted to set value to null");
+            throw new IllegalArgumentException("Value cannot be null");
+        } else if (value < -1.0 || value > 1.0) {
             logger.error("Attempted to set value outside its valid range");
             throw new IllegalArgumentException("Value must be in range [-1, 1]");
         }
@@ -118,10 +146,12 @@ public class Impact extends SuperEntity {
 
     public void setAnalysis(ImpactAnalysis analysis) {
         logger.debug("Set Analysis");
-        if (analysis == null) {
-            logger.error("Attempted to set analysis to null");
-            throw new IllegalArgumentException("Analysis cannot be null.");
+
+        if (this.analysis != null) {
+            logger.error("Attempted to set existing analysis");
+            throw new IllegalArgumentException("Existing analysis cannot be set.");
         }
+
         this.analysis = analysis;
     }
 }

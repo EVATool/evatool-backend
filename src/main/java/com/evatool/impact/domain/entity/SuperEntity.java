@@ -1,7 +1,6 @@
 package com.evatool.impact.domain.entity;
 
 import lombok.Getter;
-import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.slf4j.Logger;
@@ -33,15 +32,11 @@ public class SuperEntity {
 
     public void setId(UUID id) {
         logger.debug("Set id");
-        if (this.idAlreadySet()) {
+        if (this.id != null) {
             logger.error("Attempted to set existing id");
             throw new IllegalArgumentException("Existing id cannot be set.");
         }
         this.id = id;
-    }
-
-    private boolean idAlreadySet() {
-        return this.id != null;
     }
 
     @Override

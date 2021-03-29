@@ -73,6 +73,19 @@ class DimensionRestControllerTest {
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
+
+        // This code is technically testing spring code but it exists to ensure it is not broken.
+        @Test
+        void testFindById_InvalidUuid_ReturnHttpStatusBadRequest() {
+            // given
+            var response = testRestTemplate.getForEntity(
+                    DIMENSIONS + "/123", DimensionDto.class);
+
+            // when
+
+            // then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Nested

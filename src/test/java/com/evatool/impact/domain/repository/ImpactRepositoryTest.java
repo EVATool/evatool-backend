@@ -41,14 +41,12 @@ class ImpactRepositoryTest {
         impactAnalysisRepository.deleteAll();
     }
 
-    private Impact saveFullDummyImpact() {
+    private Impact saveFullDummyImpact(ImpactAnalysis analysis) {
         var dimension = saveDummyDimension();
         var stakeholder = saveDummyStakeholder();
-        var analysis = saveDummyAnalysis();
-        var impact = createDummyImpact();
+        var impact = createDummyImpact(analysis);
         impact.setDimension(dimension);
         impact.setStakeholder(stakeholder);
-        impact.setAnalysis(analysis);
         return impactRepository.save(impact);
     }
 
@@ -67,12 +65,11 @@ class ImpactRepositoryTest {
     @Test
     void testFindAllByAnalysisId_AnalysisWithTwoImpacts_ReturnImpactsByAnalysisId() {
         // given
-        var impact1 = saveFullDummyImpact();
-        var impact2 = saveFullDummyImpact();
+        var analysis = saveDummyAnalysis();
+        var impact1 = saveFullDummyImpact(analysis);
+        var impact2 = saveFullDummyImpact(analysis);
 
         // when
-        impact2.setAnalysis(impact1.getAnalysis());
-        impactRepository.save(impact2);
 
         // then
         var impactsOfAnalysis = impactRepository.findAllByAnalysisId(impact1.getAnalysis().getId());

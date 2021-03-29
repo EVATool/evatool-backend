@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity(name = "Var_VARIANT")
+@Entity(name = "VAR_VARIANT")
 @Getter
 @Setter
 public class Variant extends RepresentationModel<Variant> {
@@ -24,8 +24,15 @@ public class Variant extends RepresentationModel<Variant> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @ApiModelProperty(notes = "Gui ID", name = "Gui ID", required = true)
+    private String guiId;
+
     @ApiModelProperty(notes = "Title of a Variant", name = "title", required = true)
     private String title;
+
+    @ApiModelProperty(notes = "archive ", name = "archive", required = true)
+    private Boolean archived = false;
+
 
     @ApiModelProperty(notes = "SubVariant of a Variant", name = "subVariant", required = true)
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
@@ -34,11 +41,6 @@ public class Variant extends RepresentationModel<Variant> {
     @ApiModelProperty(notes = "Description of a Variant", name = "description", required = true)
     private String description;
 
-    @ApiModelProperty(notes = "Potential flag of a Variant", name = "potentialFlag", required = false)
-    private Boolean stFlagsPot;
-
-    @ApiModelProperty(notes = "Reality flag of a Variant", name = "realityFlag", required = false)
-    private Boolean stFlagsReal;
 
     @ApiModelProperty(notes = "Analysis of a Variant", name = "analysis", required = true)
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
@@ -51,8 +53,6 @@ public class Variant extends RepresentationModel<Variant> {
                 ", title='" + title + '\'' +
                 ", subVariant=" + subVariant +
                 ", description='" + description + '\'' +
-                ", stFlagsPot=" + stFlagsPot +
-                ", stFlagsReal=" + stFlagsReal +
                 ", variantsAnalyses=" + variantsAnalysis +
                 '}';
     }
@@ -63,12 +63,12 @@ public class Variant extends RepresentationModel<Variant> {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Variant variant = (Variant) o;
-        return Objects.equals(id, variant.id) && Objects.equals(title, variant.title) && Objects.equals(subVariant, variant.subVariant) && Objects.equals(description, variant.description) && Objects.equals(stFlagsPot, variant.stFlagsPot) && Objects.equals(stFlagsReal, variant.stFlagsReal) && Objects.equals(variantsAnalysis, variant.variantsAnalysis);
+        return Objects.equals(id, variant.id) && Objects.equals(title, variant.title) && Objects.equals(subVariant, variant.subVariant) && Objects.equals(description, variant.description) && Objects.equals(variantsAnalysis, variant.variantsAnalysis);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, title, subVariant, description, stFlagsPot, stFlagsReal, variantsAnalysis);
+        return Objects.hash(super.hashCode(), id, title, subVariant, description, variantsAnalysis);
     }
 
     public String toJson(){

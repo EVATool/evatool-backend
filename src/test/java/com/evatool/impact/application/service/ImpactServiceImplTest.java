@@ -57,13 +57,16 @@ class ImpactServiceImplTest {
     }
 
     private Impact saveFullDummyImpact() {
+        var analysis = saveDummyAnalysis();
+        return saveFullDummyImpact(analysis);
+    }
+
+    private Impact saveFullDummyImpact(ImpactAnalysis analysis) {
         var dimension = saveDummyDimension();
         var stakeholder = saveDummyStakeholder();
-        var analysis = saveDummyAnalysis();
-        var impact = createDummyImpact();
+        var impact = createDummyImpact(analysis);
         impact.setDimension(dimension);
         impact.setStakeholder(stakeholder);
-        impact.setAnalysis(analysis);
         return impactRepository.save(impact);
     }
 
@@ -127,12 +130,11 @@ class ImpactServiceImplTest {
         @Test
         void testFindAllByAnalysisId_AnalysisWithTwoImpacts_ReturnImpactsByAnalysisId() {
             // given
-            var impact1 = saveFullDummyImpact();
-            var impact2 = saveFullDummyImpact();
+            var analysis = saveDummyAnalysis();
+            var impact1 = saveFullDummyImpact(analysis);
+            var impact2 = saveFullDummyImpact(analysis);
 
             // when
-            impact2.setAnalysis(impact1.getAnalysis());
-            impactRepository.save(impact2);
 
             // then
             var impactsOfAnalysis = impactService.findAllByAnalysisId(impact1.getAnalysis().getId());
