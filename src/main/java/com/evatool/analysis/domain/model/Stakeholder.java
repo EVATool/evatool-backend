@@ -4,14 +4,12 @@ import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
 
-/**
- * @author fobaidi
- * @author MHallweg
- */
+
 @Entity
 @Table(name = "ANA_STAKEHOLDER")
 public class Stakeholder {
@@ -19,7 +17,10 @@ public class Stakeholder {
     @Id
     @Getter
     @Setter
-    private UUID stakeholderId = UUID.randomUUID();
+    @Type(type= "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID stakeholderId;
 
     /**
      * Name of the Stakeholder {@link String}

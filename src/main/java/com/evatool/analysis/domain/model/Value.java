@@ -3,13 +3,11 @@ package com.evatool.analysis.domain.model;
 import com.evatool.analysis.domain.enums.ValueType;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,9 +17,12 @@ public class Value {
 
     private static final Logger logger = LoggerFactory.getLogger(Value.class);
 
-    @Id
     @Getter
     @Setter
+    @Id
+    @Type(type= "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id = UUID.randomUUID();
 
     @Getter

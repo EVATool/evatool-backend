@@ -45,7 +45,7 @@ public class ValueControllerImpl {
         return new ResponseEntity<>(getValueWithLinks(valueDto), HttpStatus.OK);
     }
 
-    @GetMapping("/value")
+    @GetMapping("/values")
     @ApiOperation(value = "Read all values")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),

@@ -3,14 +3,13 @@ package com.evatool.analysis.domain.model;
 import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * @author fobaidi
- * @author MHallweg
- */
+
 @Entity
 @Table(name = "ANA_ANALYSIS")
 public class Analysis {
@@ -18,7 +17,10 @@ public class Analysis {
     @Id
     @Getter
     @Setter
-    private UUID analysisId = UUID.randomUUID();
+    @Type(type= "uuid-char")
+    @Column(columnDefinition = "CHAR(36)")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID analysisId;
 
     /**
      * Name of the Analysis {@link String}

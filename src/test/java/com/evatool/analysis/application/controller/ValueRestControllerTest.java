@@ -85,7 +85,7 @@ class ValueRestControllerTest {
 
             // when
             var response = testRestTemplate.getForEntity(
-                    "/value", ValueDto[].class);
+                    "/values", ValueDto[].class);
             var valueDtoList = response.getBody();
 
             // then
@@ -116,11 +116,11 @@ class ValueRestControllerTest {
 
             // when
             var getSocialResponse = testRestTemplate.getForEntity(
-                    "/value" + "?type=" + ValueType.SOCIAL.toString(), ValueDto[].class);
+                    "/values" + "?type=" + ValueType.SOCIAL.toString(), ValueDto[].class);
             var socialValue = getSocialResponse.getBody();
 
             var getEconomicResponse = testRestTemplate.getForEntity(
-                    "/value" + "?type=" + ValueType.ECONOMIC.toString(), ValueDto[].class);
+                    "/values" + "?type=" + ValueType.ECONOMIC.toString(), ValueDto[].class);
             var economicValue = getEconomicResponse.getBody();
 
             // then
@@ -175,7 +175,7 @@ class ValueRestControllerTest {
                     "/value", httpEntity, ValueDto.class);
 
             // then
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         }
     }
 
@@ -207,7 +207,7 @@ class ValueRestControllerTest {
 
             // when
             var response = testRestTemplate.exchange(
-                    "/values", HttpMethod.PUT, httpEntity, ValueDto.class);
+                    "/value", HttpMethod.PUT, httpEntity, ValueDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -221,10 +221,10 @@ class ValueRestControllerTest {
             // when
             var httpEntity = new HttpEntity<>(valueDto);
             var response = testRestTemplate.exchange(
-                    "/value", HttpMethod.PUT, httpEntity, ValueDto.class);
+                    "/values", HttpMethod.PUT, httpEntity, ValueDto.class);
 
             // then
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED);
         }
     }
 
