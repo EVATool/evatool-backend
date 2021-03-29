@@ -24,6 +24,8 @@ public class AnalysisMapper {
         analysisDTO.setAnalysisName(analysis.getAnalysisName());
         analysisDTO.setAnalysisDescription(analysis.getDescription());
         analysisDTO.setRootEntityID(analysis.getAnalysisId());
+        analysisDTO.setImage(analysis.getImage());
+        analysisDTO.setDate(analysis.getDate());
 
         return analysisDTO;
     }

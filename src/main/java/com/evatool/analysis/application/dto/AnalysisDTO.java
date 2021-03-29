@@ -11,5 +11,7 @@ public class AnalysisDTO {
     private UUID rootEntityID;
     private String analysisName;
     private String analysisDescription;
+    private String image;
+    private Date date;
 
 }

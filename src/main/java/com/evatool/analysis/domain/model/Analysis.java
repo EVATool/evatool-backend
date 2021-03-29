@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -31,6 +32,13 @@ public class Analysis {
     @Getter
     private String description;
 
+    @Getter
+    @Setter
+    private String image;
+
+    @Getter
+    @Setter
+    private Date date;
 
 
     public Analysis(String analysisName, String description) {
@@ -60,6 +68,8 @@ public class Analysis {
                 "analysisId=" + analysisId +
                 ", analysisName='" + analysisName + '\'' +
                 ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", date='" + date + '\'' +
                 '}';
     }
     public String toJson(){

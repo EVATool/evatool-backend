@@ -70,14 +70,9 @@ public class AnalysisControllerImpl implements AnalysisController {
     @Override
     public EntityModel<AnalysisDTO> updateAnalysis(@RequestBody AnalysisDTO analysisDTO) {
         logger.info("[PUT] /analysis");
-        Optional<Analysis> analysisOptional = analysisRepository.findById(analysisDTO.getRootEntityID());
-        if (analysisOptional.isPresent()) {
-            Analysis analysis = analysisOptional.get();
-            analysis.setAnalysisName(analysisDTO.getAnalysisName());
-            analysis.setDescription(analysisDTO.getAnalysisDescription());
-            analysisEventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toJson()));
-        }
+        analysisDTOService.update(analysisDTO);
         return getAnalysisById(analysisDTO.getRootEntityID());
+
     }
 
     @Override
