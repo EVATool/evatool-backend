@@ -1,9 +1,8 @@
 package com.evatool.requirements.application.service;
 
-import com.evatool.requirements.dto.RequirementDTO;
-import com.evatool.requirements.entity.*;
-import com.evatool.requirements.repository.*;
-import com.evatool.requirements.service.RequirementMapper;
+import com.evatool.requirements.application.dto.RequirementDTO;
+import com.evatool.requirements.domain.entity.*;
+import com.evatool.requirements.domain.repository.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;

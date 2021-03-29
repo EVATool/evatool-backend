@@ -1,10 +1,10 @@
 package com.evatool.requirements.domain.event;
 
 import com.evatool.global.event.impact.ImpactUpdatedEvent;
-import com.evatool.requirements.entity.RequirementsImpact;
-import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
-import com.evatool.requirements.events.listener.RequirementEventListener;
-import com.evatool.requirements.repository.RequirementsImpactsRepository;
+import com.evatool.requirements.domain.entity.RequirementsImpact;
+import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
+import com.evatool.requirements.domain.events.listener.RequirementEventListener;
+import com.evatool.requirements.domain.repository.RequirementsImpactsRepository;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ class RequirementsImpactUpdateEventListenerTest {
     @Test
     void testOnApplicationEvent_PublishEvent_ImpactUpdated() {
         // given
-        RequirementsImpact requirementsImpact = new RequirementsImpact("Description",10,null);
+        RequirementsImpact requirementsImpact = new RequirementsImpact("Description",10d,null);
         requirementsImpactsRepository.save(requirementsImpact);
         String newDescription = "newDescription";
 

@@ -1,7 +1,6 @@
 package com.evatool.requirements.domain.repository;
 
-import com.evatool.requirements.entity.*;
-import com.evatool.requirements.repository.*;
+import com.evatool.requirements.domain.entity.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
