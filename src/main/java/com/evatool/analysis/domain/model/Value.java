@@ -23,7 +23,7 @@ public class Value {
     @Type(type= "uuid-char")
     @Column(columnDefinition = "CHAR(36)")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
     @Getter
     @Column(name = "NAME", nullable = false)

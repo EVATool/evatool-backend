@@ -224,7 +224,7 @@ class ValueRestControllerMockServiceTest {
             doNothing().when(valueService).deleteById(any(UUID.class));
 
             // then
-            mvc.perform(delete("/value+" + "/" + UUID.randomUUID().toString())
+            mvc.perform(delete("/value" + "/" + UUID.randomUUID().toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk());
