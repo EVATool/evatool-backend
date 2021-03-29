@@ -2,11 +2,11 @@ package com.evatool.analysis.application.controller.service;
 
 import com.evatool.analysis.application.services.ValueService;
 import com.evatool.analysis.common.error.ValueType;
+import com.evatool.analysis.common.error.execptions.EntityIdMustBeNullException;
 import com.evatool.analysis.common.error.execptions.EntityIdRequiredException;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.ValueRepository;
-import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
