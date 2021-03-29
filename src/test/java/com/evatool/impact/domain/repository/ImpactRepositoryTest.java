@@ -1,78 +1,21 @@
 package com.evatool.impact.domain.repository;
 
-import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.entity.ImpactAnalysis;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.entity.Value;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Arrays;
 
-import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ImpactRepositoryTest {
-
-    @Autowired
-    ImpactRepository impactRepository;
-
-    @Autowired
-    ImpactStakeholderRepository stakeholderRepository;
-
-    @Autowired
-    ImpactAnalysisRepository impactAnalysisRepository;
-
-    @Autowired
-    ImpactValueRepository impactValueRepository;
-
-    @BeforeEach
-    @AfterAll
-    private void clearDatabase() {
-        impactRepository.deleteAll();
-        stakeholderRepository.deleteAll();
-        impactValueRepository.deleteAll();
-        impactAnalysisRepository.deleteAll();
-    }
-
-    private Impact saveFullDummyImpact() {
-        var value = saveDummyValue();
-        var stakeholder = saveDummyStakeholder();
-        var analysis = saveDummyAnalysis();
-        var impact = createDummyImpact();
-        impact.setValueEntity(value);
-        impact.setStakeholder(stakeholder);
-        impact.setAnalysis(analysis);
-        return impactRepository.save(impact);
-    }
-
-    private Value saveDummyValue() {
-        return impactValueRepository.save(createDummyValue());
-    }
-
-    private ImpactStakeholder saveDummyStakeholder() {
-        return stakeholderRepository.save(createDummyStakeholder());
-    }
-
-    private ImpactAnalysis saveDummyAnalysis() {
-        return impactAnalysisRepository.save(createDummyAnalysis());
-    }
+class ImpactRepositoryTest extends RepositoryTest {
 
     @Test
     void testFindAllByAnalysisId_AnalysisWithTwoImpacts_ReturnImpactsByAnalysisId() {
         // given
-        var impact1 = saveFullDummyImpact();
-        var impact2 = saveFullDummyImpact();
+        var analysis = saveDummyAnalysis();
+        var impact1 = saveFullDummyImpact(analysis);
+        var impact2 = saveFullDummyImpact(analysis);
 
         // when
-        impact2.setAnalysis(impact1.getAnalysis());
-        impactRepository.save(impact2);
 
         // then
         var impactsOfAnalysis = impactRepository.findAllByAnalysisId(impact1.getAnalysis().getId());

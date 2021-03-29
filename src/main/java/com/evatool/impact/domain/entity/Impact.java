@@ -1,6 +1,8 @@
 package com.evatool.impact.domain.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,8 @@ import java.util.Objects;
 
 @Table(name = "IMP_IMPACT")
 @Entity(name = "IMP_IMPACT")
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Impact extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(Impact.class);
@@ -53,41 +57,6 @@ public class Impact extends SuperEntity {
         this.setAnalysis(analysis);
     }
 
-    @Override
-    public String toString() {
-        return "Impact{" +
-                "id=" + this.id +
-                ", numericId=" + this.numericId +
-                ", value=" + this.value +
-                ", description='" + this.description + '\'' +
-                ", value =" + this.valueEntity +
-                ", stakeholder=" + this.stakeholder +
-                ", analysis=" + this.analysis +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        var that = (Impact) o;
-        return super.equals(that)
-                && Objects.equals(this.numericId, that.numericId)
-                && Double.compare(this.value, that.value) == 0
-                && Objects.equals(this.description, that.description)
-                && Objects.equals(this.value, that.value)
-                && Objects.equals(this.stakeholder, that.stakeholder)
-                && Objects.equals(this.analysis, that.analysis);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), this.value, this.description, this.value, this.stakeholder, this.analysis);
-    }
-
-    // TODO [philipp] Write tests in service and rest controller that validate this behavior.
-    //  - Correct Exceptions are thrown
-    //  - Correct Http Return Codes
     public void setNumericId(Integer numericId) {
         logger.debug("Set NumericId");
         if (this.numericId != null) {
@@ -146,6 +115,12 @@ public class Impact extends SuperEntity {
 
     public void setAnalysis(ImpactAnalysis analysis) {
         logger.debug("Set Analysis");
+
+        if (this.analysis != null) {
+            logger.error("Attempted to set existing analysis");
+            throw new IllegalArgumentException("Existing analysis cannot be set.");
+        }
+
         this.analysis = analysis;
     }
 }
