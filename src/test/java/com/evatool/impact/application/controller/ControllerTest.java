@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
-import javax.transaction.Transactional;
 import java.util.UUID;
 
 import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.toDto;
@@ -25,7 +24,6 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Transactional
 public class ControllerTest {
 
     @Autowired

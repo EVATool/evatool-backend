@@ -9,7 +9,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+
 import java.util.UUID;
+
 import static com.evatool.impact.application.controller.UriUtil.IMPACTS;
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpactDto;
@@ -83,7 +85,7 @@ public class ImpactRestControllerTest extends ControllerTest {
             var impactsOfAnalysis = response.getBody();
 
             // then
-            assertThat(impactsOfAnalysis.toString()).isEqualTo((new ImpactDto[]{impact1, impact2}).toString());
+            assertThat(impactsOfAnalysis).isEqualTo((new ImpactDto[]{impact1, impact2}));
         }
     }
 
@@ -92,20 +94,16 @@ public class ImpactRestControllerTest extends ControllerTest {
 
         @Test
         void testCreate_CreatedImpact_ReturnCreatedImpact() {
-            try {
-                // given
-                var impactDto = createDummyImpactDto();
+            // given
+            var impactDto = saveDummyImpactDtoChildren();
 
-                // when
-                var httpEntity = new HttpEntity<>(impactDto);
-                var response = testRestTemplate.postForEntity(
-                        IMPACTS, httpEntity, ImpactDto.class);
+            // when
+            var httpEntity = new HttpEntity<>(impactDto);
+            var response = testRestTemplate.postForEntity(
+                    IMPACTS, httpEntity, ImpactDto.class);
 
-                // then
-                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-            }catch (Exception e){
-                System.out.println(e);
-            }
+            // then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         }
 
         @Test
