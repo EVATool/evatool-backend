@@ -36,6 +36,13 @@ public class ValueDto {
     @NotNull
     private String description;
 
+    @ApiModelProperty(required = true)
+    @Getter
+    @Setter
+    @NotNull
+    private String guiId;
+
+
     @Override
     public String toString() {
         return "valueDto{" +

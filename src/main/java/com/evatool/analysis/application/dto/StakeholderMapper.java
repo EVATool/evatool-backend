@@ -1,4 +1,4 @@
-package com.evatool.analysis.application.services;
+package com.evatool.analysis.application.dto;
 
 import com.evatool.analysis.application.dto.StakeholderDTO;
 import com.evatool.analysis.application.controller.StakeholderControllerImpl;

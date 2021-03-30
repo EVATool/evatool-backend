@@ -103,4 +103,11 @@ public class Value {
         }
         this.description = description;
     }
+
+    public void setGuiId(String guiId) {
+        if (guiId == null){
+            throw new IllegalArgumentException("guiId cannot be null.");
+        }
+        this.guiId = guiId;
+    }
 }

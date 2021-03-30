@@ -2,6 +2,7 @@ package com.evatool.analysis.application.services;
 
 
 import com.evatool.analysis.application.dto.StakeholderDTO;
+import com.evatool.analysis.application.dto.StakeholderMapper;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class StakeholderDTOService {

@@ -1,6 +1,7 @@
 package com.evatool.analysis.application.services;
 
 import com.evatool.analysis.application.dto.AnalysisDTO;
+import com.evatool.analysis.application.dto.AnalysisMapper;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
