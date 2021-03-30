@@ -42,7 +42,7 @@ public class ServiceTest {
     protected ImpactAnalysisService analysisService;
 
     @Autowired
-    protected ImpactValueService impactValueService;
+    protected ImpactValueService valueService;
 
     @BeforeEach
     @AfterAll
@@ -65,11 +65,6 @@ public class ServiceTest {
         impact.setValueEntity(value);
         impact.setStakeholder(stakeholder);
         return impactRepository.save(impact);
-    }
-
-    protected ImpactStakeholder saveFullDummyImpactStakeholder() {
-        var stakeholder = createDummyStakeholder();
-        return stakeholderRepository.save(stakeholder);
     }
 
     protected ImpactValue saveFullDummyValue() {
