@@ -1,7 +1,6 @@
 package com.evatool.impact.application.dto;
 
 import com.evatool.impact.common.ImpactValueType;
-import com.evatool.impact.domain.entity.ImpactValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
@@ -10,7 +9,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 import java.util.UUID;
 
 @ApiModel(value = "ImpactValue", description = "Value of an Impact")

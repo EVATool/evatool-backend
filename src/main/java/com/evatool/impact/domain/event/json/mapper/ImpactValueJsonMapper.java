@@ -1,9 +1,7 @@
 package com.evatool.impact.domain.event.json.mapper;
 
 import com.evatool.impact.common.exception.EventPayloadInvalidException;
-import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactValue;
-import com.evatool.impact.domain.event.json.ImpactJson;
 import com.evatool.impact.domain.event.json.ImpactValueJson;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
