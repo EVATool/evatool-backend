@@ -1,7 +1,5 @@
 package com.evatool.impact.application.dto;
 
-import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.entity.Value;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

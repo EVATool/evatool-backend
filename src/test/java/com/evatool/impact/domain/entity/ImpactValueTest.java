@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-class ValueTest {
+class ImpactValueTest {
 
     @Test
     void testSetName_NullValue_ThrowIllegalArgumentException() {

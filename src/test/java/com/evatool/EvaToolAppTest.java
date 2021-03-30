@@ -2,7 +2,6 @@ package com.evatool;
 
 import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
-import com.evatool.analysis.domain.events.json.ValueEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
@@ -17,7 +16,7 @@ import com.evatool.impact.common.ImpactValueType;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.entity.Value;
+import com.evatool.impact.domain.entity.ImpactValue;
 import com.evatool.impact.domain.event.ImpactEventPublisher;
 import com.evatool.impact.domain.event.json.ImpactValueEventPublisher;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
@@ -214,8 +213,8 @@ class EvaToolAppTest {
             impactValueRepository.deleteAll();
         }
 
-        Value createDummyValue() {
-            return impactValueRepository.save(new Value(UUID.randomUUID(), "Name", ImpactValueType.SOCIAL, "Description"));
+        ImpactValue createDummyValue() {
+            return impactValueRepository.save(new ImpactValue(UUID.randomUUID(), "Name", ImpactValueType.SOCIAL, "Description"));
         }
 
         // Received by: Requirement
@@ -314,7 +313,7 @@ class EvaToolAppTest {
         }
 
         Impact createDummyImpact() {
-            var value = impactValueRepository.save(new Value(UUID.randomUUID(), "Name", ImpactValueType.SOCIAL, "Description"));
+            var value = impactValueRepository.save(new ImpactValue(UUID.randomUUID(), "Name", ImpactValueType.SOCIAL, "Description"));
 
             impactValueEventPublisher.publishValueCreated(value);
             var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name"));
@@ -336,14 +335,14 @@ class EvaToolAppTest {
             // then
             assertThat(requirementImpact).isNotNull();
             assertThat(requirementImpact.getId()).isEqualTo(impact.getId());
-            //assertThat(requirementImpact.getValue()).isEqualTo(impact.getValue());
+            //assertThat(requirementImpact.getImpactValue()).isEqualTo(impact.getImpactValue());
             assertThat(requirementImpact.getDescription()).isEqualTo(impact.getDescription());
             //assertThat(requirementImpact.getRequirementDimension().getId()).isEqualTo(impact.getDimension().getId());
             //assertThat(requirementImpact.getRequirementDimension().getName()).isEqualTo(impact.getDimension().getName());
 
 //            assertThat(analysisImpact).isNotNull();
 //            assertThat(analysisImpact.getId()).isEqualTo(impact.getId());
-//            assertThat(analysisImpact.getValue()).isEqualTo(impact.getValue());
+//            assertThat(analysisImpact.getImpactValue()).isEqualTo(impact.getImpactValue());
 //            assertThat(analysisImpact.getDescription()).isEqualTo(impact.getDescription());
             //assertThat(analysisImpact.getDimension()).isEqualTo(impact.getDimension());
         }
@@ -363,10 +362,10 @@ class EvaToolAppTest {
 
             // then
             assertThat(requirementImpact).isNotNull();
-            //assertThat(requirementImpact.getValue()).isEqualTo(impact.getValue());
+            //assertThat(requirementImpact.getImpactValue()).isEqualTo(impact.getImpactValue());
 
 //            assertThat(analysisImpact).isNotNull();
-//            assertThat(analysisImpact.getValue()).isEqualTo(impact.getValue());
+//            assertThat(analysisImpact.getImpactValue()).isEqualTo(impact.getImpactValue());
         }
 
         // Received by: Requirement, Analysis

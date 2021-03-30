@@ -3,7 +3,7 @@ package com.evatool.impact.domain.event.json;
 import com.evatool.global.event.value.ValueCreatedEvent;
 import com.evatool.global.event.value.ValueDeletedEvent;
 import com.evatool.global.event.value.ValueUpdatedEvent;
-import com.evatool.impact.domain.entity.Value;
+import com.evatool.impact.domain.entity.ImpactValue;
 import com.evatool.impact.domain.event.json.mapper.ImpactValueJsonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,27 +21,27 @@ public class ImpactValueEventPublisher {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
-    public void publishValueCreated(final Value value) {
-        logger.info("Preparing to publish create Value event");
-        var valueJson = ImpactValueJsonMapper.toJson(value);
+    public void publishValueCreated(final ImpactValue impactValue) {
+        logger.info("Preparing to publish create ImpactValue event");
+        var valueJson = ImpactValueJsonMapper.toJson(impactValue);
         var valueCreatedEvent = new ValueCreatedEvent(this, valueJson);
         applicationEventPublisher.publishEvent(valueCreatedEvent);
-        logger.info("Create value event published");
+        logger.info("Create impactValue event published");
     }
 
-    public void publishValueDeleted(final Value value) {
-        logger.info("Preparing to publish delete value event");
-        var valueJson = ImpactValueJsonMapper.toJson(value);
+    public void publishValueDeleted(final ImpactValue impactValue) {
+        logger.info("Preparing to publish delete impactValue event");
+        var valueJson = ImpactValueJsonMapper.toJson(impactValue);
         var valueDeletedEvent = new ValueDeletedEvent(this, valueJson);
         applicationEventPublisher.publishEvent(valueDeletedEvent);
-        logger.info("Delete value event published");
+        logger.info("Delete impactValue event published");
     }
 
-    public void publishValueUpdated(final Value value) {
-        logger.info("Preparing to publish update value event");
-        var valueJson = ImpactValueJsonMapper.toJson(value);
+    public void publishValueUpdated(final ImpactValue impactValue) {
+        logger.info("Preparing to publish update impactValue event");
+        var valueJson = ImpactValueJsonMapper.toJson(impactValue);
         var valueUpdatedEvent = new ValueUpdatedEvent(this, valueJson);
         applicationEventPublisher.publishEvent(valueUpdatedEvent);
-        logger.info("Update value event published");
+        logger.info("Update impactValue event published");
     }
 }

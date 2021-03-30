@@ -10,11 +10,11 @@ import java.util.UUID;
 
 public class TestDataGenerator {
 
-    public static Value createDummyValue() {
-        return new Value(UUID.randomUUID(),"dummyValue", ImpactValueType.ECONOMIC, "dummyValueDescription");
+    public static ImpactValue createDummyValue() {
+        return new ImpactValue(UUID.randomUUID(),"dummyValue", ImpactValueType.ECONOMIC, "dummyValueDescription");
     }
-    public static Value createDummyValueNoId() {
-        return new Value("dummyValue", ImpactValueType.ECONOMIC, "dummyValueDescription");
+    public static ImpactValue createDummyValueNoId() {
+        return new ImpactValue("dummyValue", ImpactValueType.ECONOMIC, "dummyValueDescription");
     }
 
     public static ImpactStakeholder createDummyStakeholder() {

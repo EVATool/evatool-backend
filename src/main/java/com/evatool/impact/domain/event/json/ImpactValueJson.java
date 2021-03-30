@@ -1,6 +1,6 @@
 package com.evatool.impact.domain.event.json;
 
-import com.evatool.impact.domain.entity.Value;
+import com.evatool.impact.domain.entity.ImpactValue;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +24,7 @@ public class ImpactValueJson {
     @Setter
     private String description;
 
-    public boolean equalsEntity(Value that) {
+    public boolean equalsEntity(ImpactValue that) {
         if (that == null) return false;
         return Objects.equals(this.id, that.getId().toString())
                 && Objects.equals(this.name, that.getName())
