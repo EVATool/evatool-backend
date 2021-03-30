@@ -3,6 +3,7 @@ package com.evatool.impact.domain.entity;
 import com.evatool.impact.common.ImpactValueType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,17 +33,23 @@ public class ImpactValue extends SuperEntity {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
+    @Getter
+    @Setter
+    @Column(name = "GUIID", nullable = false)
+    private String guiId;
+
     public ImpactValue() {
         super();
         logger.debug("{} created", ImpactValue.class.getSimpleName());
     }
 
-    public ImpactValue(UUID id, String name, ImpactValueType type, String description) {
+    public ImpactValue(UUID id, String name, ImpactValueType type, String description, String guiId) {
         this();
         this.setId(id);
         this.setName(name);
         this.setType(type);
         this.setDescription(description);
+        this.setGuiId(guiId);
     }
 
     @Override

@@ -42,7 +42,7 @@ public class TestDataGenerator {
 
 
     public static Value createDummyValue() {
-        return new Value("dummyValue", ValueType.ECONOMIC, "dummyValueDescription");
+        return new Value("dummyValue", ValueType.ECONOMIC, "dummyValueDescription", "VAL01");
     }
 
     public static ValueDto createDummyValueDto() {

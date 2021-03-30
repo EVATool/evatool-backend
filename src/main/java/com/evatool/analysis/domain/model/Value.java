@@ -46,10 +46,11 @@ public class Value {
         logger.debug("{} created", Value.class.getSimpleName());
     }
 
-    public Value(String name, ValueType type, String description) {
+    public Value(String name, ValueType type, String description, String guiId) {
         this.setName(name);
         this.setType(type);
         this.setDescription(description);
+        this.setGuiId(guiId);
     }
 
     @Override

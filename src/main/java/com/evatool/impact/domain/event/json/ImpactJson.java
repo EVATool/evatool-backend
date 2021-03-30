@@ -34,6 +34,10 @@ public class ImpactJson {
     @Setter
     private String analysisId;
 
+    @Getter
+    @Setter
+    private String guiID;
+
     public boolean equalsEntity(Impact that) {
         if (that == null) return false;
         return Objects.equals(this.id, that.getId().toString())

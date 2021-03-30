@@ -103,5 +103,6 @@ public class ValueServiceImpl implements ValueService {
         logger.info("Delete ImpactValue");
         valueRepository.deleteAll();
     }
+}
 
 
