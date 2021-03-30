@@ -12,7 +12,6 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@SpringBootTest
 class ImpactStakeholderServiceImplTest extends ServiceTest {
 
     @Nested

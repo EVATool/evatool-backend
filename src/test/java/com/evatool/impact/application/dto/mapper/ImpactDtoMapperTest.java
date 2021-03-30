@@ -23,7 +23,6 @@ class ImpactDtoMapperTest {
 
         // then
         assertThat(impact).isEqualTo(recreatedImpact);
-
     }
 
     @Test

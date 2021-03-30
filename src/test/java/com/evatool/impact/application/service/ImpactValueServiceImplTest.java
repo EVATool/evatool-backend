@@ -12,7 +12,6 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@SpringBootTest
 public class ImpactValueServiceImplTest extends ServiceTest {
 
     @Nested

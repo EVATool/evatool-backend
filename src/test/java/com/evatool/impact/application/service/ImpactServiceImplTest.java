@@ -21,8 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ImpactServiceImplTest extends ServiceTest {
 
     @Nested
@@ -37,7 +35,7 @@ class ImpactServiceImplTest extends ServiceTest {
             var impactDto = impactService.findById(impact.getId());
 
             // then
-            assertThat(impactDto.toString()).isEqualTo(toDto(impact).toString());
+            assertThat(impactDto).isEqualTo(toDto(impact));
         }
 
         @Test
@@ -101,7 +99,7 @@ class ImpactServiceImplTest extends ServiceTest {
             var retrievedImpact = impactService.findById(createdImpact.getId());
 
             // then
-            assertEquals(retrievedImpact.toString(), createdImpact.toString());
+            assertEquals(retrievedImpact, createdImpact);
         }
 
         @Test
@@ -125,8 +123,7 @@ class ImpactServiceImplTest extends ServiceTest {
             impactDto.setUniqueString("IMP42");
 
             // then
-            assertThatExceptionOfType(UniqueStringMustBeNullException.class)
-                    .isThrownBy(() -> impactService.create(impactDto));
+            assertThatExceptionOfType(UniqueStringMustBeNullException.class).isThrownBy(() -> impactService.create(impactDto));
         }
     }
 
