@@ -4,9 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.UUID;
-
-import static com.evatool.impact.common.TestDataGenerator.*;
+import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
+import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -34,14 +33,13 @@ class SuperEntityUuidGeneratorTest {
     void testPersist_NotNullId_PresetIdWasInserted() {
         // given
         var superEntity = createDummyValue();
-        var id = UUID.randomUUID();
-        superEntity.setId(id);
+        var presetId = superEntity.getId();
 
         // when
         var savedSuperEntity = impactValueRepository.save(superEntity);
 
         // then
         assertThat(savedSuperEntity.getId()).isNotNull();
-        assertThat(savedSuperEntity.getId()).isEqualTo(id);
+        assertThat(savedSuperEntity.getId()).isEqualTo(presetId);
     }
 }
