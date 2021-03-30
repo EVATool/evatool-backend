@@ -1,5 +1,6 @@
 package com.evatool.impact.application.dto;
 
+import com.evatool.impact.common.ImpactValueType;
 import com.evatool.impact.domain.entity.ImpactValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,7 +33,7 @@ public class ImpactValueDto {
     @Getter
     @Setter
     @NotNull
-    private ImpactValue impactValue;
+    private ImpactValueType type;
 
     @ApiModelProperty(required = true)
     @Getter

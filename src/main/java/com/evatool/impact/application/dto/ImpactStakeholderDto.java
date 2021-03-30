@@ -18,7 +18,7 @@ public class ImpactStakeholderDto {
     @ApiModelProperty
     @Getter
     @Setter
-    private UUID id;
+    private UUID id; // TODO technically @NotNull because foreign entities MUST be present in the domain
 
     @ApiModelProperty(required = true)
     @Getter

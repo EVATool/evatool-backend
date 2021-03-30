@@ -18,7 +18,6 @@ public class ImpactValueDtoMapper {
     public static ImpactValue fromDto(ImpactValueDto impactValueDto) {
         logger.info("Mapping Dto to Entity");
         return modelMapper.map(impactValueDto, ImpactValue.class);
-
     }
 
     public static ImpactValueDto toDto(ImpactValue impactValue) {
