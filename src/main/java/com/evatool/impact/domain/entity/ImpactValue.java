@@ -53,32 +53,6 @@ public class ImpactValue extends SuperEntity {
         this.setDescription(description);
     }
 
-    @Override
-    public String toString() {
-        return "value{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        var that = (ImpactValue) o;
-        return super.equals(that)
-                && Objects.equals(this.name, that.name)
-                && this.type == that.type
-                && Objects.equals(this.description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), this.name, this.type, this.description);
-    }
-
     public void setName(String name) {
         logger.debug("Set Name");
         if (name == null) {

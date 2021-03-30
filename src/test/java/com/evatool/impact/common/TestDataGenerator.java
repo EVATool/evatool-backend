@@ -36,7 +36,6 @@ public class TestDataGenerator {
 
     public static ImpactStakeholderDto createDummyStakeholderDto() {
         return ImpactStakeholderDtoMapper.toDto(createDummyStakeholder());
-
     }
 
     public static ImpactDto createDummyImpactDto() {
