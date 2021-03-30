@@ -141,7 +141,6 @@ class ImpactValueJsonMapperTest {
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
     }
 
-
     @Test
     void testFromJsonString_JsonStringNullTypeField_ThrowEventPayloadInvalidException() {
         // given
@@ -165,5 +164,4 @@ class ImpactValueJsonMapperTest {
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
     }
-    // TODO ForeignEntity base class
 }
