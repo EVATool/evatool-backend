@@ -37,6 +37,10 @@ public class Value {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
+    @Getter
+    @Column(name = "GUIID", nullable = false)
+    private String guiId;
+
     public Value() {
         super();
         logger.debug("{} created", Value.class.getSimpleName());
