@@ -6,7 +6,7 @@ import com.evatool.analysis.common.error.execptions.EntityIdMustBeNullException;
 import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.common.error.execptions.EntityIdRequiredException;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
-import com.evatool.analysis.domain.events.json.ValueEventPublisher;
+import com.evatool.analysis.domain.events.ValueEventPublisher;
 import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.ValueRepository;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class ValueServiceImpl implements ValueService {
 
     @Override
     public ValueDto findById(UUID id) {
-        logger.info("Get Value");
+        logger.info("Get ImpactValue");
         if (id == null) {
             throw new EntityIdRequiredException(Value.class.getSimpleName());
         }
@@ -47,7 +47,7 @@ public class ValueServiceImpl implements ValueService {
 
     @Override
     public List<ValueDto> findAllByType(ValueType type) {
-        logger.info("Get Value by type");
+        logger.info("Get ImpactValue by type");
         var values = valueRepository.findAllByType(type);
         var valueDtoList = new ArrayList<ValueDto>();
         values.forEach(value -> valueDtoList.add(ValueDtoMapper.toDto(value)));
@@ -91,7 +91,7 @@ public class ValueServiceImpl implements ValueService {
 
     @Override
     public void deleteById(UUID id) {
-        logger.info("Delete Value");
+        logger.info("Delete ImpactValue");
         var valueDto = this.findById(id);
         var value = ValueDtoMapper.fromDto(valueDto);
         valueRepository.delete(value);
@@ -100,7 +100,7 @@ public class ValueServiceImpl implements ValueService {
 
     @Override
     public void deleteAll() {
-        logger.info("Delete Value");
+        logger.info("Delete ImpactValue");
         valueRepository.deleteAll();
     }
 }

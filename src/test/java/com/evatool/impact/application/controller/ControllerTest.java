@@ -1,10 +1,9 @@
 package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.dto.ImpactValueDto;
-import com.evatool.impact.application.dto.ImpactValueDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
+import com.evatool.impact.application.dto.mapper.ImpactValueDtoMapper;
 import com.evatool.impact.application.service.ImpactService;
 import com.evatool.impact.application.service.ImpactValueService;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
-import javax.transaction.Transactional;
 import java.util.UUID;
 
 import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.toDto;
@@ -26,7 +24,6 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Transactional
 public class ControllerTest {
 
     @Autowired
@@ -64,6 +61,7 @@ public class ControllerTest {
         return impactService.create(toDto(impact));
     }
 
+
     protected ImpactDto saveDummyImpactDtoChildren() {
         var impactDto = createDummyImpactDto();
         impactDto.getValueEntity().setId(UUID.randomUUID());
@@ -71,11 +69,5 @@ public class ControllerTest {
         stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder()));
         analysisRepository.save(ImpactAnalysisDtoMapper.fromDto(impactDto.getAnalysis()));
         return impactDto;
-    }
-
-    protected ImpactValueDto saveFullDummyValueDto() {
-        var value = createDummyValue();
-        var valueDto = ImpactValueDtoMapper.toDto(value);
-        return valueService.create(valueDto);
     }
 }

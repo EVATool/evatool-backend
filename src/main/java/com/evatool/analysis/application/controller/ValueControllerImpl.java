@@ -39,7 +39,7 @@ public class ValueControllerImpl {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    public ResponseEntity<EntityModel<ValueDto>> findById(@ApiParam("Value ID") @Valid @PathVariable UUID id) {
+    public ResponseEntity<EntityModel<ValueDto>> findById(@ApiParam("ImpactValue ID") @Valid @PathVariable UUID id) {
         logger.info("GET " + "/value/{id}");
         var valueDto = valueService.findById(id);
         return new ResponseEntity<>(getValueWithLinks(valueDto), HttpStatus.OK);
@@ -50,13 +50,15 @@ public class ValueControllerImpl {
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request")})
-    public ResponseEntity<List<EntityModel<ValueDto>>> findAll(@ApiParam(value = "Value Type") @Valid @RequestParam(value = "type", required = false) ValueType type) {
+    public ResponseEntity<List<EntityModel<ValueDto>>> findAll(@ApiParam(value = "ImpactValue Type") @Valid @RequestParam(value = "type", required = false) ValueType type) {
         List<ValueDto> valueDtoList;
+        System.out.println(type);
         if (type == null) {
-            logger.info("GET " + "/value");
+            logger.info("GET " + "/values");
             valueDtoList = valueService.findAll();
         } else {
-            logger.info("GET " + "/value" + "?type={}", type);
+            logger.info("GET " + "/values" + "?type={}", type);
+
             valueDtoList = valueService.findAllByType(type);
         }
         return new ResponseEntity<>(getValueWithLinks(valueDtoList), HttpStatus.OK);
@@ -82,7 +84,7 @@ public class ValueControllerImpl {
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 422, message = "Unprocessable")})
-    public ResponseEntity<EntityModel<ValueDto>> update(@ApiParam("Value") @Valid @RequestBody ValueDto valueDto) {
+    public ResponseEntity<EntityModel<ValueDto>> update(@ApiParam("ImpactValue") @Valid @RequestBody ValueDto valueDto) {
         logger.info("PUT " + "/value");
         var updatedValueDto = valueService.update(valueDto);
         return new ResponseEntity<>(getValueWithLinks(updatedValueDto), HttpStatus.OK);
@@ -94,7 +96,7 @@ public class ValueControllerImpl {
             @ApiResponse(code = 200, message = "Deleted"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    public ResponseEntity<Void> deleteById(@ApiParam("Value ID") @Valid @PathVariable UUID id) {
+    public ResponseEntity<Void> deleteById(@ApiParam("ImpactValue ID") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + "/values/{id}");
         valueService.deleteById(id);
         return ResponseEntity.ok().build();

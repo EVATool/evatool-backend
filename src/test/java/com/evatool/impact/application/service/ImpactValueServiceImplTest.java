@@ -7,38 +7,38 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper.toDto;
-import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
+import static com.evatool.impact.application.dto.mapper.ImpactValueDtoMapper.toDto;
+import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-class ImpactStakeholderServiceImplTest extends ServiceTest {
+public class ImpactValueServiceImplTest extends ServiceTest {
 
     @Nested
     class FindById {
 
         @Test
-        void testFindById_ExistingStakeholder_ReturnStakeholder() {
+        void testFindById_ExistingValue_ReturnValue() {
             // given
-            var stakeholder = saveFullDummyStakeholder();
+            var value = saveFullDummyValue();
 
             // when
-            var stakeholderDto = stakeholderService.findById(stakeholder.getId());
+            var valueDto = valueService.findById(value.getId());
 
             // then
-            assertThat(stakeholderDto).isEqualTo(toDto(stakeholder));
+            assertThat(valueDto).isEqualTo(toDto(value));
         }
 
         @Test
         void testFindById_NonExistingId_ThrowEntityNotFoundException() {
             // given
-            var stakeholder = createDummyStakeholder();
+            var value = createDummyValue();
 
             // when
 
             // then
-            var id = stakeholder.getId();
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.findById(id));
+            var id = value.getId();
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> valueService.findById(id));
         }
     }
 
@@ -47,17 +47,17 @@ class ImpactStakeholderServiceImplTest extends ServiceTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3})
-        void testFindAll_ExistingStakeholders_ReturnStakeholders(int value) {
+        void testFindAll_ExistingValues_ReturnValues(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                saveFullDummyStakeholder();
+                saveFullDummyValue();
             }
 
             // when
-            var stakeholders = stakeholderService.findAll();
+            var values = valueService.findAll();
 
             // then
-            assertThat(stakeholders.size()).isEqualTo(value);
+            assertThat(values.size()).isEqualTo(value);
         }
     }
 
@@ -66,18 +66,18 @@ class ImpactStakeholderServiceImplTest extends ServiceTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3})
-        void testDeleteAll_ExistingStakeholders_ReturnNoStakeholders(int value) {
+        void testDeleteAll_ExistingValues_ReturnNoValues(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                saveFullDummyStakeholder();
+                saveFullDummyValue();
             }
 
             // when
-            stakeholderService.deleteAll();
+            valueService.deleteAll();
 
             // then
-            var stakeholders = stakeholderService.findAll();
-            assertThat(stakeholders.size()).isZero();
+            var values = valueService.findAll();
+            assertThat(values.size()).isZero();
         }
     }
 }

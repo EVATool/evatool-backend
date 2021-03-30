@@ -3,7 +3,7 @@ package com.evatool.impact.domain.repository;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.entity.Value;
+import com.evatool.impact.domain.entity.ImpactValue;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
@@ -56,7 +56,7 @@ public class RepositoryTest {
         return impactRepository.save(impact);
     }
 
-    protected Value saveDummyValue() {
+    protected ImpactValue saveDummyValue() {
         return valueRepository.save(createDummyValue());
     }
 

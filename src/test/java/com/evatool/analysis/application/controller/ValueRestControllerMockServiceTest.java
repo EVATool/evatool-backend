@@ -1,6 +1,7 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.EvaToolApp;
+import com.evatool.analysis.application.services.ValueServiceImpl;
 import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.global.config.SwaggerConfig;
@@ -154,13 +155,13 @@ class ValueRestControllerMockServiceTest {
             given(valueService.findAllByType(ValueType.ECONOMIC)).willReturn(economicValues);
 
             // then
-            mvc.perform(get("/values" + "?types=" + ValueType.SOCIAL.toString())
+            mvc.perform(get("/values" + "?type=" + ValueType.SOCIAL.toString() )
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(socialValues.size())));
 
-            mvc.perform(get("/values" + "?types=" + ValueType.ECONOMIC.toString())
+            mvc.perform(get("/values" + "?type=" + ValueType.ECONOMIC.toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())

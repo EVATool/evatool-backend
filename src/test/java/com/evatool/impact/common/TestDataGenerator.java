@@ -4,14 +4,15 @@ import com.evatool.impact.application.dto.*;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
+import com.evatool.impact.application.dto.mapper.ImpactValueDtoMapper;
 import com.evatool.impact.domain.entity.*;
 
 import java.util.UUID;
 
 public class TestDataGenerator {
 
-    public static Value createDummyValue() {
-        return new Value("dummyValue", ImpactValueType.ECONOMIC, "dummyValueDescription");
+    public static ImpactValue createDummyValue() {
+        return new ImpactValue(UUID.randomUUID(),"dummyValue", ImpactValueType.ECONOMIC, "dummyValueDescription");
     }
 
     public static ImpactStakeholder createDummyStakeholder() {
@@ -30,10 +31,8 @@ public class TestDataGenerator {
         return new ImpactAnalysis(UUID.randomUUID());
     }
 
-
     public static ImpactStakeholderDto createDummyStakeholderDto() {
         return ImpactStakeholderDtoMapper.toDto(createDummyStakeholder());
-
     }
 
     public static ImpactDto createDummyImpactDto() {
@@ -47,5 +46,4 @@ public class TestDataGenerator {
     public static ImpactValueDto createDummyValueDto() {
         return ImpactValueDtoMapper.toDto(createDummyValue());
     }
-
 }

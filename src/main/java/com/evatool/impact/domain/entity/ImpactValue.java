@@ -1,20 +1,24 @@
 package com.evatool.impact.domain.entity;
 
 import com.evatool.impact.common.ImpactValueType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Objects;
+import java.util.UUID;
 
 @Entity(name = "IMP_VALUE")
 @Table(name = "IMP_VALUE")
-public class Value extends SuperEntity {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class ImpactValue extends SuperEntity {
 
-    private static final Logger logger = LoggerFactory.getLogger(Value.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImpactValue.class);
 
     @Getter
     @Column(name = "NAME", nullable = false)
@@ -28,42 +32,27 @@ public class Value extends SuperEntity {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    public Value() {
+    public ImpactValue() {
         super();
-        logger.debug("{} created", Value.class.getSimpleName());
+        logger.debug("{} created", ImpactValue.class.getSimpleName());
     }
 
-    public Value(String name, ImpactValueType type, String description) {
+    public ImpactValue(UUID id, String name, ImpactValueType type, String description) {
         this();
+        this.setId(id);
         this.setName(name);
         this.setType(type);
         this.setDescription(description);
     }
 
     @Override
-    public String toString() {
-        return "value{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        var that = (Value) o;
-        return super.equals(that)
-                && Objects.equals(this.name, that.name)
-                && this.type == that.type
-                && Objects.equals(this.description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), this.name, this.type, this.description);
+    public void setId(UUID id) {
+        logger.debug("Set id");
+        if (id == null) {
+            logger.error("Attempted to set id to null");
+            throw new IllegalArgumentException("Id cannot be null.");
+        }
+        super.setId(id);
     }
 
     public void setName(String name) {

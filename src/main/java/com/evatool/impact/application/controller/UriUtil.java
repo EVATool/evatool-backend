@@ -10,7 +10,7 @@ public class UriUtil {
 
     public static final String VALUES = "/values";
     public static final String VALUE_ID = "/values/{id}";
-    public static final String VALUE_TYPES = "/value/types";
+    public static final String VALUE_TYPES = "/values/types";
     public static final String VALUE_NAME = "value";
 
     public static final String STAKEHOLDERS = "/stakeholders";

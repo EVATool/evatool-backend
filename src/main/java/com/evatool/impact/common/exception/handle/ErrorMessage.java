@@ -1,6 +1,7 @@
 package com.evatool.impact.common.exception.handle;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.http.HttpStatus;
 
 import java.io.PrintWriter;
@@ -8,6 +9,7 @@ import java.io.StringWriter;
 import java.sql.Timestamp;
 import java.util.Date;
 
+@ToString
 public class ErrorMessage {
 
     @Getter
@@ -38,14 +40,5 @@ public class ErrorMessage {
         this.trace = sw.toString();
         this.message = exception.getMessage();
         this.path = path;
-    }
-
-    @Override
-    public String toString() {
-        return "ErrorMessage{" +
-                "timestamp=" + timestamp +
-                ", message='" + message + '\'' +
-                ", uri='" + path + '\'' +
-                '}';
     }
 }

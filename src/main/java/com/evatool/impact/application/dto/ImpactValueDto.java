@@ -1,16 +1,19 @@
 package com.evatool.impact.application.dto;
 
-import com.evatool.impact.domain.entity.Value;
+import com.evatool.impact.common.ImpactValueType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 import java.util.UUID;
 
-@ApiModel(value = "Value", description = "Value of an Values")
+@ApiModel(value = "ImpactValue", description = "Value of an Impact")
+@EqualsAndHashCode
+@ToString
 public class ImpactValueDto {
 
     @ApiModelProperty
@@ -28,34 +31,11 @@ public class ImpactValueDto {
     @Getter
     @Setter
     @NotNull
-    private Value value;
+    private ImpactValueType type;
 
     @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull
     private String description;
-
-    @Override
-    public String toString() {
-        return "ValueDto{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + value + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ImpactValueDto that = (ImpactValueDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && value == that.value && Objects.equals(description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, value, description);
-    }
 }

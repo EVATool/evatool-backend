@@ -44,7 +44,7 @@ public class StakeholderDTO {
 
     public void setValue(Float value) {
         if (value == null) {
-            throw new IllegalArgumentException("Value cannot be null.");
+            throw new IllegalArgumentException("ImpactValue cannot be null.");
         }
         this.value = value;
     }

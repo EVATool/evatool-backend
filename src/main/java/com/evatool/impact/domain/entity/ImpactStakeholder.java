@@ -14,8 +14,8 @@ import java.util.UUID;
 @Entity(name = "IMP_STAKEHOLDER")
 @Table(name = "IMP_STAKEHOLDER")
 @EqualsAndHashCode(callSuper = true)
-@ToString
-public class ImpactStakeholder extends SuperEntity {
+@ToString(callSuper = true)
+public class ImpactStakeholder extends SuperEntity { // TODO ForeignEntity base class
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholder.class);
 

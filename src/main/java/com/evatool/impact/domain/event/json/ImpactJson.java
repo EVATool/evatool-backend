@@ -3,14 +3,16 @@ package com.evatool.impact.domain.event.json;
 import com.evatool.impact.domain.entity.Impact;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Objects;
 
+@ToString
 public class ImpactJson {
 
     @Getter
     @Setter
-    private String id;
+    private String id; // TODO change to UUID
 
     @Getter
     @Setter

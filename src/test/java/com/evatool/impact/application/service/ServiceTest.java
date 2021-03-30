@@ -3,7 +3,7 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.entity.Value;
+import com.evatool.impact.domain.entity.ImpactValue;
 import com.evatool.impact.domain.repository.ImpactValueRepository;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
@@ -42,7 +42,7 @@ public class ServiceTest {
     protected ImpactAnalysisService analysisService;
 
     @Autowired
-    protected ImpactValueService impactValueService;
+    protected ImpactValueService valueService;
 
     @BeforeEach
     @AfterAll
@@ -67,12 +67,7 @@ public class ServiceTest {
         return impactRepository.save(impact);
     }
 
-    protected ImpactStakeholder saveFullDummyImpactStakeholder() {
-        var stakeholder = createDummyStakeholder();
-        return stakeholderRepository.save(stakeholder);
-    }
-
-    protected Value saveFullDummyValue() {
+    protected ImpactValue saveFullDummyValue() {
         return valueRepository.save(createDummyValue());
     }
 

@@ -50,7 +50,7 @@ public class Value {
 
     @Override
     public String toString() {
-        return "Value{" +
+        return "ImpactValue{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +

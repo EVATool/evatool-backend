@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.UUID;
 
-@ApiModel(value = "Value", description = "Value of an Values")
+@ApiModel(value = "ImpactValue", description = "ImpactValue of an Values")
 public class ValueDto {
 
     @ApiModelProperty

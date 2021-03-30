@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @Table(name = "IMP_IMPACT")
 @Entity(name = "IMP_IMPACT")
@@ -33,7 +32,7 @@ public class Impact extends SuperEntity {
 
     @Getter
     @ManyToOne(optional = false)
-    private Value valueEntity;
+    private ImpactValue valueEntity;
 
     @Getter
     @ManyToOne(optional = false)
@@ -48,7 +47,7 @@ public class Impact extends SuperEntity {
         logger.debug("{} created", Impact.class.getSimpleName());
     }
 
-    public Impact(double value, String description, Value valueEntity, ImpactStakeholder stakeholder, ImpactAnalysis analysis) {
+    public Impact(double value, String description, ImpactValue valueEntity, ImpactStakeholder stakeholder, ImpactAnalysis analysis) {
         this();
         this.setValue(value);
         this.setDescription(description);
@@ -75,13 +74,13 @@ public class Impact extends SuperEntity {
     }
 
     public void setValue(Double value) {
-        logger.debug("Set Value");
+        logger.debug("Set ImpactValue");
         if (value == null) {
             logger.error("Attempted to set value to null");
-            throw new IllegalArgumentException("Value cannot be null");
+            throw new IllegalArgumentException("ImpactValue cannot be null");
         } else if (value < -1.0 || value > 1.0) {
             logger.error("Attempted to set value outside its valid range");
-            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+            throw new IllegalArgumentException("ImpactValue must be in range [-1, 1]");
         }
         this.value = value;
     }
@@ -95,13 +94,13 @@ public class Impact extends SuperEntity {
         this.description = description;
     }
 
-    public void setValueEntity(Value value) {
-        logger.debug("Set Value (Value)");
-        if (value == null) {
-            logger.error("Attempted to set Value description to null");
-            throw new IllegalArgumentException("Value cannot be null.");
+    public void setValueEntity(ImpactValue impactValue) {
+        logger.debug("Set ImpactValue (ImpactValue)");
+        if (impactValue == null) {
+            logger.error("Attempted to set ImpactValue description to null");
+            throw new IllegalArgumentException("ImpactValue cannot be null.");
         }
-        this.valueEntity = value;
+        this.valueEntity = impactValue;
     }
 
     public void setStakeholder(ImpactStakeholder stakeholder) {

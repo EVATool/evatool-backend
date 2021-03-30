@@ -12,7 +12,7 @@ import java.util.UUID;
 @Entity(name = "IMP_ANALYSIS")
 @Table(name = "IMP_ANALYSIS")
 @EqualsAndHashCode(callSuper = true)
-@ToString
+@ToString(callSuper = true)
 public class ImpactAnalysis extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactAnalysis.class);

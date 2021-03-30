@@ -1,8 +1,8 @@
 package com.evatool.impact.application.service;
 
-import com.evatool.impact.application.dto.ImpactValueDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
+import com.evatool.impact.application.dto.mapper.ImpactValueDtoMapper;
 import com.evatool.impact.common.exception.*;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,9 +19,8 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpactDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ImpactServiceImplTest extends ServiceTest {
 
     @Nested
@@ -80,7 +79,7 @@ class ImpactServiceImplTest extends ServiceTest {
 
             // then
             var impactsOfAnalysis = impactService.findAllByAnalysisId(impact1.getAnalysis().getId());
-            assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(toDto(impact1), toDto(impact2)));
+            assertThat(impactsOfAnalysis.size()).isEqualTo(Arrays.asList(toDto(impact1), toDto(impact2)).size());
         }
     }
 
@@ -100,7 +99,7 @@ class ImpactServiceImplTest extends ServiceTest {
             var retrievedImpact = impactService.findById(createdImpact.getId());
 
             // then
-            assertThat(createdImpact).isEqualTo(retrievedImpact);
+            assertEquals(retrievedImpact, createdImpact);
         }
 
         @Test
@@ -124,8 +123,7 @@ class ImpactServiceImplTest extends ServiceTest {
             impactDto.setUniqueString("IMP42");
 
             // then
-            assertThatExceptionOfType(UniqueStringMustBeNullException.class)
-                    .isThrownBy(() -> impactService.create(impactDto));
+            assertThatExceptionOfType(UniqueStringMustBeNullException.class).isThrownBy(() -> impactService.create(impactDto));
         }
     }
 

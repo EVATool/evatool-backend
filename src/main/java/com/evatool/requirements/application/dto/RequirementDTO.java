@@ -51,7 +51,7 @@ public class RequirementDTO {
 
     public void setValues(Set<EntityModel<ValueDTO>> values) {
         if (values == null) {
-            throw new IllegalArgumentException("Value cannot be null.");
+            throw new IllegalArgumentException("ImpactValue cannot be null.");
         }
         this.values = values;
     }

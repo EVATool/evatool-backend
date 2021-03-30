@@ -37,7 +37,6 @@ public class ImpactServiceImpl implements ImpactService {
         this.impactEventPublisher = impactEventPublisher;
     }
 
-
     @Override
     public ImpactDto findById(UUID id) {
         logger.info("Get Impact");

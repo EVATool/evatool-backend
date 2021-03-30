@@ -55,7 +55,7 @@ public class RequirementsImpact {
 
     public void setValue(Double value) {
         if (value < -1 || value > 1) {
-            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+            throw new IllegalArgumentException("ImpactValue must be in range [-1, 1]");
         }
         this.value = value;
     }
