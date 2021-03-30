@@ -1,6 +1,7 @@
 package com.evatool.analysis.application.dto;
 
 import com.evatool.analysis.domain.enums.StakeholderLevel;
+import com.evatool.analysis.domain.model.AnalysisImpact;
 import com.google.gson.Gson;
 import lombok.Getter;
 
@@ -12,6 +13,7 @@ public class StakeholderDTO {
     private String stakeholderName;
     private StakeholderLevel stakeholderLevel;
     private Integer priority;
+    private List<AnalysisImpact> impactList;
     private Float value;
     private String guiId;
 
@@ -52,6 +54,10 @@ public class StakeholderDTO {
             throw new IllegalArgumentException("GuiId cannot be null.");
         }
         this.guiId = guiId;
+    }
+
+    public void setImpactList(List<AnalysisImpact> impactList) {
+        this.impactList = impactList;
     }
 
     @Override

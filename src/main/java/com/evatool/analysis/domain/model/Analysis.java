@@ -40,7 +40,7 @@ public class Analysis {
 
     @Getter
     @Setter
-    private Date date;
+    private Date lastUpdate;
 
 
     public Analysis(String analysisName, String description) {
@@ -71,7 +71,7 @@ public class Analysis {
                 ", analysisName='" + analysisName + '\'' +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
-                ", date='" + date + '\'' +
+                ", date='" + lastUpdate + '\'' +
                 '}';
     }
     public String toJson(){

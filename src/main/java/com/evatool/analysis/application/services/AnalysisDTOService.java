@@ -45,7 +45,7 @@ public class AnalysisDTOService {
         analysis.setAnalysisName(analysisDTO.getAnalysisName());
         analysis.setDescription(analysisDTO.getAnalysisDescription());
         analysis.setImage(analysisDTO.getImage());
-        analysis.setDate(analysisDTO.getDate());
+        analysis.setLastUpdate(analysisDTO.getDate());
         return analysis;
     }
 
@@ -59,7 +59,7 @@ public class AnalysisDTOService {
         analysis.setAnalysisName(analysisDTO.getAnalysisName());
         analysis.setDescription(analysisDTO.getAnalysisDescription());
         analysis.setImage(analysisDTO.getImage());
-        analysis.setDate(analysisDTO.getDate());
+        analysis.setLastUpdate(analysisDTO.getDate());
 
         analysis = analysisRepository.save(analysis);
         eventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toJson()));

@@ -43,7 +43,7 @@ public class Stakeholder {
 
 
     /**
-     * GuiId of the Stakeholder {@link int}
+     * GuiId of the Stakeholder {@link String}
      */
     @Getter
     private String guiId;
