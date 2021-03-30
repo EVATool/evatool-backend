@@ -1,10 +1,9 @@
 package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.dto.ImpactValueDto;
-import com.evatool.impact.application.dto.ImpactValueDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
+import com.evatool.impact.application.dto.mapper.ImpactValueDtoMapper;
 import com.evatool.impact.application.service.ImpactService;
 import com.evatool.impact.application.service.ImpactValueService;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
