@@ -33,7 +33,7 @@ class SuperEntityUuidGeneratorTest {
     @Test
     void testPersist_NotNullId_PresetIdWasInserted() {
         // given
-        var superEntity = createDummyValueNoId();
+        var superEntity = createDummyValue();
         var id = UUID.randomUUID();
         superEntity.setId(id);
 

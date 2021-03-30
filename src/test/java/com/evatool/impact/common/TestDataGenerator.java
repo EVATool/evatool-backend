@@ -13,9 +13,6 @@ public class TestDataGenerator {
     public static ImpactValue createDummyValue() {
         return new ImpactValue(UUID.randomUUID(),"dummyValue", ImpactValueType.ECONOMIC, "dummyValueDescription");
     }
-    public static ImpactValue createDummyValueNoId() {
-        return new ImpactValue("dummyValue", ImpactValueType.ECONOMIC, "dummyValueDescription");
-    }
 
     public static ImpactStakeholder createDummyStakeholder() {
         return new ImpactStakeholder(UUID.randomUUID(), "dummyStakeholder");
