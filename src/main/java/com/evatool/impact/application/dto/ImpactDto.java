@@ -2,8 +2,10 @@ package com.evatool.impact.application.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -12,6 +14,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 @ApiModel(value = "Impact")
+@EqualsAndHashCode
+@ToString
 public class ImpactDto {
 
     @ApiModelProperty
@@ -55,36 +59,4 @@ public class ImpactDto {
     @Setter
     @NotNull
     private ImpactAnalysisDto analysis;
-
-    @Override
-    public String toString() {
-        return "ImpactDto{" +
-                "id='" + id + '\'' +
-                ", uniqueString=" + uniqueString +
-                ", value=" + value +
-                ", description='" + description + '\'' +
-                ", value=" + valueEntity +
-                ", stakeholder=" + stakeholder +
-                ", analysis=" + analysis +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ImpactDto that = (ImpactDto) o;
-        return Double.compare(that.value, value) == 0
-                && Objects.equals(id, that.id)
-                && Objects.equals(uniqueString, that.uniqueString)
-                && Objects.equals(description, that.description)
-                && Objects.equals(stakeholder, that.stakeholder)
-                && Objects.equals(valueEntity, that.valueEntity)
-                && Objects.equals(analysis, that.analysis);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, uniqueString, value, description, stakeholder, valueEntity, analysis);
-    }
 }
