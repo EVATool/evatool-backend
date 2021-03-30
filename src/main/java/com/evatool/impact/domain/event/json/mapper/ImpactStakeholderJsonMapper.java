@@ -2,7 +2,9 @@ package com.evatool.impact.domain.event.json.mapper;
 
 import com.evatool.impact.common.exception.EventPayloadInvalidException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
+import com.evatool.impact.domain.entity.ImpactValue;
 import com.evatool.impact.domain.event.json.ImpactStakeholderJson;
+import com.evatool.impact.domain.event.json.ImpactValueJson;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.modelmapper.MappingException;
@@ -27,5 +29,11 @@ public class ImpactStakeholderJsonMapper {
         } catch (JsonSyntaxException | IllegalArgumentException | MappingException ex) {
             throw new EventPayloadInvalidException(json, ex);
         }
+    }
+
+    public static String toJson(ImpactStakeholder impactStakeholder) {
+        logger.info("Mapping Entity to Json");
+        var impactStakeholderJson = modelMapper.map(impactStakeholder, ImpactStakeholderJson.class);
+        return new Gson().toJson(impactStakeholderJson);
     }
 }
