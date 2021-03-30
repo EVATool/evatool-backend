@@ -10,13 +10,12 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity(name = "IMP_VALUE")
 @Table(name = "IMP_VALUE")
 @EqualsAndHashCode(callSuper = true)
-@ToString
+@ToString(callSuper = true)
 public class ImpactValue extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactValue.class);
@@ -40,7 +39,7 @@ public class ImpactValue extends SuperEntity {
 
     public ImpactValue(UUID id, String name, ImpactValueType type, String description) {
         this();
-        this.id =id;
+        this.setId(id);
         this.setName(name);
         this.setType(type);
         this.setDescription(description);

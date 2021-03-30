@@ -73,10 +73,4 @@ public class ControllerTest {
         analysisRepository.save(ImpactAnalysisDtoMapper.fromDto(impactDto.getAnalysis()));
         return impactDto;
     }
-
-    protected ImpactValueDto saveFullDummyValueDto() {
-        var value = createDummyValue();
-        var valueDto = ImpactValueDtoMapper.toDto(value);
-        return valueService.create(valueDto);
-    }
 }

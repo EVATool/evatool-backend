@@ -7,7 +7,6 @@ import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.domain.entity.ImpactValue;
-import com.evatool.impact.domain.event.json.ImpactValueEventPublisher;
 import com.evatool.impact.domain.repository.ImpactValueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +24,8 @@ public class ImpactValueServiceImpl implements ImpactValueService {
 
     private final ImpactValueRepository impactValueRepository;
 
-    private final ImpactValueEventPublisher impactValueEventPublisher;
-
-    public ImpactValueServiceImpl(ImpactValueRepository impactValueRepository, ImpactValueEventPublisher impactValueEventPublisher) {
+    public ImpactValueServiceImpl(ImpactValueRepository impactValueRepository) {
         this.impactValueRepository = impactValueRepository;
-        this.impactValueEventPublisher = impactValueEventPublisher;
     }
 
     @Override
@@ -67,35 +63,6 @@ public class ImpactValueServiceImpl implements ImpactValueService {
     public List<ImpactValueType> findAllTypes() {
         logger.info("Get Values Types");
         return Arrays.asList(ImpactValueType.values());
-    }
-
-    @Override
-    public ImpactValueDto create(ImpactValueDto valuesDto) {
-        logger.info("Create Values");
-        if (valuesDto.getId() != null) {
-            throw new EntityIdMustBeNullException(ImpactValue.class.getSimpleName());
-        }
-        var values = impactValueRepository.save(ImpactValueDtoMapper.fromDto(valuesDto));
-        impactValueEventPublisher.publishValueCreated(values);
-        return ImpactValueDtoMapper.toDto(values);
-    }
-
-    @Override
-    public ImpactValueDto update(ImpactValueDto impactValueDto) {
-        logger.info("Update Values");
-        this.findById(impactValueDto.getId());
-        var value = impactValueRepository.save(ImpactValueDtoMapper.fromDto(impactValueDto));
-        impactValueEventPublisher.publishValueUpdated(value);
-        return ImpactValueDtoMapper.toDto(value);
-    }
-
-    @Override
-    public void deleteById(UUID id) {
-        logger.info("Delete ImpactValue");
-        var valueDto = this.findById(id);
-        var value = ImpactValueDtoMapper.fromDto(valueDto);
-        impactValueRepository.delete(value);
-        impactValueEventPublisher.publishValueDeleted(value);
     }
 
     @Override

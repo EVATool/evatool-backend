@@ -17,11 +17,5 @@ public interface ImpactValueService {
 
     List<ImpactValueType> findAllTypes();
 
-    ImpactValueDto create(ImpactValueDto impactValueDto);
-
-    ImpactValueDto update(ImpactValueDto impactValueDto);
-
-    void deleteById(UUID id);
-
     void deleteAll();
 }

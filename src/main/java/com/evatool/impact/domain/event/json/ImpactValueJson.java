@@ -3,9 +3,11 @@ package com.evatool.impact.domain.event.json;
 import com.evatool.impact.domain.entity.ImpactValue;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Objects;
 
+@ToString
 public class ImpactValueJson {
 
     @Getter
