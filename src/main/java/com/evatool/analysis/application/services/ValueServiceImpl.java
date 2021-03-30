@@ -6,7 +6,7 @@ import com.evatool.analysis.common.error.execptions.EntityIdMustBeNullException;
 import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.common.error.execptions.EntityIdRequiredException;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
-import com.evatool.analysis.domain.events.json.ValueEventPublisher;
+import com.evatool.analysis.domain.events.ValueEventPublisher;
 import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.ValueRepository;
 import org.slf4j.Logger;

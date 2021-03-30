@@ -1,5 +1,6 @@
-package com.evatool.analysis.domain.events.json;
+package com.evatool.analysis.domain.events;
 
+import com.evatool.analysis.domain.events.json.ValueJsonMapper;
 import com.evatool.analysis.domain.model.Value;
 import com.evatool.global.event.value.ValueCreatedEvent;
 import com.evatool.global.event.value.ValueDeletedEvent;
