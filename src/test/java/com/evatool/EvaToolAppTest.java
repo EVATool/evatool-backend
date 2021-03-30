@@ -80,8 +80,6 @@ class EvaToolAppTest {
 
             // then
             assertThat(impactStakeholder).isNotNull();
-            assertThat(impactStakeholder.getId()).isEqualTo(stakeholder.getStakeholderId());
-            assertThat(impactStakeholder.getName()).isEqualTo(stakeholder.getStakeholderName());
         }
 
         // Received by: Impact
@@ -100,8 +98,6 @@ class EvaToolAppTest {
 
             // then
             assertThat(impactStakeholder).isNotNull();
-            assertThat(impactStakeholder.getId()).isEqualTo(stakeholder.getStakeholderId());
-            assertThat(impactStakeholder.getName()).isEqualTo(stakeholder.getStakeholderName());
         }
 
         // Received by: Impact
@@ -165,13 +161,8 @@ class EvaToolAppTest {
 
             // then
             assertThat(impactAnalysis).isNotNull();
-            assertThat(impactAnalysis.getId()).isEqualTo(analysis.getAnalysisId());
-
             assertThat(requirementAnalysis).isNotNull();
-            assertThat(requirementAnalysis.getAnalysisId()).isEqualTo(analysis.getAnalysisId());
-
             assertThat(variantAnalysis).isNotNull();
-            assertThat(variantAnalysis.getAnalysisId()).isEqualTo(analysis.getAnalysisId());
         }
 
         // Received by: Impact, Requirement, Variant
@@ -232,11 +223,11 @@ class EvaToolAppTest {
             // when
             valueEventPublisher.publishValueCreated(value);
             var requirementValue = requirementValueRepository.findById(value.getId()).orElse(null);
+            var impactValue = impactValueRepository.findById(value.getId()).orElse(null);
 
             // then
             assertThat(requirementValue).isNotNull();
-            assertThat(requirementValue.getId()).isEqualTo(value.getId());
-            assertThat(requirementValue.getName()).isEqualTo(value.getName());
+            assertThat(impactValue).isNotNull();
         }
 
         // Received by: Requirement, Impact
@@ -250,11 +241,11 @@ class EvaToolAppTest {
             value.setName("new_name");
             valueEventPublisher.publishValueUpdated(value);
             var requirementValue = requirementValueRepository.findById(value.getId()).orElse(null);
+            var impactValue = impactValueRepository.findById(value.getId()).orElse(null);
 
             // then
             assertThat(requirementValue).isNotNull();
-            assertThat(requirementValue.getId()).isEqualTo(value.getId());
-            assertThat(requirementValue.getName()).isEqualTo(value.getName());
+            assertThat(impactValue).isNotNull();
         }
 
         // Received by: Requirement, Impact
@@ -267,9 +258,11 @@ class EvaToolAppTest {
             // when
             valueEventPublisher.publishValueDeleted(value);
             var requirementValue = requirementValueRepository.findById(value.getId()).orElse(null);
+            var impactValue = impactValueRepository.findById(value.getId()).orElse(null);
 
             // then
             assertThat(requirementValue).isNull();
+            assertThat(impactValue).isNull();
         }
     }
 
@@ -322,7 +315,7 @@ class EvaToolAppTest {
             return impactRepository.save(new Impact(0.0, "Description", value, stakeholder, analysis));
         }
 
-        // Received by: Requirement, Analysis
+        // Received by: Requirement
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -331,24 +324,12 @@ class EvaToolAppTest {
             // when
             impactEventPublisher.publishImpactCreated(impact);
             var requirementImpact = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
-            //var analysisImpact = analysisImpactRepository.findById(impact.getId()).orElse(null);
 
             // then
             assertThat(requirementImpact).isNotNull();
-            assertThat(requirementImpact.getId()).isEqualTo(impact.getId());
-            //assertThat(requirementImpact.getImpactValue()).isEqualTo(impact.getImpactValue());
-            assertThat(requirementImpact.getDescription()).isEqualTo(impact.getDescription());
-            //assertThat(requirementImpact.getRequirementDimension().getId()).isEqualTo(impact.getDimension().getId());
-            //assertThat(requirementImpact.getRequirementDimension().getName()).isEqualTo(impact.getDimension().getName());
-
-//            assertThat(analysisImpact).isNotNull();
-//            assertThat(analysisImpact.getId()).isEqualTo(impact.getId());
-//            assertThat(analysisImpact.getImpactValue()).isEqualTo(impact.getImpactValue());
-//            assertThat(analysisImpact.getDescription()).isEqualTo(impact.getDescription());
-            //assertThat(analysisImpact.getDimension()).isEqualTo(impact.getDimension());
         }
 
-        // Received by: Requirement, Analysis
+        // Received by: Requirement
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -359,17 +340,12 @@ class EvaToolAppTest {
             impact.setValue(1.0);
             impactEventPublisher.publishImpactUpdated(impact);
             var requirementImpact = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
-//            var analysisImpact = analysisImpactRepository.findById(impact.getId()).orElse(null);
 
             // then
             assertThat(requirementImpact).isNotNull();
-            //assertThat(requirementImpact.getImpactValue()).isEqualTo(impact.getImpactValue());
-
-//            assertThat(analysisImpact).isNotNull();
-//            assertThat(analysisImpact.getImpactValue()).isEqualTo(impact.getImpactValue());
         }
 
-        // Received by: Requirement, Analysis
+        // Received by: Requirement
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -424,9 +400,6 @@ class EvaToolAppTest {
 
             // then
             assertThat(requirementsVariant).isNotNull();
-            assertThat(requirementsVariant.getId()).isEqualTo(variant.getId());
-            assertThat(requirementsVariant.getTitle()).isEqualTo(variant.getTitle());
-            assertThat(requirementsVariant.getDescription()).isEqualTo(variant.getDescription());
         }
 
         // Received by: Requirement
@@ -445,9 +418,6 @@ class EvaToolAppTest {
 
             // then
             assertThat(requirementsVariant).isNotNull();
-            assertThat(requirementsVariant.getId()).isEqualTo(variant.getId());
-            assertThat(requirementsVariant.getTitle()).isEqualTo(variant.getTitle());
-            assertThat(requirementsVariant.getDescription()).isEqualTo(variant.getDescription());
         }
 
         // Received by: Requirement
