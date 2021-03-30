@@ -215,7 +215,7 @@ class EvaToolAppTest {
         }
 
         Value createDummyValue() {
-            return impactValueRepository.save(new Value("Name", ImpactValueType.SOCIAL, "Description"));
+            return impactValueRepository.save(new Value(UUID.randomUUID(), "Name", ImpactValueType.SOCIAL, "Description"));
         }
 
         // Received by: Requirement
@@ -314,7 +314,7 @@ class EvaToolAppTest {
         }
 
         Impact createDummyImpact() {
-            var value = impactValueRepository.save(new Value("Name", ImpactValueType.SOCIAL, "Description"));
+            var value = impactValueRepository.save(new Value(UUID.randomUUID(), "Name", ImpactValueType.SOCIAL, "Description"));
 
             impactValueEventPublisher.publishValueCreated(value);
             var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name"));

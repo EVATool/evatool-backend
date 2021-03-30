@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity(name = "IMP_VALUE")
 @Table(name = "IMP_VALUE")
@@ -31,6 +32,14 @@ public class Value extends SuperEntity {
     public Value() {
         super();
         logger.debug("{} created", Value.class.getSimpleName());
+    }
+
+    public Value(UUID id,String name, ImpactValueType type, String description) {
+        this();
+        this.id =id;
+        this.setName(name);
+        this.setType(type);
+        this.setDescription(description);
     }
 
     public Value(String name, ImpactValueType type, String description) {
