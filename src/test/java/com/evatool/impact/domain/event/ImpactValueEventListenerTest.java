@@ -6,6 +6,7 @@ import com.evatool.global.event.value.ValueUpdatedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.entity.ImpactValue;
+import com.evatool.impact.domain.event.json.mapper.ImpactValueJsonMapper;
 import com.evatool.impact.domain.repository.ImpactValueRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
+import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -38,19 +40,17 @@ class ImpactValueEventListenerTest {
         @Test
         void testOnStakeholderCreatedEvent_PublishEvent_StakeholderCreated() {
             // given
-            var id = UUID.randomUUID();
-            var name = "name";
-            var json = String.format("{\"valueId\":\"%s\",\"valueName\":\"%s\"}", id.toString(), name);
+            var value = createDummyValue();
+            var json = ImpactValueJsonMapper.toJson(value);
 
             // when
             var valueCreatedEvent = new ValueCreatedEvent(this, json);
             impactValueEventListener.onValueCreatedEvent(valueCreatedEvent);
 
             // then
-            var createdByEvent = impactValueRepository.findById(id);
+            var createdByEvent = impactValueRepository.findById(value.getId());
             assertThat(createdByEvent).isPresent();
-            assertThat(createdByEvent.get().getId()).isEqualTo(id);
-            assertThat(createdByEvent.get().getName()).isEqualTo(name);
+            assertThat(createdByEvent.get()).isEqualTo(value);
         }
 
         @Test
@@ -60,7 +60,7 @@ class ImpactValueEventListenerTest {
             var name = "name";
             var json = String.format("{\"valueId\":\"%s\",\"valueName\":\"%s\"}", id.toString(), name);
 
-            var value = new ImpactValue(id, name);
+            var value = createDummyValue();
             impactValueRepository.save(value);
 
             // when
@@ -81,7 +81,7 @@ class ImpactValueEventListenerTest {
             var name = "name";
             var json = String.format("{\"valueId\":\"%s\",\"valueName\":\"%s\"}", id.toString(), name);
 
-            var value = new ImpactValue(id, name);
+            var value = createDummyValue();
             impactValueRepository.save(value);
 
             // when
@@ -118,7 +118,7 @@ class ImpactValueEventListenerTest {
             var name = "name";
             var json = String.format("{\"valueId\":\"%s\",\"valueName\":\"%s\"}", id.toString(), name);
 
-            var value = new ImpactValue(id, "old_name");
+            var value = createDummyValue();
             impactValueRepository.save(value);
 
             // when
