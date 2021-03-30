@@ -74,7 +74,7 @@ class ImpactValueJsonMapperTest {
         var value = createDummyValue();
 
         // when
-        var json = String.format("{\"%s\",\"type\":\"%s\",\"description\":\"%s\"}", value.getName(), value.getType(), value.getDescription());
+        var json = String.format("{\"name\":\"%s\",\"type\":\"%s\",\"description\":\"%s\"}", value.getName(), value.getType(), value.getDescription());
 
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
@@ -117,4 +117,5 @@ class ImpactValueJsonMapperTest {
     }
 
     // TODO add missing json and null json tests for tow missing fields
+    // TODO ForeignEntity base class
 }

@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.UUID;
+
 @ToString
 public class ImpactValueJson {
 
     @Getter
     @Setter
-    private String id;
+    private UUID id;
 
     @Getter
     @Setter
