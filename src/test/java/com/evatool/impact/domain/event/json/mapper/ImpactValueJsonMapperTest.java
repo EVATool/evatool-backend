@@ -93,6 +93,31 @@ class ImpactValueJsonMapperTest {
     }
 
     @Test
+    void testFromJsonString_JsonStringMissingTypeField_ThrowEventPayloadInvalidException() {
+        // given
+        var value = createDummyValue();
+
+        // when
+        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"description\":\"%s\"}", value.getId(), value.getName(), value.getDescription());
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
+
+
+    @Test
+    void testFromJsonString_JsonStringMissingDescriptionField_ThrowEventPayloadInvalidException() {
+        // given
+        var value = createDummyValue();
+
+        // when
+        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"type\":\"%s\"}", value.getId(), value.getName(), value.getType());
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
+
+    @Test
     void testFromJsonString_JsonStringNullIdField_ThrowEventPayloadInvalidException() {
         // given
         var value = createDummyValue();
@@ -116,6 +141,29 @@ class ImpactValueJsonMapperTest {
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
     }
 
-    // TODO add missing json and null json tests for tow missing fields
+
+    @Test
+    void testFromJsonString_JsonStringNullTypeField_ThrowEventPayloadInvalidException() {
+        // given
+        var value = createDummyValue();
+
+        // when
+        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"type\":null,\"description\":\"%s\"}", value.getId(), value.getName(), value.getDescription());
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
+
+    @Test
+    void testFromJsonString_JsonStringNullDescriptionField_ThrowEventPayloadInvalidException() {
+        // given
+        var value = createDummyValue();
+
+        // when
+        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"type\":\"%s\",\"description\":null}", value.getId(), value.getName(), value.getType());
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
     // TODO ForeignEntity base class
 }
