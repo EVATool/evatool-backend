@@ -35,7 +35,7 @@ class ImpactValueEventListenerTest {
     class Created {
 
         @Test
-        void testOnStakeholderCreatedEvent_PublishEvent_StakeholderCreated() {
+        void testOnValueCreatedEvent_PublishEvent_ValueCreated() {
             // given
             var value = createDummyValue();
             var json = ImpactValueJsonMapper.toJson(value);
@@ -50,7 +50,7 @@ class ImpactValueEventListenerTest {
         }
 
         @Test
-        void testOnStakeholderCreatedEvent_StakeholderAlreadyExists_ThrowEventEntityAlreadyExistsException() {
+        void testOnValueCreatedEvent_ValueAlreadyExists_ThrowEventEntityAlreadyExistsException() {
             // given
             var value = createDummyValue();
             var json = ImpactValueJsonMapper.toJson(value);
@@ -68,7 +68,7 @@ class ImpactValueEventListenerTest {
     class Deleted {
 
         @Test
-        void testOnStakeholderDeletedEvent_PublishEvent_StakeholderDeleted() {
+        void testOnValueDeletedEvent_PublishEvent_ValueDeleted() {
             // given
             var value = createDummyValue();
             var json = ImpactValueJsonMapper.toJson(value);
@@ -79,12 +79,12 @@ class ImpactValueEventListenerTest {
             impactValueEventListener.onValueDeletedEvent(valueDeletedEvent);
 
             // then
-            var deletedByEventStakeholder = impactValueRepository.findById(value.getId());
-            assertThat(deletedByEventStakeholder).isNotPresent();
+            var deletedByEventValue = impactValueRepository.findById(value.getId());
+            assertThat(deletedByEventValue).isNotPresent();
         }
 
         @Test
-        void testOnStakeholderDeletedEvent_StakeholderDoesNotExist_ThrowEventEntityDoesNotExistException() {
+        void testOnValueDeletedEvent_ValueDoesNotExist_ThrowEventEntityDoesNotExistException() {
             // given
             var value = createDummyValue();
             var json = ImpactValueJsonMapper.toJson(value);
@@ -101,7 +101,7 @@ class ImpactValueEventListenerTest {
     class Updated {
 
         @Test
-        void testOnStakeholderUpdatedEvent_PublishEvent_StakeholderUpdated() {
+        void testOnValueUpdatedEvent_PublishEvent_ValueUpdated() {
             // given
             var value = createDummyValue();
             var json = ImpactValueJsonMapper.toJson(value);
@@ -112,12 +112,12 @@ class ImpactValueEventListenerTest {
             impactValueEventListener.onValueUpdatedEvent(valueUpdatedEvent);
 
             // then
-            var updatedByEventStakeholder = impactValueRepository.findById(value.getId());
-            assertThat(updatedByEventStakeholder).contains(value);
+            var updatedByEventValue = impactValueRepository.findById(value.getId());
+            assertThat(updatedByEventValue).contains(value);
         }
 
         @Test
-        void testOnStakeholderUpdatedEvent_StakeholderDoesNotExists_ThrowEventEntityDoesNotExistException() {
+        void testOnValueUpdatedEvent_ValueDoesNotExists_ThrowEventEntityDoesNotExistException() {
             // given
             var value = createDummyValue();
             var json = ImpactValueJsonMapper.toJson(value);
