@@ -45,11 +45,14 @@ public class ImpactValue extends SuperEntity {
         this.setDescription(description);
     }
 
-    public ImpactValue(String name, ImpactValueType type, String description) {
-        this();
-        this.setName(name);
-        this.setType(type);
-        this.setDescription(description);
+    @Override
+    public void setId(UUID id) {
+        logger.debug("Set id");
+        if (id == null) {
+            logger.error("Attempted to set id to null");
+            throw new IllegalArgumentException("Id cannot be null.");
+        }
+        super.setId(id);
     }
 
     public void setName(String name) {
