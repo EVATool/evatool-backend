@@ -10,7 +10,7 @@ public class RequirementDTO {
     private UUID projectID;
     private String requirementTitle;
     private String requirementDescription;
-    private Set<EntityModel<DimensionDTO>> dimensions = new HashSet<>();
+    private Set<EntityModel<ValueDTO>> values = new HashSet<>();
     private Map<UUID, EntityModel<RequirementPointDTO>> requirementPointDTOMap = new HashMap<>();
     private Map<UUID,EntityModel<VariantsDTO>> variantsTitle = new HashMap<>();
 
@@ -45,15 +45,15 @@ public class RequirementDTO {
     }
 
 
-    public Set<EntityModel<DimensionDTO>> getDimensions() {
-        return dimensions;
+    public Set<EntityModel<ValueDTO>> getValues() {
+        return values;
     }
 
-    public void setDimensions(Set<EntityModel<DimensionDTO>> dimensions) {
-        if (dimensions == null) {
-            throw new IllegalArgumentException("Dimensions cannot be null.");
+    public void setValues(Set<EntityModel<ValueDTO>> values) {
+        if (values == null) {
+            throw new IllegalArgumentException("ImpactValue cannot be null.");
         }
-        this.dimensions = dimensions;
+        this.values = values;
     }
 
     public Map<UUID, EntityModel<VariantsDTO>> getVariantsTitle() {

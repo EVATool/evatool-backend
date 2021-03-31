@@ -28,4 +28,10 @@ public class ImpactStakeholderJsonMapper {
             throw new EventPayloadInvalidException(json, ex);
         }
     }
+
+    public static String toJson(ImpactStakeholder impactStakeholder) {
+        logger.info("Mapping Entity to Json");
+        var impactStakeholderJson = modelMapper.map(impactStakeholder, ImpactStakeholderJson.class);
+        return new Gson().toJson(impactStakeholderJson);
+    }
 }

@@ -32,7 +32,7 @@ public class Impact extends SuperEntity {
 
     @Getter
     @ManyToOne(optional = false)
-    private Dimension dimension;
+    private ImpactValue valueEntity;
 
     @Getter
     @ManyToOne(optional = false)
@@ -47,11 +47,11 @@ public class Impact extends SuperEntity {
         logger.debug("{} created", Impact.class.getSimpleName());
     }
 
-    public Impact(double value, String description, Dimension dimension, ImpactStakeholder stakeholder, ImpactAnalysis analysis) {
+    public Impact(double value, String description, ImpactValue valueEntity, ImpactStakeholder stakeholder, ImpactAnalysis analysis) {
         this();
         this.setValue(value);
         this.setDescription(description);
-        this.setDimension(dimension);
+        this.setValueEntity(valueEntity);
         this.setStakeholder(stakeholder);
         this.setAnalysis(analysis);
     }
@@ -74,13 +74,13 @@ public class Impact extends SuperEntity {
     }
 
     public void setValue(Double value) {
-        logger.debug("Set Value");
+        logger.debug("Set ImpactValue");
         if (value == null) {
             logger.error("Attempted to set value to null");
-            throw new IllegalArgumentException("Value cannot be null");
+            throw new IllegalArgumentException("ImpactValue cannot be null");
         } else if (value < -1.0 || value > 1.0) {
             logger.error("Attempted to set value outside its valid range");
-            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+            throw new IllegalArgumentException("ImpactValue must be in range [-1, 1]");
         }
         this.value = value;
     }
@@ -94,13 +94,13 @@ public class Impact extends SuperEntity {
         this.description = description;
     }
 
-    public void setDimension(Dimension dimension) {
-        logger.debug("Set Dimension");
-        if (dimension == null) {
-            logger.error("Attempted to set dimension description to null");
-            throw new IllegalArgumentException("Dimension cannot be null.");
+    public void setValueEntity(ImpactValue impactValue) {
+        logger.debug("Set ImpactValue (ImpactValue)");
+        if (impactValue == null) {
+            logger.error("Attempted to set ImpactValue description to null");
+            throw new IllegalArgumentException("ImpactValue cannot be null.");
         }
-        this.dimension = dimension;
+        this.valueEntity = impactValue;
     }
 
     public void setStakeholder(ImpactStakeholder stakeholder) {

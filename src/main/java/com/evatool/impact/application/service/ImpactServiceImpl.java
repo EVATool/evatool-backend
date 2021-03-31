@@ -21,7 +21,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     private final ImpactRepository impactRepository;
 
-    private final DimensionService dimensionService;
+    private final ImpactValueService impactValueService;
 
     private final ImpactStakeholderService impactStakeholderService;
 
@@ -29,14 +29,13 @@ public class ImpactServiceImpl implements ImpactService {
 
     private final ImpactEventPublisher impactEventPublisher;
 
-    public ImpactServiceImpl(ImpactRepository impactRepository, DimensionService dimensionService, ImpactStakeholderService impactStakeholderService, ImpactAnalysisService impactAnalysisService, ImpactEventPublisher impactEventPublisher) {
+    public ImpactServiceImpl(ImpactRepository impactRepository, ImpactValueService valueService, ImpactStakeholderService impactStakeholderService, ImpactAnalysisService impactAnalysisService, ImpactEventPublisher impactEventPublisher) {
         this.impactRepository = impactRepository;
-        this.dimensionService = dimensionService;
+        this.impactValueService = valueService;
         this.impactStakeholderService = impactStakeholderService;
         this.impactAnalysisService = impactAnalysisService;
         this.impactEventPublisher = impactEventPublisher;
     }
-
 
     @Override
     public ImpactDto findById(UUID id) {
@@ -114,7 +113,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     private void assertImpactChildrenExist(ImpactDto impactDto) {
         this.impactStakeholderService.findById(impactDto.getStakeholder().getId());
-        this.dimensionService.findById(impactDto.getDimension().getId());
+        this.impactValueService.findById(impactDto.getValueEntity().getId());
         this.impactAnalysisService.findById(impactDto.getAnalysis().getId());
     }
 }

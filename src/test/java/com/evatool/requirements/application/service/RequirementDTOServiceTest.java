@@ -29,7 +29,7 @@ class RequirementDTOServiceTest {
     RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
-    RequirementDimensionRepository requirementDimensionRepository;
+    RequirementValueRepository requirementValueRepository;
 
     @Autowired
     RequirementPointRepository requirementPointRepository;
@@ -43,10 +43,10 @@ class RequirementDTOServiceTest {
 
     @Test
     void testRequirementDTOService_ThrowException() {
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(requirementsImpact);
 
         Map<UUID,String> impactTitles = new HashMap<>();

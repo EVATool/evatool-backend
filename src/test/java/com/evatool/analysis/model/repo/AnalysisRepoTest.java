@@ -1,10 +1,8 @@
 package com.evatool.analysis.model.repo;
 
 import com.evatool.analysis.common.TestDataGenerator;
-import com.evatool.analysis.model.Analysis;
-import com.evatool.analysis.model.Stakeholder;
-import com.evatool.analysis.repository.AnalysisRepository;
-import com.evatool.analysis.repository.StakeholderRepository;
+import com.evatool.analysis.domain.model.Analysis;
+import com.evatool.analysis.domain.repository.AnalysisRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -24,7 +22,7 @@ public class AnalysisRepoTest {
 
         // given
         Analysis analysis = TestDataGenerator.getAnalysis();
-        analysisRepository.save(analysis);
+        analysis = analysisRepository.save(analysis);
 
         // when
         Analysis analysisFound = analysisRepository.findById(analysis.getAnalysisId()).orElse(null);
@@ -39,7 +37,7 @@ public class AnalysisRepoTest {
         Analysis analysis = TestDataGenerator.getAnalysis();
 
         // when
-        analysisRepository.save(analysis);
+        analysis = analysisRepository.save(analysis);
 
         // then
         assertThat(analysis.getAnalysisId()).isNotNull();
@@ -51,7 +49,7 @@ public class AnalysisRepoTest {
         Analysis analysis = TestDataGenerator.getAnalysis();
 
         // when
-        analysisRepository.save(analysis);
+        analysis = analysisRepository.save(analysis);
 
         // then
         UUID.fromString(analysis.getAnalysisId().toString());

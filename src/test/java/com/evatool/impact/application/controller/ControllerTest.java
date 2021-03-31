@@ -1,16 +1,15 @@
 package com.evatool.impact.application.controller;
 
-import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
-import com.evatool.impact.application.service.DimensionService;
+import com.evatool.impact.application.dto.mapper.ImpactValueDtoMapper;
 import com.evatool.impact.application.service.ImpactService;
+import com.evatool.impact.application.service.ImpactValueService;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
-import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
+import com.evatool.impact.domain.repository.ImpactValueRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
@@ -34,7 +33,7 @@ public class ControllerTest {
     protected ImpactService impactService;
 
     @Autowired
-    protected DimensionRepository dimensionRepository;
+    protected ImpactValueRepository valueRepository;
 
     @Autowired
     protected ImpactStakeholderRepository stakeholderRepository;
@@ -43,37 +42,32 @@ public class ControllerTest {
     protected ImpactAnalysisRepository analysisRepository;
 
     @Autowired
-    protected DimensionService dimensionService;
+    protected ImpactValueService valueService;
 
     @BeforeEach
     @AfterAll
     private void clearDatabase() {
         impactService.deleteAll();
         stakeholderRepository.deleteAll();
-        dimensionRepository.deleteAll();
+        valueRepository.deleteAll();
         analysisRepository.deleteAll();
     }
 
     protected ImpactDto saveFullDummyImpactDto() {
         var analysis = analysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
         var impact = createDummyImpact(analysis);
-        impact.setDimension(dimensionRepository.save(impact.getDimension()));
+        impact.setValueEntity(valueRepository.save(impact.getValueEntity()));
         impact.setStakeholder(stakeholderRepository.save(impact.getStakeholder()));
         return impactService.create(toDto(impact));
     }
 
+
     protected ImpactDto saveDummyImpactDtoChildren() {
         var impactDto = createDummyImpactDto();
-        impactDto.getDimension().setId(UUID.randomUUID());
-        dimensionRepository.save(DimensionDtoMapper.fromDto(impactDto.getDimension()));
+        impactDto.getValueEntity().setId(UUID.randomUUID());
+        valueRepository.save(ImpactValueDtoMapper.fromDto(impactDto.getValueEntity()));
         stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder()));
         analysisRepository.save(ImpactAnalysisDtoMapper.fromDto(impactDto.getAnalysis()));
         return impactDto;
-    }
-
-    protected DimensionDto saveFullDummyDimensionDto() {
-        var dimension = createDummyDimension();
-        var dimensionDto = DimensionDtoMapper.toDto(dimension);
-        return dimensionService.create(dimensionDto);
     }
 }

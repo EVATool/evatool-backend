@@ -1,10 +1,10 @@
 package com.evatool.impact.application.service;
 
-import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.repository.DimensionRepository;
+import com.evatool.impact.domain.entity.ImpactValue;
+import com.evatool.impact.domain.repository.ImpactValueRepository;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
@@ -27,7 +27,7 @@ public class ServiceTest {
     protected ImpactRepository impactRepository;
 
     @Autowired
-    protected DimensionRepository dimensionRepository;
+    protected ImpactValueRepository valueRepository;
 
     @Autowired
     protected ImpactStakeholderRepository stakeholderRepository;
@@ -42,14 +42,14 @@ public class ServiceTest {
     protected ImpactAnalysisService analysisService;
 
     @Autowired
-    protected DimensionService dimensionService;
+    protected ImpactValueService valueService;
 
     @BeforeEach
     @AfterAll
     private void clearDatabase() {
         impactRepository.deleteAll();
         stakeholderRepository.deleteAll();
-        dimensionRepository.deleteAll();
+        valueRepository.deleteAll();
         impactAnalysisRepository.deleteAll();
     }
 
@@ -59,21 +59,16 @@ public class ServiceTest {
     }
 
     protected Impact saveFullDummyImpact(ImpactAnalysis analysis) {
-        var dimension = saveFullDummyDimension();
+        var value = saveFullDummyValue();
         var stakeholder = saveFullDummyStakeholder();
         var impact = createDummyImpact(analysis);
-        impact.setDimension(dimension);
+        impact.setValueEntity(value);
         impact.setStakeholder(stakeholder);
         return impactRepository.save(impact);
     }
 
-    protected ImpactStakeholder saveFullDummyImpactStakeholder() {
-        var stakeholder = createDummyStakeholder();
-        return stakeholderRepository.save(stakeholder);
-    }
-
-    protected Dimension saveFullDummyDimension() {
-        return dimensionRepository.save(createDummyDimension());
+    protected ImpactValue saveFullDummyValue() {
+        return valueRepository.save(createDummyValue());
     }
 
     protected ImpactStakeholder saveFullDummyStakeholder() {

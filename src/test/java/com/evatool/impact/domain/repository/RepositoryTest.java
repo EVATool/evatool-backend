@@ -1,9 +1,9 @@
 package com.evatool.impact.domain.repository;
 
-import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
+import com.evatool.impact.domain.entity.ImpactValue;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
@@ -20,7 +20,7 @@ public class RepositoryTest {
     protected ImpactRepository impactRepository;
 
     @Autowired
-    protected DimensionRepository dimensionRepository;
+    protected ImpactValueRepository valueRepository;
 
     @Autowired
     protected ImpactStakeholderRepository stakeholderRepository;
@@ -33,31 +33,31 @@ public class RepositoryTest {
     private void clearDatabase() {
         impactRepository.deleteAll();
         stakeholderRepository.deleteAll();
-        dimensionRepository.deleteAll();
+        valueRepository.deleteAll();
         impactAnalysisRepository.deleteAll();
     }
 
     protected Impact saveFullDummyImpact() {
-        var dimension = saveDummyDimension();
+        var value = saveDummyValue();
         var stakeholder = saveDummyStakeholder();
         var analysis = saveDummyAnalysis();
         var impact = createDummyImpact(analysis);
-        impact.setDimension(dimension);
+        impact.setValueEntity(value);
         impact.setStakeholder(stakeholder);
         return impactRepository.save(impact);
     }
 
     protected Impact saveFullDummyImpact(ImpactAnalysis analysis) {
-        var dimension = saveDummyDimension();
+        var value = saveDummyValue();
         var stakeholder = saveDummyStakeholder();
         var impact = createDummyImpact(analysis);
-        impact.setDimension(dimension);
+        impact.setValueEntity(value);
         impact.setStakeholder(stakeholder);
         return impactRepository.save(impact);
     }
 
-    protected Dimension saveDummyDimension() {
-        return dimensionRepository.save(createDummyDimension());
+    protected ImpactValue saveDummyValue() {
+        return valueRepository.save(createDummyValue());
     }
 
     protected ImpactStakeholder saveDummyStakeholder() {

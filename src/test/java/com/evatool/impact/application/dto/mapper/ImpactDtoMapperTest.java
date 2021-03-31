@@ -16,7 +16,6 @@ class ImpactDtoMapperTest {
         // given
         var impact = createDummyImpact();
         impact.setId(UUID.randomUUID());
-        impact.getDimension().setId(UUID.randomUUID());
 
         // when
         var impactDto = toDto(impact);
@@ -31,10 +30,8 @@ class ImpactDtoMapperTest {
         // given
         var impactDto = createDummyImpactDto();
         impactDto.setId(UUID.randomUUID());
-        impactDto.setUniqueString("IMP1337");
-        impactDto.setDimension(createDummyDimensionDto());
+        impactDto.setValueEntity(createDummyValueDto());
         impactDto.setStakeholder(createDummyStakeholderDto());
-        impactDto.setAnalysis(createDummyAnalysisDto());
 
         // when
         var impact = fromDto(impactDto);

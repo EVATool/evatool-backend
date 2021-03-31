@@ -43,4 +43,16 @@ public class StakeholderTest {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setPriority(null));
     }
 
+    @Test
+    public void testSetStakeholderGuiId() {
+
+        // given
+        var stakeholder = getStakholder();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setGuiId(null));
+    }
+
 }

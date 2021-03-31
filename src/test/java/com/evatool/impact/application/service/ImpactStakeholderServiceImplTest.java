@@ -12,7 +12,6 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@SpringBootTest
 class ImpactStakeholderServiceImplTest extends ServiceTest {
 
     @Nested
@@ -21,7 +20,7 @@ class ImpactStakeholderServiceImplTest extends ServiceTest {
         @Test
         void testFindById_ExistingStakeholder_ReturnStakeholder() {
             // given
-            var stakeholder = saveFullDummyImpactStakeholder();
+            var stakeholder = saveFullDummyStakeholder();
 
             // when
             var stakeholderDto = stakeholderService.findById(stakeholder.getId());
@@ -51,7 +50,7 @@ class ImpactStakeholderServiceImplTest extends ServiceTest {
         void testFindAll_ExistingStakeholders_ReturnStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                saveFullDummyImpactStakeholder();
+                saveFullDummyStakeholder();
             }
 
             // when
@@ -70,7 +69,7 @@ class ImpactStakeholderServiceImplTest extends ServiceTest {
         void testDeleteAll_ExistingStakeholders_ReturnNoStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                saveFullDummyImpactStakeholder();
+                saveFullDummyStakeholder();
             }
 
             // when

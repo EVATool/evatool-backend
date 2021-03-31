@@ -85,7 +85,7 @@ public class ImpactRestControllerTest extends ControllerTest {
             var impactsOfAnalysis = response.getBody();
 
             // then
-            assertThat(impactsOfAnalysis).isEqualTo(new ImpactDto[]{impact1, impact2});
+            assertThat(impactsOfAnalysis).isEqualTo((new ImpactDto[]{impact1, impact2}));
         }
     }
 

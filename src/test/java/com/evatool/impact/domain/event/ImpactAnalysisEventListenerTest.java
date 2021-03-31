@@ -4,7 +4,7 @@ import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
-import com.evatool.impact.domain.entity.ImpactAnalysis;
+import com.evatool.impact.domain.event.json.mapper.ImpactAnalysisJsonMapper;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.UUID;
-
+import static com.evatool.impact.common.TestDataGenerator.createDummyAnalysis;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -37,26 +36,23 @@ public class ImpactAnalysisEventListenerTest {
         @Test
         void testOnAnalysisCreatedEvent_PublishEvent_AnalysisCreated() {
             // given
-            var id = UUID.randomUUID();
-            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
+            var analysis = createDummyAnalysis();
+            var json = ImpactAnalysisJsonMapper.toJson(analysis);
 
             // when
             var analysisCreatedEvent = new AnalysisCreatedEvent(json);
             impactAnalysisEventListener.onAnalysisCreatedEvent(analysisCreatedEvent);
 
             // then
-            var createdByEvent = analysisRepository.findById(id);
-            assertThat(createdByEvent).isPresent();
-            assertThat(createdByEvent.get().getId()).isEqualTo(id);
+            var createdByEvent = analysisRepository.findById(analysis.getId());
+            assertThat(createdByEvent).contains(analysis);
         }
 
         @Test
         void testOnAnalysisCreatedEvent_AnalysisAlreadyExists_ThrowEventEntityAlreadyExistsException() {
             // given
-            var id = UUID.randomUUID();
-            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
-
-            var analysis = new ImpactAnalysis(id);
+            var analysis = createDummyAnalysis();
+            var json = ImpactAnalysisJsonMapper.toJson(analysis);
             analysisRepository.save(analysis);
 
             // when
@@ -73,10 +69,8 @@ public class ImpactAnalysisEventListenerTest {
         @Test
         void testOnAnalysisDeletedEvent_PublishEvent_AnalysisDeleted() {
             // given
-            var id = UUID.randomUUID();
-            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
-
-            var analysis = new ImpactAnalysis(id);
+            var analysis = createDummyAnalysis();
+            var json = ImpactAnalysisJsonMapper.toJson(analysis);
             analysisRepository.save(analysis);
 
             // when
@@ -84,15 +78,15 @@ public class ImpactAnalysisEventListenerTest {
             impactAnalysisEventListener.onAnalysisDeletedEvent(analysisDeletedEvent);
 
             // then
-            var deletedByEventAnalysis = analysisRepository.findById(id);
+            var deletedByEventAnalysis = analysisRepository.findById(analysis.getId());
             assertThat(deletedByEventAnalysis).isNotPresent();
         }
 
         @Test
         void testOnAnalysisDeletedEvent_AnalysisDoesNotExist_ThrowEventEntityDoesNotExistException() {
             // given
-            var id = UUID.randomUUID();
-            var json = String.format("{\"analysisId\":\"%s\"}", id.toString());
+            var analysis = createDummyAnalysis();
+            var json = ImpactAnalysisJsonMapper.toJson(analysis);
 
             // when
             AnalysisDeletedEvent analysisDeletedEvent = new AnalysisDeletedEvent(json);

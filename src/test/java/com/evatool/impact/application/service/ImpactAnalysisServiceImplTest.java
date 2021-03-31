@@ -12,7 +12,6 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyAnalysis;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@SpringBootTest
 public class ImpactAnalysisServiceImplTest extends ServiceTest {
 
     @Nested

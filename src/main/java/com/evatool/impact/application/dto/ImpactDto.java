@@ -45,7 +45,7 @@ public class ImpactDto {
     @Getter
     @Setter
     @NotNull
-    private DimensionDto dimension;
+    private ImpactValueDto valueEntity;
 
     @ApiModelProperty(required = true)
     @Getter
