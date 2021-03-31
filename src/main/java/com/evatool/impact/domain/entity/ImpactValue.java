@@ -3,13 +3,13 @@ package com.evatool.impact.domain.entity;
 import com.evatool.impact.common.ImpactValueType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.UUID;
 
@@ -32,6 +32,10 @@ public class ImpactValue extends SuperEntity {
     @Getter
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
+
+    @Getter
+    @ManyToOne(optional = true) // TODO change to false when event from Analysis has analysisId
+    private ImpactAnalysis analysis;
 
     public ImpactValue() {
         super();
@@ -80,5 +84,17 @@ public class ImpactValue extends SuperEntity {
             throw new IllegalArgumentException("Description cannot be null.");
         }
         this.description = description;
+    }
+
+    // TODO Tests
+    public void setAnalysis(ImpactAnalysis analysis) {
+        logger.debug("Set Analysis");
+
+        if (this.analysis != null) {
+            logger.error("Attempted to set existing analysis");
+            throw new IllegalArgumentException("Existing analysis cannot be set.");
+        }
+
+        this.analysis = analysis;
     }
 }

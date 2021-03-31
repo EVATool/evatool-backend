@@ -13,4 +13,6 @@ public interface ImpactValueRepository extends CrudRepository<ImpactValue, UUID>
 
     List<ImpactValue> findAllByType(ImpactValueType type);
 
+    List<ImpactValue> findAllByAnalysisId(UUID analysisId); // TODO Tests
+
 }

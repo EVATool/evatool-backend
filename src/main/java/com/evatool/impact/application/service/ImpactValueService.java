@@ -11,11 +11,19 @@ public interface ImpactValueService {
 
     ImpactValueDto findById(UUID id);
 
+    List<ImpactValueDto> findAllByAnalysisId(UUID analysisId);
+
     List<ImpactValueDto> findAllByType(ImpactValueType impactValueType);
 
     List<ImpactValueDto> findAll();
 
     List<ImpactValueType> findAllTypes();
+
+    ImpactValueDto create(ImpactValueDto impactValueDto);
+
+    ImpactValueDto update(ImpactValueDto impactValueDto);
+
+    void deleteById(UUID id);
 
     void deleteAll();
 }
