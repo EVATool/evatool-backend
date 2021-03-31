@@ -55,11 +55,12 @@ public class Value {
 
     @Override
     public String toString() {
-        return "ImpactValue{" +
+        return "Value{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
+                ", guiId='" + guiId + '\'' +
                 '}';
     }
 

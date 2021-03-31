@@ -10,7 +10,7 @@ class ImpactValueTest {
 
     @Test
     void testConstructor_NullId_ThrowIllegalArgumentException() {
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new ImpactValue(null, "name", ImpactValueType.SOCIAL, "desc", "VAL01"));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new ImpactValue(null, "name", ImpactValueType.SOCIAL, "desc"));
     }
 
     @Test

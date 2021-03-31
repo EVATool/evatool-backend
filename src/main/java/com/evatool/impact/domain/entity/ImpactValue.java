@@ -33,23 +33,17 @@ public class ImpactValue extends SuperEntity {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    @Getter
-    @Setter
-    @Column(name = "GUIID", nullable = false)
-    private String guiId;
-
     public ImpactValue() {
         super();
         logger.debug("{} created", ImpactValue.class.getSimpleName());
     }
 
-    public ImpactValue(UUID id, String name, ImpactValueType type, String description, String guiId) {
+    public ImpactValue(UUID id, String name, ImpactValueType type, String description) {
         this();
         this.setId(id);
         this.setName(name);
         this.setType(type);
         this.setDescription(description);
-        this.setGuiId(guiId);
     }
 
     @Override
