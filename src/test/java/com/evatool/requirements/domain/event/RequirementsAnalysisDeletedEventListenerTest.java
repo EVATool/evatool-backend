@@ -28,7 +28,6 @@ class RequirementsAnalysisDeletedEventListenerTest {
     private RequirementEventListener requirementEventListener;
 
     @Test
-    @Disabled
     void testOnApplicationEvent_PublishEvent_AnalysisDeleted() {
         // given
         RequirementsAnalysis requirementsAnalysis = new RequirementsAnalysis();
