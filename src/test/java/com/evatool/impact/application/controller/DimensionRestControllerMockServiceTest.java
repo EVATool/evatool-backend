@@ -1,9 +1,6 @@
 package com.evatool.impact.application.controller;
 
-import com.evatool.EvaToolApp;
-import com.evatool.global.config.SwaggerConfig;
 import com.evatool.impact.application.dto.DimensionDto;
-import com.evatool.impact.application.service.DimensionService;
 import com.evatool.impact.common.DimensionType;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,12 +8,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -33,14 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(DimensionRestController.class)
-@ContextConfiguration(classes = {SwaggerConfig.class, EvaToolApp.class})
-class DimensionRestControllerMockServiceTest {
-
-    @Autowired
-    private MockMvc mvc;
-
-    @MockBean
-    private DimensionService dimensionService;
+class DimensionRestControllerMockServiceTest extends ControllerMockTest {
 
     @Nested
     class FindById {

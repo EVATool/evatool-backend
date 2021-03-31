@@ -1,16 +1,12 @@
 package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.DimensionDto;
-import com.evatool.impact.application.service.DimensionService;
 import com.evatool.impact.common.DimensionType;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -25,25 +21,8 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDt
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-class DimensionRestControllerTest {
+class DimensionRestControllerTest extends ControllerTest {
 
-    @Autowired
-    private TestRestTemplate testRestTemplate;
-
-    @Autowired
-    private DimensionService dimensionService;
-
-    @BeforeEach
-    public void clearDatabase() {
-        dimensionService.deleteAll();
-    }
-
-    private DimensionDto saveFullDummyDimensionDto() {
-        var dimension = createDummyDimension();
-        var dimensionDto = toDto(dimension);
-        return dimensionService.create(dimensionDto);
-
-    }
 
     @Nested
     class FindById {
