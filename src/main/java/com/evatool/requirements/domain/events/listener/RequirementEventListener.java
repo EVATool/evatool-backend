@@ -57,11 +57,16 @@ public class RequirementEventListener {
             throw new EventEntityAlreadyExistsException();
         }
         RequirementsImpact requirementsImpact = RequirementsImpact.fromJson(event.getJsonPayload());
-        Optional<RequirementDimension> requirementDimension = requirementDimensionRepository.findById(UUID.fromString(impactJson.getDimensionId()));
-        if(requirementDimension.isEmpty()){
-            logger.error("Dimension ist nicht vorhanden. ID:[{}]",impactJson.getDimensionId());
+        if(impactJson.getDimensionId()!=null) {
+            Optional<RequirementValue> requirementValue = requirementValueRepository.findById(UUID.fromString(impactJson.getDimensionId()));
+            if (requirementValue.isEmpty()) {
+                logger.error("Dimension ist nicht vorhanden. ID:[{}]", impactJson.getDimensionId());
+            } else {
+                requirementsImpact.setRequirementValue(requirementValue.get());
+            }
+        }else{
+            logger.error("Für das Impact wurde keine DimensionId übermittelt. JsonBody:[{}]", impactJson);
         }
-        requirementsImpact.setRequirementDimension(requirementDimension.get());
         requirementsImpactsRepository.save(requirementsImpact);
     }
 

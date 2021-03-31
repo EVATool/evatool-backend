@@ -28,4 +28,14 @@ public class ImpactJson {
         return  new Gson().fromJson(json, ImpactJson.class);
 
     }
+
+    @Override
+    public String toString() {
+        return "ImpactJson{" +
+                "id='" + id + '\'' +
+                ", value=" + value +
+                ", description='" + description + '\'' +
+                ", dimensionId='" + dimensionId + '\'' +
+                '}';
+    }
 }
