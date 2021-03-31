@@ -30,13 +30,13 @@ public class GlobalExceptionHandler {
         return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(NumericIdMustBeNullException.class)
-    public ResponseEntity<ErrorMessage> handleNumericIdMustBeNullException(NumericIdMustBeNullException exception, WebRequest webRequest) {
+    @ExceptionHandler(UniqueStringMustBeNullException.class)
+    public ResponseEntity<ErrorMessage> handleNumericIdMustBeNullException(UniqueStringMustBeNullException exception, WebRequest webRequest) {
         return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(NumericIdCannotBeUpdatedException.class)
-    public ResponseEntity<ErrorMessage> handleNumericIdCannotBeUpdatedException(NumericIdCannotBeUpdatedException exception, WebRequest webRequest) {
+    @ExceptionHandler(UniqueStringCannotBeUpdatedException.class)
+    public ResponseEntity<ErrorMessage> handleNumericIdCannotBeUpdatedException(UniqueStringCannotBeUpdatedException exception, WebRequest webRequest) {
         return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 

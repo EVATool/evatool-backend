@@ -8,7 +8,6 @@ import com.evatool.requirements.domain.events.listener.RequirementEventListener;
 import com.evatool.requirements.domain.repository.RequirementAnalysisRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,14 +29,11 @@ class RequirementsAnalysisCreateEventListenerTest {
     @Autowired
     private RequirementEventListener requirementEventListener;
 
-
     @Test
-    @Disabled
     void testOnApplicationEvent_PublishEvent_AnalysisCreated() {
-
         // given
         UUID id = UUID.randomUUID();
-        String json = String.format("{\"id\":\"%s\"}", id.toString());
+        String json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
         // when
         AnalysisCreatedEvent analysisCreatedEvent = new AnalysisCreatedEvent(json);
@@ -50,19 +46,17 @@ class RequirementsAnalysisCreateEventListenerTest {
     }
 
     @Test
-    @Disabled
     void testOnApplicationEvent_AnalysisAlreadyExists_ThrowEventEntityAlreadyExistsException() {
-
         // given
         UUID id = UUID.randomUUID();
-        String json = String.format("{\"id\":\"%s\"}", id.toString());
+        String json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
         RequirementsAnalysis requirementsAnalysis;
 
         try {
             JSONObject jsonObject = new JSONObject(json);
             requirementsAnalysis = new RequirementsAnalysis();
-            requirementsAnalysis.setAnalysisId(UUID.fromString(jsonObject.getString("id")));
+            requirementsAnalysis.setAnalysisId(UUID.fromString(jsonObject.getString("analysisId")));
         } catch (JSONException jex) {
             throw new InvalidEventPayloadException(json, jex);
         }
@@ -74,6 +68,5 @@ class RequirementsAnalysisCreateEventListenerTest {
 
         // then
         assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.analyseCreated(analysisCreatedEvent));
-
     }
 }

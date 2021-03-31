@@ -1,10 +1,13 @@
 package com.evatool;
 
-import com.evatool.analysis.enums.StakeholderLevel;
-import com.evatool.analysis.events.AnalysisEventPublisher;
-import com.evatool.analysis.model.Analysis;
-import com.evatool.analysis.model.Stakeholder;
-import com.evatool.analysis.repository.AnalysisImpactRepository;
+import com.evatool.analysis.domain.enums.StakeholderLevel;
+import com.evatool.analysis.domain.enums.ValueType;
+import com.evatool.analysis.domain.events.AnalysisEventPublisher;
+import com.evatool.analysis.domain.events.ValueEventPublisher;
+import com.evatool.analysis.domain.model.Analysis;
+import com.evatool.analysis.domain.model.Stakeholder;
+import com.evatool.analysis.domain.model.Value;
+import com.evatool.analysis.domain.repository.ValueRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
@@ -13,19 +16,18 @@ import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
-import com.evatool.impact.common.DimensionType;
-import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.common.ImpactValueType;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.event.DimensionEventPublisher;
+import com.evatool.impact.domain.entity.ImpactValue;
 import com.evatool.impact.domain.event.ImpactEventPublisher;
-import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
+import com.evatool.impact.domain.repository.ImpactValueRepository;
 import com.evatool.requirements.domain.repository.RequirementAnalysisRepository;
-import com.evatool.requirements.domain.repository.RequirementDimensionRepository;
+import com.evatool.requirements.domain.repository.RequirementValueRepository;
 import com.evatool.requirements.domain.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.domain.repository.RequirementsVariantsRepository;
 import com.evatool.variants.domain.entities.Variant;
@@ -78,8 +80,6 @@ class EvaToolAppTest {
 
             // then
             assertThat(impactStakeholder).isNotNull();
-            assertThat(impactStakeholder.getId()).isEqualTo(stakeholder.getStakeholderId());
-            assertThat(impactStakeholder.getName()).isEqualTo(stakeholder.getStakeholderName());
         }
 
         // Received by: Impact
@@ -98,8 +98,6 @@ class EvaToolAppTest {
 
             // then
             assertThat(impactStakeholder).isNotNull();
-            assertThat(impactStakeholder.getId()).isEqualTo(stakeholder.getStakeholderId());
-            assertThat(impactStakeholder.getName()).isEqualTo(stakeholder.getStakeholderName());
         }
 
         // Received by: Impact
@@ -163,13 +161,8 @@ class EvaToolAppTest {
 
             // then
             assertThat(impactAnalysis).isNotNull();
-            assertThat(impactAnalysis.getId()).isEqualTo(analysis.getAnalysisId());
-
             assertThat(requirementAnalysis).isNotNull();
-            assertThat(requirementAnalysis.getAnalysisId()).isEqualTo(analysis.getAnalysisId());
-
             assertThat(variantAnalysis).isNotNull();
-            assertThat(variantAnalysis.getAnalysisId()).isEqualTo(analysis.getAnalysisId());
         }
 
         // Received by: Impact, Requirement, Variant
@@ -196,75 +189,80 @@ class EvaToolAppTest {
 
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-    class DimensionEvent {
+    class ValueEvent {
 
         @Autowired
-        DimensionRepository dimensionRepository;
+        ValueRepository valueRepository;
 
         @Autowired
-        DimensionEventPublisher dimensionEventPublisher;
+        ValueEventPublisher valueEventPublisher;
 
         @Autowired
-        RequirementDimensionRepository requirementDimensionRepository;
+        ImpactValueRepository impactValueRepository;
+
+        @Autowired
+        RequirementValueRepository requirementValueRepository;
 
         @BeforeEach
         @AfterAll
         void clearDatabase() {
-            requirementDimensionRepository.deleteAll();
-            dimensionRepository.deleteAll();
+            requirementValueRepository.deleteAll();
+            impactValueRepository.deleteAll();
         }
 
-        Dimension createDummyDimension() {
-            return dimensionRepository.save(new Dimension("Name", DimensionType.SOCIAL, "Description"));
+        Value createDummyValue() {
+            return valueRepository.save(new Value("Name", ValueType.SOCIAL, "Description", "ANA01"));
         }
 
-        // Received by: Requirement
+        // Received by: Requirement, Impact
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var dimension = createDummyDimension();
+            var value = createDummyValue();
 
             // when
-            dimensionEventPublisher.publishDimensionCreated(dimension);
-            var requirementDimension = requirementDimensionRepository.findById(dimension.getId()).orElse(null);
+            valueEventPublisher.publishValueCreated(value);
+            var requirementValue = requirementValueRepository.findById(value.getId()).orElse(null);
+            var impactValue = impactValueRepository.findById(value.getId()).orElse(null);
 
             // then
-            assertThat(requirementDimension).isNotNull();
-            assertThat(requirementDimension.getId()).isEqualTo(dimension.getId());
-            assertThat(requirementDimension.getName()).isEqualTo(dimension.getName());
+            assertThat(requirementValue).isNotNull();
+            assertThat(impactValue).isNotNull();
         }
 
-        // Received by: Requirement
+        // Received by: Requirement, Impact
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var dimension = createDummyDimension();
-            dimensionEventPublisher.publishDimensionCreated(dimension);
+            var value = createDummyValue();
+            valueEventPublisher.publishValueCreated(value);
 
             // when
-            dimension.setName("new_name");
-            dimensionEventPublisher.publishDimensionUpdated(dimension);
-            var requirementDimension = requirementDimensionRepository.findById(dimension.getId()).orElse(null);
+            value.setName("new_name");
+            valueEventPublisher.publishValueUpdated(value);
+            var requirementValue = requirementValueRepository.findById(value.getId()).orElse(null);
+            var impactValue = impactValueRepository.findById(value.getId()).orElse(null);
 
             // then
-            assertThat(requirementDimension).isNotNull();
-            assertThat(requirementDimension.getId()).isEqualTo(dimension.getId());
-            assertThat(requirementDimension.getName()).isEqualTo(dimension.getName());
+            assertThat(requirementValue).isNotNull();
+            assertThat(impactValue).isNotNull();
         }
 
-        // Received by: Requirement
+        // Received by: Requirement, Impact
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var dimension = createDummyDimension();
-            dimensionEventPublisher.publishDimensionCreated(dimension);
+            var value = createDummyValue();
+            valueEventPublisher.publishValueCreated(value);
 
             // when
-            dimensionEventPublisher.publishDimensionDeleted(dimension);
-            var requirementDimension = requirementDimensionRepository.findById(dimension.getId()).orElse(null);
+            valueEventPublisher.publishValueDeleted(value);
+            var requirementValue = requirementValueRepository.findById(value.getId()).orElse(null);
+            var impactValue = impactValueRepository.findById(value.getId()).orElse(null);
 
             // then
-            assertThat(requirementDimension).isNull();
+            assertThat(requirementValue).isNull();
+            assertThat(impactValue).isNull();
         }
     }
 
@@ -276,10 +274,13 @@ class EvaToolAppTest {
         ImpactRepository impactRepository;
 
         @Autowired
-        DimensionRepository dimensionRepository;
+        ValueRepository valueRepository;
 
         @Autowired
-        DimensionEventPublisher dimensionEventPublisher;
+        ValueEventPublisher valueEventPublisher;
+
+        @Autowired
+        ImpactValueRepository impactValueRepository;
 
         @Autowired
         ImpactStakeholderRepository impactStakeholderRepository;
@@ -294,32 +295,27 @@ class EvaToolAppTest {
         RequirementsImpactsRepository requirementsImpactsRepository;
 
         @Autowired
-        RequirementDimensionRepository requirementDimensionRepository;
-
-        @Autowired
-        AnalysisImpactRepository analysisImpactRepository;
+        RequirementValueRepository requirementValueRepository;
 
         @BeforeEach
         @AfterAll
         void clearDatabase() {
             requirementsImpactsRepository.deleteAll();
-            requirementDimensionRepository.deleteAll();
-            analysisImpactRepository.deleteAll();
+            requirementValueRepository.deleteAll();
             impactRepository.deleteAll();
-            dimensionRepository.deleteAll();
+            impactValueRepository.deleteAll();
             impactStakeholderRepository.deleteAll();
             impactAnalysisRepository.deleteAll();
         }
 
         Impact createDummyImpact() {
-            var dimension = dimensionRepository.save(new Dimension("Name", DimensionType.SOCIAL, "Description"));
-            dimensionEventPublisher.publishDimensionCreated(dimension);
+            var value = impactValueRepository.save(new ImpactValue(UUID.randomUUID(), "Name", ImpactValueType.SOCIAL, "Description"));
             var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name"));
             var analysis = impactAnalysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
-            return impactRepository.save(new Impact(0.0, "Description", dimension, stakeholder, analysis));
+            return impactRepository.save(new Impact(0.0, "Description", value, stakeholder, analysis));
         }
 
-        // Received by: Requirement, Analysis
+        // Received by: Requirement
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -328,24 +324,12 @@ class EvaToolAppTest {
             // when
             impactEventPublisher.publishImpactCreated(impact);
             var requirementImpact = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
-            var analysisImpact = analysisImpactRepository.findById(impact.getId()).orElse(null);
 
             // then
             assertThat(requirementImpact).isNotNull();
-            assertThat(requirementImpact.getId()).isEqualTo(impact.getId());
-            //assertThat(requirementImpact.getValue()).isEqualTo(impact.getValue());
-            assertThat(requirementImpact.getDescription()).isEqualTo(impact.getDescription());
-            //assertThat(requirementImpact.getRequirementDimension().getId()).isEqualTo(impact.getDimension().getId());
-            //assertThat(requirementImpact.getRequirementDimension().getName()).isEqualTo(impact.getDimension().getName());
-
-            assertThat(analysisImpact).isNotNull();
-            assertThat(analysisImpact.getId()).isEqualTo(impact.getId());
-            assertThat(analysisImpact.getValue()).isEqualTo(impact.getValue());
-            assertThat(analysisImpact.getDescription()).isEqualTo(impact.getDescription());
-            //assertThat(analysisImpact.getDimension()).isEqualTo(impact.getDimension());
         }
 
-        // Received by: Requirement, Analysis
+        // Received by: Requirement
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -356,17 +340,12 @@ class EvaToolAppTest {
             impact.setValue(1.0);
             impactEventPublisher.publishImpactUpdated(impact);
             var requirementImpact = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
-            var analysisImpact = analysisImpactRepository.findById(impact.getId()).orElse(null);
 
             // then
             assertThat(requirementImpact).isNotNull();
-            //assertThat(requirementImpact.getValue()).isEqualTo(impact.getValue());
-
-            assertThat(analysisImpact).isNotNull();
-            assertThat(analysisImpact.getValue()).isEqualTo(impact.getValue());
         }
 
-        // Received by: Requirement, Analysis
+        // Received by: Requirement
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
@@ -376,11 +355,9 @@ class EvaToolAppTest {
             // when
             impactEventPublisher.publishImpactDeleted(impact);
             var requirementImpact = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
-            var analysisImpact = analysisImpactRepository.findById(impact.getId()).orElse(null);
 
             // then
             assertThat(requirementImpact).isNull();
-            assertThat(analysisImpact).isNull();
         }
     }
 
@@ -423,9 +400,6 @@ class EvaToolAppTest {
 
             // then
             assertThat(requirementsVariant).isNotNull();
-            assertThat(requirementsVariant.getId()).isEqualTo(variant.getId());
-            assertThat(requirementsVariant.getTitle()).isEqualTo(variant.getTitle());
-            assertThat(requirementsVariant.getDescription()).isEqualTo(variant.getDescription());
         }
 
         // Received by: Requirement
@@ -444,9 +418,6 @@ class EvaToolAppTest {
 
             // then
             assertThat(requirementsVariant).isNotNull();
-            assertThat(requirementsVariant.getId()).isEqualTo(variant.getId());
-            assertThat(requirementsVariant.getTitle()).isEqualTo(variant.getTitle());
-            assertThat(requirementsVariant.getDescription()).isEqualTo(variant.getDescription());
         }
 
         // Received by: Requirement

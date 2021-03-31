@@ -2,45 +2,27 @@ package com.evatool.impact.application.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 import java.util.UUID;
 
 @ApiModel(value = "ImpactStakeholder", description = "Stakeholder of an impact")
+@EqualsAndHashCode
+@ToString
 public class ImpactStakeholderDto {
 
     @ApiModelProperty
     @Getter
     @Setter
-    private UUID id;
+    private UUID id; // TODO technically @NotNull because foreign entities MUST be present in the domain
 
     @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull
     private String name;
-
-    @Override
-    public String toString() {
-        return "ImpactStakeholderDto{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ImpactStakeholderDto that = (ImpactStakeholderDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
 }

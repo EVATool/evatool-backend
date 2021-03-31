@@ -3,6 +3,7 @@ package com.evatool.requirements.domain.event;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.requirements.domain.entity.RequirementsAnalysis;
 import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
+import com.evatool.requirements.domain.entity.RequirementsAnalysis;
 import com.evatool.requirements.domain.events.listener.RequirementEventListener;
 import com.evatool.requirements.domain.repository.RequirementAnalysisRepository;
 import org.junit.jupiter.api.Disabled;
@@ -28,13 +29,12 @@ class RequirementsAnalysisDeletedEventListenerTest {
     private RequirementEventListener requirementEventListener;
 
     @Test
-    @Disabled
     void testOnApplicationEvent_PublishEvent_AnalysisDeleted() {
         // given
         RequirementsAnalysis requirementsAnalysis = new RequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
 
-        String json = String.format("{\"id\":\"%s\"}", requirementsAnalysis.getAnalysisId().toString());
+        String json = String.format("{\"analysisId\":\"%s\"}", requirementsAnalysis.getAnalysisId().toString());
         UUID tempId = requirementsAnalysis.getAnalysisId();
 
         // when
@@ -50,7 +50,7 @@ class RequirementsAnalysisDeletedEventListenerTest {
     void testOnApplicationEvent_AnalysisDoesNotExist_ThrowEventEntityDoesNotExistException() {
         // given
         UUID id = UUID.randomUUID();
-        String json = String.format("{\"id\":\"%s\"}", id.toString());
+        String json = String.format("{\"analysisId\":\"%s\"}", id.toString());
 
         // when
         AnalysisDeletedEvent analysisDeletedEvent = new AnalysisDeletedEvent(json);
