@@ -17,7 +17,6 @@ import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
-import com.evatool.impact.common.ImpactValueType;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
@@ -330,7 +329,7 @@ class EvaToolAppTest {
         Impact createDummyImpact() {
             var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name"));
             var analysis = impactAnalysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
-            var value = impactValueRepository.save(new ImpactValue(UUID.randomUUID(), "Name", ImpactValueType.SOCIAL, "Description" ,analysis));
+            var value = impactValueRepository.save(new ImpactValue(UUID.randomUUID(), "Name", "SOCIAL", "Description" ,analysis));
             return impactRepository.save(new Impact(0.0, "Description", value, stakeholder, analysis));
         }
 

@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.ImpactValueType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -27,7 +26,7 @@ public class ImpactValue extends SuperEntity {
 
     @Getter
     @Column(name = "TYPE", nullable = false)
-    private ImpactValueType type;
+    private String type;
 
     @Getter
     @Column(name = "DESCRIPTION", nullable = false)
@@ -42,7 +41,7 @@ public class ImpactValue extends SuperEntity {
         logger.debug("{} created", ImpactValue.class.getSimpleName());
     }
 
-    public ImpactValue(UUID id, String name, ImpactValueType type, String description, ImpactAnalysis analysis) {
+    public ImpactValue(UUID id, String name, String type, String description, ImpactAnalysis analysis) {
         this();
         this.setId(id);
         this.setName(name);
@@ -70,7 +69,7 @@ public class ImpactValue extends SuperEntity {
         this.name = name;
     }
 
-    public void setType(ImpactValueType type) {
+    public void setType(String type) {
         if (type == null) {
             logger.error("Attempted to set type to null");
             throw new IllegalArgumentException("Type cannot be null.");
@@ -90,12 +89,10 @@ public class ImpactValue extends SuperEntity {
     // TODO Tests
     public void setAnalysis(ImpactAnalysis analysis) {
         logger.debug("Set Analysis");
-
         if (this.analysis != null) {
             logger.error("Attempted to set existing analysis");
             throw new IllegalArgumentException("Existing analysis cannot be set.");
         }
-
         this.analysis = analysis;
     }
 }
