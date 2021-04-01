@@ -78,7 +78,6 @@ public class AnalysisControllerImpl implements AnalysisController {
         logger.info("[PUT] /analysis");
         analysisDTOService.update(analysisDTO);
         return getAnalysisById(analysisDTO.getRootEntityID());
-
     }
 
     @Override

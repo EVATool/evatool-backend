@@ -2,7 +2,7 @@ package com.evatool.analysis.model.entity;
 
 import org.junit.jupiter.api.Test;
 
-import static com.evatool.analysis.common.TestDataGenerator.getStakholder;
+import static com.evatool.analysis.common.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class StakeholderTest {
@@ -11,7 +11,7 @@ public class StakeholderTest {
     public void testSetStakeholderName() {
 
         // given
-        var stakeholder = getStakholder();
+        var stakeholder = getStakeholder();
 
         // when
 
@@ -23,7 +23,7 @@ public class StakeholderTest {
     public void testSetStakeholderLevel() {
 
         // given
-        var stakeholder = getStakholder();
+        var stakeholder = getStakeholder();
 
         // when
 
@@ -35,7 +35,7 @@ public class StakeholderTest {
     public void testSetStakeholderPriority() {
 
         // given
-        var stakeholder = getStakholder();
+        var stakeholder = getStakeholder();
 
         // when
 
@@ -47,7 +47,7 @@ public class StakeholderTest {
     public void testSetStakeholderGuiId() {
 
         // given
-        var stakeholder = getStakholder();
+        var stakeholder = getStakeholder();
 
         // when
 

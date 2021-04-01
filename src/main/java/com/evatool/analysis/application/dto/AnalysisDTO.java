@@ -14,5 +14,6 @@ public class AnalysisDTO {
     private String image;
     private Date date;
     private Boolean isTemplate;
+    private String uniqueString;
 
 }

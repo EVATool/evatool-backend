@@ -5,6 +5,7 @@ import com.evatool.analysis.application.dto.AnalysisMapper;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
+import com.evatool.analysis.domain.model.NumericId;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import org.slf4j.Logger;
@@ -58,7 +59,7 @@ public class AnalysisDTOService {
     public void update(AnalysisDTO analysisDTO){
         logger.debug("update [{}]", analysisDTO);
         Optional<Analysis> analysisOptional = analysisRepository.findById(analysisDTO.getRootEntityID());
-        if(analysisOptional.isEmpty())
+        if (analysisOptional.isEmpty())
             throw new EntityNotFoundException(Analysis.class, analysisDTO.getRootEntityID());
 
         Analysis analysis = analysisOptional.get();
@@ -66,6 +67,12 @@ public class AnalysisDTOService {
         analysis.setDescription(analysisDTO.getAnalysisDescription());
         analysis.setImage(analysisDTO.getImage());
         analysis.setLastUpdate(new Date(System.currentTimeMillis()));
+        analysis.setIsTemplate(analysisDTO.getIsTemplate());
+        if (analysisDTO.getUniqueString() != null) {
+            var numericId = new NumericId();
+            numericId.setNumericId(Integer.valueOf(analysisDTO.getUniqueString().replace("ANA", "")));
+            analysis.setNumericId(numericId);
+        }
 
         analysis = analysisRepository.save(analysis);
         eventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toJson()));

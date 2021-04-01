@@ -20,7 +20,7 @@ public class StakeholderRepoTest {
     public void testFindByIdExistingStakeholder() {
 
         // given
-        Stakeholder stakeholder = TestDataGenerator.getStakholder();
+        Stakeholder stakeholder = TestDataGenerator.getStakeholder();
         stakeholder = stakeholderRepository.save(stakeholder);
 
         // when
@@ -33,7 +33,7 @@ public class StakeholderRepoTest {
     @Test
     public void testSaveInsertedStakeholderIdIsNotNull() {
         // given
-        Stakeholder stakeholder = TestDataGenerator.getStakholder();
+        Stakeholder stakeholder = TestDataGenerator.getStakeholder();
 
         // when
         stakeholderRepository.save(stakeholder);
@@ -45,7 +45,7 @@ public class StakeholderRepoTest {
     @Test
     public void testSaveInsertedStakeholderIdIsUuid() {
         // given
-        Stakeholder stakeholder = TestDataGenerator.getStakholder();
+        Stakeholder stakeholder = TestDataGenerator.getStakeholder();
 
         // when
         stakeholderRepository.save(stakeholder);
@@ -59,7 +59,7 @@ public class StakeholderRepoTest {
     @Test
     public void testDeleteStakeholderReturnNull() {
         // given
-        Stakeholder stakeholder = TestDataGenerator.getStakholder();
+        Stakeholder stakeholder = TestDataGenerator.getStakeholder();
         stakeholderRepository.save(stakeholder);
 
         // when

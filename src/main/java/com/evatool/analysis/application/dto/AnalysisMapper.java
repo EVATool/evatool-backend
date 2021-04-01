@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class AnalysisMapper {
-    
+
     public List<AnalysisDTO> map(List<Analysis> resultList) {
         List<AnalysisDTO> analysisDTOList = new ArrayList<>();
         for(Analysis analysis : resultList){
@@ -25,6 +25,7 @@ public class AnalysisMapper {
         analysisDTO.setImage(analysis.getImage());
         analysisDTO.setDate(analysis.getLastUpdate());
         analysisDTO.setIsTemplate(analysis.getIsTemplate());
+        analysisDTO.setUniqueString(analysis.getUniqueString());
         return analysisDTO;
     }
 }
