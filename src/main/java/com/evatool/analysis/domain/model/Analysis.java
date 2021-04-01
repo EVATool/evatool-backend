@@ -44,7 +44,7 @@ public class Analysis {
 
     @Getter
     @Setter
-    private boolean isTemplate = false;
+    private Boolean isTemplate = false;
 
     public Analysis(String analysisName, String description) {
         this.analysisName = analysisName;
