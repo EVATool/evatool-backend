@@ -1,13 +1,14 @@
 package com.evatool.analysis.application.controller;
 
-import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.application.dto.StakeholderDTO;
+import com.evatool.analysis.application.interfaces.StakeholderController;
+import com.evatool.analysis.application.services.StakeholderDTOService;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
+import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
-import com.evatool.analysis.application.services.StakeholderDTOService;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
@@ -36,25 +37,29 @@ public class StakeholderControllerImpl implements StakeholderController {
     @Autowired
     private AnalysisEventPublisher stakeholderEventPublisher;
 
-
     Logger logger = LoggerFactory.getLogger(StakeholderControllerImpl.class);
-
 
     @Override
     public List<EntityModel<StakeholderDTO>> getStakeholderList() {
         logger.info("[GET] /stakeholders");
         List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
-        if (stakeholderList.isEmpty()){
+        if (stakeholderList.isEmpty()) {
             return Arrays.asList();
         }
         return generateLinks(stakeholderDTOService.findAll(stakeholderList));
     }
 
     @Override
+    public List<StakeholderLevel> findAllLevels() {
+        logger.info("Get Stakeholder Levels");
+        return Arrays.asList(StakeholderLevel.values());
+    }
+
+    @Override
     public EntityModel<StakeholderDTO> getStakeholderById(UUID id) {
         logger.info("[GET] /stakeholders/{id}");
         Optional<Stakeholder> stakeholder = stakeholderRepository.findById(id);
-        if (stakeholder.isEmpty()){
+        if (stakeholder.isEmpty()) {
             throw new EntityNotFoundException(Stakeholder.class, id);
         }
         return generateLinks(stakeholderDTOService.findById(stakeholder.get()));

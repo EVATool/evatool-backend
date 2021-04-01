@@ -2,6 +2,7 @@ package com.evatool.analysis.application.interfaces;
 
 
 import com.evatool.analysis.application.dto.StakeholderDTO;
+import com.evatool.analysis.domain.enums.StakeholderLevel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -9,10 +10,11 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.UUID;
 
-@Api ("API-endpoint for Stakeholder")
+@Api("API-endpoint for Stakeholder")
 public interface StakeholderController {
 
     @GetMapping("/stakeholders")
@@ -20,6 +22,12 @@ public interface StakeholderController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All entities returned")})
     public List<EntityModel<StakeholderDTO>> getStakeholderList();
+
+    @GetMapping("/stakeholders/levels")
+    @ApiOperation(value = "This method returns a list of stakeholder levels")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "All levels returned")})
+    public List<StakeholderLevel> findAllLevels();
 
     @GetMapping("/stakeholders/{id}")
     @ApiOperation(value = "This method returns an optional of an Stakeholder by his ID")
