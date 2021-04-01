@@ -29,7 +29,6 @@ public class AnalysisDTOService {
     @Autowired
     private AnalysisEventPublisher eventPublisher;
 
-
     public List<AnalysisDTO> findAll(List<Analysis> analysisDTOList) {
         logger.info("findAll");
         return analysisMapper.map(analysisDTOList);
@@ -41,7 +40,7 @@ public class AnalysisDTOService {
     }
 
     public Analysis create(AnalysisDTO analysisDTO) {
-        logger.debug("create [{}]",analysisDTO);
+        logger.debug("create [{}]", analysisDTO);
         Analysis analysis = new Analysis();
         analysis.setAnalysisName(analysisDTO.getAnalysisName());
         analysis.setDescription(analysisDTO.getAnalysisDescription());
@@ -64,6 +63,5 @@ public class AnalysisDTOService {
 
         analysis = analysisRepository.save(analysis);
         eventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toJson()));
-
     }
 }
