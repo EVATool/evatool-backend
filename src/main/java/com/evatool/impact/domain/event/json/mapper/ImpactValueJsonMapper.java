@@ -19,19 +19,34 @@ public class ImpactValueJsonMapper {
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    public static ImpactValue fromJson(String json) {
-        logger.info("Mapping Json to Entity");
+    public static ImpactValueJson fromString(String json) {
+        logger.info("Mapping String to Json");
         try {
-            var impactValueJson = new Gson().fromJson(json, ImpactValueJson.class);
-            return modelMapper.map(impactValueJson, ImpactValue.class);
-        } catch (JsonSyntaxException | IllegalArgumentException | MappingException ex) {
+            return new Gson().fromJson(json, ImpactValueJson.class);
+        } catch (JsonSyntaxException ex) {
             throw new EventPayloadInvalidException(json, ex);
         }
     }
 
-    public static String toJson(ImpactValue impactValue) {
+    public static ImpactValue fromJson(ImpactValueJson impactValueJson) {
+        logger.info("Mapping Json to Entity");
+        try {
+            return modelMapper.map(impactValueJson, ImpactValue.class);
+        } catch (IllegalArgumentException | MappingException ex) {
+            throw new EventPayloadInvalidException(impactValueJson.toString(), ex);
+        }
+    }
+
+    public static ImpactValueJson toJson(ImpactValue impactValue) {
         logger.info("Mapping Entity to Json");
-        var impactValueJson = modelMapper.map(impactValue, ImpactValueJson.class);
+        return modelMapper.map(impactValue, ImpactValueJson.class);
+    }
+
+    public static String toString(ImpactValueJson impactValueJson) {
         return new Gson().toJson(impactValueJson);
+    }
+
+    public static String toString(ImpactValue impactValue) {
+        return toString(toJson(impactValue));
     }
 }

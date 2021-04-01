@@ -8,8 +8,7 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
 import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-class SuperEntityUuidGeneratorTest {
+class SuperEntityUuidGeneratorTest  extends  RepositoryTest{
 
     @Autowired
     private ImpactRepository impactRepository;
@@ -32,7 +31,7 @@ class SuperEntityUuidGeneratorTest {
     @Test
     void testPersist_NotNullId_PresetIdWasInserted() {
         // given
-        var superEntity = createDummyValue();
+        var superEntity = saveDummyValue();
         var presetId = superEntity.getId();
 
         // when

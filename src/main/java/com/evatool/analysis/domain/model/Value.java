@@ -41,6 +41,11 @@ public class Value {
     @Column(name = "GUIID", nullable = false)
     private String guiId;
 
+    @Getter
+    @Setter
+    @ManyToOne
+    private Analysis analysis;
+
     public Value() {
         super();
         logger.debug("{} created", Value.class.getSimpleName());
@@ -61,6 +66,7 @@ public class Value {
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
                 ", guiId='" + guiId + '\'' +
+                ", analysis='" + analysis + '\'' +
                 '}';
     }
 

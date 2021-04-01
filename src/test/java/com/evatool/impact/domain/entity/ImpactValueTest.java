@@ -1,8 +1,8 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.ImpactValueType;
 import org.junit.jupiter.api.Test;
 
+import static com.evatool.impact.common.TestDataGenerator.createDummyAnalysis;
 import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -10,7 +10,7 @@ class ImpactValueTest {
 
     @Test
     void testConstructor_NullId_ThrowIllegalArgumentException() {
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new ImpactValue(null, "name", ImpactValueType.SOCIAL, "desc"));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new ImpactValue(null, "name", "SOCIAL", "desc", createDummyAnalysis()));
     }
 
     @Test
