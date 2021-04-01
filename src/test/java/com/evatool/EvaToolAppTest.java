@@ -7,6 +7,7 @@ import com.evatool.analysis.domain.events.ValueEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.model.Value;
+import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.domain.repository.ValueRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
@@ -198,6 +199,12 @@ class EvaToolAppTest {
         ValueEventPublisher valueEventPublisher;
 
         @Autowired
+        AnalysisEventPublisher analysisEventPublisher;
+
+        @Autowired
+        AnalysisRepository analysisRepository;
+
+        @Autowired
         ImpactValueRepository impactValueRepository;
 
         @Autowired
@@ -210,15 +217,27 @@ class EvaToolAppTest {
             impactValueRepository.deleteAll();
         }
 
-        Value createDummyValue() {
-            return valueRepository.save(new Value("Name", ValueType.SOCIAL, "Description", "ANA01"));
+        Analysis saveDummyAnalysisAndFire() {
+            var analysis = analysisRepository.save(new Analysis("name", "desc"));
+            var analysisCreatedEvent = new AnalysisCreatedEvent(analysis.toJson());
+            analysisEventPublisher.publishEvent(analysisCreatedEvent);
+            return analysis;
+        }
+
+        Value saveDummyValue() {
+            var value = valueRepository.save(new Value("Name", ValueType.SOCIAL, "Description", "ANA01"));
+            var analysis = saveDummyAnalysisAndFire();
+            value.setAnalysis(analysis);
+            return value;
         }
 
         // Received by: Requirement, Impact
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var value = createDummyValue();
+            var value = saveDummyValue();
+            System.out.println("____________________");
+            System.out.println(value);
 
             // when
             valueEventPublisher.publishValueCreated(value);
@@ -234,7 +253,7 @@ class EvaToolAppTest {
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var value = createDummyValue();
+            var value = saveDummyValue();
             valueEventPublisher.publishValueCreated(value);
 
             // when
@@ -252,7 +271,7 @@ class EvaToolAppTest {
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var value = createDummyValue();
+            var value = saveDummyValue();
             valueEventPublisher.publishValueCreated(value);
 
             // when

@@ -29,12 +29,7 @@ public class ValueJson {
     @Setter
     private String guiId;
 
-    public boolean equalsEntity(Value that) {
-        if (that == null) return false;
-        return Objects.equals(this.id, that.getId().toString())
-                && Objects.equals(this.name, that.getName())
-                && Objects.equals(this.type, that.getType().toString())
-                && Objects.equals(this.description, that.getDescription())
-                && Objects.equals(this.guiId, that.getGuiId());
-    }
+    @Getter
+    @Setter
+    private String analysisId;
 }

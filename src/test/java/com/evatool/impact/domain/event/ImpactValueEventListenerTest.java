@@ -25,7 +25,7 @@ class ImpactValueEventListenerTest extends EventListenerTest {
         void testOnValueCreatedEvent_PublishEvent_ValueCreated() {
             // given
             var value = saveDummyValueChildren();
-            var json = ImpactValueJsonMapper.toJson(value);
+            var json = ImpactValueJsonMapper.toString(value);
 
             // when
             var valueCreatedEvent = new ValueCreatedEvent(this, json);
@@ -40,7 +40,7 @@ class ImpactValueEventListenerTest extends EventListenerTest {
         void testOnValueCreatedEvent_ValueAlreadyExists_ThrowEventEntityAlreadyExistsException() {
             // given
             var value = saveDummyValueChildren();
-            var json = ImpactValueJsonMapper.toJson(value);
+            var json = ImpactValueJsonMapper.toString(value);
             valueRepository.save(value);
 
             // when
@@ -58,7 +58,7 @@ class ImpactValueEventListenerTest extends EventListenerTest {
         void testOnValueDeletedEvent_PublishEvent_ValueDeleted() {
             // given
             var value = saveDummyValueChildren();
-            var json = ImpactValueJsonMapper.toJson(value);
+            var json = ImpactValueJsonMapper.toString(value);
             valueRepository.save(value);
 
             // when
@@ -74,7 +74,7 @@ class ImpactValueEventListenerTest extends EventListenerTest {
         void testOnValueDeletedEvent_ValueDoesNotExist_ThrowEventEntityDoesNotExistException() {
             // given
             var value = saveDummyValueChildren();
-            var json = ImpactValueJsonMapper.toJson(value);
+            var json = ImpactValueJsonMapper.toString(value);
 
             // when
             var valueDeletedEvent = new ValueDeletedEvent(this, json);
@@ -91,7 +91,7 @@ class ImpactValueEventListenerTest extends EventListenerTest {
         void testOnValueUpdatedEvent_PublishEvent_ValueUpdated() {
             // given
             var value = saveDummyValueChildren();
-            var json = ImpactValueJsonMapper.toJson(value);
+            var json = ImpactValueJsonMapper.toString(value);
             valueRepository.save(value);
 
             // when
@@ -107,7 +107,7 @@ class ImpactValueEventListenerTest extends EventListenerTest {
         void testOnValueUpdatedEvent_ValueDoesNotExists_ThrowEventEntityDoesNotExistException() {
             // given
             var value = saveDummyValueChildren();
-            var json = ImpactValueJsonMapper.toJson(value);
+            var json = ImpactValueJsonMapper.toString(value);
 
             // when
             var valueUpdatedEvent = new ValueUpdatedEvent(this, json);

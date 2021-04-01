@@ -55,8 +55,9 @@ public class ControllerTest {
 
     protected ImpactDto saveFullDummyImpactDto() {
         var analysis = analysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
+        var value = valueRepository.save(createDummyValue(analysis));
         var impact = createDummyImpact(analysis);
-        impact.setValueEntity(valueRepository.save(impact.getValueEntity()));
+        impact.setValueEntity(value);
         impact.setStakeholder(stakeholderRepository.save(impact.getStakeholder()));
         return impactService.create(toDto(impact));
     }

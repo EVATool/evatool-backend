@@ -6,6 +6,7 @@ import com.evatool.global.event.value.ValueUpdatedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.entity.ImpactValue;
+import com.evatool.impact.domain.event.json.ImpactValueJson;
 import com.evatool.impact.domain.event.json.mapper.ImpactValueJsonMapper;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactValueRepository;
@@ -32,8 +33,10 @@ public class ImpactValueEventListener {
     public void onValueCreatedEvent(final ValueCreatedEvent event) {
         logger.info("Value created event received");
         var jsonPayload = event.getJsonPayload();
-        var value = ImpactValueJsonMapper.fromJson(jsonPayload);
-        if (impactValueRepository.existsById(value.getId())) {
+        var valueJson = ImpactValueJsonMapper.fromString(jsonPayload);
+        assertChildrenExist(valueJson);
+        var value = ImpactValueJsonMapper.fromJson(valueJson);
+        if (impactValueRepository.existsById(valueJson.getId())) {
             throw new EventEntityAlreadyExistsException(ImpactValue.class.getSimpleName());
         }
         impactValueRepository.save(value);
@@ -44,8 +47,10 @@ public class ImpactValueEventListener {
     public void onValueDeletedEvent(final ValueDeletedEvent event) {
         logger.info("Value deleted event received");
         var jsonPayload = event.getJsonPayload();
-        var value = ImpactValueJsonMapper.fromJson(jsonPayload);
-        if (!impactValueRepository.existsById(value.getId())) {
+        var valueJson = ImpactValueJsonMapper.fromString(jsonPayload);
+        assertChildrenExist(valueJson);
+        var value = ImpactValueJsonMapper.fromJson(valueJson);
+        if (!impactValueRepository.existsById(valueJson.getId())) {
             throw new EventEntityDoesNotExistException(ImpactValue.class.getSimpleName());
         }
         impactValueRepository.delete(value);
@@ -56,15 +61,17 @@ public class ImpactValueEventListener {
     public void onValueUpdatedEvent(final ValueUpdatedEvent event) {
         logger.info("Value updated event received");
         var jsonPayload = event.getJsonPayload();
-        var value = ImpactValueJsonMapper.fromJson(jsonPayload);
-        if (!impactValueRepository.existsById(value.getId())) {
+        var valueJson = ImpactValueJsonMapper.fromString(jsonPayload);
+        assertChildrenExist(valueJson);
+        var value = ImpactValueJsonMapper.fromJson(valueJson);
+        if (!impactValueRepository.existsById(valueJson.getId())) {
             throw new EventEntityDoesNotExistException(ImpactValue.class.getSimpleName());
         }
         impactValueRepository.save(value);
         logger.info("Value updated event successfully processed");
     }
 
-    private void assertChildrenExist(ImpactValue impactValue) { // TODO ImpactValueJson...
-        this.impactAnalysisRepository.findById(impactValue.getAnalysis().getId());
+    private void assertChildrenExist(ImpactValueJson impactValueJson) { // TODO add tests
+        this.impactAnalysisRepository.findById(impactValueJson.getAnalysisId());
     }
 }

@@ -33,7 +33,7 @@ public class ImpactValueJson {
 
     public boolean equalsEntity(ImpactValue that) {
         if (that == null) return false;
-        return Objects.equals(this.id, that.getId().toString())
+        return Objects.equals(this.id, that.getId())
                 && Objects.equals(this.name, that.getName())
                 && Objects.equals(this.type, that.getType().toString())
                 && Objects.equals(this.description, that.getDescription())

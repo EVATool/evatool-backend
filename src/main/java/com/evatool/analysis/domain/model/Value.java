@@ -66,6 +66,7 @@ public class Value {
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
                 ", guiId='" + guiId + '\'' +
+                ", analysis='" + analysis + '\'' +
                 '}';
     }
 
