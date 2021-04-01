@@ -1,20 +1,27 @@
-package com.evatool.impact.domain.repository;
+package com.evatool.impact.domain.event;
 
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.entity.ImpactValue;
+import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
+import com.evatool.impact.domain.repository.ImpactRepository;
+import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
+import com.evatool.impact.domain.repository.ImpactValueRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.evatool.impact.common.TestDataGenerator.*;
 
-@DataJpaTest
+@SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RepositoryTest {
+class EventListenerTest { // TODO make abstarct +all other base test classes
+
+    @Autowired
+    protected ImpactAnalysisRepository analysisRepository;
 
     @Autowired
     protected ImpactRepository impactRepository;
@@ -56,9 +63,12 @@ public class RepositoryTest {
         return impactRepository.save(impact);
     }
 
+    protected ImpactValue saveDummyValueChildren() {
+        return createDummyValue(analysisRepository.save(createDummyAnalysis()));
+    }
+
     protected ImpactValue saveDummyValue() {
-        var analysis = saveDummyAnalysis();
-        return valueRepository.save(createDummyValue(analysis));
+        return valueRepository.save(createDummyValue());
     }
 
     protected ImpactStakeholder saveDummyStakeholder() {

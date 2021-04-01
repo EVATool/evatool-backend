@@ -38,4 +38,10 @@ public class ImpactValueDto {
     @Setter
     @NotNull
     private String description;
+
+    @ApiModelProperty(required = true)
+    @Getter
+    @Setter
+    @NotNull
+    private UUID analysisId; // TODO add tests
 }

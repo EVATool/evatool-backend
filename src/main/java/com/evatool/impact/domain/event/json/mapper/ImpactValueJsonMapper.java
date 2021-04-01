@@ -34,4 +34,6 @@ public class ImpactValueJsonMapper {
         var impactValueJson = modelMapper.map(impactValue, ImpactValueJson.class);
         return new Gson().toJson(impactValueJson);
     }
+
+    //public static ImpactValueJson fromString()
 }

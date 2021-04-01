@@ -42,12 +42,13 @@ public class ImpactValue extends SuperEntity {
         logger.debug("{} created", ImpactValue.class.getSimpleName());
     }
 
-    public ImpactValue(UUID id, String name, ImpactValueType type, String description) {
+    public ImpactValue(UUID id, String name, ImpactValueType type, String description, ImpactAnalysis analysis) {
         this();
         this.setId(id);
         this.setName(name);
         this.setType(type);
         this.setDescription(description);
+        this.setAnalysis(analysis);
     }
 
     @Override

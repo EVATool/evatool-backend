@@ -7,6 +7,7 @@ import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.entity.ImpactValue;
 import com.evatool.impact.domain.event.json.mapper.ImpactValueJsonMapper;
+import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactValueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +21,11 @@ public class ImpactValueEventListener {
 
     private final ImpactValueRepository impactValueRepository;
 
-    public ImpactValueEventListener(ImpactValueRepository impactValueRepository) {
+    private final ImpactAnalysisRepository impactAnalysisRepository;
+
+    public ImpactValueEventListener(ImpactValueRepository impactValueRepository, ImpactAnalysisRepository impactAnalysisRepository) {
         this.impactValueRepository = impactValueRepository;
+        this.impactAnalysisRepository = impactAnalysisRepository;
     }
 
     @EventListener
@@ -58,5 +62,9 @@ public class ImpactValueEventListener {
         }
         impactValueRepository.save(value);
         logger.info("Value updated event successfully processed");
+    }
+
+    private void assertChildrenExist(ImpactValue impactValue) { // TODO ImpactValueJson...
+        this.impactAnalysisRepository.findById(impactValue.getAnalysis().getId());
     }
 }

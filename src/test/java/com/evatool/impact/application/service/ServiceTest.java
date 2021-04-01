@@ -68,7 +68,8 @@ public class ServiceTest {
     }
 
     protected ImpactValue saveFullDummyValue() {
-        return valueRepository.save(createDummyValue());
+        var analysis = saveFullDummyAnalysis();
+        return valueRepository.save(createDummyValue(analysis));
     }
 
     protected ImpactStakeholder saveFullDummyStakeholder() {
