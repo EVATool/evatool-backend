@@ -34,8 +34,14 @@ public class AnalysisDTOService {
         return analysisMapper.map(analysisDTOList);
     }
 
+    public List<Analysis> findAllByIdTemplate(boolean isTemplate) {
+        logger.info("findAll");
+        var analyses = analysisRepository.findAllByIsTemplate(isTemplate);
+        return analyses;
+    }
+
     public AnalysisDTO findById(Analysis analysis) {
-        logger.debug("findId [{}]",analysis);
+        logger.debug("findId [{}]", analysis);
         return analysisMapper.map(analysis);
     }
 
