@@ -20,7 +20,7 @@ public class TestDataGenerator {
     }
 
     public static ImpactStakeholder createDummyStakeholder() {
-        return new ImpactStakeholder(UUID.randomUUID(), "dummyStakeholder");
+        return new ImpactStakeholder(UUID.randomUUID(), "dummyStakeholder", "society");
     }
 
     public static Impact createDummyImpact() {

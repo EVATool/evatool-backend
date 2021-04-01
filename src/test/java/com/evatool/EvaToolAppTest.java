@@ -327,7 +327,7 @@ class EvaToolAppTest {
         }
 
         Impact createDummyImpact() {
-            var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name"));
+            var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name", "Level"));
             var analysis = impactAnalysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
             var value = impactValueRepository.save(new ImpactValue(UUID.randomUUID(), "Name", "SOCIAL", "Description" ,analysis));
             return impactRepository.save(new Impact(0.0, "Description", value, stakeholder, analysis));
