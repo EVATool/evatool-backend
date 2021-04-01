@@ -3,6 +3,7 @@ package com.evatool.requirements.domain.event;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.requirements.domain.entity.RequirementsAnalysis;
 import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
+import com.evatool.requirements.domain.entity.RequirementsAnalysis;
 import com.evatool.requirements.domain.events.listener.RequirementEventListener;
 import com.evatool.requirements.domain.repository.RequirementAnalysisRepository;
 import org.junit.jupiter.api.Disabled;
@@ -28,7 +29,6 @@ class RequirementsAnalysisDeletedEventListenerTest {
     private RequirementEventListener requirementEventListener;
 
     @Test
-    @Disabled
     void testOnApplicationEvent_PublishEvent_AnalysisDeleted() {
         // given
         RequirementsAnalysis requirementsAnalysis = new RequirementsAnalysis();

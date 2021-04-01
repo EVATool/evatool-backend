@@ -8,7 +8,6 @@ import com.evatool.requirements.domain.events.listener.RequirementEventListener;
 import com.evatool.requirements.domain.repository.RequirementAnalysisRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

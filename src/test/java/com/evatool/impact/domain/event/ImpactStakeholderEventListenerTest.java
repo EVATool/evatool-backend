@@ -5,32 +5,20 @@ import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
+import com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.UUID;
-
+import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@SpringBootTest
-class ImpactStakeholderEventListenerTest {
-
-    @Autowired
-    private ImpactStakeholderRepository stakeholderRepository;
+class ImpactStakeholderEventListenerTest  extends  EventListenerTest{
 
     @Autowired
     private ImpactStakeholderEventListener impactStakeholderEventListener;
-
-    @BeforeEach
-    void clearData() {
-        stakeholderRepository.deleteAll();
-    }
 
     @Nested
     class Created {
@@ -38,29 +26,23 @@ class ImpactStakeholderEventListenerTest {
         @Test
         void testOnStakeholderCreatedEvent_PublishEvent_StakeholderCreated() {
             // given
-            var id = UUID.randomUUID();
-            var name = "name";
-            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
+            var stakeholder = createDummyStakeholder();
+            var json = ImpactStakeholderJsonMapper.toJson(stakeholder);
 
             // when
             var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, json);
             impactStakeholderEventListener.onStakeholderCreatedEvent(stakeholderCreatedEvent);
 
             // then
-            var createdByEvent = stakeholderRepository.findById(id);
-            assertThat(createdByEvent).isPresent();
-            assertThat(createdByEvent.get().getId()).isEqualTo(id);
-            assertThat(createdByEvent.get().getName()).isEqualTo(name);
+            var createdByEvent = stakeholderRepository.findById(stakeholder.getId());
+            assertThat(createdByEvent).contains(stakeholder);
         }
 
         @Test
         void testOnStakeholderCreatedEvent_StakeholderAlreadyExists_ThrowEventEntityAlreadyExistsException() {
             // given
-            var id = UUID.randomUUID();
-            var name = "name";
-            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
-
-            var stakeholder = new ImpactStakeholder(id, name);
+            var stakeholder = createDummyStakeholder();
+            var json = ImpactStakeholderJsonMapper.toJson(stakeholder);
             stakeholderRepository.save(stakeholder);
 
             // when
@@ -77,11 +59,8 @@ class ImpactStakeholderEventListenerTest {
         @Test
         void testOnStakeholderDeletedEvent_PublishEvent_StakeholderDeleted() {
             // given
-            var id = UUID.randomUUID();
-            var name = "name";
-            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
-
-            var stakeholder = new ImpactStakeholder(id, name);
+            var stakeholder = createDummyStakeholder();
+            var json = ImpactStakeholderJsonMapper.toJson(stakeholder);
             stakeholderRepository.save(stakeholder);
 
             // when
@@ -89,16 +68,15 @@ class ImpactStakeholderEventListenerTest {
             impactStakeholderEventListener.onStakeholderDeletedEvent(stakeholderDeletedEvent);
 
             // then
-            var deletedByEventStakeholder = stakeholderRepository.findById(id);
+            var deletedByEventStakeholder = stakeholderRepository.findById(stakeholder.getId());
             assertThat(deletedByEventStakeholder).isNotPresent();
         }
 
         @Test
         void testOnStakeholderDeletedEvent_StakeholderDoesNotExist_ThrowEventEntityDoesNotExistException() {
             // given
-            var id = UUID.randomUUID();
-            var name = "name";
-            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
+            var stakeholder = createDummyStakeholder();
+            var json = ImpactStakeholderJsonMapper.toJson(stakeholder);
 
             // when
             var stakeholderDeletedEvent = new StakeholderDeletedEvent(this, json);
@@ -114,11 +92,8 @@ class ImpactStakeholderEventListenerTest {
         @Test
         void testOnStakeholderUpdatedEvent_PublishEvent_StakeholderUpdated() {
             // given
-            var id = UUID.randomUUID();
-            var name = "name";
-            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
-
-            var stakeholder = new ImpactStakeholder(id, "old_name");
+            var stakeholder = createDummyStakeholder();
+            var json = ImpactStakeholderJsonMapper.toJson(stakeholder);
             stakeholderRepository.save(stakeholder);
 
             // when
@@ -126,18 +101,15 @@ class ImpactStakeholderEventListenerTest {
             impactStakeholderEventListener.onStakeholderUpdatedEvent(stakeholderUpdatedEvent);
 
             // then
-            var updatedByEventStakeholder = stakeholderRepository.findById(id);
-            assertThat(updatedByEventStakeholder).isPresent();
-            assertThat(updatedByEventStakeholder.get().getId()).isEqualTo(id);
-            assertThat(updatedByEventStakeholder.get().getName()).isEqualTo(name);
+            var updatedByEventStakeholder = stakeholderRepository.findById(stakeholder.getId());
+            assertThat(updatedByEventStakeholder).contains(stakeholder);
         }
 
         @Test
         void testOnStakeholderUpdatedEvent_StakeholderDoesNotExists_ThrowEventEntityDoesNotExistException() {
             // given
-            var id = UUID.randomUUID();
-            var name = "name";
-            var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", id.toString(), name);
+            var stakeholder = createDummyStakeholder();
+            var json = ImpactStakeholderJsonMapper.toJson(stakeholder);
 
             // when
             var stakeholderUpdatedEvent = new StakeholderUpdatedEvent(this, json);

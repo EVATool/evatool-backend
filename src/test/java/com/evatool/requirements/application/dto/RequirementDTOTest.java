@@ -31,14 +31,14 @@ class RequirementDTOTest {
     }
 
     @Test
-    void testSetDimensions_NullValue_ThrowException() {
+    void testSetValues_NullValue_ThrowException() {
         // given
         RequirementDTO requirementDTO = new RequirementDTO();
 
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTO.setDimensions(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTO.setValues(null));
     }
 
     @Test

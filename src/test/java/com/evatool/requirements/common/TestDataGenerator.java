@@ -13,16 +13,16 @@ import java.util.UUID;
 
 public class TestDataGenerator {
 
-    public static RequirementDimension getRequirementDimension(){
-        return new RequirementDimension("DimensionTitle");
+    public static RequirementValue getRequirementValue(){
+        return new RequirementValue("ValuesTitle");
     }
 
     public static Requirement getRequirement(RequirementsAnalysis requirementsAnalysis, Collection<RequirementsVariant> variants) {
         return new Requirement("requirementTitle","descriptionTitle",requirementsAnalysis,variants);
     }
 
-    public static RequirementsImpact getRequirementsImpacts(RequirementDimension requirementDimension) {
-        return new RequirementsImpact("Description",10d, requirementDimension);
+    public static RequirementsImpact getRequirementsImpacts(RequirementValue requirementValue) {
+        return new RequirementsImpact("Description",10d, requirementValue);
     }
 
     public static RequirementsVariant getRequirementsVariant() {
@@ -48,9 +48,9 @@ public class TestDataGenerator {
         return new RequirementPoint(requirementsImpact, 3d);
     }
 
-    public static RequirementPoint getRequirementGR(RequirementDimension requirementDimension,RequirementsAnalysis requirementsAnalysis, Collection<RequirementsVariant> variants) {
+    public static RequirementPoint getRequirementGR(RequirementValue requirementValue, RequirementsAnalysis requirementsAnalysis, Collection<RequirementsVariant> variants) {
 
-        return new RequirementPoint(getRequirementsImpacts(requirementDimension), 3d);
+        return new RequirementPoint(getRequirementsImpacts(requirementValue), 3d);
     }
 
     public static RequirementDTO getRequirementDTO(UUID projectID,Map<UUID, EntityModel<VariantsDTO>> variantsTitle) {

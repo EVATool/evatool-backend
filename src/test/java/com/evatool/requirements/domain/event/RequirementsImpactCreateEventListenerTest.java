@@ -1,10 +1,12 @@
 package com.evatool.requirements.domain.event;
 
 import com.evatool.global.event.impact.ImpactCreatedEvent;
+import com.evatool.requirements.domain.entity.RequirementValue;
 import com.evatool.requirements.domain.entity.RequirementsImpact;
 import com.evatool.requirements.common.exceptions.EventEntityAlreadyExistsException;
 import com.evatool.requirements.common.exceptions.InvalidEventPayloadException;
 import com.evatool.requirements.domain.events.listener.RequirementEventListener;
+import com.evatool.requirements.domain.repository.RequirementValueRepository;
 import com.evatool.requirements.domain.repository.RequirementsImpactsRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,14 +29,20 @@ class RequirementsImpactCreateEventListenerTest {
     private RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
+    private RequirementValueRepository requirementValueRepository;
+
+    @Autowired
     private RequirementEventListener requirementEventListener;
 
     @Test
     void testOnApplicationEvent_PublishEvent_ImpactCreated() {
         // given
+        RequirementValue requirementValue = new RequirementValue();
+        requirementValueRepository.save(requirementValue);
+
         UUID id = UUID.randomUUID();
         String description = "description";
-        String json = String.format("{\"id\":\"%s\",\"description\":\"%s\"}", id.toString(), description);
+        String json = String.format("{\"id\":\"%s\",\"description\":\"%s\",\"dimensionId\":\"%s\"}", id.toString(), description,requirementValue.getId().toString());
 
         // when
         ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(requirementEventListener, json);

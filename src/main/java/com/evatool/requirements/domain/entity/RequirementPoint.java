@@ -46,7 +46,7 @@ public class RequirementPoint {
 
     public void setPoints(Double points) throws IllegalArgumentException {
         if (points < -1 || points > 1) {
-            throw new IllegalDtoValueExcpetion("Value must be in range [-1, 1]");
+            throw new IllegalDtoValueExcpetion("ImpactValue must be in range [-1, 1]");
         }
 
         this.points = points;

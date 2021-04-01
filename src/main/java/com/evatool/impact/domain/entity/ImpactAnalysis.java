@@ -1,5 +1,7 @@
 package com.evatool.impact.domain.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +11,8 @@ import java.util.UUID;
 
 @Entity(name = "IMP_ANALYSIS")
 @Table(name = "IMP_ANALYSIS")
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class ImpactAnalysis extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactAnalysis.class);
@@ -21,13 +25,6 @@ public class ImpactAnalysis extends SuperEntity {
     public ImpactAnalysis(UUID id) {
         this();
         this.setId(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Analysis{" +
-                "id='" + this.id + '\'' +
-                '}';
     }
 
     @Override

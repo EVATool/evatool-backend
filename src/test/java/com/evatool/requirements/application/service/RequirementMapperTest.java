@@ -27,7 +27,7 @@ class RequirementMapperTest {
     RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
-    RequirementDimensionRepository requirementDimensionRepository;
+    RequirementValueRepository requirementValueRepository;
 
     @Autowired
     RequirementRepository requirementRepository;
@@ -56,10 +56,10 @@ class RequirementMapperTest {
         Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariants);
         requirementRepository.save(requirement);
 
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(requirementsImpact);
 
         RequirementDTO requirementDTO = requirementMapper.map(requirement);
@@ -89,10 +89,10 @@ class RequirementMapperTest {
         Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariants);
         requirementRepository.save(requirement);
 
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         requirementsImpactsRepository.save(requirementsImpact);
 
         ArrayList<Requirement> requirements = new ArrayList<>();

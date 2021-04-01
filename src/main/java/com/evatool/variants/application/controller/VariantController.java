@@ -1,7 +1,6 @@
 package com.evatool.variants.application.controller;
 
-import com.evatool.analysis.dto.AnalysisDTO;
-import com.evatool.impact.application.controller.DimensionRestController;
+
 import com.evatool.variants.application.dto.VariantDto;
 import com.evatool.variants.application.services.VariantService;
 import com.evatool.variants.domain.entities.Variant;

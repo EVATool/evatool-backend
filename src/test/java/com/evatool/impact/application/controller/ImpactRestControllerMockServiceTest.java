@@ -1,21 +1,14 @@
 package com.evatool.impact.application.controller;
 
-import com.evatool.EvaToolApp;
-import com.evatool.global.config.SwaggerConfig;
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.service.ImpactService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -34,14 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ImpactRestController.class)
-@ContextConfiguration(classes = {SwaggerConfig.class, EvaToolApp.class})
-public class ImpactRestControllerMockServiceTest {
-
-    @Autowired
-    private MockMvc mvc;
-
-    @MockBean
-    private ImpactService impactService;
+public class ImpactRestControllerMockServiceTest extends ControllerMockTest {
 
     @Nested
     class FindById {
@@ -66,7 +52,7 @@ public class ImpactRestControllerMockServiceTest {
         void testFindById_ExistingImpact_CorrectRestLevel3() throws Exception {
             // given
             var impactDto = createDummyImpactDto();
-            impactDto.getDimension().setId(UUID.randomUUID());
+            impactDto.getValueEntity().setId(UUID.randomUUID());
             impactDto.getStakeholder().setId(UUID.randomUUID());
             impactDto.setId(UUID.randomUUID());
 
@@ -83,12 +69,12 @@ public class ImpactRestControllerMockServiceTest {
                     .andExpect(jsonPath("$.links[*].rel").value(containsInAnyOrder(
                             "self",
                             STAKEHOLDER_NAME,
-                            DIMENSION_NAME,
+                            VALUE_NAME,
                             ANALYSIS_NAME)))
                     .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
                             "http://localhost" + IMPACTS + "/" + impactDto.getId(),
                             "http://localhost" + STAKEHOLDERS + "/" + impactDto.getStakeholder().getId(),
-                            "http://localhost" + DIMENSIONS + "/" + impactDto.getDimension().getId(),
+                            "http://localhost" + VALUES + "/" + impactDto.getValueEntity().getId(),
                             "http://localhost" + ANALYSES + "/" + impactDto.getAnalysis().getId())));
         }
 

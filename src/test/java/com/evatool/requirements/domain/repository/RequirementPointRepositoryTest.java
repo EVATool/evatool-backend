@@ -25,7 +25,7 @@ class RequirementPointRepositoryTest {
     private RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
-    private RequirementDimensionRepository requirementDimensionRepository;
+    private RequirementValueRepository requirementValueRepository;
 
     @Autowired
     private RequirementAnalysisRepository requirementAnalysisRepository;
@@ -36,8 +36,8 @@ class RequirementPointRepositoryTest {
     @Test
     void testFindById_ExistingRequirementGR_ReturnRequirement() {
         // given
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
@@ -53,7 +53,7 @@ class RequirementPointRepositoryTest {
         requirementsVariants.add(requirementsVariant1);
 
 
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariants);
         requirementRepository.save(requirement);
         requirementsImpactsRepository.save(requirementsImpact);
@@ -71,8 +71,8 @@ class RequirementPointRepositoryTest {
     @Test
     void testSave_InsertedRequirementGR_IdIsNotNull() {
 
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
@@ -88,7 +88,7 @@ class RequirementPointRepositoryTest {
         requirementsVariants.add(requirementsVariant1);
 
 
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariants);
         requirementRepository.save(requirement);
         requirementsImpactsRepository.save(requirementsImpact);
@@ -105,8 +105,8 @@ class RequirementPointRepositoryTest {
     @Test
     void testSave_InsertedRequirementGR_Id_IsUuid() {
 
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
@@ -121,7 +121,7 @@ class RequirementPointRepositoryTest {
         requirementsVariants.add(requirementsVariant);
         requirementsVariants.add(requirementsVariant1);
 
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariants);
         requirementRepository.save(requirement);
         requirementsImpactsRepository.save(requirementsImpact);
@@ -140,8 +140,8 @@ class RequirementPointRepositoryTest {
     @Test
     void testDelete_DeletedRequirementGR_ReturnNull() {
 
-        RequirementDimension requirementDimension = getRequirementDimension();
-        requirementDimensionRepository.save(requirementDimension);
+        RequirementValue requirementValue = getRequirementValue();
+        requirementValueRepository.save(requirementValue);
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
@@ -156,7 +156,7 @@ class RequirementPointRepositoryTest {
         requirementsVariants.add(requirementsVariant);
         requirementsVariants.add(requirementsVariant1);
 
-        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementValue);
         Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariants);
         requirementRepository.save(requirement);
         requirementsImpactsRepository.save(requirementsImpact);
