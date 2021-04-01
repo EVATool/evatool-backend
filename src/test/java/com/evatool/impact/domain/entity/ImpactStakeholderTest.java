@@ -9,7 +9,7 @@ class ImpactStakeholderTest {
 
     @Test
     void testConstructor_NullId_ThrowIllegalArgumentException() {
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new ImpactStakeholder(null, "name"));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new ImpactStakeholder(null, "name", "level"));
     }
 
     @Test

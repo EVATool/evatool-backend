@@ -23,15 +23,20 @@ public class ImpactStakeholder extends SuperEntity { // TODO ForeignEntity base 
     @Column(name = "NAME", nullable = false)
     private String name;
 
+    @Getter
+    @Column(name = "LEVEL", nullable = false)
+    private String level;
+
     public ImpactStakeholder() {
         super();
         logger.debug("{} created", ImpactStakeholder.class.getSimpleName());
     }
 
-    public ImpactStakeholder(UUID id, String name) {
+    public ImpactStakeholder(UUID id, String name, String level) {
         this();
         this.setId(id);
         this.setName(name);
+        this.setLevel(level);
     }
 
     @Override
@@ -51,5 +56,14 @@ public class ImpactStakeholder extends SuperEntity { // TODO ForeignEntity base 
             throw new IllegalArgumentException("Name cannot be null.");
         }
         this.name = name;
+    }
+
+    public void setLevel(String level) { // TODO tests
+        logger.debug("Set Level");
+        if (level == null) {
+            logger.error("Attempted to set level to null");
+            throw new IllegalArgumentException("Level cannot be null.");
+        }
+        this.level = level;
     }
 }

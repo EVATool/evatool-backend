@@ -25,4 +25,10 @@ public class ImpactStakeholderDto {
     @Setter
     @NotNull
     private String name;
+
+    @ApiModelProperty(required = true)
+    @Getter
+    @Setter
+    @NotNull
+    private String level;
 }
