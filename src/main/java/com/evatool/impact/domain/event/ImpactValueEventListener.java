@@ -5,6 +5,7 @@ import com.evatool.global.event.value.ValueDeletedEvent;
 import com.evatool.global.event.value.ValueUpdatedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
+import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactValue;
 import com.evatool.impact.domain.event.json.ImpactValueJson;
 import com.evatool.impact.domain.event.json.mapper.ImpactValueJsonMapper;
@@ -72,6 +73,9 @@ public class ImpactValueEventListener {
     }
 
     private void assertChildrenExist(ImpactValueJson impactValueJson) { // TODO add tests
-        this.impactAnalysisRepository.findById(impactValueJson.getAnalysisId());
+        var analysis = this.impactAnalysisRepository.findById(impactValueJson.getAnalysisId());
+        if (analysis.isEmpty()) {
+            throw new EventEntityDoesNotExistException(ImpactAnalysis.class.getSimpleName() + " (child)");
+        }
     }
 }

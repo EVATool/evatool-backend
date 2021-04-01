@@ -6,7 +6,7 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static com.evatool.impact.domain.event.json.mapper.ImpactValueJsonMapper.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ImpactValueJsonMapperTest {
+class ImpactValueJsonMapperTest { // TODO change other two domain foreign entities json mapping and tests
 
     @Test
     void testToAndFrom_ImpactValue_EqualsRecreatedImpactValue() {

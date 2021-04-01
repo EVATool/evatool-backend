@@ -49,6 +49,21 @@ class ImpactValueEventListenerTest extends EventListenerTest {
             // then
             assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> impactValueEventListener.onValueCreatedEvent(valueCreatedEvent));
         }
+
+        @Test
+        void testOnValueCreatedEvent_ChildEntityAnalysisDoesNotExist_ThrowEventEntityDoesNotExist() { // TODO in all 3 CrUD operations
+            // given
+            var value = saveDummyValueChildren();
+            var json = ImpactValueJsonMapper.toString(value);
+
+            // when
+            var valueCreatedEvent = new ValueCreatedEvent(this, json);
+            impactValueEventListener.onValueCreatedEvent(valueCreatedEvent);
+
+            // then
+            var createdByEvent = valueRepository.findById(value.getId());
+            assertThat(createdByEvent).contains(value);
+        }
     }
 
     @Nested
