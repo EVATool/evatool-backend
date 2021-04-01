@@ -42,12 +42,17 @@ public class Analysis {
     @Setter
     private Date lastUpdate;
 
+    @Getter
+    @Setter
+    private boolean isTemplate = false;
+
     public Analysis(String analysisName, String description) {
         this.analysisName = analysisName;
         this.description = description;
     }
 
-    public Analysis() {}
+    public Analysis() {
+    }
 
     public void setAnalysisName(String analysisName) {
         if (analysisName == null) {
