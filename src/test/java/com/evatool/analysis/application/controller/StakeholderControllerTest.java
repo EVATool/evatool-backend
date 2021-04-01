@@ -1,24 +1,30 @@
 package com.evatool.analysis.application.controller;
 
 
-import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.application.dto.StakeholderDTO;
-import com.evatool.analysis.domain.enums.StakeholderLevel;
+import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
+import com.evatool.analysis.domain.enums.StakeholderLevel;
+import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
-import static com.evatool.analysis.common.TestDataGenerator.*;
+import static com.evatool.analysis.common.TestDataGenerator.getStakeholderDTO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class StakeholderControllerTest {
+class StakeholderControllerTest {
+
+    @Autowired
+    private TestRestTemplate testRestTemplate;
 
     @Autowired
     private StakeholderController stakeholderController;
@@ -54,7 +60,20 @@ public class StakeholderControllerTest {
         stakeholderController.deleteStakeholder(id);
 
         //check is stakeholder deleted
-        Exception exception = assertThrows(EntityNotFoundException.class, ()-> stakeholderController.getStakeholderById(stakeholderDTOObj.getRootEntityID()).getContent());
+        Exception exception = assertThrows(EntityNotFoundException.class, () -> stakeholderController.getStakeholderById(stakeholderDTOObj.getRootEntityID()).getContent());
 
+    }
+
+    @Test
+    void testFindAllLevels_ReturnAllPossibleLevels() {
+        // given
+
+        // when
+        var valueTypes = testRestTemplate.getForEntity(
+                "/stakeholders/levels", StakeholderLevel[].class);
+
+        // then
+        assertThat(valueTypes.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(valueTypes.getBody()).isEqualTo(StakeholderLevel.values());
     }
 }
