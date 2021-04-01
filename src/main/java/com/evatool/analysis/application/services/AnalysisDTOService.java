@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,7 @@ public class AnalysisDTOService {
         analysis.setAnalysisName(analysisDTO.getAnalysisName());
         analysis.setDescription(analysisDTO.getAnalysisDescription());
         analysis.setImage(analysisDTO.getImage());
-        analysis.setLastUpdate(analysisDTO.getDate());
+        analysis.setLastUpdate(new Date(System.currentTimeMillis()));
         return analysis;
     }
 
@@ -59,7 +60,7 @@ public class AnalysisDTOService {
         analysis.setAnalysisName(analysisDTO.getAnalysisName());
         analysis.setDescription(analysisDTO.getAnalysisDescription());
         analysis.setImage(analysisDTO.getImage());
-        analysis.setLastUpdate(analysisDTO.getDate());
+        analysis.setLastUpdate(new Date(System.currentTimeMillis()));
 
         analysis = analysisRepository.save(analysis);
         eventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toJson()));

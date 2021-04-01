@@ -42,7 +42,6 @@ public class Analysis {
     @Setter
     private Date lastUpdate;
 
-
     public Analysis(String analysisName, String description) {
         this.analysisName = analysisName;
         this.description = description;
