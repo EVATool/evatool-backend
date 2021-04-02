@@ -9,7 +9,6 @@ import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.application.services.AnalysisDTOService;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
-import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

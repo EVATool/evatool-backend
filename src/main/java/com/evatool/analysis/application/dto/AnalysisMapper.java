@@ -2,7 +2,6 @@ package com.evatool.analysis.application.dto;
 
 import com.evatool.analysis.domain.model.Analysis;
 import org.springframework.stereotype.Service;
-import com.evatool.analysis.application.dto.AnalysisDTO;
 
 import java.util.ArrayList;
 import java.util.List;

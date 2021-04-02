@@ -2,8 +2,8 @@ package com.evatool.analysis.common.error;
 
 import com.evatool.analysis.common.error.execptions.EntityIdMustBeNullException;
 import com.evatool.analysis.common.error.execptions.EntityIdRequiredException;
-import com.evatool.analysis.common.error.execptions.IllegalDtoValueExcpetion;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
+import com.evatool.analysis.common.error.execptions.IllegalDtoValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,20 +24,23 @@ public class AnalysisExceptionHandler {
         AnalysisErrorMessage errorMessage = new AnalysisErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
-    @ExceptionHandler(IllegalDtoValueExcpetion.class)
-    public ResponseEntity<AnalysisErrorMessage> handleIllegalDtoValueExcpetion(IllegalDtoValueExcpetion exception, WebRequest webRequest) {
+
+    @ExceptionHandler(IllegalDtoValueException.class)
+    public ResponseEntity<AnalysisErrorMessage> handleIllegalDtoValueException(IllegalDtoValueException exception, WebRequest webRequest) {
         logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
         AnalysisErrorMessage errorMessage = new AnalysisErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
         return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
     @ExceptionHandler(EntityIdMustBeNullException.class)
-    public ResponseEntity<AnalysisErrorMessage> handleIllegalDtoValueExcpetion(EntityIdMustBeNullException exception, WebRequest webRequest) {
+    public ResponseEntity<AnalysisErrorMessage> handleEntityIdMustBeNullException(EntityIdMustBeNullException exception, WebRequest webRequest) {
         logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
         AnalysisErrorMessage errorMessage = new AnalysisErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
         return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
     @ExceptionHandler(EntityIdRequiredException.class)
-    public ResponseEntity<AnalysisErrorMessage> handleIllegalDtoValueExcpetion(EntityIdRequiredException exception, WebRequest webRequest) {
+    public ResponseEntity<AnalysisErrorMessage> handleEntityIdRequiredException(EntityIdRequiredException exception, WebRequest webRequest) {
         logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
         AnalysisErrorMessage errorMessage = new AnalysisErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
         return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);

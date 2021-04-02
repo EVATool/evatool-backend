@@ -1,10 +1,8 @@
 package com.evatool.analysis.domain.events.json;
 
-import com.evatool.analysis.domain.model.Value;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Objects;
 import java.util.UUID;
 
 public class ValueJson {

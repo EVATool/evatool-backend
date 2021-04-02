@@ -14,7 +14,6 @@ import java.util.UUID;
 @Api("API-endpoint for a analysis")
 public interface AnalysisController {
 
-    // das ist ein kommentar
     @GetMapping("/analysis")
     @ApiOperation(value = "This method returns a list of all analysis")
     @ApiResponses(value = {
