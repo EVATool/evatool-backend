@@ -20,8 +20,23 @@ public class ValueDtoMapper {
     }
 
     public static ValueDto toDto(Value value) {
+        var valueDto = new ValueDto();
+        valueDto.setId(value.getId());
+        valueDto.setName(value.getName());
+        valueDto.setDescription(value.getDescription());
+        valueDto.setType(value.getType());
+
+        var analysisDto = new AnalysisDTO();
+        analysisDto.setRootEntityID(value.getAnalysis().getAnalysisId());
+        analysisDto.setAnalysisName(value.getAnalysis().getAnalysisName());
+        analysisDto.setAnalysisDescription(value.getAnalysis().getDescription());
+        analysisDto.setImage(value.getAnalysis().getImage());
+        analysisDto.setDate(value.getAnalysis().getLastUpdate());
+
+        valueDto.setAnalysis(analysisDto);
+
         logger.info("Mapping Entity to Dto");
-        return modelMapper.map(value, ValueDto.class);
+        return valueDto;
     }
 }
 
