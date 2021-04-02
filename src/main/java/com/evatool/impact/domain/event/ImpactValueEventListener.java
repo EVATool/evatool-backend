@@ -72,7 +72,7 @@ public class ImpactValueEventListener {
         logger.info("Value updated event successfully processed");
     }
 
-    private void assertChildrenExist(ImpactValueJson impactValueJson) { // TODO add tests
+    private void assertChildrenExist(ImpactValueJson impactValueJson) {
         var analysis = this.impactAnalysisRepository.findById(impactValueJson.getAnalysisId());
         if (analysis.isEmpty()) {
             throw new EventEntityDoesNotExistException(ImpactAnalysis.class.getSimpleName() + " (child)");
