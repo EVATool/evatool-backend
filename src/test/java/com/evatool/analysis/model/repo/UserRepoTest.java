@@ -14,7 +14,4 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 public class UserRepoTest {
 
-
-
-
 }

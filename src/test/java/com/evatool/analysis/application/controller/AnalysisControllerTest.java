@@ -12,6 +12,7 @@ import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 
 import static com.evatool.analysis.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
@@ -52,7 +53,6 @@ class AnalysisControllerTest {
         analysisController.deleteAnalysis(id);
 
         //check is analysis deleted
-        Exception exception = assertThrows(EntityNotFoundException.class, ()->analysisController.getAnalysisById(analysisDTOObj.getRootEntityID()).getContent());
-
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(()->analysisController.getAnalysisById(analysisDTOObj.getRootEntityID()).getContent());
     }
 }

@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static com.evatool.analysis.common.TestDataGenerator.getStakholder;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class StakeholderTest {
+class StakeholderTest {
 
     @Test
-    public void testSetStakeholderName() {
+    void testSetStakeholderName() {
 
         // given
         var stakeholder = getStakholder();
@@ -20,7 +20,7 @@ public class StakeholderTest {
     }
 
     @Test
-    public void testSetStakeholderLevel() {
+    void testSetStakeholderLevel() {
 
         // given
         var stakeholder = getStakholder();
@@ -32,7 +32,7 @@ public class StakeholderTest {
     }
 
     @Test
-    public void testSetStakeholderPriority() {
+    void testSetStakeholderPriority() {
 
         // given
         var stakeholder = getStakholder();
@@ -44,7 +44,7 @@ public class StakeholderTest {
     }
 
     @Test
-    public void testSetStakeholderGuiId() {
+    void testSetStakeholderGuiId() {
 
         // given
         var stakeholder = getStakholder();
@@ -54,5 +54,4 @@ public class StakeholderTest {
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setGuiId(null));
     }
-
 }
