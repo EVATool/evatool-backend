@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.UUID;
+
 import static com.evatool.impact.application.dto.mapper.ImpactValueDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,6 +40,33 @@ public class ImpactValueServiceImplTest extends ServiceTest {
             // then
             var id = value.getId();
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> valueService.findById(id));
+        }
+
+        @Test
+        void testFindByAnalysisId_ExistingAnalysisId_ReturnValue() {
+            // given
+            var analysis = saveFullDummyAnalysis();
+            var impact = saveFullDummyImpact(analysis);
+
+            // when
+            var analysisId = analysis.getId();
+            var values = valueService.findAllByAnalysisId(analysisId);
+
+            // then
+            var impactValue = impact.getValueEntity();
+            assertThat(values).contains(toDto(impactValue));
+        }
+
+        @Test
+        void testFindByAnalysisId_NonExistingAnalysisId_ReturnEmptyList() {
+            // given
+            var notAValidId = UUID.randomUUID();
+
+            // when
+            var values = valueService.findAllByAnalysisId(notAValidId);
+
+            // then
+            assertThat(values).isEmpty();
         }
     }
 

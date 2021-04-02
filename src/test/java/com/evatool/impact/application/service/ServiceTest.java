@@ -4,10 +4,10 @@ import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.entity.ImpactValue;
-import com.evatool.impact.domain.repository.ImpactValueRepository;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
+import com.evatool.impact.domain.repository.ImpactValueRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
@@ -59,7 +59,7 @@ public class ServiceTest {
     }
 
     protected Impact saveFullDummyImpact(ImpactAnalysis analysis) {
-        var value = saveFullDummyValue();
+        var value = saveFullDummyValue(analysis);
         var stakeholder = saveFullDummyStakeholder();
         var impact = createDummyImpact(analysis);
         impact.setValueEntity(value);
@@ -69,6 +69,10 @@ public class ServiceTest {
 
     protected ImpactValue saveFullDummyValue() {
         var analysis = saveFullDummyAnalysis();
+        return valueRepository.save(createDummyValue(analysis));
+    }
+
+    protected ImpactValue saveFullDummyValue(ImpactAnalysis analysis) {
         return valueRepository.save(createDummyValue(analysis));
     }
 

@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +38,6 @@ public class ImpactValueServiceImpl implements ImpactValueService {
         return ImpactValueDtoMapper.toDto(value.get());
     }
 
-    // TODO Tests
     @Override
     public List<ImpactValueDto> findAllByAnalysisId(UUID analysisId) {
         logger.info("Get Impact Values By Analysis Id");
