@@ -211,7 +211,7 @@ class EvaToolAppTest {
         }
 
         Value createDummyValue() {
-            return valueRepository.save(new Value("Name", ValueType.SOCIAL, "Description", "ANA01"));
+            return valueRepository.save(new Value("Name", ValueType.SOCIAL, "Description"));
         }
 
         // Received by: Requirement, Impact

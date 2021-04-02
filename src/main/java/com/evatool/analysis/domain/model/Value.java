@@ -37,20 +37,16 @@ public class Value {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    @Getter
-    @Column(name = "GUIID", nullable = false)
-    private String guiId;
 
     public Value() {
         super();
         logger.debug("{} created", Value.class.getSimpleName());
     }
 
-    public Value(String name, ValueType type, String description, String guiId) {
+    public Value(String name, ValueType type, String description) {
         this.setName(name);
         this.setType(type);
         this.setDescription(description);
-        this.setGuiId(guiId);
     }
 
     @Override
@@ -60,7 +56,6 @@ public class Value {
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
-                ", guiId='" + guiId + '\'' +
                 '}';
     }
 
@@ -104,12 +99,5 @@ public class Value {
             throw new IllegalArgumentException("Description cannot be null.");
         }
         this.description = description;
-    }
-
-    public void setGuiId(String guiId) {
-        if (guiId == null){
-            throw new IllegalArgumentException("guiId cannot be null.");
-        }
-        this.guiId = guiId;
     }
 }

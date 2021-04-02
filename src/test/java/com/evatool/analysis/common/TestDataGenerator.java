@@ -36,7 +36,7 @@ public class TestDataGenerator {
     }
 
     public static Value createDummyValue() {
-        return new Value("dummyValue", ValueType.ECONOMIC, "dummyValueDescription", "VAL01");
+        return new Value("dummyValue", ValueType.ECONOMIC, "dummyValueDescription");
     }
 
     public static ValueDto createDummyValueDto() {
