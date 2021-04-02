@@ -2,7 +2,6 @@ package com.evatool.variants.application.service;
 
 import com.evatool.variants.application.dto.VariantDto;
 import com.evatool.variants.application.services.VariantService;
-import com.evatool.variants.domain.entities.Variant;
 import com.evatool.variants.domain.entities.VariantsAnalysis;
 import com.evatool.variants.domain.repositories.VariantRepository;
 import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.Profile;
 import javax.transaction.Transactional;
 import static com.evatool.variants.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
