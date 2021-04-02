@@ -224,7 +224,7 @@ class EvaToolAppTest {
         }
 
         Value saveDummyValue() {
-            var value = valueRepository.save(new Value("Name", ValueType.SOCIAL, "Description", "ANA01"));
+            var value = valueRepository.save(new Value("Name", ValueType.SOCIAL, "Description"));
             var analysis = saveDummyAnalysisAndFire();
             value.setAnalysis(analysis);
             return value;

@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-
 @Entity
 @Table(name = "ANA_ANALYSIS")
 public class Analysis {
@@ -17,10 +16,22 @@ public class Analysis {
     @Id
     @Getter
     @Setter
-    @Type(type= "uuid-char")
+    @Type(type = "uuid-char")
     @Column(columnDefinition = "CHAR(36)")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID analysisId = UUID.randomUUID();
+
+    @Getter
+    @Setter
+    @OneToOne(cascade = CascadeType.ALL)
+    private NumericId numericId;
+
+    public String getUniqueString() {
+        if (this.numericId == null)
+            return null;
+        else
+            return "ANA" + this.numericId.getNumericId();
+    }
 
     /**
      * Name of the Analysis {@link String}
@@ -42,13 +53,19 @@ public class Analysis {
     @Setter
     private Date lastUpdate;
 
+    @Getter
+    @Setter
+    private Boolean isTemplate = false;
 
     public Analysis(String analysisName, String description) {
+        this();
         this.analysisName = analysisName;
         this.description = description;
     }
 
-    public Analysis() {}
+    public Analysis() {
+        this.numericId = new NumericId();
+    }
 
     public void setAnalysisName(String analysisName) {
         if (analysisName == null) {
@@ -74,6 +91,7 @@ public class Analysis {
                 ", date='" + lastUpdate + '\'' +
                 '}';
     }
+
     public String toJson(){
         Gson gson = new Gson();
         return gson.toJson(this);

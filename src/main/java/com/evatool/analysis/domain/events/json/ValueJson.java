@@ -25,9 +25,5 @@ public class ValueJson {
 
     @Getter
     @Setter
-    private String guiId;
-
-    @Getter
-    @Setter
     private String analysisId;
 }

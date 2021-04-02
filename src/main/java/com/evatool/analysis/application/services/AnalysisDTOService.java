@@ -5,6 +5,7 @@ import com.evatool.analysis.application.dto.AnalysisMapper;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
+import com.evatool.analysis.domain.model.NumericId;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,41 +31,51 @@ public class AnalysisDTOService {
     @Autowired
     private AnalysisEventPublisher eventPublisher;
 
-
     public List<AnalysisDTO> findAll(List<Analysis> analysisDTOList) {
         logger.info("findAll");
         return analysisMapper.map(analysisDTOList);
     }
 
+    public List<Analysis> findAllByIdTemplate(boolean isTemplate) {
+        logger.info("findAll");
+        var analyses = analysisRepository.findAllByIsTemplate(isTemplate);
+        return analyses;
+    }
+
     public AnalysisDTO findById(Analysis analysis) {
-        logger.debug("findId [{}]",analysis);
+        logger.debug("findId [{}]", analysis);
         return analysisMapper.map(analysis);
     }
 
     public Analysis create(AnalysisDTO analysisDTO) {
-        logger.debug("create [{}]",analysisDTO);
+        logger.debug("create [{}]", analysisDTO);
         Analysis analysis = new Analysis();
         analysis.setAnalysisName(analysisDTO.getAnalysisName());
         analysis.setDescription(analysisDTO.getAnalysisDescription());
         analysis.setImage(analysisDTO.getImage());
-        analysis.setLastUpdate(analysisDTO.getDate());
+        analysis.setLastUpdate(new Date(System.currentTimeMillis()));
         return analysis;
     }
 
     public void update(AnalysisDTO analysisDTO){
         logger.debug("update [{}]", analysisDTO);
         Optional<Analysis> analysisOptional = analysisRepository.findById(analysisDTO.getRootEntityID());
-        if(analysisOptional.isEmpty())
+        if (analysisOptional.isEmpty())
             throw new EntityNotFoundException(Analysis.class, analysisDTO.getRootEntityID());
 
         Analysis analysis = analysisOptional.get();
         analysis.setAnalysisName(analysisDTO.getAnalysisName());
         analysis.setDescription(analysisDTO.getAnalysisDescription());
         analysis.setImage(analysisDTO.getImage());
-        analysis.setLastUpdate(analysisDTO.getDate());
+        analysis.setLastUpdate(new Date(System.currentTimeMillis()));
+        analysis.setIsTemplate(analysisDTO.getIsTemplate());
+        if (analysisDTO.getUniqueString() != null) {
+            var numericId = new NumericId();
+            numericId.setNumericId(Integer.valueOf(analysisDTO.getUniqueString().replace("ANA", "")));
+            analysis.setNumericId(numericId);
+        }
 
         analysis = analysisRepository.save(analysis);
         eventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toJson()));
-
     }
 }
