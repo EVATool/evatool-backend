@@ -9,18 +9,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class RequirementTest {
 
-    @Test
-    void testSetTitle_NullValue_ThrowException() {
-        // given
-        RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
-        Collection<RequirementsVariant> requirementsVariant = getRequirementsVariants();
-        Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariant);
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirement.setTitle(null));
-    }
 
     @Test
     void testSetVariants_NullValue_ThrowException() {

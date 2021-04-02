@@ -19,7 +19,6 @@ public class Requirement {
     @Type(type= "uuid-char")
     @Column(columnDefinition = "CHAR(36)")
     private final UUID id = UUID.randomUUID();
-    private String title;
     private String description;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -31,26 +30,17 @@ public class Requirement {
     @ManyToOne
     private RequirementsAnalysis requirementsAnalysis;
 
+    private Integer numericId;
+
     public Requirement() {
     }
 
-    public Requirement(String title, String description, RequirementsAnalysis requirementsAnalysis,Collection<RequirementsVariant> variants) {
-        this.title = title;
+    public Requirement(String description, RequirementsAnalysis requirementsAnalysis,Collection<RequirementsVariant> variants) {
         this.description = description;
         this.requirementsAnalysis = requirementsAnalysis;
         this.variants = variants;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) throws IllegalArgumentException {
-        if (title == null) {
-            throw new IllegalArgumentException("Title cannot be null.");
-        }
-        this.title = title;
-    }
 
     public String getDescription() {
         return description;
@@ -90,10 +80,11 @@ public class Requirement {
     public String toString() {
         return "Requirement{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", variants=" + variants +
+                ", requirementPointCollection=" + requirementPointCollection +
                 ", requirementsAnalysis=" + requirementsAnalysis +
+                ", numericId=" + numericId +
                 '}';
     }
 
@@ -108,6 +99,14 @@ public class Requirement {
 
     public void setRequirementPointCollection(Collection<RequirementPoint> requirementPointCollection) {
         this.requirementPointCollection = requirementPointCollection;
+    }
+
+    public Integer getNumericId() {
+        return numericId;
+    }
+
+    public void setNumericId(Integer numericId) {
+        this.numericId = numericId;
     }
 }
 

@@ -77,12 +77,12 @@ class RequirementDTOServiceTest {
 
         //update
         String newTitle = "newTitle";
-        requirementDTO2.setRequirementTitle(newTitle);
+        requirementDTO2.setUniqueString(newTitle);
         requirementDTOService.update(requirementDTO2);
 
         RequirementDTO requirementDTO3 = requirementDTOService.findById(requirementDTO2.getRootEntityId());
         assertThat(requirementDTO3).isNotNull();
-        assertThat(requirementDTO3.getRequirementTitle()).isEqualTo(newTitle);
+        assertThat(requirementDTO3.getUniqueString()).isEqualTo(newTitle);
 
         List<RequirementDTO> requirementDTOList = requirementDTOService.findAllForAnalysis(requirementDTO3.getProjectID());
         assertThat(requirementDTOList).isNotNull().isNotEmpty();

@@ -27,7 +27,7 @@ class RequirementDTOTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTO.setRequirementTitle(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTO.setUniqueString(null));
     }
 
     @Test

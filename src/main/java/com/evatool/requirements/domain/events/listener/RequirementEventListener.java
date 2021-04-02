@@ -11,17 +11,12 @@ import com.evatool.global.event.impact.ImpactUpdatedEvent;
 import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
-import com.evatool.requirements.domain.entity.RequirementValue;
-import com.evatool.requirements.domain.entity.RequirementsAnalysis;
-import com.evatool.requirements.domain.entity.RequirementsImpact;
-import com.evatool.requirements.domain.entity.RequirementsVariant;
+import com.evatool.requirements.domain.entity.*;
 import com.evatool.requirements.common.exceptions.EventEntityAlreadyExistsException;
 import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.domain.events.json.ImpactJson;
-import com.evatool.requirements.domain.repository.RequirementAnalysisRepository;
-import com.evatool.requirements.domain.repository.RequirementValueRepository;
-import com.evatool.requirements.domain.repository.RequirementsImpactsRepository;
-import com.evatool.requirements.domain.repository.RequirementsVariantsRepository;
+import com.evatool.requirements.domain.repository.*;
+import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +41,8 @@ public class RequirementEventListener {
     RequirementValueRepository requirementValueRepository;
     @Autowired
     RequirementAnalysisRepository requirementAnalysisRepository;
+    @Autowired
+    RequirementIdPerAnalysisRepository requirementIdPerAnalysisRepository;
 
     @EventListener
     @Async
@@ -165,8 +162,12 @@ public class RequirementEventListener {
         if (requirementAnalysisRepository.existsById(RequirementsAnalysis.fromJson(event.getJsonPayload()).getAnalysisId())) {
             throw new EventEntityAlreadyExistsException();
         }
-        requirementAnalysisRepository.save(RequirementsAnalysis.fromJson(event.getJsonPayload()));
-
+        RequirementsAnalysis requirementsAnalysis = RequirementsAnalysis.fromJson(event.getJsonPayload());
+        requirementAnalysisRepository.save(requirementsAnalysis);
+        RequirementIdPerAnalysis requirementIdPerAnalysis = new RequirementIdPerAnalysis();
+        requirementIdPerAnalysis.setAnalysisId(requirementsAnalysis.getAnalysisId().toString());
+        requirementIdPerAnalysis.setRequirmentsPerAnalysis(new Integer(0));
+        requirementIdPerAnalysisRepository.save(requirementIdPerAnalysis);
     }
 
     @EventListener
@@ -177,6 +178,12 @@ public class RequirementEventListener {
         if (!requirementAnalysisRepository.existsById(RequirementsAnalysis.fromJson(event.getJsonPayload()).getAnalysisId())) {
             throw new EventEntityDoesNotExistException();
         }
-        requirementAnalysisRepository.delete(RequirementsAnalysis.fromJson(event.getJsonPayload()));
+        RequirementsAnalysis requirementsAnalysis = RequirementsAnalysis.fromJson(event.getJsonPayload());
+        requirementAnalysisRepository.delete(requirementsAnalysis);
+        RequirementIdPerAnalysis requirementIdPerAnalysis = new RequirementIdPerAnalysis();
+        requirementIdPerAnalysis.setId(requirementsAnalysis.getAnalysisId());
+        requirementIdPerAnalysis.setAnalysisId(requirementsAnalysis.getAnalysisId().toString());
+        requirementIdPerAnalysis.setRequirmentsPerAnalysis(new Integer(0));
+        requirementIdPerAnalysisRepository.delete(requirementIdPerAnalysis);
     }
 }

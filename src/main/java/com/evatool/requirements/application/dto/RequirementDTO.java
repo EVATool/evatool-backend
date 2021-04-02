@@ -8,7 +8,7 @@ public class RequirementDTO {
 
     private UUID rootEntityId;
     private UUID projectID;
-    private String requirementTitle;
+    private String uniqueString;
     private String requirementDescription;
     private Set<EntityModel<ValueDTO>> values = new HashSet<>();
     private Map<UUID, EntityModel<RequirementPointDTO>> requirementPointDTOMap = new HashMap<>();
@@ -25,15 +25,15 @@ public class RequirementDTO {
         this.rootEntityId = rootEntityId;
     }
 
-    public String getRequirementTitle() {
-        return requirementTitle;
+    public String getUniqueString() {
+        return uniqueString;
     }
 
-    public void setRequirementTitle(String requirementTitle) {
-        if (requirementTitle == null) {
+    public void setUniqueString(String uniqueString) {
+        if (uniqueString == null) {
             throw new IllegalArgumentException("Requirement title cannot be null.");
         }
-        this.requirementTitle = requirementTitle;
+        this.uniqueString = uniqueString;
     }
 
     public String getRequirementDescription() {

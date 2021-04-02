@@ -7,11 +7,13 @@ import com.evatool.requirements.application.controller.RequirementPointControlle
 import com.evatool.requirements.application.dto.RequirementDTO;
 import com.evatool.requirements.application.dto.VariantsDTO;
 import com.evatool.requirements.domain.entity.Requirement;
+import com.evatool.requirements.domain.entity.RequirementIdPerAnalysis;
 import com.evatool.requirements.domain.entity.RequirementsAnalysis;
 import com.evatool.requirements.domain.entity.RequirementsVariant;
 import com.evatool.requirements.common.exceptions.EntityNotFoundException;
 import com.evatool.requirements.domain.events.RequirementEventPublisher;
 import com.evatool.requirements.domain.repository.RequirementAnalysisRepository;
+import com.evatool.requirements.domain.repository.RequirementIdPerAnalysisRepository;
 import com.evatool.requirements.domain.repository.RequirementRepository;
 import com.evatool.requirements.domain.repository.RequirementsVariantsRepository;
 import org.slf4j.Logger;
@@ -29,19 +31,22 @@ public class RequirementDTOService {
     final Logger logger = LoggerFactory.getLogger(RequirementDTOService.class);
 
     @Autowired
-    RequirementMapper requirementMapper;
+    private RequirementMapper requirementMapper;
 
     @Autowired
-    RequirementsVariantsRepository requirementsVariantsRepository;
+    private RequirementsVariantsRepository requirementsVariantsRepository;
 
     @Autowired
-    RequirementAnalysisRepository requirementAnalysisRepository;
+    private RequirementAnalysisRepository requirementAnalysisRepository;
 
     @Autowired
     private RequirementRepository requirementRepository;
 
     @Autowired
     private RequirementPointController requirementPointController;
+
+    @Autowired
+    private RequirementIdPerAnalysisRepository requirementIdPerAnalysisRepository;
 
     @Autowired
     private RequirementEventPublisher eventPublisher;
@@ -80,7 +85,6 @@ public class RequirementDTOService {
         if(requirementOptional.isEmpty()) throw new EntityNotFoundException(Requirement.class, requirementDTO.getRootEntityId());
         Requirement requirement = requirementOptional.get();
         requirement.setDescription(requirementDTO.getRequirementDescription());
-        requirement.setTitle(requirementDTO.getRequirementTitle());
         Collection<RequirementsVariant> requirementsVariantCollectionDTO = requirementsVariantsRepository.findAllById(requirementDTO.getVariantsTitle().keySet());
         //Remove the Variants which are removed
         Collection<RequirementsVariant> newCollection = requirement.getVariants().stream().filter(requirementsVariantCollectionDTO::contains).collect(Collectors.toList());
@@ -99,7 +103,12 @@ public class RequirementDTOService {
     public UUID create(RequirementDTO requirementDTO) {
         logger.debug("create [{}]",requirementDTO);
         Requirement requirement = new Requirement();
-        requirement.setTitle(requirementDTO.getRequirementTitle());
+        RequirementIdPerAnalysis requirementIdPerAnalysis = requirementIdPerAnalysisRepository.findByAnalysisId(requirementDTO.getProjectID().toString());
+        if(requirementIdPerAnalysis != null){
+            requirementIdPerAnalysis.setRequirmentsPerAnalysis(requirementIdPerAnalysis.getRequirmentsPerAnalysis()+1);
+            requirement.setNumericId(requirementIdPerAnalysis.getRequirmentsPerAnalysis());
+            requirementIdPerAnalysisRepository.save(requirementIdPerAnalysis);
+        }
         requirement.setDescription(requirementDTO.getRequirementDescription());
         Optional<RequirementsAnalysis> requirementsAnalysis = requirementAnalysisRepository.findById(requirementDTO.getProjectID());
         if(requirementsAnalysis.isPresent())

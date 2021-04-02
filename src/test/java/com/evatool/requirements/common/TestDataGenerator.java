@@ -18,7 +18,7 @@ public class TestDataGenerator {
     }
 
     public static Requirement getRequirement(RequirementsAnalysis requirementsAnalysis, Collection<RequirementsVariant> variants) {
-        return new Requirement("requirementTitle","descriptionTitle",requirementsAnalysis,variants);
+        return new Requirement("descriptionTitle",requirementsAnalysis,variants);
     }
 
     public static RequirementsImpact getRequirementsImpacts(RequirementValue requirementValue) {
@@ -58,7 +58,7 @@ public class TestDataGenerator {
 
         requirementDTO.setProjectID(projectID);
 
-        requirementDTO.setRequirementTitle("Title");
+        requirementDTO.setUniqueString("Title");
         requirementDTO.setRequirementDescription("Description");
         requirementDTO.setVariantsTitle(variantsTitle);
 
@@ -70,7 +70,7 @@ public class TestDataGenerator {
 
         requirementDTO.setProjectID(projectID);
 
-        requirementDTO.setRequirementTitle("Title");
+        requirementDTO.setUniqueString("Title");
         requirementDTO.setRequirementDescription("Description");
         requirementDTO.setVariantsTitle(variantsTitle);
         requirementDTO.setRequirementImpactPoints(requirementImpactPoints);

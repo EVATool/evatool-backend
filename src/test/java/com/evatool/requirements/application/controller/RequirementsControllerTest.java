@@ -79,13 +79,13 @@ class RequirementsControllerTest {
 
         //change requirement title
         String testTitle = "TestTitle";
-        requirementDTOObj.setRequirementTitle(testTitle);
+        requirementDTOObj.setUniqueString(testTitle);
         requirementsController.updateRequirement(requirementDTOObj);
 
         //check is requirement title changed
         RequirementDTO requirementAfterUpdate = requirementsController.getRequirementById(requirementDTOObj.getRootEntityId()).getContent();
 
-        assertThat(requirementAfterUpdate.getRequirementTitle()).isEqualTo(testTitle);
+        assertThat(requirementAfterUpdate.getUniqueString()).isEqualTo(testTitle);
 
         //delete requirement
         UUID idRequirement = requirementDTOObj.getRootEntityId();

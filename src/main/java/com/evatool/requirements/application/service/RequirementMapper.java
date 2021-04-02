@@ -29,7 +29,7 @@ public class RequirementMapper {
 
     public RequirementDTO map(Requirement requirement) {
         RequirementDTO requirementDTO = new RequirementDTO();
-        requirementDTO.setRequirementTitle(requirement.getTitle());
+        requirementDTO.setUniqueString("REQ"+requirement.getNumericId());
         requirementDTO.setRootEntityId(requirement.getId());
         requirementDTO.setProjectID(requirement.getRequirementsAnalysis().getAnalysisId());
         requirementDTO.setRequirementDescription(requirement.getDescription());
