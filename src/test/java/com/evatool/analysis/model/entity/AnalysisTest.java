@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static com.evatool.analysis.common.TestDataGenerator.getAnalysis;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class AnalysisTest {
+class AnalysisTest {
 
     @Test
-    public void testSetAnalysisName() {
+    void testSetAnalysisName() {
 
         // given
         var analysis = getAnalysis();
@@ -20,7 +20,7 @@ public class AnalysisTest {
     }
 
     @Test
-    public void testSetAnalysisDescription() {
+    void testSetAnalysisDescription() {
 
         // given
         var analysis = getAnalysis();
@@ -30,8 +30,4 @@ public class AnalysisTest {
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> analysis.setDescription(null));
     }
-
-
-
-
 }

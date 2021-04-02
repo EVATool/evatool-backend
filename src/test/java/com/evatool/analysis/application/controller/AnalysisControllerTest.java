@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class AnalysisControllerTest {
+class AnalysisControllerTest {
 
     @Autowired
     private AnalysisController analysisController;
@@ -26,7 +26,7 @@ public class AnalysisControllerTest {
     private AnalysisRepository analysisRepository;
 
     @Test
-    public void testAnalysisController_ThrowException() {
+    void testAnalysisController_ThrowException() {
 
         Analysis analysis = new Analysis("TestName", "description");
 
