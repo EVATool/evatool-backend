@@ -86,7 +86,6 @@ public class ImpactValue extends SuperEntity {
         this.description = description;
     }
 
-    // TODO Tests
     public void setAnalysis(ImpactAnalysis analysis) {
         logger.debug("Set Analysis");
         if (this.analysis != null) {
