@@ -101,7 +101,7 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     private List<EntityModel<StakeholderDTO>> generateLinks(List<StakeholderDTO> stakeholderDTOList){
         List<EntityModel<StakeholderDTO>> returnList = new ArrayList<>();
-        stakeholderDTOList.stream().forEach(e -> returnList.add(generateLinks(e)));
+        stakeholderDTOList.forEach(e -> returnList.add(generateLinks(e)));
         return returnList;
 
     }

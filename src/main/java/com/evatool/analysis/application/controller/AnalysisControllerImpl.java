@@ -43,7 +43,7 @@ public class AnalysisControllerImpl implements AnalysisController {
         logger.info("[GET] /analysis");
         List<Analysis> analysisList = analysisRepository.findAll();
         if (analysisList.isEmpty()){
-            return Arrays.asList();
+            return Collections.emptyList();
         }
         return generateLinks(analysisDTOService.findAll(analysisList));
     }
@@ -96,7 +96,7 @@ public class AnalysisControllerImpl implements AnalysisController {
 
     private List<EntityModel<AnalysisDTO>> generateLinks(List<AnalysisDTO> analysisDTOList){
         List<EntityModel<AnalysisDTO>> returnList = new ArrayList<>();
-        analysisDTOList.stream().forEach(element -> returnList.add(generateLinks(element)));
+        analysisDTOList.forEach(element -> returnList.add(generateLinks(element)));
         return returnList;
 
     }
