@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -42,10 +41,6 @@ public class Value {
     private String description;
 
     @Getter
-    @Column(name = "GUIID", nullable = false)
-    private String guiId;
-
-    @Getter
     @Setter
     @ManyToOne
     private Analysis analysis;
@@ -55,39 +50,10 @@ public class Value {
         logger.debug("{} created", Value.class.getSimpleName());
     }
 
-    public Value(String name, ValueType type, String description, String guiId) {
+    public Value(String name, ValueType type, String description) {
         this.setName(name);
         this.setType(type);
         this.setDescription(description);
-        this.setGuiId(guiId);
-    }
-
-    @Override
-    public String toString() {
-        return "Value{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                ", guiId='" + guiId + '\'' +
-                ", analysis='" + analysis + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        var that = (Value) o;
-        return super.equals(that)
-                && Objects.equals(this.name, that.name)
-                && this.type == that.type
-                && Objects.equals(this.description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), this.name, this.type, this.description);
     }
 
     public void setName(String name) {
@@ -114,12 +80,5 @@ public class Value {
             throw new IllegalArgumentException("Description cannot be null.");
         }
         this.description = description;
-    }
-
-    public void setGuiId(String guiId) {
-        if (guiId == null){
-            throw new IllegalArgumentException("guiId cannot be null.");
-        }
-        this.guiId = guiId;
     }
 }
