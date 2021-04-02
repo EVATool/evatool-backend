@@ -18,7 +18,7 @@ public interface AnalysisController {
     @ApiOperation(value = "This method returns a list of all analysis")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All entities returned")})
-    public List<EntityModel<AnalysisDTO>> getAnalysisList();
+    List<EntityModel<AnalysisDTO>> getAnalysisList();
 
     @GetMapping("/analysis/{id}")
     @ApiOperation(value = "This method returns a value of an analysis by ID")
@@ -26,7 +26,7 @@ public interface AnalysisController {
             @ApiResponse(code = 200, message = "The entity was found"),
             @ApiResponse(code = 400, message = "The id was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public EntityModel<AnalysisDTO> getAnalysisById(@PathVariable UUID id);
+    EntityModel<AnalysisDTO> getAnalysisById(@PathVariable UUID id);
 
     @PostMapping("/analysis")
     @ApiOperation(value = "This method add an analysis")
@@ -34,14 +34,14 @@ public interface AnalysisController {
             @ApiResponse(code = 201, message = "The entity is inserted"),
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    public EntityModel<AnalysisDTO> addAnalysis(@RequestBody AnalysisDTO analysisDTO);
+    EntityModel<AnalysisDTO> addAnalysis(@RequestBody AnalysisDTO analysisDTO);
 
     @PutMapping("/analysis")
     @ApiOperation(value = "This method updated an Analysis by his ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity is deleted"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    public EntityModel<AnalysisDTO> updateAnalysis(@RequestBody AnalysisDTO analysisDTO);
+    EntityModel<AnalysisDTO> updateAnalysis(@RequestBody AnalysisDTO analysisDTO);
 
     @DeleteMapping("/analysis/{id}")
     @ApiOperation(value = "This method delete an analysis By his ID ")
@@ -49,5 +49,5 @@ public interface AnalysisController {
             @ApiResponse(code = 200, message = "The entity is updated"),
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    public ResponseEntity<Void> deleteAnalysis(@PathVariable UUID id);
+    ResponseEntity<Void> deleteAnalysis(@PathVariable UUID id);
 }

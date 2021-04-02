@@ -17,7 +17,8 @@ import java.util.Optional;
 
 @Service
 public class AnalysisDTOService {
-    Logger logger = LoggerFactory.getLogger(AnalysisDTOService.class);
+
+    final Logger logger = LoggerFactory.getLogger(AnalysisDTOService.class);
 
     @Autowired
     private AnalysisMapper analysisMapper;

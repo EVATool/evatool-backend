@@ -1,13 +1,13 @@
 package com.evatool.analysis.application.controller;
 
-import com.evatool.analysis.application.interfaces.AnalysisController;
 import com.evatool.analysis.application.dto.AnalysisDTO;
+import com.evatool.analysis.application.interfaces.AnalysisController;
+import com.evatool.analysis.application.services.AnalysisDTOService;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
-import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
-import com.evatool.analysis.application.services.AnalysisDTOService;
+import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +17,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.*;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
-import java.util.*;
 
 @RestController
 public class AnalysisControllerImpl implements AnalysisController {
@@ -34,15 +34,13 @@ public class AnalysisControllerImpl implements AnalysisController {
     @Autowired
     private AnalysisDTOService analysisDTOService;
 
-
-    Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);
-
+    final Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);
 
     @Override
     public List<EntityModel<AnalysisDTO>> getAnalysisList() {
         logger.info("[GET] /analysis");
         List<Analysis> analysisList = analysisRepository.findAll();
-        if (analysisList.isEmpty()){
+        if (analysisList.isEmpty()) {
             return Collections.emptyList();
         }
         return generateLinks(analysisDTOService.findAll(analysisList));

@@ -19,7 +19,7 @@ public interface StakeholderController {
     @ApiOperation(value = "This method returns a list of stakeholder")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All entities returned")})
-    public List<EntityModel<StakeholderDTO>> getStakeholderList();
+    List<EntityModel<StakeholderDTO>> getStakeholderList();
 
     @GetMapping("/stakeholders/{id}")
     @ApiOperation(value = "This method returns an optional of an Stakeholder by his ID")
@@ -27,7 +27,7 @@ public interface StakeholderController {
             @ApiResponse(code = 200, message = "The entity was found"),
             @ApiResponse(code = 400, message = "The id was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public EntityModel<StakeholderDTO> getStakeholderById(@PathVariable UUID id);
+    EntityModel<StakeholderDTO> getStakeholderById(@PathVariable UUID id);
 
     @PostMapping("/stakeholders")
     @ApiOperation(value = "This Method add a Stakeholder")
@@ -35,14 +35,14 @@ public interface StakeholderController {
             @ApiResponse(code = 201, message = "The entity is inserted"),
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    public EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO);
+    EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO);
 
     @PutMapping("/stakeholders")
     @ApiOperation(value = "This method updated an stakeholder by his id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity is deleted"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    public EntityModel<StakeholderDTO> updateStakeholder(@RequestBody StakeholderDTO stakeholderDTO);
+    EntityModel<StakeholderDTO> updateStakeholder(@RequestBody StakeholderDTO stakeholderDTO);
 
     @DeleteMapping("/stakeholders/{id}")
     @ApiOperation(value = "This method delete an stakeholder by his id ")
@@ -50,6 +50,6 @@ public interface StakeholderController {
             @ApiResponse(code = 200, message = "The entity is updated"),
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    public ResponseEntity<Void> deleteStakeholder(@PathVariable UUID id);
+    ResponseEntity<Void> deleteStakeholder(@PathVariable UUID id);
 
 }
