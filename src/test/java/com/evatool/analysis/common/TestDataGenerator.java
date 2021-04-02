@@ -15,10 +15,8 @@ public class TestDataGenerator {
     }
 
     public static Stakeholder getStakholder() {
-        return new Stakeholder("StakeholderName", Integer.valueOf(10), StakeholderLevel.NATURAL_PERSON);
+        return new Stakeholder("StakeholderName", 10, StakeholderLevel.NATURAL_PERSON);
     }
-
-
 
     public static AnalysisDTO getAnalysisDTO(String name, String description) {
 
@@ -40,7 +38,6 @@ public class TestDataGenerator {
         return stakeholderDTO;
     }
 
-
     public static Value createDummyValue() {
         return new Value("dummyValue", ValueType.ECONOMIC, "dummyValueDescription", "VAL01");
     }
@@ -48,6 +45,4 @@ public class TestDataGenerator {
     public static ValueDto createDummyValueDto() {
         return ValueDtoMapper.toDto(createDummyValue());
     }
-
-
 }
