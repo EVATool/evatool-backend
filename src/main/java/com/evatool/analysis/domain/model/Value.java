@@ -1,8 +1,10 @@
 package com.evatool.analysis.domain.model;
 
 import com.evatool.analysis.domain.enums.ValueType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "ANA_VALUE")
+@EqualsAndHashCode
+@ToString
 public class Value {
 
     private static final Logger logger = LoggerFactory.getLogger(Value.class);
