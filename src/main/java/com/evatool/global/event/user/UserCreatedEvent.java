@@ -8,7 +8,7 @@ public class UserCreatedEvent extends ApplicationEvent {
     @Getter
     private String jsonPayload;
 
-    public UserCreatedEvent(String jsonPayload) {
+    public UserCreatedEvent(final String jsonPayload) {
         super(jsonPayload);
         this.jsonPayload = jsonPayload;
     }

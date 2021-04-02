@@ -9,7 +9,7 @@ public class RequirementDeletedEvent extends ApplicationEvent {
     @Getter
     private String jsonPayload;
 
-    public RequirementDeletedEvent(String jsonPayload) {
+    public RequirementDeletedEvent(final String jsonPayload) {
         super(jsonPayload);
         this.jsonPayload = jsonPayload;
     }
