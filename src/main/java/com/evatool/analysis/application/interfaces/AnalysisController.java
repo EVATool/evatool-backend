@@ -14,12 +14,11 @@ import java.util.UUID;
 @Api("API-endpoint for a analysis")
 public interface AnalysisController {
 
-    // das ist ein kommentar
     @GetMapping("/analysis")
     @ApiOperation(value = "This method returns a list of all analysis")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All entities returned")})
-    public List<EntityModel<AnalysisDTO>> getAnalysisList();
+    public List<EntityModel<AnalysisDTO>> getAnalysisList(Boolean isTemplate);
 
     @GetMapping("/analysis/{id}")
     @ApiOperation(value = "This method returns a value of an analysis by ID")

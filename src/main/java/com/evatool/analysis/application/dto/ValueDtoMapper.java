@@ -28,9 +28,6 @@ public class ValueDtoMapper {
 
     public static Value fromDto(ValueDto valueDto) {
         logger.info("Mapping Dto to Entity");
-        if (valueDto.getGuiId().equals(null) || valueDto.getGuiId().equals("")){
-            value.setGuiId(generateGuiId());
-        }
         return modelMapper.map(valueDto, Value.class);
     }
 
@@ -39,9 +36,5 @@ public class ValueDtoMapper {
         return modelMapper.map(value, ValueDto.class);
     }
 
-    public static String generateGuiId(){
-        List<Value> valueList = valueRepository.findAll();
-        return String.format("VAL%d",valueList.size() + 1 );
-    }
 }
 

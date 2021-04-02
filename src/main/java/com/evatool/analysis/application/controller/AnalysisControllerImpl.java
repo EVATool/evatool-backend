@@ -1,27 +1,29 @@
 package com.evatool.analysis.application.controller;
 
-import com.evatool.analysis.application.interfaces.AnalysisController;
 import com.evatool.analysis.application.dto.AnalysisDTO;
+import com.evatool.analysis.application.interfaces.AnalysisController;
+import com.evatool.analysis.application.services.AnalysisDTOService;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
-import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
-import com.evatool.analysis.application.services.AnalysisDTOService;
+import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
-import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import java.util.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
-import java.util.*;
 
 @RestController
 public class AnalysisControllerImpl implements AnalysisController {
@@ -35,15 +37,19 @@ public class AnalysisControllerImpl implements AnalysisController {
     @Autowired
     private AnalysisDTOService analysisDTOService;
 
-
     Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);
 
-
     @Override
-    public List<EntityModel<AnalysisDTO>> getAnalysisList() {
+    public List<EntityModel<AnalysisDTO>> getAnalysisList(@ApiParam(value = "Is A Template") @Valid @RequestParam(value = "isTemplate", required = false) Boolean isTemplate) {
         logger.info("[GET] /analysis");
-        List<Analysis> analysisList = analysisRepository.findAll();
-        if (analysisList.isEmpty()){
+        List<Analysis> analysisList = new ArrayList<>();
+        if (isTemplate == null) {
+            analysisList = analysisRepository.findAll();
+        } else {
+            analysisList = analysisDTOService.findAllByIdTemplate(isTemplate);
+        }
+
+        if (analysisList.isEmpty()) {
             return Arrays.asList();
         }
         return generateLinks(analysisDTOService.findAll(analysisList));
@@ -72,7 +78,6 @@ public class AnalysisControllerImpl implements AnalysisController {
         logger.info("[PUT] /analysis");
         analysisDTOService.update(analysisDTO);
         return getAnalysisById(analysisDTO.getRootEntityID());
-
     }
 
     @Override
