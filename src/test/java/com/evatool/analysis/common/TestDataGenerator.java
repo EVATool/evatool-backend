@@ -16,7 +16,7 @@ public class TestDataGenerator {
     return new Analysis("AnalysisName", "descriptionTitle");
   }
 
-  public static Stakeholder getStakholder() {
+  public static Stakeholder getStakeholder() {
     return new Stakeholder("StakeholderName", 10, StakeholderLevel.NATURAL_PERSON);
   }
 

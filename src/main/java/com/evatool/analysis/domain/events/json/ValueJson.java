@@ -2,9 +2,11 @@ package com.evatool.analysis.domain.events.json;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.UUID;
 
+@ToString
 public class ValueJson {
 
     @Getter

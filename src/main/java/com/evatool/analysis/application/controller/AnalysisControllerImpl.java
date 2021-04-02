@@ -9,6 +9,7 @@ import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;

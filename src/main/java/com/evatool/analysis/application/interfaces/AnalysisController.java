@@ -18,7 +18,7 @@ public interface AnalysisController {
     @ApiOperation(value = "This method returns a list of all analysis")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All entities returned")})
-    List<EntityModel<AnalysisDTO>> getAnalysisList();
+    List<EntityModel<AnalysisDTO>> getAnalysisList(@PathVariable Boolean isTemplate);
 
     @GetMapping("/analysis/{id}")
     @ApiOperation(value = "This method returns a value of an analysis by ID")

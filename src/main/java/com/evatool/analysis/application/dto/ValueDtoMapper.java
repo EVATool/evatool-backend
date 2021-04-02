@@ -28,9 +28,6 @@ public class ValueDtoMapper {
 
     public static Value fromDto(ValueDto valueDto) {
         logger.info("Mapping Dto to Entity");
-        if (valueDto.getGuiId().equals("")){
-            value.setGuiId(generateGuiId());
-        }
         return modelMapper.map(valueDto, Value.class);
     }
 

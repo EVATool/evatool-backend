@@ -4,6 +4,7 @@ import com.evatool.analysis.application.dto.StakeholderDTO;
 import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.application.services.StakeholderDTOService;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
+import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
@@ -46,6 +47,12 @@ public class StakeholderControllerImpl implements StakeholderController {
             return Collections.emptyList();
         }
         return generateLinks(stakeholderDTOService.findAll(stakeholderList));
+    }
+
+    @Override
+    public List<StakeholderLevel> findAllLevels() {
+        logger.info("Get Stakeholder Levels");
+        return Arrays.asList(StakeholderLevel.values());
     }
 
     @Override
@@ -101,8 +108,5 @@ public class StakeholderControllerImpl implements StakeholderController {
         List<EntityModel<StakeholderDTO>> returnList = new ArrayList<>();
         stakeholderDTOList.forEach(e -> returnList.add(generateLinks(e)));
         return returnList;
-
     }
-
-
 }
