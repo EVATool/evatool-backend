@@ -40,7 +40,7 @@ public class ValueDto {
     @Getter
     @Setter
     @NotNull
-    private String guiId;
+    private AnalysisDTO analysis;
 
 
     @Override
@@ -50,6 +50,7 @@ public class ValueDto {
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
+                ", analysis='" + analysis.toString() + '\'' +
                 '}';
     }
 
@@ -58,11 +59,15 @@ public class ValueDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ValueDto that = (ValueDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && type == that.type && Objects.equals(description, that.description);
+        return Objects.equals(id, that.id)
+                && Objects.equals(name, that.name)
+                && type == that.type
+                && Objects.equals(description, that.description)
+                && Objects.equals(analysis, that.analysis);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, description);
+        return Objects.hash(id, name, type, description, analysis);
     }
 }

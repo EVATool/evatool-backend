@@ -1,6 +1,7 @@
 package com.evatool.analysis.domain.model;
 
 import com.google.gson.Gson;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "ANA_ANALYSIS")
+@EqualsAndHashCode
 public class Analysis {
 
     @Id
