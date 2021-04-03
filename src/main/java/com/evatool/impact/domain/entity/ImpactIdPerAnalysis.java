@@ -6,22 +6,22 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-@Table(name = "IMP_IMPACTS_PER_ANALYSIS")
-@Entity(name = "IMP_IMPACTS_PER_ANALYSIS")
+@Table(name = "imp_impacts_per_analysis")
+@Entity(name = "imp_impacts_per_analysis")
 @EqualsAndHashCode
 @ToString
 public class ImpactIdPerAnalysis {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
     @Getter
-    @Column(name = "ANALYSIS_ID", updatable = false, nullable = false)
+    @Column(name = "analysis_id", updatable = false, nullable = false)
     private String analysisId;
 
     @Getter
-    @Column(name = "IMPACTS_PER_ANALYSIS", updatable = false, nullable = false)
+    @Column(name = "impacts_per_analysis", updatable = false, nullable = false)
     private Integer impactsPerAnalysis;
 }
