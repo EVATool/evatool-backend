@@ -1,4 +1,4 @@
-package com.evatool.impact.application.service;
+package com.evatool.impact.domain.event;
 
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
@@ -18,10 +18,10 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-abstract public class ServiceTest {
+abstract class EventListenerTest { // TODO make abstarct +all other base test classes
 
     @Autowired
-    protected ImpactService impactService;
+    protected ImpactAnalysisRepository analysisRepository;
 
     @Autowired
     protected ImpactRepository impactRepository;
@@ -35,15 +35,6 @@ abstract public class ServiceTest {
     @Autowired
     protected ImpactAnalysisRepository impactAnalysisRepository;
 
-    @Autowired
-    protected ImpactStakeholderService stakeholderService;
-
-    @Autowired
-    protected ImpactAnalysisService analysisService;
-
-    @Autowired
-    protected ImpactValueService valueService;
-
     @BeforeEach
     @AfterAll
     private void clearDatabase() {
@@ -54,33 +45,37 @@ abstract public class ServiceTest {
     }
 
     protected Impact saveFullDummyImpact() {
-        var analysis = saveFullDummyAnalysis();
-        return saveFullDummyImpact(analysis);
-    }
-
-    protected Impact saveFullDummyImpact(ImpactAnalysis analysis) {
-        var value = saveFullDummyValue(analysis);
-        var stakeholder = saveFullDummyStakeholder();
+        var value = saveDummyValue();
+        var stakeholder = saveDummyStakeholder();
+        var analysis = saveDummyAnalysis();
         var impact = createDummyImpact(analysis);
         impact.setValueEntity(value);
         impact.setStakeholder(stakeholder);
         return impactRepository.save(impact);
     }
 
-    protected ImpactValue saveFullDummyValue() {
-        var analysis = saveFullDummyAnalysis();
-        return valueRepository.save(createDummyValue(analysis));
+    protected Impact saveFullDummyImpact(ImpactAnalysis analysis) {
+        var value = saveDummyValue();
+        var stakeholder = saveDummyStakeholder();
+        var impact = createDummyImpact(analysis);
+        impact.setValueEntity(value);
+        impact.setStakeholder(stakeholder);
+        return impactRepository.save(impact);
     }
 
-    protected ImpactValue saveFullDummyValue(ImpactAnalysis analysis) {
-        return valueRepository.save(createDummyValue(analysis));
+    protected ImpactValue saveDummyValueChildren() {
+        return createDummyValue(analysisRepository.save(createDummyAnalysis()));
     }
 
-    protected ImpactStakeholder saveFullDummyStakeholder() {
+    protected ImpactValue saveDummyValue() {
+        return valueRepository.save(createDummyValue());
+    }
+
+    protected ImpactStakeholder saveDummyStakeholder() {
         return stakeholderRepository.save(createDummyStakeholder());
     }
 
-    protected ImpactAnalysis saveFullDummyAnalysis() {
+    protected ImpactAnalysis saveDummyAnalysis() {
         return impactAnalysisRepository.save(createDummyAnalysis());
     }
 }

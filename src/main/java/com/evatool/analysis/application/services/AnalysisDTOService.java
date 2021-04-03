@@ -13,13 +13,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AnalysisDTOService {
-    Logger logger = LoggerFactory.getLogger(AnalysisDTOService.class);
+
+    final Logger logger = LoggerFactory.getLogger(AnalysisDTOService.class);
 
     @Autowired
     private AnalysisMapper analysisMapper;
@@ -48,11 +48,8 @@ public class AnalysisDTOService {
 
     public Analysis create(AnalysisDTO analysisDTO) {
         logger.debug("create [{}]", analysisDTO);
-        Analysis analysis = new Analysis();
-        analysis.setAnalysisName(analysisDTO.getAnalysisName());
-        analysis.setDescription(analysisDTO.getAnalysisDescription());
-        analysis.setImage(analysisDTO.getImage());
-        analysis.setLastUpdate(new Date(System.currentTimeMillis()));
+        Analysis analysis = analysisMapper.map(analysisDTO);
+
         return analysis;
     }
 
@@ -62,12 +59,7 @@ public class AnalysisDTOService {
         if (analysisOptional.isEmpty())
             throw new EntityNotFoundException(Analysis.class, analysisDTO.getRootEntityID());
 
-        Analysis analysis = analysisOptional.get();
-        analysis.setAnalysisName(analysisDTO.getAnalysisName());
-        analysis.setDescription(analysisDTO.getAnalysisDescription());
-        analysis.setImage(analysisDTO.getImage());
-        analysis.setLastUpdate(new Date(System.currentTimeMillis()));
-        analysis.setIsTemplate(analysisDTO.getIsTemplate());
+        Analysis analysis = analysisMapper.map(analysisDTO);
         if (analysisDTO.getUniqueString() != null) {
             var numericId = new NumericId();
             numericId.setNumericId(Integer.valueOf(analysisDTO.getUniqueString().replace("ANA", "")));

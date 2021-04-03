@@ -17,6 +17,7 @@ import com.evatool.requirements.domain.entity.RequirementsImpact;
 import com.evatool.requirements.domain.entity.RequirementsVariant;
 import com.evatool.requirements.common.exceptions.EventEntityAlreadyExistsException;
 import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
+import com.evatool.requirements.domain.events.json.ImpactJson;
 import com.evatool.requirements.domain.repository.RequirementAnalysisRepository;
 import com.evatool.requirements.domain.repository.RequirementValueRepository;
 import com.evatool.requirements.domain.repository.RequirementsImpactsRepository;
@@ -27,6 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class RequirementEventListener {
@@ -48,11 +52,22 @@ public class RequirementEventListener {
     public void impactCreated(ImpactCreatedEvent event) {
         logger.info("impact created event ");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
-
-        if (requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
+        ImpactJson impactJson = ImpactJson.fromJson(event.getJsonPayload());
+        if (requirementsImpactsRepository.existsById(UUID.fromString(impactJson.getId()))) {
             throw new EventEntityAlreadyExistsException();
         }
-        requirementsImpactsRepository.save(RequirementsImpact.fromJson(event.getJsonPayload()));
+        RequirementsImpact requirementsImpact = RequirementsImpact.fromJson(event.getJsonPayload());
+        if(impactJson.getDimensionId()!=null) {
+            Optional<RequirementValue> requirementValue = requirementValueRepository.findById(UUID.fromString(impactJson.getDimensionId()));
+            if (requirementValue.isEmpty()) {
+                logger.error("Dimension ist nicht vorhanden. ID:[{}]", impactJson.getDimensionId());
+            } else {
+                requirementsImpact.setRequirementValue(requirementValue.get());
+            }
+        }else{
+            logger.error("Für das Impact wurde keine DimensionId übermittelt. JsonBody:[{}]", impactJson);
+        }
+        requirementsImpactsRepository.save(requirementsImpact);
     }
 
     @EventListener

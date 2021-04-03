@@ -2,7 +2,6 @@ package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.ImpactValueDto;
 import com.evatool.impact.application.dto.mapper.ImpactValueDtoMapper;
-import com.evatool.impact.common.ImpactValueType;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.domain.entity.ImpactValue;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +27,7 @@ public class ImpactValueServiceImpl implements ImpactValueService {
 
     @Override
     public ImpactValueDto findById(UUID id) {
-        logger.info("Get ImpactValue");
+        logger.info("Get Impact Value");
         if (id == null) {
             throw new EntityIdRequiredException(ImpactValue.class.getSimpleName());
         }
@@ -41,12 +39,12 @@ public class ImpactValueServiceImpl implements ImpactValueService {
     }
 
     @Override
-    public List<ImpactValueDto> findAllByType(ImpactValueType type) {
-        logger.info("Get ImpactValue by type");
-        var values = impactValueRepository.findAllByType(type);
-        var valueDtoList = new ArrayList<ImpactValueDto>();
-        values.forEach(value -> valueDtoList.add(ImpactValueDtoMapper.toDto(value)));
-        return valueDtoList;
+    public List<ImpactValueDto> findAllByAnalysisId(UUID analysisId) {
+        logger.info("Get Impact Values By Analysis Id");
+        var impactValues = impactValueRepository.findAllByAnalysisId(analysisId);
+        var impactValueDtoList = new ArrayList<ImpactValueDto>();
+        impactValues.forEach(impactValue -> impactValueDtoList.add(ImpactValueDtoMapper.toDto(impactValue)));
+        return impactValueDtoList;
     }
 
     @Override
@@ -56,12 +54,6 @@ public class ImpactValueServiceImpl implements ImpactValueService {
         var valuesDtoList = new ArrayList<ImpactValueDto>();
         values.forEach(value -> valuesDtoList.add(ImpactValueDtoMapper.toDto(value)));
         return valuesDtoList;
-    }
-
-    @Override
-    public List<ImpactValueType> findAllTypes() {
-        logger.info("Get Values Types");
-        return Arrays.asList(ImpactValueType.values());
     }
 
     @Override

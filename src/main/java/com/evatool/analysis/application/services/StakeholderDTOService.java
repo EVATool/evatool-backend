@@ -15,7 +15,8 @@ import java.util.List;
 
 @Service
 public class StakeholderDTOService {
-    Logger logger = LoggerFactory.getLogger(StakeholderDTOService.class);
+
+    final Logger logger = LoggerFactory.getLogger(StakeholderDTOService.class);
 
     @Autowired
     private StakeholderMapper stakeholderMapper;

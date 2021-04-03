@@ -12,13 +12,13 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class AnalysisRepoTest {
+class AnalysisRepoTest {
 
     @Autowired
     private AnalysisRepository analysisRepository;
 
     @Test
-    public void testFindByIdExistingAnalysis() {
+    void testFindByIdExistingAnalysis() {
 
         // given
         Analysis analysis = TestDataGenerator.getAnalysis();
@@ -32,7 +32,7 @@ public class AnalysisRepoTest {
     }
 
     @Test
-    public void testSaveInsertedUserIdIsNotNull() {
+    void testSaveInsertedUserIdIsNotNull() {
         // given
         Analysis analysis = TestDataGenerator.getAnalysis();
 
@@ -44,7 +44,7 @@ public class AnalysisRepoTest {
     }
 
     @Test
-    public void testSaveInsertedAnalysisIdIsUuid() {
+    void testSaveInsertedAnalysisIdIsUuid() {
         // given
         Analysis analysis = TestDataGenerator.getAnalysis();
 
@@ -58,7 +58,7 @@ public class AnalysisRepoTest {
     }
 
     @Test
-    public void testDeleteAnalysisReturnNull() {
+    void testDeleteAnalysisReturnNull() {
         // given
         Analysis analysis = TestDataGenerator.getAnalysis();
         analysisRepository.save(analysis);
@@ -70,6 +70,4 @@ public class AnalysisRepoTest {
         // then
         assertThat(analysisFound).isNull();
     }
-
-
 }

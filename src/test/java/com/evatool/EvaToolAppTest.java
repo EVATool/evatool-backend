@@ -7,6 +7,7 @@ import com.evatool.analysis.domain.events.ValueEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.model.Value;
+import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.domain.repository.ValueRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
@@ -16,7 +17,6 @@ import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.global.event.variants.VariantCreatedEvent;
 import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
-import com.evatool.impact.common.ImpactValueType;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
@@ -198,6 +198,12 @@ class EvaToolAppTest {
         ValueEventPublisher valueEventPublisher;
 
         @Autowired
+        AnalysisEventPublisher analysisEventPublisher;
+
+        @Autowired
+        AnalysisRepository analysisRepository;
+
+        @Autowired
         ImpactValueRepository impactValueRepository;
 
         @Autowired
@@ -210,20 +216,32 @@ class EvaToolAppTest {
             impactValueRepository.deleteAll();
         }
 
-        Value createDummyValue() {
-            return valueRepository.save(new Value("Name", ValueType.SOCIAL, "Description"));
+        Analysis saveDummyAnalysisAndFire() {
+            var analysis = analysisRepository.save(new Analysis("name", "desc"));
+            var analysisCreatedEvent = new AnalysisCreatedEvent(analysis.toJson());
+            analysisEventPublisher.publishEvent(analysisCreatedEvent);
+            return analysis;
+        }
+
+        Value saveDummyValue() {
+            var value = new Value("Name", ValueType.SOCIAL, "Description");
+            var analysis = saveDummyAnalysisAndFire();
+            value.setAnalysis(analysis);
+            return valueRepository.save(value);
         }
 
         // Received by: Requirement, Impact
         @Test
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var value = createDummyValue();
+            var value = saveDummyValue();
 
             // when
             valueEventPublisher.publishValueCreated(value);
             var requirementValue = requirementValueRepository.findById(value.getId()).orElse(null);
             var impactValue = impactValueRepository.findById(value.getId()).orElse(null);
+
+            System.out.println(impactValue);
 
             // then
             assertThat(requirementValue).isNotNull();
@@ -234,7 +252,7 @@ class EvaToolAppTest {
         @Test
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var value = createDummyValue();
+            var value = saveDummyValue();
             valueEventPublisher.publishValueCreated(value);
 
             // when
@@ -252,7 +270,7 @@ class EvaToolAppTest {
         @Test
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
-            var value = createDummyValue();
+            var value = saveDummyValue();
             valueEventPublisher.publishValueCreated(value);
 
             // when
@@ -309,9 +327,9 @@ class EvaToolAppTest {
         }
 
         Impact createDummyImpact() {
-            var value = impactValueRepository.save(new ImpactValue(UUID.randomUUID(), "Name", ImpactValueType.SOCIAL, "Description"));
-            var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name"));
+            var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name", "Level"));
             var analysis = impactAnalysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
+            var value = impactValueRepository.save(new ImpactValue(UUID.randomUUID(), "Name", "SOCIAL", "Description" ,analysis));
             return impactRepository.save(new Impact(0.0, "Description", value, stakeholder, analysis));
         }
 

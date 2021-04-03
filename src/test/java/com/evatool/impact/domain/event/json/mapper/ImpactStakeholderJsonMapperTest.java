@@ -1,14 +1,11 @@
 package com.evatool.impact.domain.event.json.mapper;
 
-import com.evatool.impact.common.exception.EventPayloadInvalidException;
 import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper.fromJson;
+import static com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper.toJson;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class ImpactStakeholderJsonMapperTest {
 
@@ -16,106 +13,12 @@ class ImpactStakeholderJsonMapperTest {
     void testFromJsonString_ImpactStakeholderFromJson_EqualsImpactStakeholder() {
         // given
         var stakeholder = createDummyStakeholder();
-        var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\"}", stakeholder.getId(), stakeholder.getName());
-
-        // when
-        var eventStakeholder = fromJson(json);
-
-        // then
-        assertThat(eventStakeholder).isEqualTo(stakeholder);
-    }
-
-    @Test
-    void testFromJsonString_JsonStringEmpty_ThrowEventPayloadInvalidException() {
-        // given
+        var json = toJson(stakeholder);
+        var recreatedStakeholder = fromJson(json);
 
         // when
 
         // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(""));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringNull_ThrowEventPayloadInvalidException() {
-        // given
-
-        // when
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(null));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringMissingColon_ThrowEventPayloadInvalidException() {
-        // given
-        var id = UUID.randomUUID().toString();
-        var name = "name";
-
-        // when
-        var json = String.format("{\"stakeholderId\"\"%s\",\"stakeholderName\":\"%s\"}", id, name);
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonHasNotRequiredFields_EqualsImpactStakeholder() {
-        // given
-        var stakeholder = createDummyStakeholder();
-        var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":\"%s\",\"not required\":\"useless\"}", stakeholder.getId(), stakeholder.getName());
-
-        // when
-        var eventStakeholder = fromJson(json);
-
-        // then
-        assertThat(eventStakeholder).isEqualTo(stakeholder);
-    }
-
-    @Test
-    void testFromJsonString_JsonStringMissingIdField_ThrowEventPayloadInvalidException() {
-        // given
-        var name = "name";
-
-        // when
-        var json = String.format("{\"stakeholderName\":\"%s\"}", name);
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringMissingNameField_ThrowEventPayloadInvalidException() {
-        // given
-        var id = UUID.randomUUID().toString();
-
-        // when
-        var json = String.format("{\"stakeholderId\":\"%s\"}", id);
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringNullIdField_ThrowEventPayloadInvalidException() {
-        // given
-        var name = "name";
-
-        // when
-        var json = String.format("{\"stakeholderId\":null,\"stakeholderName\":\"%s\"}", name);
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringNullNameField_ThrowEventPayloadInvalidException() {
-        // given
-        var id = UUID.randomUUID().toString();
-
-        // when
-        var json = String.format("{\"stakeholderId\":\"%s\",\"stakeholderName\":null}", id);
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+        assertThat(stakeholder).isEqualTo(recreatedStakeholder);
     }
 }

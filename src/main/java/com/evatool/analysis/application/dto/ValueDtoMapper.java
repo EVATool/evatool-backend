@@ -1,13 +1,10 @@
 package com.evatool.analysis.application.dto;
 
+import com.evatool.analysis.domain.model.NumericId;
 import com.evatool.analysis.domain.model.Value;
-import com.evatool.analysis.domain.repository.ValueRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 public class ValueDtoMapper {
 
@@ -18,23 +15,22 @@ public class ValueDtoMapper {
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    @Autowired
-    private static Value value;
-
-    @Autowired
-    private static ValueRepository valueRepository;
-
-
-
     public static Value fromDto(ValueDto valueDto) {
         logger.info("Mapping Dto to Entity");
-        return modelMapper.map(valueDto, Value.class);
+        var value = modelMapper.map(valueDto, Value.class);
+        if (valueDto.getAnalysis().getUniqueString() != null) {
+            var numericId = new NumericId();
+            numericId.setNumericId(Integer.valueOf(valueDto.getAnalysis().getUniqueString().replace("ANA", "")));
+            value.getAnalysis().setNumericId(numericId);
+        }
+        return value;
     }
 
     public static ValueDto toDto(Value value) {
         logger.info("Mapping Entity to Dto");
-        return modelMapper.map(value, ValueDto.class);
+        var valueDto = modelMapper.map(value, ValueDto.class);
+        valueDto.getAnalysis().setRootEntityID(value.getAnalysis().getAnalysisId());
+        return valueDto;
     }
-
 }
 

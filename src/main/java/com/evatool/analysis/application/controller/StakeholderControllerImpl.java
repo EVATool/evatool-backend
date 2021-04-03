@@ -37,14 +37,14 @@ public class StakeholderControllerImpl implements StakeholderController {
     @Autowired
     private AnalysisEventPublisher stakeholderEventPublisher;
 
-    Logger logger = LoggerFactory.getLogger(StakeholderControllerImpl.class);
+    final Logger logger = LoggerFactory.getLogger(StakeholderControllerImpl.class);
 
     @Override
     public List<EntityModel<StakeholderDTO>> getStakeholderList() {
         logger.info("[GET] /stakeholders");
         List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
-        if (stakeholderList.isEmpty()) {
-            return Arrays.asList();
+        if (stakeholderList.isEmpty()){
+            return Collections.emptyList();
         }
         return generateLinks(stakeholderDTOService.findAll(stakeholderList));
     }
@@ -59,7 +59,7 @@ public class StakeholderControllerImpl implements StakeholderController {
     public EntityModel<StakeholderDTO> getStakeholderById(UUID id) {
         logger.info("[GET] /stakeholders/{id}");
         Optional<Stakeholder> stakeholder = stakeholderRepository.findById(id);
-        if (stakeholder.isEmpty()) {
+        if (stakeholder.isEmpty()){
             throw new EntityNotFoundException(Stakeholder.class, id);
         }
         return generateLinks(stakeholderDTOService.findById(stakeholder.get()));
@@ -106,10 +106,7 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     private List<EntityModel<StakeholderDTO>> generateLinks(List<StakeholderDTO> stakeholderDTOList){
         List<EntityModel<StakeholderDTO>> returnList = new ArrayList<>();
-        stakeholderDTOList.stream().forEach(e -> returnList.add(generateLinks(e)));
+        stakeholderDTOList.forEach(e -> returnList.add(generateLinks(e)));
         return returnList;
-
     }
-
-
 }

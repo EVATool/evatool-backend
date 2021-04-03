@@ -39,7 +39,7 @@ public class ValueServiceImpl implements ValueService {
             throw new EntityIdRequiredException(Value.class.getSimpleName());
         }
         var value = valueRepository.findById(id);
-        if (!value.isPresent()) {
+        if (value.isEmpty()) {
             throw new EntityNotFoundException(Value.class, id);
         }
         return ValueDtoMapper.toDto(value.get());

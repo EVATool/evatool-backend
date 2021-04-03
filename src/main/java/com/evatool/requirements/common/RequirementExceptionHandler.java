@@ -2,7 +2,7 @@ package com.evatool.requirements.common;
 
 
 import com.evatool.requirements.common.exceptions.EntityNotFoundException;
-import com.evatool.requirements.common.exceptions.IllegalDtoValueExcpetion;
+import com.evatool.requirements.common.exceptions.IllegalDtoValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,8 +23,8 @@ public class RequirementExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(IllegalDtoValueExcpetion.class)
-    public ResponseEntity<RequirementsErrorMessage> handleIllegalDtoValueExcpetion(IllegalDtoValueExcpetion exception, WebRequest webRequest) {
+    @ExceptionHandler(IllegalDtoValueException.class)
+    public ResponseEntity<RequirementsErrorMessage> handleIllegalDtoValueException(IllegalDtoValueException exception, WebRequest webRequest) {
         logger.error("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
         RequirementsErrorMessage errorMessage = new RequirementsErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
         return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);

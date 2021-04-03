@@ -1,6 +1,5 @@
 package com.evatool.impact.application.dto;
 
-import com.evatool.impact.common.ImpactValueType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
@@ -31,11 +30,17 @@ public class ImpactValueDto {
     @Getter
     @Setter
     @NotNull
-    private ImpactValueType type;
+    private String type;
 
     @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull
     private String description;
+
+    @ApiModelProperty(required = true)
+    @Getter
+    @Setter
+    @NotNull
+    private ImpactAnalysisDto analysis;
 }

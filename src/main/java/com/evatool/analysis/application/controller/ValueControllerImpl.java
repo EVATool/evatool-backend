@@ -52,7 +52,6 @@ public class ValueControllerImpl {
             @ApiResponse(code = 400, message = "Bad Request")})
     public ResponseEntity<List<EntityModel<ValueDto>>> findAll(@ApiParam(value = "ImpactValue Type") @Valid @RequestParam(value = "type", required = false) ValueType type) {
         List<ValueDto> valueDtoList;
-        System.out.println(type);
         if (type == null) {
             logger.info("GET " + "/values");
             valueDtoList = valueService.findAll();

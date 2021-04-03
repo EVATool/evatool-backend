@@ -9,7 +9,6 @@ import com.evatool.variants.domain.entities.VariantsRequirements;
 import com.evatool.variants.domain.repositories.VariantRepository;
 import com.evatool.variants.domain.repositories.VariantRequirementsRepository;
 import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
-import com.google.common.annotations.VisibleForTesting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
@@ -53,8 +52,7 @@ public class VariantMapper {
         variantDto.setDescription(variant.getDescription());
         if (variant.getSubVariant() != null) {
             Link subVariantLink = linkTo(methodOn(VariantController.class).getAllVariants()).withSelfRel();
-            List<Variant> variantList = new ArrayList<>();
-            variantList.addAll(variant.getSubVariant());
+            List<Variant> variantList = new ArrayList<>(variant.getSubVariant());
             CollectionModel<Variant> subVariantCollectionModel = CollectionModel.of(variantList);
             subVariantCollectionModel.add(subVariantLink);
         }

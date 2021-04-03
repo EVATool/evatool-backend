@@ -1,12 +1,12 @@
 package com.evatool.analysis.domain.events.json;
 
-import com.evatool.analysis.domain.model.Value;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import java.util.Objects;
 import java.util.UUID;
 
+@ToString
 public class ValueJson {
 
     @Getter
@@ -25,11 +25,7 @@ public class ValueJson {
     @Setter
     private String description;
 
-    public boolean equalsEntity(Value that) {
-        if (that == null) return false;
-        return Objects.equals(this.id, that.getId().toString())
-                && Objects.equals(this.name, that.getName())
-                && Objects.equals(this.type, that.getType().toString())
-                && Objects.equals(this.description, that.getDescription());
-    }
+    @Getter
+    @Setter
+    private String analysisId;
 }

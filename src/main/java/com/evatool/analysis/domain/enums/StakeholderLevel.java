@@ -13,14 +13,14 @@ public enum StakeholderLevel {
     ORGANIZATION("organization"),
     SOCIETY("society");
 
-    private String stakeholderLevel;
+    private final String level;
 
     StakeholderLevel(String stakeholderLevel) {
-        this.stakeholderLevel = stakeholderLevel;
+        this.level = stakeholderLevel;
     }
 
     public String getStakeholderLevel() {
-        return this.stakeholderLevel;
+        return this.level;
     }
 }
 

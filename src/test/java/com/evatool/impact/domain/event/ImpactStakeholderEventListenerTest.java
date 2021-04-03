@@ -7,9 +7,7 @@ import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,19 +15,10 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@SpringBootTest
-class ImpactStakeholderEventListenerTest {
-
-    @Autowired
-    private ImpactStakeholderRepository stakeholderRepository;
+class ImpactStakeholderEventListenerTest  extends  EventListenerTest{
 
     @Autowired
     private ImpactStakeholderEventListener impactStakeholderEventListener;
-
-    @BeforeEach
-    void clearData() {
-        stakeholderRepository.deleteAll();
-    }
 
     @Nested
     class Created {

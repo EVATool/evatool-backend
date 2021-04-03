@@ -13,6 +13,10 @@ public class UriUtil {
     public static final String VALUE_TYPES = "/values/types";
     public static final String VALUE_NAME = "value";
 
+    public static final String IMPACT_VALUES = "/impacts/values";
+    public static final String IMPACT_VALUE_ID = "/impacts/values/{id}";
+    public static final String VALUE_VALUE_NAME = "impact value";
+
     public static final String STAKEHOLDERS = "/stakeholders";
     public static final String STAKEHOLDER_NAME = "stakeholder";
 
