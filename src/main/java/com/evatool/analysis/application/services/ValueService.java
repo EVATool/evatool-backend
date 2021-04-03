@@ -12,6 +12,8 @@ public interface ValueService {
 
     List<ValueDto> findAllByType(ValueType type);
 
+    List<ValueDto> findAllByAnalysisId(UUID analysisId);
+
     List<ValueDto> findAll();
 
     List<ValueType> findAllTypes();
