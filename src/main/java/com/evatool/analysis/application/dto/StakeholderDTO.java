@@ -13,7 +13,7 @@ public class StakeholderDTO {
     private String stakeholderName;
     private StakeholderLevel stakeholderLevel;
     private Integer priority;
-    private Collection<AnalysisImpact> impactList;
+    private Collection<AnalysisImpact> impactList = new ArrayList<>();
     private String guiId;
 
     public void setRootEntityID(UUID rootEntityID) {

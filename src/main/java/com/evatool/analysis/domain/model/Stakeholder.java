@@ -4,6 +4,8 @@ import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -46,6 +48,7 @@ public class Stakeholder {
 
     @Getter
     @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<AnalysisImpact> impact = new ArrayList<>();
 
     /**
