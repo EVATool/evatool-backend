@@ -1,14 +1,19 @@
 package com.evatool.analysis.application.dto;
 
 import com.evatool.analysis.domain.model.Analysis;
+import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import com.evatool.analysis.application.dto.AnalysisDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class AnalysisMapper {
+
+    private final ModelMapper modelMapper = new ModelMapper();
+    private static final Logger logger = LoggerFactory.getLogger(AnalysisMapper.class);
 
 
     public List<AnalysisDTO> map(List<Analysis> resultList) {
@@ -26,8 +31,15 @@ public class AnalysisMapper {
         analysisDTO.setRootEntityID(analysis.getAnalysisId());
         analysisDTO.setImage(analysis.getImage());
         analysisDTO.setDate(analysis.getLastUpdate());
-
+        analysisDTO.setIsTemplate(analysis.getIsTemplate());
+        analysisDTO.setUniqueString(analysis.getUniqueString());
         return analysisDTO;
     }
 
+    public Analysis map(AnalysisDTO analysisDTO) {
+        logger.info("Map to entity");
+        var analysis = modelMapper.map(analysisDTO, Analysis.class);
+        logger.info(analysis.toString());
+        return analysis;
+    }
 }

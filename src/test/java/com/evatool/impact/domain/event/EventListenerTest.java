@@ -18,7 +18,7 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class EventListenerTest { // TODO make abstarct +all other base test classes
+abstract class EventListenerTest { // TODO make abstarct +all other base test classes
 
     @Autowired
     protected ImpactAnalysisRepository analysisRepository;

@@ -224,10 +224,10 @@ class EvaToolAppTest {
         }
 
         Value saveDummyValue() {
-            var value = valueRepository.save(new Value("Name", ValueType.SOCIAL, "Description", "ANA01"));
+            var value = new Value("Name", ValueType.SOCIAL, "Description");
             var analysis = saveDummyAnalysisAndFire();
             value.setAnalysis(analysis);
-            return value;
+            return valueRepository.save(value);
         }
 
         // Received by: Requirement, Impact
@@ -235,13 +235,13 @@ class EvaToolAppTest {
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
             var value = saveDummyValue();
-            System.out.println("____________________");
-            System.out.println(value);
 
             // when
             valueEventPublisher.publishValueCreated(value);
             var requirementValue = requirementValueRepository.findById(value.getId()).orElse(null);
             var impactValue = impactValueRepository.findById(value.getId()).orElse(null);
+
+            System.out.println(impactValue);
 
             // then
             assertThat(requirementValue).isNotNull();

@@ -42,5 +42,5 @@ public class ImpactValueDto {
     @Getter
     @Setter
     @NotNull
-    private ImpactAnalysisDto analysis; // TODO add tests
+    private ImpactAnalysisDto analysis;
 }

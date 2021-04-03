@@ -10,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.EntityModel;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.*;
 
 import static com.evatool.requirements.common.TestDataGenerator.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class RequirementPointControllerTest {
@@ -89,7 +88,7 @@ class RequirementPointControllerTest {
         requirement.getRequirementPointCollection().remove(requirementPoint);
         requirementRepository.save(requirement);
         requirementPointController.deleteRequirementPoint(requirementPoint);
-        assertThat(requirement.getRequirementPointCollection().size()).isEqualTo(0);
+        assertThat(requirement.getRequirementPointCollection()).isEmpty();
     }
 
     @Test
@@ -132,7 +131,6 @@ class RequirementPointControllerTest {
         assertThat(requirementPoint1).isNotNull();
         assertThat(requirementPoint1.getPoints()).isEqualTo(requirementDTO.getRequirementImpactPoints().get(requirementPoint1.getRequirementsImpact().getId()).getContent().getPoints());
 
-
         Map<UUID,EntityModel<RequirementPointDTO>> requirementImpactPoints2 = new HashMap<>();
         EntityModel<RequirementPointDTO> newPoint = RequirementPointDTO.generateLinks(new RequirementPointDTO(requirementsImpact.getId(),requirementsImpact.getDescription(),-1d));
         requirementImpactPoints2.put(requirementsImpact.getId(),newPoint);
@@ -147,8 +145,6 @@ class RequirementPointControllerTest {
         assertThat(requirementPointUpdated.getPoints()).isEqualTo(newPoint.getContent().getPoints());
 
         requirementPointController.deletePointsForRequirement(requirement1);
-        assertThat(requirement1.getRequirementPointCollection().size()).isEqualTo(0);
-
+        assertThat(requirement1.getRequirementPointCollection()).isEmpty();
     }
-
 }

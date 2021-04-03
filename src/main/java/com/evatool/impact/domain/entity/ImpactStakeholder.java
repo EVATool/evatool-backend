@@ -58,7 +58,7 @@ public class ImpactStakeholder extends SuperEntity { // TODO ForeignEntity base 
         this.name = name;
     }
 
-    public void setLevel(String level) { // TODO tests
+    public void setLevel(String level) {
         logger.debug("Set Level");
         if (level == null) {
             logger.error("Attempted to set level to null");

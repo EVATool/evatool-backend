@@ -1,6 +1,5 @@
 package com.evatool.analysis.application.dto;
 
-import com.evatool.analysis.application.dto.StakeholderDTO;
 import com.evatool.analysis.application.controller.StakeholderControllerImpl;
 import com.evatool.analysis.domain.model.Stakeholder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,7 @@ public class StakeholderMapper {
         stakeholderDTO.setStakeholderLevel(stakeholder.getStakeholderLevel());
         stakeholderDTO.setRootEntityID(stakeholder.getStakeholderId());
         stakeholderDTO.setGuiId(stakeholder.getGuiId());
+        stakeholderDTO.setImpactList(stakeholder.getImpact());
         return stakeholderDTO;
     }
 }

@@ -1,10 +1,10 @@
 package com.evatool.analysis.application.controller;
 
 
-import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.application.dto.StakeholderDTO;
-import com.evatool.analysis.domain.enums.StakeholderLevel;
+import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
+import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
@@ -13,12 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
-import static com.evatool.analysis.common.TestDataGenerator.*;
+import static com.evatool.analysis.common.TestDataGenerator.getStakeholderDTO;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class StakeholderControllerTest {
+class StakeholderControllerTest {
 
     @Autowired
     private StakeholderController stakeholderController;
@@ -27,7 +27,7 @@ public class StakeholderControllerTest {
     private StakeholderRepository stakeholderRepository;
 
     @Test
-    public void testStakeholderController_ThrowException() {
+    void testStakeholderController_ThrowException() {
 
 
         Stakeholder stakeholder = new Stakeholder("TestName", 1, StakeholderLevel.NATURAL_PERSON);
@@ -54,7 +54,6 @@ public class StakeholderControllerTest {
         stakeholderController.deleteStakeholder(id);
 
         //check is stakeholder deleted
-        Exception exception = assertThrows(EntityNotFoundException.class, ()-> stakeholderController.getStakeholderById(stakeholderDTOObj.getRootEntityID()).getContent());
-
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderController.getStakeholderById(stakeholderDTOObj.getRootEntityID()).getContent());
     }
 }

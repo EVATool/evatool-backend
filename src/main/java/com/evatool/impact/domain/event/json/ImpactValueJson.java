@@ -35,7 +35,7 @@ public class ImpactValueJson {
         if (that == null) return false;
         return Objects.equals(this.id, that.getId())
                 && Objects.equals(this.name, that.getName())
-                && Objects.equals(this.type, that.getType().toString())
+                && Objects.equals(this.type, that.getType())
                 && Objects.equals(this.description, that.getDescription())
                 && Objects.equals(this.analysisId, that.getAnalysis().getId());
     }

@@ -1,7 +1,6 @@
 package com.evatool.variants.domain.repository.events;
 
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
-import com.evatool.global.event.requirements.RequirementCreatedEvent;
 import com.evatool.global.event.requirements.RequirementDeletedEvent;
 import com.evatool.variants.common.error.exceptions.EventEntityDoesNotExistException;
 import com.evatool.variants.domain.entities.VariantsRequirements;

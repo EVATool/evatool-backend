@@ -24,7 +24,7 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ControllerTest {
+abstract class ControllerTest {
 
     @Autowired
     protected TestRestTemplate testRestTemplate;

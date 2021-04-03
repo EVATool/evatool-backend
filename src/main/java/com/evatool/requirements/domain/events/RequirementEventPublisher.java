@@ -16,7 +16,7 @@ public class RequirementEventPublisher {
 
     public void publishEvent(ApplicationEvent applicationEvent){
         if(logger.isInfoEnabled())logger.info(String.format("Publishing Event: %s" , applicationEvent.getClass()));
-        if(logger.isDebugEnabled())logger.debug(String.format("EVENT: %s  Eventpayload:  %s", applicationEvent.getClass() , applicationEvent.getSource().toString() ));
+        if(logger.isDebugEnabled())logger.debug(String.format("EVENT: %s  Event payload:  %s", applicationEvent.getClass() , applicationEvent.getSource().toString() ));
         applicationEventPublisher.publishEvent(applicationEvent);
     }
 
