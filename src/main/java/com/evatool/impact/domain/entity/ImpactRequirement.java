@@ -31,8 +31,9 @@ public class ImpactRequirement extends SuperEntity {
         logger.debug("{} created", ImpactValue.class.getSimpleName());
     }
 
-    public ImpactRequirement(String title, String description) {
+    public ImpactRequirement(UUID id, String title, String description) {
         this();
+        this.setId(id);
         this.setTitle(title);
         this.setDescription(description);
     }
