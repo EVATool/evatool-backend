@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 
@@ -41,6 +43,10 @@ public class Stakeholder {
     @Enumerated(EnumType.STRING)
     private StakeholderLevel stakeholderLevel;
 
+
+    @Getter
+    @OneToMany
+    private Collection<AnalysisImpact> impact = new ArrayList<>();
 
     /**
      * GuiId of the Stakeholder {@link String}
@@ -85,6 +91,8 @@ public class Stakeholder {
         }
         this.guiId = guiId;
     }
+
+
 
 
 

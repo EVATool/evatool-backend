@@ -48,7 +48,6 @@ public class StakeholderDTOService {
         {
             stakeholder.setGuiId(stakeholderDTO.getGuiId());
         }
-
         return stakeholder;
     }
 
