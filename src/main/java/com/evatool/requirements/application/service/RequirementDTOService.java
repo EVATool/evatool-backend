@@ -114,6 +114,8 @@ public class RequirementDTOService {
         if(requirementsAnalysis.isPresent())
         {
             requirement.setRequirementsAnalysis(requirementsAnalysis.get());
+        }else{
+            throw new EntityNotFoundException(RequirementsAnalysis.class,requirementDTO.getProjectID());
         }
         Collection<RequirementsVariant> requirementsVariantCollection = new ArrayList<>();
         for( Map.Entry<UUID, EntityModel<VariantsDTO>> entry:requirementDTO.getVariantsTitle().entrySet()) {
