@@ -9,8 +9,6 @@ import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.model.Value;
 
-import java.util.UUID;
-
 public class TestDataGenerator {
 
   public static Analysis getAnalysis() {
@@ -44,7 +42,6 @@ public class TestDataGenerator {
   public static ValueDto createDummyValueDto() {
     var analysisDto = new AnalysisDTO();
     var valueDto = new ValueDto();
-    valueDto.setId(UUID.randomUUID());
     valueDto.setName("ramdomName");
     valueDto.setType(ValueType.ECONOMIC);
     valueDto.setDescription("desc");

@@ -1,8 +1,10 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.dto.ValueDto;
+import com.evatool.analysis.application.services.AnalysisDTOService;
 import com.evatool.analysis.application.services.ValueService;
 import com.evatool.analysis.domain.enums.ValueType;
+import com.evatool.analysis.domain.repository.AnalysisRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,8 +19,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
-import static com.evatool.analysis.common.TestDataGenerator.*;
 import static com.evatool.analysis.application.dto.ValueDtoMapper.toDto;
+import static com.evatool.analysis.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -30,6 +32,12 @@ class ValueRestControllerTest {
     @Autowired
     private ValueService valueService;
 
+    @Autowired
+    private AnalysisDTOService analysisDTOService;
+
+    @Autowired
+    private AnalysisRepository analysisRepository;
+
     @BeforeEach
     public void clearDatabase() {
         valueService.deleteAll();
@@ -37,9 +45,12 @@ class ValueRestControllerTest {
 
     private ValueDto saveFullDummyValueDto() {
         var value = createDummyValue();
+        var analysisDto = getAnalysisDTO("name", "desc");
+        var analysis =  analysisRepository.save(analysisDTOService.create(analysisDto));
+        value.setAnalysis(analysis);
+        System.out.println(analysis);
         var valueDto = toDto(value);
         return valueService.create(valueDto);
-
     }
 
     @Nested
