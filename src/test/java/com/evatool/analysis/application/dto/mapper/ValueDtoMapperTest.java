@@ -21,6 +21,7 @@ public class ValueDtoMapperTest {
         value.setId(UUID.randomUUID());
         var analysis = new Analysis("name", "desc");
         analysis.setAnalysisId(UUID.randomUUID());
+//        analysis.setNumericId();
         value.setAnalysis(analysis);
 
         // when
@@ -38,6 +39,7 @@ public class ValueDtoMapperTest {
         analysisDto.setRootEntityID(UUID.randomUUID());
         analysisDto.setAnalysisName("aName");
         analysisDto.setAnalysisDescription("aDesc");
+        analysisDto.setUniqueString("ANA1");
 
         var valueDto = new ValueDto();
         valueDto.setId(UUID.randomUUID());
