@@ -50,15 +50,18 @@ public class ValueControllerImpl {
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request")})
-    public ResponseEntity<List<EntityModel<ValueDto>>> findAll(@ApiParam(value = "ImpactValue Type") @Valid @RequestParam(value = "type", required = false) ValueType type) {
+    public ResponseEntity<List<EntityModel<ValueDto>>> findAll(
+            @ApiParam(value = "Value Type") @Valid @RequestParam(value = "type", required = false) ValueType type,
+            @ApiParam(value = "Analysis ID") @Valid @RequestParam(value = "analysisId", required = false) UUID analysisId) {
+        logger.info("GET " + "/values");
         List<ValueDto> valueDtoList;
-        if (type == null) {
-            logger.info("GET " + "/values");
-            valueDtoList = valueService.findAll();
-        } else {
-            logger.info("GET " + "/values" + "?type={}", type);
-
+        // Second parameter is currently ignored if first is available.
+        if (type != null) {
             valueDtoList = valueService.findAllByType(type);
+        } else if (analysisId != null) {
+            valueDtoList = valueService.findAllByAnalysisId(analysisId);
+        } else {
+            valueDtoList = valueService.findAll();
         }
         return new ResponseEntity<>(getValueWithLinks(valueDtoList), HttpStatus.OK);
     }
