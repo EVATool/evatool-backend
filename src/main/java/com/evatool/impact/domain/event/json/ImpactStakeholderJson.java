@@ -25,7 +25,7 @@ public class ImpactStakeholderJson {
 
     public boolean equalsEntity(ImpactStakeholder that) {
         if (that == null) return false;
-        return Objects.equals(this.stakeholderId, that.getId().toString())
+        return Objects.equals(this.stakeholderId, that.getId())
                 && Objects.equals(this.stakeholderName, that.getName())
                 && Objects.equals(this.stakeholderLevel, that.getLevel());
     }

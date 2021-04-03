@@ -235,8 +235,6 @@ class EvaToolAppTest {
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
             var value = saveDummyValue();
-            System.out.println("____________________");
-            System.out.println(value);
 
             // when
             valueEventPublisher.publishValueCreated(value);

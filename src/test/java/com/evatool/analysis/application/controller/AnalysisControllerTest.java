@@ -12,12 +12,11 @@ import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 
 import static com.evatool.analysis.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class AnalysisControllerTest {
+class AnalysisControllerTest {
 
     @Autowired
     private AnalysisController analysisController;
@@ -26,7 +25,7 @@ public class AnalysisControllerTest {
     private AnalysisRepository analysisRepository;
 
     @Test
-    public void testAnalysisController_ThrowException() {
+    void testAnalysisController_ThrowException() {
 
         Analysis analysis = new Analysis("TestName", "description");
 
@@ -52,7 +51,6 @@ public class AnalysisControllerTest {
         analysisController.deleteAnalysis(id);
 
         //check is analysis deleted
-        Exception exception = assertThrows(EntityNotFoundException.class, ()->analysisController.getAnalysisById(analysisDTOObj.getRootEntityID()).getContent());
-
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(()->analysisController.getAnalysisById(analysisDTOObj.getRootEntityID()).getContent());
     }
 }

@@ -2,14 +2,12 @@ package com.evatool.analysis.application.dto;
 
 import com.evatool.analysis.domain.model.Analysis;
 import org.springframework.stereotype.Service;
-import com.evatool.analysis.application.dto.AnalysisDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class AnalysisMapper {
-
 
     public List<AnalysisDTO> map(List<Analysis> resultList) {
         List<AnalysisDTO> analysisDTOList = new ArrayList<>();
@@ -26,8 +24,8 @@ public class AnalysisMapper {
         analysisDTO.setRootEntityID(analysis.getAnalysisId());
         analysisDTO.setImage(analysis.getImage());
         analysisDTO.setDate(analysis.getLastUpdate());
-
+        analysisDTO.setIsTemplate(analysis.getIsTemplate());
+        analysisDTO.setUniqueString(analysis.getUniqueString());
         return analysisDTO;
     }
-
 }

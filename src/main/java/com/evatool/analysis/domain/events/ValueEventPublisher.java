@@ -23,9 +23,7 @@ public class ValueEventPublisher {
 
     public void publishValueCreated(final Value value) {
         logger.info("Preparing to publish create ImpactValue event");
-        System.out.println(value);
         var valueJson = ValueJsonMapper.toJson(value);
-        System.out.println(valueJson);
         var valueCreatedEvent = new ValueCreatedEvent(this, valueJson);
         applicationEventPublisher.publishEvent(valueCreatedEvent);
         logger.info("Create value event published");

@@ -10,7 +10,13 @@ class ImpactValueTest {
 
     @Test
     void testConstructor_NullId_ThrowIllegalArgumentException() {
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new ImpactValue(null, "name", "SOCIAL", "desc", createDummyAnalysis()));
+        // given
+        var analysis = createDummyAnalysis();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new ImpactValue(null, "name", "SOCIAL", "desc", analysis));
     }
 
     @Test

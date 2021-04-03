@@ -14,7 +14,7 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RepositoryTest {
+abstract public class RepositoryTest {
 
     @Autowired
     protected ImpactRepository impactRepository;

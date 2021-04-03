@@ -18,7 +18,7 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ServiceTest {
+abstract public class ServiceTest {
 
     @Autowired
     protected ImpactService impactService;

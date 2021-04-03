@@ -10,7 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 @ContextConfiguration(classes = {SwaggerConfig.class, EvaToolApp.class})
-public class ControllerMockTest {
+abstract public class ControllerMockTest {
 
     @Autowired
     protected MockMvc mvc;
