@@ -26,6 +26,7 @@ public class ValueDtoMapper {
         valueDto.setDescription(value.getDescription());
         valueDto.setType(value.getType());
 
+        if (value.getAnalysis() == null) return valueDto;
         var analysisDto = new AnalysisDTO();
         analysisDto.setRootEntityID(value.getAnalysis().getAnalysisId());
         analysisDto.setAnalysisName(value.getAnalysis().getAnalysisName());
