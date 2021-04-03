@@ -1,11 +1,11 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.EvaToolApp;
-import com.evatool.analysis.domain.enums.ValueType;
-import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
-import com.evatool.global.config.SwaggerConfig;
 import com.evatool.analysis.application.dto.ValueDto;
 import com.evatool.analysis.application.services.ValueService;
+import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
+import com.evatool.analysis.domain.enums.ValueType;
+import com.evatool.global.config.SwaggerConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static com.evatool.analysis.common.TestDataGenerator.createDummyValueDto;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
@@ -29,7 +30,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static com.evatool.analysis.common.TestDataGenerator.*;
 
 @WebMvcTest(ValueControllerImpl.class)
 @ContextConfiguration(classes = {SwaggerConfig.class, EvaToolApp.class})
@@ -48,6 +48,7 @@ class ValueRestControllerMockServiceTest {
         void testFindById_ExistingValues_ReturnValues() throws Exception {
             // given
             var valueDto = createDummyValueDto();
+            valueDto.setId(UUID.randomUUID());
 
             // when
             when(valueService.findById(any(UUID.class))).thenReturn(valueDto);
@@ -115,6 +116,7 @@ class ValueRestControllerMockServiceTest {
             for (int i = 0; i < value; i++) {
                 // given
                 var valueDto = createDummyValueDto();
+                valueDto.setId(UUID.randomUUID());
                 valueDtos.add(valueDto);
             }
             // when
@@ -138,6 +140,7 @@ class ValueRestControllerMockServiceTest {
             var socialValues = new ArrayList<ValueDto>();
             for (int i = 0; i < 3; i++) {
                 var socialValue = createDummyValueDto();
+                socialValue.setId(UUID.randomUUID());
                 socialValue.setType(ValueType.SOCIAL);
                 socialValues.add(socialValue);
             }
@@ -145,6 +148,7 @@ class ValueRestControllerMockServiceTest {
             var economicValues = new ArrayList<ValueDto>();
             for (int i = 0; i < 4; i++) {
                 var economicValue = createDummyValueDto();
+                economicValue.setId(UUID.randomUUID());
                 economicValue.setType(ValueType.ECONOMIC);
                 economicValues.add(economicValue);
             }
@@ -175,6 +179,7 @@ class ValueRestControllerMockServiceTest {
         void testCreate_CreatedValue_ReturnCreatedValue() throws Exception {
             // given
             var valuesDto = createDummyValueDto();
+            valuesDto.setId(UUID.randomUUID());
             var id = UUID.randomUUID();
             valuesDto.setId(id);
 

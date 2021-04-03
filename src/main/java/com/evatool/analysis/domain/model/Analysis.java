@@ -1,8 +1,10 @@
 package com.evatool.analysis.domain.model;
 
 import com.google.gson.Gson;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -11,6 +13,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "ANA_ANALYSIS")
+@EqualsAndHashCode
+@ToString
 public class Analysis {
 
     @Id
@@ -27,7 +31,7 @@ public class Analysis {
     private NumericId numericId;
 
     public String getUniqueString() {
-        if (this.numericId == null)
+        if (this.numericId == null || this.numericId.getNumericId() == null)
             return null;
         else
             return "ANA" + this.numericId.getNumericId();
@@ -79,17 +83,6 @@ public class Analysis {
             throw new IllegalArgumentException("description cannot be null.");
         }
         this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "Analysis{" +
-                "analysisId=" + analysisId +
-                ", analysisName='" + analysisName + '\'' +
-                ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
-                ", date='" + lastUpdate + '\'' +
-                '}';
     }
 
     public String toJson(){

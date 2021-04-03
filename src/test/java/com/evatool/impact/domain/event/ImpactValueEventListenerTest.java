@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -51,18 +52,16 @@ class ImpactValueEventListenerTest extends EventListenerTest {
         }
 
         @Test
-        void testOnValueCreatedEvent_ChildEntityAnalysisDoesNotExist_ThrowEventEntityDoesNotExist() { // TODO in all 3 CrUD operations
+        void testOnValueCreatedEvent_ChildEntityAnalysisDoesNotExist_ThrowEventEntityDoesNotExist() {
             // given
-            var value = saveDummyValueChildren();
+            var value = createDummyValue();
             var json = ImpactValueJsonMapper.toString(value);
 
             // when
             var valueCreatedEvent = new ValueCreatedEvent(this, json);
-            impactValueEventListener.onValueCreatedEvent(valueCreatedEvent);
 
             // then
-            var createdByEvent = valueRepository.findById(value.getId());
-            assertThat(createdByEvent).contains(value);
+            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactValueEventListener.onValueCreatedEvent(valueCreatedEvent));
         }
     }
 

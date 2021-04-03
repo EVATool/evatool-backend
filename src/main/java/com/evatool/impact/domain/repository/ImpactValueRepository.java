@@ -10,6 +10,6 @@ import java.util.UUID;
 @Repository
 public interface ImpactValueRepository extends CrudRepository<ImpactValue, UUID> {
 
-    List<ImpactValue> findAllByAnalysisId(UUID analysisId); // TODO Tests
+    List<ImpactValue> findAllByAnalysisId(UUID analysisId);
 
 }

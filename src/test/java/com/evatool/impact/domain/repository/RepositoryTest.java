@@ -48,7 +48,7 @@ abstract public class RepositoryTest {
     }
 
     protected Impact saveFullDummyImpact(ImpactAnalysis analysis) {
-        var value = saveDummyValue();
+        var value = saveFullDummyValue(analysis);
         var stakeholder = saveDummyStakeholder();
         var impact = createDummyImpact(analysis);
         impact.setValueEntity(value);
@@ -58,6 +58,10 @@ abstract public class RepositoryTest {
 
     protected ImpactValue saveDummyValue() {
         var analysis = saveDummyAnalysis();
+        return valueRepository.save(createDummyValue(analysis));
+    }
+
+    protected ImpactValue saveFullDummyValue(ImpactAnalysis analysis) {
         return valueRepository.save(createDummyValue(analysis));
     }
 

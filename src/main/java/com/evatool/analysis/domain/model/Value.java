@@ -1,18 +1,21 @@
 package com.evatool.analysis.domain.model;
 
 import com.evatool.analysis.domain.enums.ValueType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "ANA_VALUE")
+@EqualsAndHashCode
+@ToString
 public class Value {
 
     private static final Logger logger = LoggerFactory.getLogger(Value.class);
@@ -39,7 +42,7 @@ public class Value {
 
     @Getter
     @Setter
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Analysis analysis;
 
     public Value() {
@@ -51,33 +54,6 @@ public class Value {
         this.setName(name);
         this.setType(type);
         this.setDescription(description);
-    }
-
-    @Override
-    public String toString() {
-        return "Value{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                ", analysis='" + analysis + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        var that = (Value) o;
-        return super.equals(that)
-                && Objects.equals(this.name, that.name)
-                && this.type == that.type
-                && Objects.equals(this.description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), this.name, this.type, this.description);
     }
 
     public void setName(String name) {
@@ -105,5 +81,4 @@ public class Value {
         }
         this.description = description;
     }
-
 }

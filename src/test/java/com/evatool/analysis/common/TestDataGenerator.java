@@ -3,7 +3,6 @@ package com.evatool.analysis.common;
 import com.evatool.analysis.application.dto.AnalysisDTO;
 import com.evatool.analysis.application.dto.StakeholderDTO;
 import com.evatool.analysis.application.dto.ValueDto;
-import com.evatool.analysis.application.dto.ValueDtoMapper;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.domain.model.Analysis;
@@ -41,6 +40,12 @@ public class TestDataGenerator {
   }
 
   public static ValueDto createDummyValueDto() {
-    return ValueDtoMapper.toDto(createDummyValue());
+    var analysisDto = new AnalysisDTO();
+    var valueDto = new ValueDto();
+    valueDto.setName("ramdomName");
+    valueDto.setType(ValueType.ECONOMIC);
+    valueDto.setDescription("desc");
+    valueDto.setAnalysis(analysisDto);
+    return valueDto;
   }
 }

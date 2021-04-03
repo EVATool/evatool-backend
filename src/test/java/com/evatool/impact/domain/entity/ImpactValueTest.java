@@ -62,4 +62,16 @@ class ImpactValueTest {
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> value.setDescription(null));
     }
+
+    @Test
+    void testSetAnalysis_ExistingAnalysis_ThrowIllegalArgumentException() {
+        // given
+        var value = createDummyValue();
+        var analysis = createDummyAnalysis();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> value.setAnalysis(analysis));
+    }
 }

@@ -38,7 +38,6 @@ public class ImpactValueServiceImpl implements ImpactValueService {
         return ImpactValueDtoMapper.toDto(value.get());
     }
 
-    // TODO Tests
     @Override
     public List<ImpactValueDto> findAllByAnalysisId(UUID analysisId) {
         logger.info("Get Impact Values By Analysis Id");

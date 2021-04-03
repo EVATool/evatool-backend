@@ -1,16 +1,17 @@
 package com.evatool.analysis.application.controller;
 
-import com.evatool.analysis.application.interfaces.AnalysisController;
 import com.evatool.analysis.application.dto.AnalysisDTO;
+import com.evatool.analysis.application.dto.AnalysisMapper;
+import com.evatool.analysis.application.interfaces.AnalysisController;
+import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.util.UUID;
-import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 
-import static com.evatool.analysis.common.TestDataGenerator.*;
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -24,13 +25,15 @@ class AnalysisControllerTest {
     @Autowired
     private AnalysisRepository analysisRepository;
 
+    private AnalysisMapper analysisMapper = new AnalysisMapper();
+
     @Test
     void testAnalysisController_ThrowException() {
 
         Analysis analysis = new Analysis("TestName", "description");
 
         //create analysis
-        AnalysisDTO analysisDTO = getAnalysisDTO(analysis.getAnalysisName(), analysis.getDescription());
+        AnalysisDTO analysisDTO = analysisMapper.map(analysis);
         AnalysisDTO analysisDTOObj = analysisController.addAnalysis(analysisDTO).getContent();
 
         //check is analysis created
