@@ -2,6 +2,7 @@ package com.evatool.variants.application;
 
 import com.evatool.variants.application.controller.VariantController;
 import com.evatool.variants.application.dto.VariantDto;
+import com.evatool.variants.common.error.exceptions.VariantCannotDeleteException;
 import com.evatool.variants.common.error.exceptions.VariantsEntityNotFoundException;
 import com.evatool.variants.domain.entities.VariantsAnalysis;
 import com.evatool.variants.domain.repositories.VariantRepository;
@@ -65,8 +66,12 @@ class VariantsControllerTest {
         assertThat(updatedVariant).isNotNull();
         assertThat(updatedVariant.getTitle()).isEqualTo(newTitle);
         UUID tempId = updatedVariant.getId();
-        variantController.deleteVariant(updatedVariant.getId());
+        assertThrows(VariantCannotDeleteException.class, () -> variantController.deleteVariant(updatedVariant.getId()));
 
+        updatedVariant.setArchived(true);
+        variantController.updateVariant(updatedVariant);
+        variantController.deleteVariant(updatedVariant.getId());
+        
         assertThrows(VariantsEntityNotFoundException.class, ()-> variantController.getVariant(tempId));
     }
 }
