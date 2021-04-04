@@ -43,7 +43,7 @@ public class Variant extends RepresentationModel<Variant> {
 
 
     @ApiModelProperty(notes = "Analysis of a Variant", name = "analysis", required = true)
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER)
     private VariantsAnalysis variantsAnalysis;
 
     @Override

@@ -9,16 +9,12 @@ import com.evatool.variants.domain.entities.VariantsRequirements;
 import com.evatool.variants.domain.repositories.VariantRepository;
 import com.evatool.variants.domain.repositories.VariantRequirementsRepository;
 import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
-import com.google.common.annotations.VisibleForTesting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -85,7 +81,7 @@ public class VariantMapper {
             variant.setGuiId(variantDto.getGuiId());
         }
         if (variantDto.getArchived()){
-            if (checkIfArchivable(variantDto.getId())) {
+            if (checkIfDeletable(variantDto.getId())) {
                 variant.setArchived(variantDto.getArchived());
             } else {
                 throw new VariantStillReferredException();
@@ -97,10 +93,21 @@ public class VariantMapper {
     private String generateGuiId(UUID analysisId) {
         List<Variant> variants = variantRepository.findAll();
         variants.removeIf(variant -> !variant.getVariantsAnalysis().getAnalysisId().equals(analysisId));
-        return String.format("VAR%d", variants.size() + 1);
+        ArrayList<Integer> numberRange = new ArrayList<>();
+        variants.forEach(variant -> numberRange.add(Integer.parseInt(variant.getGuiId().split("VAR")[1])));
+
+        if(!numberRange.isEmpty())
+        {
+            Collections.max(numberRange,null);
+            return String.format("VAR%d", variants.size() + 1);
+        }
+        else
+        {
+            return String.format("VAR%d", variants.size() + 1);
+        }
     }
 
-    public Boolean checkIfArchivable(UUID variantid) {
+    public Boolean checkIfDeletable(UUID variantid) {
         List<VariantsRequirements> requirements = variantRequirementsRepository.findAll();
         requirements.forEach(requirement -> {
             requirement.getVariants().forEach(requirementVariant -> {
@@ -109,5 +116,4 @@ public class VariantMapper {
         });
         return requirements.isEmpty();
     }
-
 }

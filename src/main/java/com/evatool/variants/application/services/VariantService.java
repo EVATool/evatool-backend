@@ -114,7 +114,7 @@ public class VariantService {
     public void deleteVariant(UUID id) {
         logger.debug("delete [{}]",id);
         Variant variant = variantRepository.findVariantById(id);
-        if(!variantMapper.checkIfArchivable(id)){
+        if(!variantMapper.checkIfDeletable(id)){
             throw new VariantStillReferredException();
         }
         if (variant == null) {
@@ -137,9 +137,4 @@ public class VariantService {
         variantsEventPublisher.publishEvent(new VariantCreatedEvent(newVariant.toJson()));
         return variantMapper.toDto(newVariant);
     }
-
-
-
-
-
 }
