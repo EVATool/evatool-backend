@@ -63,8 +63,8 @@ class RequirementDTOServiceTest {
         Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
         requirementImpactPoints.put(requirementsImpact.getId(),1);
 
-        Map<UUID, EntityModel<VariantsDTO>> variantsTitle = new HashMap<>();
-        variantsTitle.put(requirementsVariant.getId(),VariantsDTO.generateLinks(new VariantsDTO(requirementsVariant.getId(),requirementsVariant.getTitle())));
+        Set<EntityModel<VariantsDTO>> variantsTitle = new HashSet<>();
+        variantsTitle.add(VariantsDTO.generateLinks(new VariantsDTO(requirementsVariant.getId(),requirementsVariant.getTitle(),new Boolean(false))));
 
         RequirementDTO requirementDTO = getRequirementDTO(requirementsAnalysis.getAnalysisId(),variantsTitle);
 
@@ -76,7 +76,7 @@ class RequirementDTOServiceTest {
         assertThat(requirementDTO2.getRootEntityId()).isEqualTo(uuidRequirement);
 
         //update
-        String newTitle = "newTitle";
+        String newTitle = "REQnull";
         requirementDTO2.setUniqueString(newTitle);
         requirementDTOService.update(requirementDTO2);
 

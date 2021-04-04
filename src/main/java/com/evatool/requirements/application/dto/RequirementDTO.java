@@ -12,7 +12,7 @@ public class RequirementDTO {
     private String requirementDescription;
     private Set<EntityModel<ValueDTO>> values = new HashSet<>();
     private Map<UUID, EntityModel<RequirementPointDTO>> requirementPointDTOMap = new HashMap<>();
-    private Map<UUID,EntityModel<VariantsDTO>> variantsTitle = new HashMap<>();
+    private Set<EntityModel<VariantsDTO>> variantsTitle = new HashSet<>();
 
     public UUID getRootEntityId() {
         return rootEntityId;
@@ -56,11 +56,11 @@ public class RequirementDTO {
         this.values = values;
     }
 
-    public Map<UUID, EntityModel<VariantsDTO>> getVariantsTitle() {
+    public Set<EntityModel<VariantsDTO>> getVariantsTitle() {
         return variantsTitle;
     }
 
-    public void setVariantsTitle(Map<UUID, EntityModel<VariantsDTO>> variantsTitle) {
+    public void setVariantsTitle(Set<EntityModel<VariantsDTO>> variantsTitle) {
         if (variantsTitle == null) {
             throw new IllegalArgumentException("Variants title cannot be null.");
         }

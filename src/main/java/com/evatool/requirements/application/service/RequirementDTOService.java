@@ -85,7 +85,11 @@ public class RequirementDTOService {
         if(requirementOptional.isEmpty()) throw new EntityNotFoundException(Requirement.class, requirementDTO.getRootEntityId());
         Requirement requirement = requirementOptional.get();
         requirement.setDescription(requirementDTO.getRequirementDescription());
-        Collection<RequirementsVariant> requirementsVariantCollectionDTO = requirementsVariantsRepository.findAllById(requirementDTO.getVariantsTitle().keySet());
+        Collection<UUID> uuidsVariants = new ArrayList<>();
+        for(EntityModel<VariantsDTO> entry:requirementDTO.getVariantsTitle()) {
+            uuidsVariants.add(entry.getContent().getEntityId());
+        }
+        Collection<RequirementsVariant> requirementsVariantCollectionDTO = requirementsVariantsRepository.findAllById(uuidsVariants);
         //Remove the Variants which are removed
         Collection<RequirementsVariant> newCollection = requirement.getVariants().stream().filter(requirementsVariantCollectionDTO::contains).collect(Collectors.toList());
         //Add the new Variants
@@ -118,9 +122,9 @@ public class RequirementDTOService {
             throw new EntityNotFoundException(RequirementsAnalysis.class,requirementDTO.getProjectID());
         }
         Collection<RequirementsVariant> requirementsVariantCollection = new ArrayList<>();
-        for( Map.Entry<UUID, EntityModel<VariantsDTO>> entry:requirementDTO.getVariantsTitle().entrySet()) {
-            Optional<RequirementsVariant> requirementsVariant = requirementsVariantsRepository.findById(entry.getKey());
-            if(requirementsVariant.isEmpty()) throw new EntityNotFoundException(RequirementsVariant.class,entry.getKey());
+        for(EntityModel<VariantsDTO> entry:requirementDTO.getVariantsTitle()) {
+            Optional<RequirementsVariant> requirementsVariant = requirementsVariantsRepository.findById(entry.getContent().getEntityId());
+            if(requirementsVariant.isEmpty()) throw new EntityNotFoundException(RequirementsVariant.class,entry.getContent().getEntityId());
             requirementsVariantCollection.add(requirementsVariant.get());
         }
         requirement.setVariants(requirementsVariantCollection);

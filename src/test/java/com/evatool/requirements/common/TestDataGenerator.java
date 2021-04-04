@@ -6,10 +6,7 @@ import com.evatool.requirements.application.dto.VariantsDTO;
 import com.evatool.requirements.domain.entity.*;
 import org.springframework.hateoas.EntityModel;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class TestDataGenerator {
 
@@ -53,7 +50,7 @@ public class TestDataGenerator {
         return new RequirementPoint(getRequirementsImpacts(requirementValue), 3d);
     }
 
-    public static RequirementDTO getRequirementDTO(UUID projectID,Map<UUID, EntityModel<VariantsDTO>> variantsTitle) {
+    public static RequirementDTO getRequirementDTO(UUID projectID, Set<EntityModel<VariantsDTO>> variantsTitle) {
         var requirementDTO = new RequirementDTO();
 
         requirementDTO.setProjectID(projectID);
@@ -65,7 +62,7 @@ public class TestDataGenerator {
         return requirementDTO;
     }
 
-    public static RequirementDTO getRequirementDTO(Map<UUID, EntityModel<RequirementPointDTO>> requirementImpactPoints, UUID projectID, Map<UUID,EntityModel<VariantsDTO>> variantsTitle) {
+    public static RequirementDTO getRequirementDTO(Map<UUID, EntityModel<RequirementPointDTO>> requirementImpactPoints, UUID projectID,Set<EntityModel<VariantsDTO>> variantsTitle) {
         var requirementDTO = new RequirementDTO();
 
         requirementDTO.setProjectID(projectID);

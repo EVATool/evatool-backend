@@ -15,13 +15,15 @@ public class VariantsDTO {
 
     private UUID entityId;
     private String variantsTitle;
+    private Boolean archived;
 
     public VariantsDTO() {
     }
 
-    public VariantsDTO(UUID entityId, String variantsTitle) {
+    public VariantsDTO(UUID entityId, String variantsTitle, Boolean archived) {
         this.entityId = entityId;
         this.variantsTitle = variantsTitle;
+        this.archived=archived;
     }
 
     public UUID getEntityId() {
@@ -38,6 +40,14 @@ public class VariantsDTO {
 
     public void setVariantsTitle(String variantsTitle) {
         this.variantsTitle = variantsTitle;
+    }
+
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
     }
 
     @Override

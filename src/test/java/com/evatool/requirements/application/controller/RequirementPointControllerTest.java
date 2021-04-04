@@ -115,8 +115,8 @@ class RequirementPointControllerTest {
         Map<UUID, EntityModel<RequirementPointDTO>> requirementImpactPoints = new HashMap<>();
         requirementImpactPoints.put(requirementsImpact.getId(),RequirementPointDTO.generateLinks(new RequirementPointDTO(requirementsImpact.getId(), requirementsImpact.getDescription(),1d)));
 
-        Map<UUID, EntityModel<VariantsDTO>> variantsTitle = new HashMap<>();
-        variantsTitle.put(requirementsVariant.getId(), VariantsDTO.generateLinks(new VariantsDTO(requirementsVariant.getId(),requirementsVariant.getTitle())));
+        Set<EntityModel<VariantsDTO>> variantsTitle = new HashSet<>();
+        variantsTitle.add(VariantsDTO.generateLinks(new VariantsDTO(requirementsVariant.getId(),requirementsVariant.getTitle(),new Boolean(false))));
 
         RequirementDTO requirementDTO = getRequirementDTO(requirementImpactPoints,requirementsAnalysis.getAnalysisId(),variantsTitle);
         RequirementDTO requirementDTOObj = requirementsController.newRequirement(requirementDTO).getBody().getContent();

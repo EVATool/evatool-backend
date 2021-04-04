@@ -19,6 +19,7 @@ public class RequirementsVariant {
     private UUID id = UUID.randomUUID();
     private String title;
     private String description;
+    private Boolean archived;
 
     public RequirementsVariant() {
     }
@@ -60,5 +61,13 @@ public class RequirementsVariant {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
     }
 }
