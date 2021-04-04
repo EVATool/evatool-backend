@@ -5,6 +5,7 @@ import com.evatool.global.event.variants.VariantDeletedEvent;
 import com.evatool.global.event.variants.VariantUpdatedEvent;
 import com.evatool.variants.application.controller.VariantController;
 import com.evatool.variants.application.dto.VariantMapper;
+import com.evatool.variants.common.error.exceptions.VariantCannotDeleteException;
 import com.evatool.variants.common.error.exceptions.VariantStillReferredException;
 import com.evatool.variants.common.error.exceptions.VariantsEntityNotFoundException;
 import com.evatool.variants.domain.entities.Variant;
@@ -120,6 +121,9 @@ public class VariantService {
         if (variant == null) {
             throw new VariantsEntityNotFoundException(id.toString());
         } else {
+            if(!variant.getArchived()){
+                throw new VariantCannotDeleteException(id.toString());
+            }
             variantRepository.delete(variant);
             variantsEventPublisher.publishEvent(new VariantDeletedEvent(variant.toJson()));
         }
