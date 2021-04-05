@@ -10,12 +10,14 @@ import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
+import com.evatool.variants.domain.entities.Variant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class StakeholderDTOService {
@@ -69,21 +71,52 @@ public class StakeholderDTOService {
         return stakeholder;
     }
 
+
+    public Stakeholder update(StakeholderDTO stakeholderDTO){
+
+        Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(stakeholderDTO.getRootEntityID());
+        Stakeholder stakeholder = stakeholderOptional.orElseThrow();
+        stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
+        stakeholder.setPriority(stakeholderDTO.getPriority());
+        if(!stakeholderDTO.getStakeholderLevel().getStakeholderLevel().equals(stakeholder.getStakeholderLevel().getStakeholderLevel()))
+        {
+            stakeholder.setGuiId(generateGuiId(stakeholderDTO.getStakeholderLevel()));
+        }
+        stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
+
+        return stakeholder;
+    }
+
     private String generateGuiId(StakeholderLevel stakeholderLevel) {
         List<Stakeholder> stakeholders = stakeholderRepository.findAll();
 
-       long stakeholderLevelSize =  stakeholders.stream().filter(stakeholder -> stakeholder.getStakeholderLevel().equals(stakeholderLevel)).count();
+        final int[] ind = {0};
+        final int[] org = {0};
+        final int[] soc = {0};
+        final int[] sta = {0};
 
-        switch (stakeholderLevel.getStakeholderLevel()){
+
+        stakeholders.forEach(stakeholder -> {
+            if(stakeholder.getGuiId().contains("IND") && Integer.parseInt(stakeholder.getGuiId().split("IND")[1]) >= ind[0]){
+                ind[0] = Integer.parseInt(stakeholder.getGuiId().split("IND")[1]);
+            }
+            else if(stakeholder.getGuiId().contains("ORG") && Integer.parseInt(stakeholder.getGuiId().split("ORG")[1]) >= org[0]){
+                org[0] = Integer.parseInt(stakeholder.getGuiId().split("ORG")[1]);
+            }
+            else if(stakeholder.getGuiId().contains("SOC") && Integer.parseInt(stakeholder.getGuiId().split("SOC")[1]) >= soc[0]){
+                soc[0] = Integer.parseInt(stakeholder.getGuiId().split("SOC")[1]);
+            }
+        });
+
+        switch (stakeholderLevel.getStakeholderLevel()) {
             case "natural person":
-                return String.format("IND%d", stakeholderLevelSize + 1);
+                return String.format("IND%d", ind[0] + 1);
             case "organization":
-                return String.format("ORG%d", stakeholderLevelSize + 1);
+                return String.format("ORG%d", org[0] + 1);
             case "society":
-                return String.format("SOC%d", stakeholderLevelSize + 1);
+                return String.format("SOC%d", soc[0] + 1);
             default:
-                return String.format("STA%d", stakeholderLevelSize + 1);
+                return String.format("STA%d", sta[0] + 1);
         }
     }
-
 }
