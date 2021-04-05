@@ -7,12 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
 
-/**
- * This class represents a User
- *
- * @author fobaidi
- * @author MHallweg
- */
+
 @Entity
 @Table(name = "ANA_USER")
 public class User {
