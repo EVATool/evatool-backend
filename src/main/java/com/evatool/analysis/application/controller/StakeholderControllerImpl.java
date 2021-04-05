@@ -93,6 +93,7 @@ public class StakeholderControllerImpl implements StakeholderController {
         stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
         stakeholder.setPriority(stakeholderDTO.getPriority());
+        stakeholderRepository.save(stakeholder);
         stakeholderEventPublisher.publishEvent(new StakeholderUpdatedEvent(this, stakeholderDTO.toString()));
         return getStakeholderById(stakeholderDTO.getRootEntityID());
     }
