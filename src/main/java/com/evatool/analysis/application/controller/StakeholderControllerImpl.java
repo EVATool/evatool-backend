@@ -50,6 +50,18 @@ public class StakeholderControllerImpl implements StakeholderController {
     }
 
     @Override
+    public List<EntityModel<StakeholderDTO>> getStakeholderByAnalysis(UUID analysisId) {
+        logger.info("[GET] /stakeholders?analysisId={id}");
+        List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
+
+        stakeholderList.removeIf(stakeholder -> !stakeholder.getAnalysis().getAnalysisId().equals(analysisId));
+        if (stakeholderList.isEmpty()){
+            return Collections.emptyList();
+        }
+        return generateLinks(stakeholderDTOService.findAll(stakeholderList));
+    }
+
+    @Override
     public List<StakeholderLevel> findAllLevels() {
         logger.info("Get Stakeholder Levels");
         return Arrays.asList(StakeholderLevel.values());

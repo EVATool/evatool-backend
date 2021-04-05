@@ -51,6 +51,11 @@ public class Stakeholder {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<AnalysisImpact> impact = new ArrayList<>();
 
+    @Getter
+    @Setter
+    @ManyToOne
+    private Analysis analysis;
+
     /**
      * GuiId of the Stakeholder {@link String}
      */
