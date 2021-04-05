@@ -10,6 +10,7 @@ import com.evatool.impact.domain.entity.ImpactValue;
 import com.evatool.impact.domain.event.json.ImpactValueJson;
 import com.evatool.impact.domain.event.json.mapper.ImpactValueJsonMapper;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
+import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactValueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +26,12 @@ public class ImpactValueEventListener {
 
     private final ImpactAnalysisRepository impactAnalysisRepository;
 
-    public ImpactValueEventListener(ImpactValueRepository impactValueRepository, ImpactAnalysisRepository impactAnalysisRepository) {
+    private final ImpactRepository impactRepository;
+
+    public ImpactValueEventListener(ImpactValueRepository impactValueRepository, ImpactAnalysisRepository impactAnalysisRepository, ImpactRepository impactRepository) {
         this.impactValueRepository = impactValueRepository;
         this.impactAnalysisRepository = impactAnalysisRepository;
+        this.impactRepository = impactRepository;
     }
 
     @EventListener
@@ -54,6 +58,7 @@ public class ImpactValueEventListener {
         if (!impactValueRepository.existsById(valueJson.getId())) {
             throw new EventEntityDoesNotExistException(ImpactValue.class.getSimpleName());
         }
+        impactRepository.deleteAll(impactRepository.findAllByValueId(value.getId())); // TODO tests
         impactValueRepository.delete(value);
         logger.info("Value deleted event successfully processed");
     }

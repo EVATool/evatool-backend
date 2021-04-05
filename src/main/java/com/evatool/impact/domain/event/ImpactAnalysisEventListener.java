@@ -7,6 +7,8 @@ import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.event.json.mapper.ImpactAnalysisJsonMapper;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
+import com.evatool.impact.domain.repository.ImpactRepository;
+import com.evatool.impact.domain.repository.ImpactValueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
@@ -19,8 +21,14 @@ public class ImpactAnalysisEventListener {
 
     private final ImpactAnalysisRepository analysisRepository;
 
-    public ImpactAnalysisEventListener(ImpactAnalysisRepository analysisRepository) {
+    private final ImpactRepository impactRepository;
+
+    private final ImpactValueRepository impactValueRepository;
+
+    public ImpactAnalysisEventListener(ImpactAnalysisRepository analysisRepository, ImpactRepository impactRepository, ImpactValueRepository impactValueRepository) {
         this.analysisRepository = analysisRepository;
+        this.impactRepository = impactRepository;
+        this.impactValueRepository = impactValueRepository;
     }
 
     @EventListener
@@ -43,6 +51,8 @@ public class ImpactAnalysisEventListener {
         if (!analysisRepository.existsById(analysis.getId())) {
             throw new EventEntityDoesNotExistException(ImpactAnalysis.class.getSimpleName());
         }
+        impactRepository.deleteAll(impactRepository.findAllByAnalysisId(analysis.getId())); // TODO tests
+        impactValueRepository.deleteAll(impactValueRepository.findAllByAnalysisId(analysis.getId())); // TODO tests
         analysisRepository.delete(analysis);
         logger.info("Analysis deleted event successfully processed");
     }
