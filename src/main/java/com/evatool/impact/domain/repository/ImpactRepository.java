@@ -12,4 +12,8 @@ public interface ImpactRepository extends CrudRepository<Impact, UUID> {
 
     List<Impact> findAllByAnalysisId(UUID analysisId);
 
+    List<Impact> findAllByStakeholderId(UUID stakeholderId); // TODO tests
+
+    List<Impact> findAllByValueEntityId(UUID valueId); // TODO tests
+
 }

@@ -7,6 +7,7 @@ import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper;
+import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +21,11 @@ public class ImpactStakeholderEventListener {
 
     private final ImpactStakeholderRepository stakeholderRepository;
 
-    public ImpactStakeholderEventListener(ImpactStakeholderRepository stakeholderRepository) {
+    private final ImpactRepository impactRepository;
+
+    public ImpactStakeholderEventListener(ImpactStakeholderRepository stakeholderRepository, ImpactRepository impactRepository) {
         this.stakeholderRepository = stakeholderRepository;
+        this.impactRepository = impactRepository;
     }
 
     @EventListener
@@ -44,6 +48,7 @@ public class ImpactStakeholderEventListener {
         if (!stakeholderRepository.existsById(stakeholder.getId())) {
             throw new EventEntityDoesNotExistException(ImpactStakeholder.class.getSimpleName());
         }
+        impactRepository.deleteAll(impactRepository.findAllByStakeholderId(stakeholder.getId())); // TODO tests
         stakeholderRepository.delete(stakeholder);
         logger.info("Stakeholder deleted event successfully processed");
     }
