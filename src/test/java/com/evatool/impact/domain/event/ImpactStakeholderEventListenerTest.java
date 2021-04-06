@@ -6,16 +6,15 @@ import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper;
-import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-class ImpactStakeholderEventListenerTest  extends  EventListenerTest{
+class ImpactStakeholderEventListenerTest extends EventListenerTest {
 
     @Autowired
     private ImpactStakeholderEventListener impactStakeholderEventListener;
@@ -83,6 +82,24 @@ class ImpactStakeholderEventListenerTest  extends  EventListenerTest{
 
             // then
             assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactStakeholderEventListener.onStakeholderDeletedEvent(stakeholderDeletedEvent));
+        }
+
+        @Test
+        void testOnStakeholderDeletedEvent_ImpactsReferenceStakeholder_DeleteImpacts() {
+            // given
+            var stakeholder = createDummyStakeholder();
+            var json = ImpactStakeholderJsonMapper.toJson(stakeholder);
+            var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, json);
+            impactStakeholderEventListener.onStakeholderCreatedEvent(stakeholderCreatedEvent);
+
+            // when
+            var impact = saveFullDummyImpact(stakeholder);
+            var stakeholderDeletedEvent = new StakeholderDeletedEvent(this, json);
+            impactStakeholderEventListener.onStakeholderDeletedEvent(stakeholderDeletedEvent);
+            var impacts = impactRepository.findAllByStakeholderId(stakeholder.getId());
+
+            // then
+            assertThat(impacts).isEmpty();
         }
     }
 
