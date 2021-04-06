@@ -88,11 +88,9 @@ public class StakeholderControllerImpl implements StakeholderController {
     @Override
     public EntityModel<StakeholderDTO> updateStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
         logger.info("[PUT] /stakeholders");
-        Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(stakeholderDTO.getRootEntityID());
-        Stakeholder stakeholder = stakeholderOptional.orElseThrow();
-        stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
-        stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
-        stakeholder.setPriority(stakeholderDTO.getPriority());
+
+        Stakeholder stakeholder = stakeholderDTOService.update(stakeholderDTO);
+
         stakeholderRepository.save(stakeholder);
         stakeholderEventPublisher.publishEvent(new StakeholderUpdatedEvent(this, stakeholderDTO.toString()));
         return getStakeholderById(stakeholderDTO.getRootEntityID());
