@@ -1,14 +1,19 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.dto.ValueDto;
+import com.evatool.analysis.application.dto.ValueDtoMapper;
 import com.evatool.analysis.application.services.ValueService;
 import com.evatool.analysis.domain.enums.ValueType;
+import com.evatool.analysis.domain.model.Stakeholder;
+import com.evatool.analysis.domain.model.Value;
+import com.evatool.analysis.domain.repository.ValueRepository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +34,10 @@ public class ValueControllerImpl {
     private static final Logger logger = LoggerFactory.getLogger(ValueControllerImpl.class);
 
     private final ValueService valueService;
+
+    @Autowired
+    private ValueRepository valueRepository;
+
 
     public ValueControllerImpl(ValueService valueService) {
         this.valueService = valueService;
@@ -111,6 +121,23 @@ public class ValueControllerImpl {
     public ResponseEntity<List<ValueType>> findAllTypes() {
         logger.info("GET " + "/value/types");
         return new ResponseEntity<>(valueService.findAllTypes(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/values", params = "analysisId")
+    @ApiOperation(value = "Read all value by analysis")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK")})
+    private List<EntityModel<ValueDto>> getValuesByAnalysisId(@RequestParam("analysisId") UUID analysisId){
+        logger.info("[GET] /values?analysisId={id}");
+        List<Value> valueList = valueRepository.findAll();
+
+        valueList.removeIf(value -> !value.getAnalysis().getAnalysisId().equals(analysisId));
+        if (valueList.isEmpty()){
+            return Collections.emptyList();
+        }
+        List<ValueDto> valueDtoList = new ArrayList<>();
+        valueList.forEach(value -> {valueDtoList.add(ValueDtoMapper.toDto(value));});
+        return getValueWithLinks(valueDtoList);
     }
 
     private EntityModel<ValueDto> getValueWithLinks(ValueDto valueDto) {
