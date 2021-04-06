@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -44,4 +45,10 @@ public class ValueDto {
     @Setter
     @NotNull
     private AnalysisDTO analysis;
+
+    @ApiModelProperty(required = true)
+    @Getter
+    @Setter
+    @NotNull
+    private Boolean archived = false;
 }
