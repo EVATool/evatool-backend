@@ -58,7 +58,7 @@ public class ImpactValueEventListener {
         if (!impactValueRepository.existsById(valueJson.getId())) {
             throw new EventEntityDoesNotExistException(ImpactValue.class.getSimpleName());
         }
-        impactRepository.deleteAll(impactRepository.findAllByValueEntityId(value.getId())); // TODO tests
+        impactRepository.deleteAll(impactRepository.findAllByValueEntityId(value.getId()));
         impactValueRepository.delete(value);
         logger.info("Value deleted event successfully processed");
     }

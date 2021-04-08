@@ -48,7 +48,7 @@ public class ImpactStakeholderEventListener {
         if (!stakeholderRepository.existsById(stakeholder.getId())) {
             throw new EventEntityDoesNotExistException(ImpactStakeholder.class.getSimpleName());
         }
-        impactRepository.deleteAll(impactRepository.findAllByStakeholderId(stakeholder.getId())); // TODO tests
+        impactRepository.deleteAll(impactRepository.findAllByStakeholderId(stakeholder.getId()));
         stakeholderRepository.delete(stakeholder);
         logger.info("Stakeholder deleted event successfully processed");
     }

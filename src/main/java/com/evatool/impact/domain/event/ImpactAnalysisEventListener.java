@@ -51,8 +51,8 @@ public class ImpactAnalysisEventListener {
         if (!analysisRepository.existsById(analysis.getId())) {
             throw new EventEntityDoesNotExistException(ImpactAnalysis.class.getSimpleName());
         }
-        impactRepository.deleteAll(impactRepository.findAllByAnalysisId(analysis.getId())); // TODO tests
-        impactValueRepository.deleteAll(impactValueRepository.findAllByAnalysisId(analysis.getId())); // TODO tests
+        impactRepository.deleteAll(impactRepository.findAllByAnalysisId(analysis.getId()));
+        impactValueRepository.deleteAll(impactValueRepository.findAllByAnalysisId(analysis.getId()));
         analysisRepository.delete(analysis);
         logger.info("Analysis deleted event successfully processed");
     }
