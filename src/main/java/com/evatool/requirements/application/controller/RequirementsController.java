@@ -3,6 +3,8 @@ package com.evatool.requirements.application.controller;
 
 import com.evatool.requirements.application.dto.RequirementDTO;
 import com.evatool.requirements.application.service.RequirementDTOService;
+import com.evatool.requirements.domain.repository.RequirementPointRepository;
+import com.evatool.requirements.domain.repository.RequirementRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -15,7 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -28,6 +32,12 @@ public class RequirementsController {
 
 	@Autowired
 	private RequirementDTOService dtoService;
+
+	@Autowired
+	private RequirementRepository requirementRepository;
+
+	@Autowired
+	private RequirementPointRepository requirementPointRepository;
 
 	@GetMapping("/requirements")
 	@ApiOperation(value = "This method returns a list of all Requirements.")
@@ -94,15 +104,21 @@ public class RequirementsController {
 		return ResponseEntity.ok().build();
 	}
 
-	private EntityModel<RequirementDTO> generateLinks(RequirementDTO requirementDTO){
+	@GetMapping("/requirements/referenced-by-impact/{impactId}")
+	public ResponseEntity<Boolean> referencedByImpact(@PathVariable UUID impactId) {
+		var requirementPoints = requirementPointRepository.findAllByRequirementsImpactId(impactId);
+		return new ResponseEntity<>(!requirementPoints.isEmpty(), HttpStatus.OK);
+	}
+
+	private EntityModel<RequirementDTO> generateLinks(RequirementDTO requirementDTO) {
 		EntityModel<RequirementDTO> requirementDTOEntityModel = EntityModel.of(requirementDTO);
 		requirementDTOEntityModel.add(linkTo(methodOn(RequirementsController.class).getRequirementById(requirementDTO.getRootEntityId())).withSelfRel());
 		return requirementDTOEntityModel;
 	}
 
-	private List<EntityModel<RequirementDTO>> generateLinks(List<RequirementDTO> requirementDTOList){
+	private List<EntityModel<RequirementDTO>> generateLinks(List<RequirementDTO> requirementDTOList) {
 		List<EntityModel<RequirementDTO>> returnList = new ArrayList<>();
-		requirementDTOList.stream().forEach(e->returnList.add(generateLinks(e)));
+		requirementDTOList.stream().forEach(e -> returnList.add(generateLinks(e)));
 		return returnList;
 	}
 }

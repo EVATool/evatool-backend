@@ -21,4 +21,36 @@ class ImpactRepositoryTest extends RepositoryTest {
         var impactsOfAnalysis = impactRepository.findAllByAnalysisId(impact1.getAnalysis().getId());
         assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(impact1, impact2));
     }
+
+    @Test
+    void testFindAllByStakeholderId_ImpactWithTwoStakeholders_ReturnImpactByStakeholderId() {
+        // given
+        var stakeholder = saveDummyStakeholder();
+        var impact1 = saveFullDummyImpact();
+        var impact2 = saveFullDummyImpact();
+        impact1.setStakeholder(stakeholder);
+        impact2.setStakeholder(stakeholder);
+
+        // when
+
+        // then
+        var impactsOfStakeholder = impactRepository.findAllByStakeholderId(stakeholder.getId());
+        assertThat(impactsOfStakeholder).isEqualTo(Arrays.asList(impact1, impact2));
+    }
+
+    @Test
+    void testFindAllByValueEntityId_ImpactWithTwoValues_ReturnImpactByValueId() {
+        // given
+        var value = saveDummyValue();
+        var impact1 = saveFullDummyImpact();
+        var impact2 = saveFullDummyImpact();
+        impact1.setValueEntity(value);
+        impact2.setValueEntity(value);
+
+        // when
+
+        // then
+        var impactsOfValue = impactRepository.findAllByValueEntityId(value.getId());
+        assertThat(impactsOfValue).isEqualTo(Arrays.asList(impact1, impact2));
+    }
 }

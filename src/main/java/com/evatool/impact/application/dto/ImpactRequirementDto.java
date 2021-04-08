@@ -10,10 +10,10 @@ import lombok.ToString;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-@ApiModel(value = "ImpactStakeholder", description = "Stakeholder of an impact")
+@ApiModel(value = "ImpactRequirement", description = "Requirement of an impact")
 @EqualsAndHashCode
 @ToString
-public class ImpactStakeholderDto {
+public class ImpactRequirementDto {
 
     @ApiModelProperty
     @Getter
@@ -24,11 +24,10 @@ public class ImpactStakeholderDto {
     @Getter
     @Setter
     @NotNull
-    private String name;
+    private String title;
 
     @ApiModelProperty(required = true)
     @Getter
     @Setter
-    @NotNull
-    private String level;
+    private String description;
 }
