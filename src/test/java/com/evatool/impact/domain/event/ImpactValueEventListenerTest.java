@@ -96,6 +96,24 @@ class ImpactValueEventListenerTest extends EventListenerTest {
             // then
             assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactValueEventListener.onValueDeletedEvent(valueDeletedEvent));
         }
+
+        @Test
+        void testOnValueDeletedEvent_ImpactsReferenceValue_DeleteImpacts() {
+            // given
+            var value = saveDummyValueChildren();
+            var json = ImpactValueJsonMapper.toString(value);
+            var valueCreatedEvent = new ValueCreatedEvent(this, json);
+            impactValueEventListener.onValueCreatedEvent(valueCreatedEvent);
+
+            // when
+            var impact = saveFullDummyImpact(value);
+            var valueDeletedEvent = new ValueDeletedEvent(this, json);
+            impactValueEventListener.onValueDeletedEvent(valueDeletedEvent);
+            var impacts = impactRepository.findAllByValueEntityId(value.getId());
+
+            // then
+            assertThat(impacts).isEmpty();
+        }
     }
 
     @Nested

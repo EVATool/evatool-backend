@@ -5,10 +5,9 @@ import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.event.json.mapper.ImpactAnalysisJsonMapper;
-import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyAnalysis;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -82,6 +81,24 @@ public class ImpactAnalysisEventListenerTest extends EventListenerTest {
 
             // then
             assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisDeletedEvent(analysisDeletedEvent));
+        }
+
+        @Test
+        void testOnAnalysisDeletedEvent_ImpactsReferenceAnalysis_DeleteImpacts() {
+            // given
+            var analysis = createDummyAnalysis();
+            var json = ImpactAnalysisJsonMapper.toJson(analysis);
+            var analysisCreatedEvent = new AnalysisCreatedEvent(json);
+            impactAnalysisEventListener.onAnalysisCreatedEvent(analysisCreatedEvent);
+
+            // when
+            var impact = saveFullDummyImpact(analysis);
+            var analysisDeletedEvent = new AnalysisDeletedEvent(json);
+            impactAnalysisEventListener.onAnalysisDeletedEvent(analysisDeletedEvent);
+            var impacts = impactRepository.findAllByAnalysisId(analysis.getId());
+
+            // then
+            assertThat(impacts).isEmpty();
         }
     }
 }

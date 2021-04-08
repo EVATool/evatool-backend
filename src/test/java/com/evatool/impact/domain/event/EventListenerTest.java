@@ -54,6 +54,24 @@ abstract class EventListenerTest { // TODO make abstarct +all other base test cl
         return impactRepository.save(impact);
     }
 
+    protected Impact saveFullDummyImpact(ImpactValue value) {
+        var stakeholder = saveDummyStakeholder();
+        var analysis = saveDummyAnalysis();
+        var impact = createDummyImpact(analysis);
+        impact.setValueEntity(value);
+        impact.setStakeholder(stakeholder);
+        return impactRepository.save(impact);
+    }
+
+    protected Impact saveFullDummyImpact(ImpactStakeholder stakeholder) {
+        var analysis = saveDummyAnalysis();
+        var value = saveDummyValue();
+        var impact = createDummyImpact(analysis);
+        impact.setValueEntity(value);
+        impact.setStakeholder(stakeholder);
+        return impactRepository.save(impact);
+    }
+
     protected Impact saveFullDummyImpact(ImpactAnalysis analysis) {
         var value = saveDummyValue();
         var stakeholder = saveDummyStakeholder();
@@ -64,11 +82,13 @@ abstract class EventListenerTest { // TODO make abstarct +all other base test cl
     }
 
     protected ImpactValue saveDummyValueChildren() {
-        return createDummyValue(analysisRepository.save(createDummyAnalysis()));
+        var analysis = saveDummyAnalysis();
+        return createDummyValue(analysis);
     }
 
     protected ImpactValue saveDummyValue() {
-        return valueRepository.save(createDummyValue());
+        var analysis = saveDummyAnalysis();
+        return valueRepository.save(createDummyValue(analysis));
     }
 
     protected ImpactStakeholder saveDummyStakeholder() {
