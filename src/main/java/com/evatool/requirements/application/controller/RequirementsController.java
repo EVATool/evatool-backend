@@ -104,7 +104,7 @@ public class RequirementsController {
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping("/requirements/referenced-by-impact/{id}")
+	@GetMapping("/requirements/referenced-by-impact/{impactId}")
 	public ResponseEntity<Boolean> referencedByImpact(@PathVariable UUID impactId) {
 		var requirementPoints = requirementPointRepository.findAllByRequirementsImpactId(impactId);
 		return new ResponseEntity<>(requirementPoints.isEmpty(), HttpStatus.OK);
