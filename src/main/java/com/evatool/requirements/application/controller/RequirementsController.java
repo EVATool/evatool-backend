@@ -107,7 +107,7 @@ public class RequirementsController {
 	@GetMapping("/requirements/referenced-by-impact/{impactId}")
 	public ResponseEntity<Boolean> referencedByImpact(@PathVariable UUID impactId) {
 		var requirementPoints = requirementPointRepository.findAllByRequirementsImpactId(impactId);
-		return new ResponseEntity<>(requirementPoints.isEmpty(), HttpStatus.OK);
+		return new ResponseEntity<>(!requirementPoints.isEmpty(), HttpStatus.OK);
 	}
 
 	private EntityModel<RequirementDTO> generateLinks(RequirementDTO requirementDTO) {
