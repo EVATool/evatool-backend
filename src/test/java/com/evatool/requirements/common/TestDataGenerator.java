@@ -62,7 +62,7 @@ public class TestDataGenerator {
         return requirementDTO;
     }
 
-    public static RequirementDTO getRequirementDTO(Map<UUID, EntityModel<RequirementPointDTO>> requirementImpactPoints, UUID projectID,Set<EntityModel<VariantsDTO>> variantsTitle) {
+    public static RequirementDTO getRequirementDTO(Set<EntityModel<RequirementPointDTO>> requirementImpactPoints, UUID projectID,Set<EntityModel<VariantsDTO>> variantsTitle) {
         var requirementDTO = new RequirementDTO();
 
         requirementDTO.setProjectID(projectID);

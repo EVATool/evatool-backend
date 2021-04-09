@@ -112,8 +112,8 @@ class RequirementPointControllerTest {
         Collection<RequirementsVariant> requirementsVariants = new ArrayList<>();
         requirementsVariants.add(requirementsVariant);
 
-        Map<UUID, EntityModel<RequirementPointDTO>> requirementImpactPoints = new HashMap<>();
-        requirementImpactPoints.put(requirementsImpact.getId(),RequirementPointDTO.generateLinks(new RequirementPointDTO(requirementsImpact.getId(), requirementsImpact.getDescription(),1d)));
+        Set<EntityModel<RequirementPointDTO>> requirementImpactPoints = new HashSet<>();
+        requirementImpactPoints.add(RequirementPointDTO.generateLinks(new RequirementPointDTO(requirementsImpact.getId(), requirementsImpact.getDescription(),1d)));
 
         Set<EntityModel<VariantsDTO>> variantsTitle = new HashSet<>();
         variantsTitle.add(VariantsDTO.generateLinks(new VariantsDTO(requirementsVariant.getId(),requirementsVariant.getTitle(),new Boolean(false))));
@@ -130,12 +130,13 @@ class RequirementPointControllerTest {
         RequirementPoint requirementPoint1 = ((List<RequirementPoint>)requirement.getRequirementPointCollection()).get(0);
 
         assertThat(requirementPoint1).isNotNull();
-        assertThat(requirementPoint1.getPoints()).isEqualTo(requirementDTO.getRequirementImpactPoints().get(requirementPoint1.getRequirementsImpact().getId()).getContent().getPoints());
+        Iterator<EntityModel<RequirementPointDTO>> iterator = requirementDTO.getRequirementImpactPoints().iterator();
+        assertThat(requirementPoint1.getPoints()).isEqualTo(iterator.next().getContent().getPoints());
 
 
-        Map<UUID,EntityModel<RequirementPointDTO>> requirementImpactPoints2 = new HashMap<>();
+        Set<EntityModel<RequirementPointDTO>> requirementImpactPoints2 = new HashSet<>();
         EntityModel<RequirementPointDTO> newPoint = RequirementPointDTO.generateLinks(new RequirementPointDTO(requirementsImpact.getId(),requirementsImpact.getDescription(),-1d));
-        requirementImpactPoints2.put(requirementsImpact.getId(),newPoint);
+        requirementImpactPoints2.add(newPoint);
 
         requirementDTOObj.setRequirementImpactPoints(requirementImpactPoints2);
         requirement1 = requirementPointController.updatePoints(requirement1,requirementDTOObj);
@@ -143,7 +144,9 @@ class RequirementPointControllerTest {
         RequirementPoint requirementPointUpdated = ((List<RequirementPoint>)requirement1.getRequirementPointCollection()).get(0);;
 
         assertThat(requirementPointUpdated).isNotNull();
-        assertThat(requirementPointUpdated.getPoints()).isEqualTo(requirementDTOObj.getRequirementImpactPoints().get(requirementPointUpdated.getRequirementsImpact().getId()).getContent().getPoints());
+
+        Iterator<EntityModel<RequirementPointDTO>> iterator2 = requirementDTOObj.getRequirementImpactPoints().iterator();
+        assertThat(requirementPointUpdated.getPoints()).isEqualTo(iterator2.next().getContent().getPoints());
         assertThat(requirementPointUpdated.getPoints()).isEqualTo(newPoint.getContent().getPoints());
 
         requirementPointController.deletePointsForRequirement(requirement1);

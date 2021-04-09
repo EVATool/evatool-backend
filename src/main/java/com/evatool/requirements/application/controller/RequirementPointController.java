@@ -64,17 +64,19 @@ public class RequirementPointController {
 
 	public Requirement createPoints(Requirement requirement, RequirementDTO requirementDTO) {
 		Collection<RequirementPoint> requirementPointCollection = new ArrayList<>();
-		for( Map.Entry<UUID, EntityModel<RequirementPointDTO>> entry:requirementDTO.getRequirementImpactPoints().entrySet()) {
+		for( EntityModel<RequirementPointDTO> requirementPointDTOEntityModel:requirementDTO.getRequirementImpactPoints()) {
 			RequirementPoint requirementPoint = new RequirementPoint();
-			requirementPoint.setPoints(entry.getValue().getContent().getPoints());
-			Optional<RequirementsImpact> requirementsImpact = requirementsImpactsRepository.findById(entry.getKey());
+			requirementPoint.setPoints(requirementPointDTOEntityModel.getContent().getPoints());
+			Optional<RequirementsImpact> requirementsImpact = requirementsImpactsRepository.findById(requirementPointDTOEntityModel.getContent().getEntityId());
 			if(requirementsImpact.isEmpty()){
-				throw new EntityNotFoundException(RequirementsImpact.class,entry.getKey());
+				throw new EntityNotFoundException(RequirementsImpact.class,requirementPointDTOEntityModel.getContent().getEntityId());
 			}
 			requirementPoint.setRequirementsImpact(requirementsImpact.get());
 			requirementPointCollection.add(requirementPoint);
 		}
-		this.newRequirementPoint(requirementPointCollection);
+		if(requirementPointCollection.size()>0) {
+			this.newRequirementPoint(requirementPointCollection);
+		}
 		requirement.getRequirementPointCollection().addAll(requirementPointCollection);
 		return requirement;
 	}
@@ -84,21 +86,40 @@ public class RequirementPointController {
 		Collection<RequirementPoint> requirementPointCollectionFromEntity = requirement.getRequirementPointCollection();
 		Collection<RequirementPoint> updateList = new ArrayList<>();
 		Collection<RequirementPoint> deleteList = new ArrayList<>();
-		Map<UUID, EntityModel<RequirementPointDTO>> requirementImpactPointsMap=requirementDTO.getRequirementImpactPoints();
+		Collection<RequirementPoint> equalsList = new ArrayList<>();
+		Set<EntityModel<RequirementPointDTO>> requirementImpactPointsFromDTO=requirementDTO.getRequirementImpactPoints();
 		for (RequirementPoint requirementPoint:requirementPointCollectionFromEntity){
-			if(requirementImpactPointsMap.get(requirementPoint.getId())==null) {
-				deleteList.add(requirementPoint);
+			boolean exist=false;
+			for (EntityModel<RequirementPointDTO> requirementPointDTO:requirementImpactPointsFromDTO){
+				if(requirementPointDTO.getContent().getEntityId().equals(requirementPoint.getRequirementsImpact().getId())) {
+					exist=true;
+					if(!requirementPointDTO.getContent().getPoints().equals(requirementPoint.getPoints())){
+						requirementPoint.setPoints(requirementPointDTO.getContent().getPoints());
+						updateList.add(requirementPoint);
+						requirementDTO.getRequirementImpactPoints().remove(requirementPoint.getId());
+					}else{
+						equalsList.add(requirementPoint);
+					}
+					break;
+				}
 			}
-			else if(requirementImpactPointsMap.get(requirementPoint.getId()).getContent().getPoints()!=requirementPoint.getPoints()){
-				requirementPoint.setPoints(requirementImpactPointsMap.get(requirementPoint.getId()).getContent().getPoints());
-				updateList.add(requirementPoint);
-				requirementDTO.getRequirementImpactPoints().remove(requirementPoint.getId());
+			if(!exist){
+				deleteList.add(requirementPoint);
 			}
 		}
 		requirement.getRequirementPointCollection().removeAll(deleteList);
 		requirement = this.requirementRepository.save(requirement);
-		this.updateRequirementPoint(updateList);
-		this.deleteRequirementPoint(deleteList);
+		if(updateList.size()>0) {
+			this.updateRequirementPoint(updateList);
+			this.removePoints(requirementDTO,updateList);
+		}
+		if(deleteList.size()>0) {
+			this.deleteRequirementPoint(deleteList);
+			this.removePoints(requirementDTO,deleteList);
+		}
+		if(equalsList.size()>0) {
+			this.removePoints(requirementDTO,equalsList);
+		}
 		this.createPoints(requirement,requirementDTO);
 		return requirement;
 	}
@@ -108,5 +129,22 @@ public class RequirementPointController {
 		Collection<RequirementPoint> collection = requirement.getRequirementPointCollection();
 		requirementPointRepository.deleteAll(collection);
 		requirement.getRequirementPointCollection().clear();
+	}
+
+	private void removePoints(RequirementDTO requirementDTO, Collection<RequirementPoint> list){
+		for (RequirementPoint requirementPoint:list){
+			boolean remove=false;
+			EntityModel<RequirementPointDTO> toRemove=null;
+			for (EntityModel<RequirementPointDTO> requirementPointDTO:requirementDTO.getRequirementImpactPoints()){
+				if(requirementPointDTO.getContent().getEntityId().equals(requirementPoint.getRequirementsImpact().getId())) {
+					remove=true;
+					toRemove=requirementPointDTO;
+					break;
+				}
+			}
+			if(remove && toRemove!=null){
+				requirementDTO.getRequirementImpactPoints().remove(toRemove);
+			}
+		}
 	}
 }
