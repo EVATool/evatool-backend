@@ -3,6 +3,7 @@ package com.evatool.analysis.application.controller;
 import com.evatool.analysis.application.dto.AnalysisDTO;
 import com.evatool.analysis.application.interfaces.AnalysisController;
 import com.evatool.analysis.application.services.AnalysisDTOService;
+import com.evatool.analysis.application.services.ValueServiceImpl;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,11 +39,14 @@ public class AnalysisControllerImpl implements AnalysisController {
   @Autowired
   private AnalysisDTOService analysisDTOService;
 
+  @Autowired
+  private ValueServiceImpl valueService;
+
   final Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);
 
   @Override
   public List<EntityModel<AnalysisDTO>> getAnalysisList(
-      @ApiParam(value = "Is A Template") @Valid @RequestParam(value = "isTemplate", required = false) Boolean isTemplate) {
+          @ApiParam(value = "Is A Template") @Valid @RequestParam(value = "isTemplate", required = false) Boolean isTemplate) {
     logger.info("[GET] /analysis");
     List<Analysis> analysisList = analysisRepository.findAll();
     if (analysisList.isEmpty()) {
@@ -86,13 +91,22 @@ public class AnalysisControllerImpl implements AnalysisController {
     analysisRepository.deleteById(id);
     analysisEventPublisher.publishEvent(new AnalysisDeletedEvent(analysis.toString()));
     return ResponseEntity.ok().build();
+  }
 
+  @Override
+  public ResponseEntity<AnalysisDTO> deepCopyAnalysis(UUID id, AnalysisDTO analysisDTO) {
+    var newAnalysisDto = addAnalysis(analysisDTO);
+    var templateAnalysis = getAnalysisById(id);
+
+    var templateAnalysisValues = valueService.find
+
+    return new ResponseEntity(newAnalysisDto, HttpStatus.OK);
   }
 
   private EntityModel<AnalysisDTO> generateLinks(AnalysisDTO analysisDTO) {
     EntityModel<AnalysisDTO> analysisDTOEntityModel = EntityModel.of(analysisDTO);
     analysisDTOEntityModel
-        .add(linkTo(methodOn(AnalysisController.class).getAnalysisById(analysisDTO.getRootEntityID())).withSelfRel());
+            .add(linkTo(methodOn(AnalysisController.class).getAnalysisById(analysisDTO.getRootEntityID())).withSelfRel());
     return analysisDTOEntityModel;
   }
 

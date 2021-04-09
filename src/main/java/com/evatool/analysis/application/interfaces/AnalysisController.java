@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -50,4 +51,12 @@ public interface AnalysisController {
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
     ResponseEntity<Void> deleteAnalysis(@PathVariable UUID id);
+
+    @PostMapping("/analysis/deep-copy/{id}")
+    @ApiOperation(value = "This method deep copies an analysis with its values")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "The entity is updated"),
+            @ApiResponse(code = 400, message = "The entity is invalid"),
+            @ApiResponse(code = 404, message = "The entity is not found")})
+    ResponseEntity<AnalysisDTO> deepCopyAnalysis(@PathVariable UUID id, @RequestBody AnalysisDTO analysisDTO);
 }
