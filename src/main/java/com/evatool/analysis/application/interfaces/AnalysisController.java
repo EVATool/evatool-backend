@@ -58,5 +58,5 @@ public interface AnalysisController {
             @ApiResponse(code = 200, message = "The entity is updated"),
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    ResponseEntity<AnalysisDTO> deepCopyAnalysis(@PathVariable UUID id, @RequestBody AnalysisDTO analysisDTO);
+    EntityModel<AnalysisDTO> deepCopyAnalysis(@PathVariable UUID id, @RequestBody AnalysisDTO analysisDTO);
 }

@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -100,10 +99,9 @@ public class AnalysisControllerImpl implements AnalysisController {
   }
 
   @Override
-  public ResponseEntity<AnalysisDTO> deepCopyAnalysis(UUID id, AnalysisDTO analysisDTO) {
+  public EntityModel<AnalysisDTO> deepCopyAnalysis(UUID id, AnalysisDTO analysisDTO) {
     var newAnalysisDto = addAnalysis(analysisDTO);
-    var newAnalysis = analysisMapper.map(analysisDTO);
-    var templateAnalysis = getAnalysisById(id);
+    var newAnalysis = analysisRepository.findById(newAnalysisDto.getContent().getRootEntityID()).get();
 
     var templateAnalysisValues = valueService.findAllByAnalysisId(id);
     for (var value : templateAnalysisValues) {
@@ -113,7 +111,7 @@ public class AnalysisControllerImpl implements AnalysisController {
       valueService.create(ValueDtoMapper.toDto(copiedValue));
     }
 
-    return new ResponseEntity(newAnalysisDto, HttpStatus.OK);
+    return newAnalysisDto;
   }
 
   private EntityModel<AnalysisDTO> generateLinks(AnalysisDTO analysisDTO) {
