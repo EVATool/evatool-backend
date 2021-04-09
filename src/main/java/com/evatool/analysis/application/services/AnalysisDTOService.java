@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,7 @@ public class AnalysisDTOService {
     public Analysis create(AnalysisDTO analysisDTO) {
         logger.debug("create [{}]", analysisDTO);
         Analysis analysis = analysisMapper.map(analysisDTO);
+        analysis.setLastUpdate(new Date());
 
         return analysis;
     }
@@ -60,11 +62,12 @@ public class AnalysisDTOService {
             throw new EntityNotFoundException(Analysis.class, analysisDTO.getRootEntityID());
 
         Analysis analysis = analysisMapper.map(analysisDTO);
-        if (analysisDTO.getUniqueString() != null) {
+        analysis.setLastUpdate(new Date());
+        /*if (analysisDTO.getUniqueString() != null) {
             var numericId = new NumericId();
             numericId.setNumericId(Integer.valueOf(analysisDTO.getUniqueString().replace("ANA", "")));
             analysis.setNumericId(numericId);
-        }
+        }*/
 
         analysis = analysisRepository.save(analysis);
         eventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toJson()));
