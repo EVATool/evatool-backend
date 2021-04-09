@@ -1,0 +1,159 @@
+{
+	"id": "cc29cb9b-9de4-4b35-a581-e14147896f2a",
+	"name": "Eva-Tool-LOCAL",
+	"values": [
+		{
+			"key": "host",
+			"value": "localhost:8080",
+			"enabled": true
+		},
+		{
+			"key": "analysisId",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "stakeholder1Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "stakeholder2Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "stakeholder3Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "stakeholder4Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "stakeholder5Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "stakeholder6Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "stakeholder7Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "stakeholder8Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "value1Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "value2Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "value3Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "value4Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "value5Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "value6Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "value7Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "value8Id",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "impact1Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "impact2Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "impact3Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "impact4Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "impact5Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "impact6Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "impact7Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "impact8Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "impact9Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "impact10Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "impact11Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "impact12Id",
+			"value": "\"\"",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2021-04-09T14:51:24.328Z",
+	"_postman_exported_using": "Postman/8.1.0"
+}
