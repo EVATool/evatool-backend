@@ -33,7 +33,7 @@ public class ImpactValue extends SuperEntity {
     private String description;
 
     @Getter
-    @ManyToOne(optional = true) // TODO change to false when event from Analysis has analysisId
+    @ManyToOne(optional = false)
     private ImpactAnalysis analysis;
 
     public ImpactValue() {

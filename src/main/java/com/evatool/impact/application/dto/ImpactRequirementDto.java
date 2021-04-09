@@ -10,25 +10,24 @@ import lombok.ToString;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-@ApiModel(value = "ImpactStakeholder", description = "Stakeholder of an impact")
+@ApiModel(value = "ImpactRequirement", description = "Requirement of an impact")
 @EqualsAndHashCode
 @ToString
-public class ImpactStakeholderDto {
+public class ImpactRequirementDto {
 
-    @ApiModelProperty(example = "ede53b7c-cc72-4466-a238-9d9821c420c5")
+    @ApiModelProperty
     @Getter
     @Setter
     private UUID id;
 
-    @ApiModelProperty(required = true, example = "Health Insurance")
+    @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull
-    private String name;
+    private String title;
 
-    @ApiModelProperty(required = true, example = "ORGANIZATION")
+    @ApiModelProperty(required = true)
     @Getter
     @Setter
-    @NotNull
-    private String level;
+    private String description;
 }

@@ -23,6 +23,5 @@ public class AnalysisDTO {
     private Date date;
     private Boolean isTemplate;
     private String uniqueString;
-    private Set<Value> valuesSet;
 
 }

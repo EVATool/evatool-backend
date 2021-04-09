@@ -33,8 +33,6 @@ public class AnalysisMapper {
         analysisDTO.setDate(analysis.getLastUpdate());
         analysisDTO.setIsTemplate(analysis.getIsTemplate());
         analysisDTO.setUniqueString(analysis.getUniqueString());
-
-        logger.info(analysis.getIsTemplate().toString());
         return analysisDTO;
     }
 

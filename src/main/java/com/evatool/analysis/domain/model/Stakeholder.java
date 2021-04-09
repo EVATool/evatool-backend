@@ -74,7 +74,7 @@ public class Stakeholder {
 
     public void setStakeholderLevel(StakeholderLevel stakeholderLevel) {
         if (stakeholderLevel == null){
-            throw new IllegalArgumentException("Level name cannot be null.");
+            throw new IllegalArgumentException("Stakeholder level cannot be null.");
         }
         this.stakeholderLevel = stakeholderLevel;
     }

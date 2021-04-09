@@ -1,13 +1,7 @@
 package com.evatool.impact.application.service;
 
-import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.entity.ImpactAnalysis;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.entity.ImpactValue;
-import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
-import com.evatool.impact.domain.repository.ImpactRepository;
-import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
-import com.evatool.impact.domain.repository.ImpactValueRepository;
+import com.evatool.impact.domain.entity.*;
+import com.evatool.impact.domain.repository.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
@@ -36,6 +30,9 @@ abstract public class ServiceTest {
     protected ImpactAnalysisRepository impactAnalysisRepository;
 
     @Autowired
+    protected ImpactRequirementRepository requirementRepository;
+
+    @Autowired
     protected ImpactStakeholderService stakeholderService;
 
     @Autowired
@@ -44,6 +41,9 @@ abstract public class ServiceTest {
     @Autowired
     protected ImpactValueService valueService;
 
+    @Autowired
+    protected ImpactRequirementService requirementService;
+
     @BeforeEach
     @AfterAll
     private void clearDatabase() {
@@ -51,6 +51,7 @@ abstract public class ServiceTest {
         stakeholderRepository.deleteAll();
         valueRepository.deleteAll();
         impactAnalysisRepository.deleteAll();
+        requirementRepository.deleteAll();
     }
 
     protected Impact saveFullDummyImpact() {
@@ -82,5 +83,9 @@ abstract public class ServiceTest {
 
     protected ImpactAnalysis saveFullDummyAnalysis() {
         return impactAnalysisRepository.save(createDummyAnalysis());
+    }
+
+    protected ImpactRequirement saveFullDummyRequirement() {
+        return requirementRepository.save(createDummyRequirement());
     }
 }

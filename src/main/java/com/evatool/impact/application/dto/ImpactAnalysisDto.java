@@ -14,7 +14,7 @@ import java.util.UUID;
 @ToString
 public class ImpactAnalysisDto {
 
-    @ApiModelProperty
+    @ApiModelProperty(example = "a550faa0-c4c9-48e5-8748-16b916212bac")
     @Getter
     @Setter
     private UUID id;

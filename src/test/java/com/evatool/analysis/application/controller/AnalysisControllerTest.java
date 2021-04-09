@@ -4,14 +4,19 @@ import com.evatool.analysis.application.dto.AnalysisDTO;
 import com.evatool.analysis.application.dto.AnalysisMapper;
 import com.evatool.analysis.application.interfaces.AnalysisController;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
+import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.domain.model.Analysis;
+import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
+import com.evatool.analysis.domain.repository.ValueRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
+import static com.evatool.analysis.common.TestDataGenerator.createDummyValue;
+import static com.evatool.analysis.common.TestDataGenerator.getAnalysis;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -24,6 +29,9 @@ class AnalysisControllerTest {
 
     @Autowired
     private AnalysisRepository analysisRepository;
+
+    @Autowired
+    ValueRepository valueRepository;
 
     private AnalysisMapper analysisMapper = new AnalysisMapper();
 
@@ -54,6 +62,36 @@ class AnalysisControllerTest {
         analysisController.deleteAnalysis(id);
 
         //check is analysis deleted
-        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(()->analysisController.getAnalysisById(analysisDTOObj.getRootEntityID()).getContent());
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> analysisController.getAnalysisById(analysisDTOObj.getRootEntityID()).getContent());
+    }
+
+    @Test
+    void testDeepCopyAnalysis() {
+        // given
+        var templateAnalysis = analysisRepository.save(getAnalysis());
+
+        var value1 = createDummyValue();
+        value1.setAnalysis(templateAnalysis);
+        value1 = valueRepository.save(value1);
+
+        var value2 = createDummyValue();
+        value2.setAnalysis(templateAnalysis);
+        value2 = valueRepository.save(value2);
+
+        // when
+        var newAnalysis = new Analysis("deep copy", "deep copy");
+        var newAnalysisDto = analysisController.deepCopyAnalysis(templateAnalysis.getAnalysisId(), analysisMapper.map(newAnalysis)).getContent();
+
+        // then
+        var templateValues = valueRepository.findAllByAnalysisAnalysisId(templateAnalysis.getAnalysisId());
+        var newAnalysisValues = valueRepository.findAllByAnalysisAnalysisId(newAnalysisDto.getRootEntityID());
+
+        assertThat(templateValues.size()).isEqualTo(newAnalysisValues.size());
+
+        assertThat(templateValues.get(0).getAnalysis().getAnalysisName()).isEqualTo(templateAnalysis.getAnalysisName());
+        assertThat(templateValues.get(1).getAnalysis().getAnalysisName()).isEqualTo(templateAnalysis.getAnalysisName());
+
+        assertThat(newAnalysisValues.get(0).getAnalysis().getAnalysisName()).isEqualTo(newAnalysis.getAnalysisName());
+        assertThat(newAnalysisValues.get(1).getAnalysis().getAnalysisName()).isEqualTo(newAnalysis.getAnalysisName());
     }
 }

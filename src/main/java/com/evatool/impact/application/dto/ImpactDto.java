@@ -17,17 +17,17 @@ import java.util.UUID;
 @ToString
 public class ImpactDto {
 
-    @ApiModelProperty
+    @ApiModelProperty(example = "f33c6fa8-1697-11ea-8d71-362b9e155667")
     @Getter
     @Setter
     private UUID id;
 
-    @ApiModelProperty
+    @ApiModelProperty(example = "IMP01")
     @Getter
     @Setter
     private String uniqueString;
 
-    @ApiModelProperty(required = true, allowableValues = "range[-1.0,1.0]")
+    @ApiModelProperty(example = "0.7",required = true, allowableValues = "range[-1.0,1.0]")
     @Getter
     @Setter
     @DecimalMin("-1.0")
@@ -35,7 +35,7 @@ public class ImpactDto {
     @NotNull
     private Double value;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(example = "If poorly implemented, ILA might contribute to a general loss of privacy by technical support solutions.", required = true)
     @Getter
     @Setter
     @NotNull
