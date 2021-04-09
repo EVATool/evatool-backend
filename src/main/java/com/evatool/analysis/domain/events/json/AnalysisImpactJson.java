@@ -11,7 +11,7 @@ import java.util.UUID;
 public class AnalysisImpactJson {
 
     private UUID id;
-    private Double value;
+    private Float value;
     private ImpactStakeholder stakeholder;
 }
 
