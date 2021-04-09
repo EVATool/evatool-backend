@@ -2,16 +2,16 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.service.ImpactService;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-public class ImpactRestController {
+public class ImpactRestController implements ImpactApi {
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactRestController.class);
 
@@ -33,24 +33,12 @@ public class ImpactRestController {
         this.impactService = impactService;
     }
 
-    @GetMapping(IMPACTS_ID)
-    @ApiOperation(value = "Read impact by ID")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 404, message = "Not Found")})
     public ResponseEntity<EntityModel<ImpactDto>> findById(@ApiParam("Impact ID") @Valid @PathVariable UUID id) {
         logger.info("GET " + IMPACTS_ID);
         var impactDto = impactService.findById(id);
         return new ResponseEntity<>(getImpactWithLinks(impactDto), HttpStatus.OK);
     }
 
-    @GetMapping(IMPACTS)
-    @ApiOperation(value = "Read all impacts")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 404, message = "Not Found")})
     public ResponseEntity<List<EntityModel<ImpactDto>>> findAll(@ApiParam(value = "Analysis Id") @Valid @RequestParam(value = "analysisId", required = false) UUID analysisId) {
         logger.info("GET " + IMPACTS);
         List<ImpactDto> impactDtoList;
@@ -62,37 +50,18 @@ public class ImpactRestController {
         return new ResponseEntity<>(getImpactsWithLinks(impactDtoList), HttpStatus.OK);
     }
 
-    @PostMapping(IMPACTS)
-    @ApiOperation(value = "Create a new impact")
-    @ApiResponses({
-            @ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 422, message = "Unprocessable")})
     public ResponseEntity<EntityModel<ImpactDto>> create(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto) {
         logger.info("POST " + IMPACTS);
         var insertedImpactDto = impactService.create(impactDto);
         return new ResponseEntity<>(getImpactWithLinks(insertedImpactDto), HttpStatus.CREATED);
     }
 
-    @PutMapping(IMPACTS)
-    @ApiOperation(value = "Update an impact")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Updated"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 422, message = "Unprocessable")})
     public ResponseEntity<EntityModel<ImpactDto>> update(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto) {
         logger.info("PUT " + IMPACTS);
         var updatedImpactDto = impactService.update(impactDto);
         return new ResponseEntity<>(getImpactWithLinks(updatedImpactDto), HttpStatus.OK);
     }
 
-    @DeleteMapping(IMPACTS_ID)
-    @ApiOperation(value = "Delete impact by ID")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Deleted"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 404, message = "Not Found")})
     public ResponseEntity<Void> deleteById(@ApiParam("Impact ID") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + IMPACTS_ID);
         impactService.deleteById(id);
