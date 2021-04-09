@@ -13,4 +13,6 @@ public interface ValueRepository extends JpaRepository<Value, UUID> {
 
     List<Value> findAllByType(ValueType type);
 
+    List<Value> findAllByAnalysisAnalysisId(UUID analysisId);
+
 }

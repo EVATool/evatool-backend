@@ -1,6 +1,7 @@
 package com.evatool.analysis.domain.model;
 
 import com.evatool.analysis.domain.enums.ValueType;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,8 +43,16 @@ public class Value {
 
     @Getter
     @Setter
+    @Column(name = "ARCHIVED", nullable = false)
+    @ApiModelProperty(notes = "archive ", name = "archive", required = true)
+    private Boolean archived = false;
+
+    @Getter
+    @Setter
     @ManyToOne(optional = false)
     private Analysis analysis;
+
+
 
     public Value() {
         super();

@@ -23,6 +23,13 @@ public interface StakeholderController {
             @ApiResponse(code = 200, message = "All entities returned")})
     List<EntityModel<StakeholderDTO>> getStakeholderList();
 
+    @GetMapping(value ="/stakeholders",params = "analysisId")
+    @ApiOperation(value = "This method returns a list of stakeholder by analysisId")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "All entities returned")})
+    List<EntityModel<StakeholderDTO>> getStakeholderByAnalysis(@RequestParam("analysisId") UUID analysisId);
+
+
     @GetMapping("/stakeholders/levels")
     @ApiOperation(value = "This method returns a list of stakeholder levels")
     @ApiResponses(value = {
@@ -59,5 +66,4 @@ public interface StakeholderController {
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
     ResponseEntity<Void> deleteStakeholder(@PathVariable UUID id);
-
 }
