@@ -54,6 +54,18 @@ class AnalysisControllerTest {
         analysisController.deleteAnalysis(id);
 
         //check is analysis deleted
-        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(()->analysisController.getAnalysisById(analysisDTOObj.getRootEntityID()).getContent());
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> analysisController.getAnalysisById(analysisDTOObj.getRootEntityID()).getContent());
+    }
+
+    @Test
+    void testDeepCopyAnalysis() {
+        // given
+
+
+        // when
+
+
+        // then
+
     }
 }

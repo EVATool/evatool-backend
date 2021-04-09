@@ -1,12 +1,15 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.dto.AnalysisDTO;
+import com.evatool.analysis.application.dto.AnalysisMapper;
+import com.evatool.analysis.application.dto.ValueDtoMapper;
 import com.evatool.analysis.application.interfaces.AnalysisController;
 import com.evatool.analysis.application.services.AnalysisDTOService;
 import com.evatool.analysis.application.services.ValueServiceImpl;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
+import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
@@ -41,6 +44,9 @@ public class AnalysisControllerImpl implements AnalysisController {
 
   @Autowired
   private ValueServiceImpl valueService;
+
+  @Autowired
+  private AnalysisMapper analysisMapper;
 
   final Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);
 
@@ -96,9 +102,16 @@ public class AnalysisControllerImpl implements AnalysisController {
   @Override
   public ResponseEntity<AnalysisDTO> deepCopyAnalysis(UUID id, AnalysisDTO analysisDTO) {
     var newAnalysisDto = addAnalysis(analysisDTO);
+    var newAnalysis = analysisMapper.map(analysisDTO);
     var templateAnalysis = getAnalysisById(id);
 
-    var templateAnalysisValues = valueService.find
+    var templateAnalysisValues = valueService.findAllByAnalysisId(id);
+    for (var value : templateAnalysisValues) {
+      var copiedValue = new Value(value.getName(), value.getType(), value.getDescription());
+      copiedValue.setArchived(value.getArchived());
+      copiedValue.setAnalysis(newAnalysis);
+      valueService.create(ValueDtoMapper.toDto(copiedValue));
+    }
 
     return new ResponseEntity(newAnalysisDto, HttpStatus.OK);
   }
