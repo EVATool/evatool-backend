@@ -28,6 +28,8 @@ public class StakeholderMapper {
         stakeholderDTO.setStakeholderLevel(stakeholder.getStakeholderLevel());
         stakeholderDTO.setRootEntityID(stakeholder.getStakeholderId());
         stakeholderDTO.setGuiId(stakeholder.getGuiId());
+        stakeholderDTO.setImpactList(stakeholder.getImpact());
+        stakeholderDTO.setAnalysisId(stakeholder.getAnalysis().getAnalysisId());
         return stakeholderDTO;
     }
 }

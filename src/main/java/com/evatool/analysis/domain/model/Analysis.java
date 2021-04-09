@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -60,6 +61,11 @@ public class Analysis {
     @Getter
     @Setter
     private Boolean isTemplate = false;
+
+    @Getter
+    @Setter
+    @OneToMany
+    private Set<Value> valueSet;
 
     public Analysis(String analysisName, String description) {
         this();
