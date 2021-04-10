@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -78,7 +79,7 @@ public class StakeholderControllerImpl implements StakeholderController {
     }
 
     @Override
-    public EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
+    public EntityModel<StakeholderDTO> addStakeholder(@Valid @RequestBody StakeholderDTO stakeholderDTO) {
         logger.info("[POST] /stakeholders");
         Stakeholder stakeholder = stakeholderRepository.save(stakeholderDTOService.create(stakeholderDTO));
         stakeholderEventPublisher.publishEvent(new StakeholderCreatedEvent(this, stakeholder.toJson()));
