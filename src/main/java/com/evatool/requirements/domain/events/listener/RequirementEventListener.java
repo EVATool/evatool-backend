@@ -54,10 +54,10 @@ public class RequirementEventListener {
             throw new EventEntityAlreadyExistsException();
         }
         RequirementsImpact requirementsImpact = RequirementsImpact.fromJson(event.getJsonPayload());
-        if(impactJson.getDimensionId()!=null) {
-            Optional<RequirementValue> requirementValue = requirementValueRepository.findById(UUID.fromString(impactJson.getDimensionId()));
+        if(impactJson.getValueEntityId()!=null) {
+            Optional<RequirementValue> requirementValue = requirementValueRepository.findById(UUID.fromString(impactJson.getValueEntityId()));
             if (requirementValue.isEmpty()) {
-                logger.error("Dimension ist nicht vorhanden. ID:[{}]", impactJson.getDimensionId());
+                logger.error("Dimension ist nicht vorhanden. ID:[{}]", impactJson.getValueEntityId());
             } else {
                 requirementsImpact.setRequirementValue(requirementValue.get());
             }

@@ -21,7 +21,7 @@ public class ImpactJson {
 
     @Getter
     @Setter
-    private String dimensionId;
+    private String valueEntityId;
 
     public static ImpactJson fromJson(String json){
         return  new Gson().fromJson(json, ImpactJson.class);
@@ -34,7 +34,7 @@ public class ImpactJson {
                 "id='" + id + '\'' +
                 ", value=" + value +
                 ", description='" + description + '\'' +
-                ", dimensionId='" + dimensionId + '\'' +
+                ", valueEntityId='" + valueEntityId + '\'' +
                 '}';
     }
 }
