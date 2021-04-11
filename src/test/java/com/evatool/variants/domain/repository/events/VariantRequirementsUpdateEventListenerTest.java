@@ -18,14 +18,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
-
-import static com.evatool.variants.common.TestDataGenerator.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.evatool.variants.common.TestDataGenerator.getVariant;
+import static com.evatool.variants.common.TestDataGenerator.getVariantsAnalysis;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -104,9 +103,5 @@ class VariantRequirementsUpdateEventListenerTest {
 
         // then
         assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> variantEventListener.requirementUpdated(requirementUpdateEvent));
-
-
-
     }
-
 }

@@ -1,8 +1,10 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.dto.ValueDto;
+import com.evatool.analysis.application.services.AnalysisDTOService;
 import com.evatool.analysis.application.services.ValueService;
 import com.evatool.analysis.domain.enums.ValueType;
+import com.evatool.analysis.domain.repository.AnalysisRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,8 +19,9 @@ import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
-import static com.evatool.analysis.common.TestDataGenerator.*;
 import static com.evatool.analysis.application.dto.ValueDtoMapper.toDto;
+import static com.evatool.analysis.common.TestDataGenerator.createDummyValue;
+import static com.evatool.analysis.common.TestDataGenerator.getAnalysisDTO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -30,16 +33,40 @@ class ValueRestControllerTest {
     @Autowired
     private ValueService valueService;
 
+    @Autowired
+    private AnalysisDTOService analysisDTOService;
+
+    @Autowired
+    private AnalysisRepository analysisRepository;
+
     @BeforeEach
     public void clearDatabase() {
         valueService.deleteAll();
     }
 
-    private ValueDto saveFullDummyValueDto() {
+    private ValueDto saveDummyValueChildren() {
         var value = createDummyValue();
+        var analysisDto = getAnalysisDTO("name", "desc");
+        var analysis =  analysisRepository.save(analysisDTOService.create(analysisDto));
+        value.setAnalysis(analysis);
+        System.out.println(analysis);
+        var valueDto = toDto(value);
+        return valueDto;
+    }
+
+    private ValueDto saveFullDummyValueDto() {
+        return saveFullDummyValueDto(ValueType.ECONOMIC);
+    }
+
+    private ValueDto saveFullDummyValueDto(ValueType valueType) {
+        var value = createDummyValue();
+        var analysisDto = getAnalysisDTO("name", "desc");
+        var analysis =  analysisRepository.save(analysisDTOService.create(analysisDto));
+        value.setAnalysis(analysis);
+        value.setType(valueType);
+        System.out.println(analysis);
         var valueDto = toDto(value);
         return valueService.create(valueDto);
-
     }
 
     @Nested
@@ -102,16 +129,12 @@ class ValueRestControllerTest {
             // given
             int n_socialValue = 3;
             for (int i = 0; i < n_socialValue; i++) {
-                var socialValue = createDummyValueDto();
-                socialValue.setType(ValueType.SOCIAL);
-                valueService.create(socialValue);
+                var socialValue = saveFullDummyValueDto(ValueType.SOCIAL);
             }
 
             int n_economicValue = 4;
             for (int i = 0; i < n_economicValue; i++) {
-                var economicValue = createDummyValueDto();
-                economicValue.setType(ValueType.ECONOMIC);
-                valueService.create(economicValue);
+                var economicValue = saveFullDummyValueDto(ValueType.ECONOMIC);
             }
 
             // when
@@ -152,7 +175,7 @@ class ValueRestControllerTest {
         @Test
         void testCreate_CreatedValue_ReturnCreatedValue() {
             // given
-            var valuesDto = createDummyValueDto();
+            var valuesDto = saveDummyValueChildren();
 
             // when
             var httpEntity = new HttpEntity<>(valuesDto);
@@ -166,8 +189,7 @@ class ValueRestControllerTest {
         @Test
         void testCreate_NotNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
-            var valuesDto = createDummyValueDto();
-            valuesDto.setId(UUID.randomUUID());
+            var valuesDto = saveFullDummyValueDto();
 
             // when
             var httpEntity = new HttpEntity<>(valuesDto);
@@ -200,9 +222,8 @@ class ValueRestControllerTest {
         @Test
         void testUpdate_UpdateNonExistingId_ReturnHttpStatusNotFound() {
             // given
-            var value = createDummyValue();
-            value.setId(UUID.randomUUID());
-            var valueDto = toDto(value);
+            var valueDto = saveFullDummyValueDto();
+            valueDto.setId(UUID.randomUUID());
             var httpEntity = new HttpEntity<>(valueDto);
 
             // when
@@ -216,7 +237,8 @@ class ValueRestControllerTest {
         @Test
         void testUpdate_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
-            var valueDto = createDummyValueDto();
+            var valueDto = saveFullDummyValueDto();
+            valueDto.setId(null);
 
             // when
             var httpEntity = new HttpEntity<>(valueDto);
@@ -249,7 +271,7 @@ class ValueRestControllerTest {
         @Test
         void testDeleteById_DeleteNonExistingId_ReturnHttpStatusNotFound() {
             // given
-            var valueDto = createDummyValueDto();
+            var valueDto = saveFullDummyValueDto();
             valueDto.setId(UUID.randomUUID());
 
             // when

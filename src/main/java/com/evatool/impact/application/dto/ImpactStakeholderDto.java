@@ -15,14 +15,20 @@ import java.util.UUID;
 @ToString
 public class ImpactStakeholderDto {
 
-    @ApiModelProperty
+    @ApiModelProperty(example = "ede53b7c-cc72-4466-a238-9d9821c420c5")
     @Getter
     @Setter
-    private UUID id; // TODO technically @NotNull because foreign entities MUST be present in the domain
+    private UUID id;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, example = "Health Insurance")
     @Getter
     @Setter
     @NotNull
     private String name;
+
+    @ApiModelProperty(required = true, example = "ORGANIZATION")
+    @Getter
+    @Setter
+    @NotNull
+    private String level;
 }

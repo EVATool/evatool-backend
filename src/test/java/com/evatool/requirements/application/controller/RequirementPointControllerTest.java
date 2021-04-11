@@ -10,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.EntityModel;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.*;
 
 import static com.evatool.requirements.common.TestDataGenerator.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class RequirementPointControllerTest {
@@ -89,7 +88,7 @@ class RequirementPointControllerTest {
         requirement.getRequirementPointCollection().remove(requirementPoint);
         requirementRepository.save(requirement);
         requirementPointController.deleteRequirementPoint(requirementPoint);
-        assertThat(requirement.getRequirementPointCollection().size()).isEqualTo(0);
+        assertThat(requirement.getRequirementPointCollection()).isEmpty();
     }
 
     @Test

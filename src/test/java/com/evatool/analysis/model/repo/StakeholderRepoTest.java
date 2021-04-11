@@ -11,16 +11,16 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class StakeholderRepoTest {
+class StakeholderRepoTest {
 
     @Autowired
     private StakeholderRepository stakeholderRepository;
 
     @Test
-    public void testFindByIdExistingStakeholder() {
+    void testFindByIdExistingStakeholder() {
 
         // given
-        Stakeholder stakeholder = TestDataGenerator.getStakholder();
+        Stakeholder stakeholder = TestDataGenerator.getStakeholder();
         stakeholder = stakeholderRepository.save(stakeholder);
 
         // when
@@ -31,9 +31,9 @@ public class StakeholderRepoTest {
     }
 
     @Test
-    public void testSaveInsertedStakeholderIdIsNotNull() {
+    void testSaveInsertedStakeholderIdIsNotNull() {
         // given
-        Stakeholder stakeholder = TestDataGenerator.getStakholder();
+        Stakeholder stakeholder = TestDataGenerator.getStakeholder();
 
         // when
         stakeholderRepository.save(stakeholder);
@@ -43,9 +43,9 @@ public class StakeholderRepoTest {
     }
 
     @Test
-    public void testSaveInsertedStakeholderIdIsUuid() {
+    void testSaveInsertedStakeholderIdIsUuid() {
         // given
-        Stakeholder stakeholder = TestDataGenerator.getStakholder();
+        Stakeholder stakeholder = TestDataGenerator.getStakeholder();
 
         // when
         stakeholderRepository.save(stakeholder);
@@ -53,13 +53,12 @@ public class StakeholderRepoTest {
         // then
         UUID.fromString(stakeholder.getStakeholderId().toString());
         assertThat(stakeholder.getStakeholderId()).isNotNull();
-
     }
 
     @Test
-    public void testDeleteStakeholderReturnNull() {
+    void testDeleteStakeholderReturnNull() {
         // given
-        Stakeholder stakeholder = TestDataGenerator.getStakholder();
+        Stakeholder stakeholder = TestDataGenerator.getStakeholder();
         stakeholderRepository.save(stakeholder);
 
         // when
@@ -69,5 +68,4 @@ public class StakeholderRepoTest {
         // then
         assertThat(stakeholderFound).isNull();
     }
-
 }

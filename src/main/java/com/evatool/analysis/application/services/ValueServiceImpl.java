@@ -3,9 +3,9 @@ package com.evatool.analysis.application.services;
 import com.evatool.analysis.application.dto.ValueDto;
 import com.evatool.analysis.application.dto.ValueDtoMapper;
 import com.evatool.analysis.common.error.execptions.EntityIdMustBeNullException;
-import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.common.error.execptions.EntityIdRequiredException;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
+import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.domain.events.ValueEventPublisher;
 import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.ValueRepository;
@@ -39,7 +39,7 @@ public class ValueServiceImpl implements ValueService {
             throw new EntityIdRequiredException(Value.class.getSimpleName());
         }
         var value = valueRepository.findById(id);
-        if (!value.isPresent()) {
+        if (value.isEmpty()) {
             throw new EntityNotFoundException(Value.class, id);
         }
         return ValueDtoMapper.toDto(value.get());
@@ -49,6 +49,14 @@ public class ValueServiceImpl implements ValueService {
     public List<ValueDto> findAllByType(ValueType type) {
         logger.info("Get ImpactValue by type");
         var values = valueRepository.findAllByType(type);
+        var valueDtoList = new ArrayList<ValueDto>();
+        values.forEach(value -> valueDtoList.add(ValueDtoMapper.toDto(value)));
+        return valueDtoList;
+    }
+
+    @Override
+    public List<ValueDto> findAllByAnalysisId(UUID analysisId) {
+        var values = valueRepository.findAllByAnalysisAnalysisId(analysisId);
         var valueDtoList = new ArrayList<ValueDto>();
         values.forEach(value -> valueDtoList.add(ValueDtoMapper.toDto(value)));
         return valueDtoList;

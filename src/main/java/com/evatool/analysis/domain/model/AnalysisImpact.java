@@ -18,5 +18,5 @@ public class AnalysisImpact {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private Float impactValues;
+    private Float impactValue;
 }

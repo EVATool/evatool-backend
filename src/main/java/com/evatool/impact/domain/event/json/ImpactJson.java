@@ -12,7 +12,7 @@ public class ImpactJson {
 
     @Getter
     @Setter
-    private String id; // TODO change to UUID
+    private String id;
 
     @Getter
     @Setter

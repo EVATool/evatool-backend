@@ -1,13 +1,14 @@
 package com.evatool.analysis.application.controller;
 
-import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.application.dto.StakeholderDTO;
+import com.evatool.analysis.application.interfaces.StakeholderController;
+import com.evatool.analysis.application.services.StakeholderDTOService;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
+import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
-import com.evatool.analysis.application.services.StakeholderDTOService;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
@@ -36,18 +37,34 @@ public class StakeholderControllerImpl implements StakeholderController {
     @Autowired
     private AnalysisEventPublisher stakeholderEventPublisher;
 
-
-    Logger logger = LoggerFactory.getLogger(StakeholderControllerImpl.class);
-
+    final Logger logger = LoggerFactory.getLogger(StakeholderControllerImpl.class);
 
     @Override
     public List<EntityModel<StakeholderDTO>> getStakeholderList() {
         logger.info("[GET] /stakeholders");
         List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
         if (stakeholderList.isEmpty()){
-            return Arrays.asList();
+            return Collections.emptyList();
         }
         return generateLinks(stakeholderDTOService.findAll(stakeholderList));
+    }
+
+    @Override
+    public List<EntityModel<StakeholderDTO>> getStakeholderByAnalysis(UUID analysisId) {
+        logger.info("[GET] /stakeholders?analysisId={id}");
+        List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
+
+        stakeholderList.removeIf(stakeholder -> !stakeholder.getAnalysis().getAnalysisId().equals(analysisId));
+        if (stakeholderList.isEmpty()){
+            return Collections.emptyList();
+        }
+        return generateLinks(stakeholderDTOService.findAll(stakeholderList));
+    }
+
+    @Override
+    public List<StakeholderLevel> findAllLevels() {
+        logger.info("Get Stakeholder Levels");
+        return Arrays.asList(StakeholderLevel.values());
     }
 
     @Override
@@ -71,11 +88,10 @@ public class StakeholderControllerImpl implements StakeholderController {
     @Override
     public EntityModel<StakeholderDTO> updateStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
         logger.info("[PUT] /stakeholders");
-        Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(stakeholderDTO.getRootEntityID());
-        Stakeholder stakeholder = stakeholderOptional.orElseThrow();
-        stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
-        stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
-        stakeholder.setPriority(stakeholderDTO.getPriority());
+
+        Stakeholder stakeholder = stakeholderDTOService.update(stakeholderDTO);
+
+        stakeholderRepository.save(stakeholder);
         stakeholderEventPublisher.publishEvent(new StakeholderUpdatedEvent(this, stakeholderDTO.toString()));
         return getStakeholderById(stakeholderDTO.getRootEntityID());
     }
@@ -101,10 +117,7 @@ public class StakeholderControllerImpl implements StakeholderController {
 
     private List<EntityModel<StakeholderDTO>> generateLinks(List<StakeholderDTO> stakeholderDTOList){
         List<EntityModel<StakeholderDTO>> returnList = new ArrayList<>();
-        stakeholderDTOList.stream().forEach(e -> returnList.add(generateLinks(e)));
+        stakeholderDTOList.forEach(e -> returnList.add(generateLinks(e)));
         return returnList;
-
     }
-
-
 }

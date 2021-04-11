@@ -1,13 +1,7 @@
 package com.evatool.impact.application.service;
 
-import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.entity.ImpactAnalysis;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.entity.ImpactValue;
-import com.evatool.impact.domain.repository.ImpactValueRepository;
-import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
-import com.evatool.impact.domain.repository.ImpactRepository;
-import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
+import com.evatool.impact.domain.entity.*;
+import com.evatool.impact.domain.repository.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
@@ -18,7 +12,7 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ServiceTest {
+abstract public class ServiceTest {
 
     @Autowired
     protected ImpactService impactService;
@@ -36,6 +30,9 @@ public class ServiceTest {
     protected ImpactAnalysisRepository impactAnalysisRepository;
 
     @Autowired
+    protected ImpactRequirementRepository requirementRepository;
+
+    @Autowired
     protected ImpactStakeholderService stakeholderService;
 
     @Autowired
@@ -44,6 +41,9 @@ public class ServiceTest {
     @Autowired
     protected ImpactValueService valueService;
 
+    @Autowired
+    protected ImpactRequirementService requirementService;
+
     @BeforeEach
     @AfterAll
     private void clearDatabase() {
@@ -51,6 +51,7 @@ public class ServiceTest {
         stakeholderRepository.deleteAll();
         valueRepository.deleteAll();
         impactAnalysisRepository.deleteAll();
+        requirementRepository.deleteAll();
     }
 
     protected Impact saveFullDummyImpact() {
@@ -59,7 +60,7 @@ public class ServiceTest {
     }
 
     protected Impact saveFullDummyImpact(ImpactAnalysis analysis) {
-        var value = saveFullDummyValue();
+        var value = saveFullDummyValue(analysis);
         var stakeholder = saveFullDummyStakeholder();
         var impact = createDummyImpact(analysis);
         impact.setValueEntity(value);
@@ -68,7 +69,12 @@ public class ServiceTest {
     }
 
     protected ImpactValue saveFullDummyValue() {
-        return valueRepository.save(createDummyValue());
+        var analysis = saveFullDummyAnalysis();
+        return valueRepository.save(createDummyValue(analysis));
+    }
+
+    protected ImpactValue saveFullDummyValue(ImpactAnalysis analysis) {
+        return valueRepository.save(createDummyValue(analysis));
     }
 
     protected ImpactStakeholder saveFullDummyStakeholder() {
@@ -77,5 +83,9 @@ public class ServiceTest {
 
     protected ImpactAnalysis saveFullDummyAnalysis() {
         return impactAnalysisRepository.save(createDummyAnalysis());
+    }
+
+    protected ImpactRequirement saveFullDummyRequirement() {
+        return requirementRepository.save(createDummyRequirement());
     }
 }

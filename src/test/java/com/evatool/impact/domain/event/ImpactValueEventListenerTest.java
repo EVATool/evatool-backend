@@ -6,30 +6,18 @@ import com.evatool.global.event.value.ValueUpdatedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.event.json.mapper.ImpactValueJsonMapper;
-import com.evatool.impact.domain.repository.ImpactValueRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@SpringBootTest
-class ImpactValueEventListenerTest {
-
-    @Autowired
-    private ImpactValueRepository impactValueRepository;
+class ImpactValueEventListenerTest extends EventListenerTest {
 
     @Autowired
     private ImpactValueEventListener impactValueEventListener;
-
-    @BeforeEach
-    void clearData() {
-        impactValueRepository.deleteAll();
-    }
 
     @Nested
     class Created {
@@ -37,30 +25,43 @@ class ImpactValueEventListenerTest {
         @Test
         void testOnValueCreatedEvent_PublishEvent_ValueCreated() {
             // given
-            var value = createDummyValue();
-            var json = ImpactValueJsonMapper.toJson(value);
+            var value = saveDummyValueChildren();
+            var json = ImpactValueJsonMapper.toString(value);
 
             // when
             var valueCreatedEvent = new ValueCreatedEvent(this, json);
             impactValueEventListener.onValueCreatedEvent(valueCreatedEvent);
 
             // then
-            var createdByEvent = impactValueRepository.findById(value.getId());
+            var createdByEvent = valueRepository.findById(value.getId());
             assertThat(createdByEvent).contains(value);
         }
 
         @Test
         void testOnValueCreatedEvent_ValueAlreadyExists_ThrowEventEntityAlreadyExistsException() {
             // given
-            var value = createDummyValue();
-            var json = ImpactValueJsonMapper.toJson(value);
-            impactValueRepository.save(value);
+            var value = saveDummyValueChildren();
+            var json = ImpactValueJsonMapper.toString(value);
+            valueRepository.save(value);
 
             // when
             var valueCreatedEvent = new ValueCreatedEvent(this, json);
 
             // then
             assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> impactValueEventListener.onValueCreatedEvent(valueCreatedEvent));
+        }
+
+        @Test
+        void testOnValueCreatedEvent_ChildEntityAnalysisDoesNotExist_ThrowEventEntityDoesNotExist() {
+            // given
+            var value = createDummyValue();
+            var json = ImpactValueJsonMapper.toString(value);
+
+            // when
+            var valueCreatedEvent = new ValueCreatedEvent(this, json);
+
+            // then
+            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactValueEventListener.onValueCreatedEvent(valueCreatedEvent));
         }
     }
 
@@ -70,30 +71,48 @@ class ImpactValueEventListenerTest {
         @Test
         void testOnValueDeletedEvent_PublishEvent_ValueDeleted() {
             // given
-            var value = createDummyValue();
-            var json = ImpactValueJsonMapper.toJson(value);
-            impactValueRepository.save(value);
+            var value = saveDummyValueChildren();
+            var json = ImpactValueJsonMapper.toString(value);
+            valueRepository.save(value);
 
             // when
             var valueDeletedEvent = new ValueDeletedEvent(this, json);
             impactValueEventListener.onValueDeletedEvent(valueDeletedEvent);
 
             // then
-            var deletedByEventValue = impactValueRepository.findById(value.getId());
+            var deletedByEventValue = valueRepository.findById(value.getId());
             assertThat(deletedByEventValue).isNotPresent();
         }
 
         @Test
         void testOnValueDeletedEvent_ValueDoesNotExist_ThrowEventEntityDoesNotExistException() {
             // given
-            var value = createDummyValue();
-            var json = ImpactValueJsonMapper.toJson(value);
+            var value = saveDummyValueChildren();
+            var json = ImpactValueJsonMapper.toString(value);
 
             // when
             var valueDeletedEvent = new ValueDeletedEvent(this, json);
 
             // then
             assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactValueEventListener.onValueDeletedEvent(valueDeletedEvent));
+        }
+
+        @Test
+        void testOnValueDeletedEvent_ImpactsReferenceValue_DeleteImpacts() {
+            // given
+            var value = saveDummyValueChildren();
+            var json = ImpactValueJsonMapper.toString(value);
+            var valueCreatedEvent = new ValueCreatedEvent(this, json);
+            impactValueEventListener.onValueCreatedEvent(valueCreatedEvent);
+
+            // when
+            var impact = saveFullDummyImpact(value);
+            var valueDeletedEvent = new ValueDeletedEvent(this, json);
+            impactValueEventListener.onValueDeletedEvent(valueDeletedEvent);
+            var impacts = impactRepository.findAllByValueEntityId(value.getId());
+
+            // then
+            assertThat(impacts).isEmpty();
         }
     }
 
@@ -103,24 +122,24 @@ class ImpactValueEventListenerTest {
         @Test
         void testOnValueUpdatedEvent_PublishEvent_ValueUpdated() {
             // given
-            var value = createDummyValue();
-            var json = ImpactValueJsonMapper.toJson(value);
-            impactValueRepository.save(value);
+            var value = saveDummyValueChildren();
+            var json = ImpactValueJsonMapper.toString(value);
+            valueRepository.save(value);
 
             // when
             var valueUpdatedEvent = new ValueUpdatedEvent(this, json);
             impactValueEventListener.onValueUpdatedEvent(valueUpdatedEvent);
 
             // then
-            var updatedByEventValue = impactValueRepository.findById(value.getId());
+            var updatedByEventValue = valueRepository.findById(value.getId());
             assertThat(updatedByEventValue).contains(value);
         }
 
         @Test
         void testOnValueUpdatedEvent_ValueDoesNotExists_ThrowEventEntityDoesNotExistException() {
             // given
-            var value = createDummyValue();
-            var json = ImpactValueJsonMapper.toJson(value);
+            var value = saveDummyValueChildren();
+            var json = ImpactValueJsonMapper.toString(value);
 
             // when
             var valueUpdatedEvent = new ValueUpdatedEvent(this, json);

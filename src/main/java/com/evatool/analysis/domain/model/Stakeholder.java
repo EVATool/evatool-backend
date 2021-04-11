@@ -4,9 +4,13 @@ import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 
@@ -42,6 +46,16 @@ public class Stakeholder {
     private StakeholderLevel stakeholderLevel;
 
 
+    @Getter
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Collection<AnalysisImpact> impact = new ArrayList<>();
+
+    @Getter
+    @Setter
+    @ManyToOne // TODO has to become optional=false
+    private Analysis analysis;
+
     /**
      * GuiId of the Stakeholder {@link String}
      */
@@ -60,7 +74,7 @@ public class Stakeholder {
 
     public void setStakeholderLevel(StakeholderLevel stakeholderLevel) {
         if (stakeholderLevel == null){
-            throw new IllegalArgumentException("Level name cannot be null.");
+            throw new IllegalArgumentException("Stakeholder level cannot be null.");
         }
         this.stakeholderLevel = stakeholderLevel;
     }
@@ -85,6 +99,8 @@ public class Stakeholder {
         }
         this.guiId = guiId;
     }
+
+
 
 
 

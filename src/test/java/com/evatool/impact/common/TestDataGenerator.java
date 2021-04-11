@@ -1,22 +1,31 @@
 package com.evatool.impact.common;
 
 import com.evatool.impact.application.dto.*;
-import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
-import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
-import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
-import com.evatool.impact.application.dto.mapper.ImpactValueDtoMapper;
+import com.evatool.impact.application.dto.mapper.*;
 import com.evatool.impact.domain.entity.*;
 
 import java.util.UUID;
 
 public class TestDataGenerator {
 
+    public static ImpactRequirement createDummyRequirement() {
+        return new ImpactRequirement(UUID.randomUUID(), "reqTitle", "reqDesc");
+    }
+
+    public static ImpactRequirementDto createDummyRequirementDto() {
+        return ImpactRequirementDtoMapper.toDto(createDummyRequirement());
+    }
+
     public static ImpactValue createDummyValue() {
-        return new ImpactValue(UUID.randomUUID(),"dummyValue", ImpactValueType.ECONOMIC, "dummyValueDescription");
+        return new ImpactValue(UUID.randomUUID(),"dummyValue", "ECONOMIC", "dummyValueDescription", createDummyAnalysis());
+    }
+
+    public static ImpactValue createDummyValue(ImpactAnalysis analysis) {
+        return new ImpactValue(UUID.randomUUID(),"dummyValue", "ECONOMIC", "dummyValueDescription", analysis);
     }
 
     public static ImpactStakeholder createDummyStakeholder() {
-        return new ImpactStakeholder(UUID.randomUUID(), "dummyStakeholder");
+        return new ImpactStakeholder(UUID.randomUUID(), "dummyStakeholder", "society");
     }
 
     public static Impact createDummyImpact() {

@@ -9,7 +9,7 @@ class ImpactStakeholderTest {
 
     @Test
     void testConstructor_NullId_ThrowIllegalArgumentException() {
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new ImpactStakeholder(null, "name"));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new ImpactStakeholder(null, "name", "level"));
     }
 
     @Test
@@ -32,5 +32,16 @@ class ImpactStakeholderTest {
 
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setName(null));
+    }
+
+    @Test
+    void testSetLevel_NullValue_ThrowIllegalArgumentException() {
+        // given
+        var stakeholder = createDummyStakeholder();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setLevel(null));
     }
 }

@@ -1,6 +1,5 @@
 package com.evatool.impact.application.dto;
 
-import com.evatool.impact.common.ImpactValueType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
@@ -16,26 +15,32 @@ import java.util.UUID;
 @ToString
 public class ImpactValueDto {
 
-    @ApiModelProperty
+    @ApiModelProperty(example = "7b715d34-991e-11eb-a8b3-0242ac130003")
     @Getter
     @Setter
     private UUID id;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, example = "Safety")
     @Getter
     @Setter
     @NotNull
     private String name;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, example = "SOCIAL")
     @Getter
     @Setter
     @NotNull
-    private ImpactValueType type;
+    private String type;
+
+    @ApiModelProperty(required = true, example = "Safety primarily means protecting.")
+    @Getter
+    @Setter
+    @NotNull
+    private String description;
 
     @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull
-    private String description;
+    private ImpactAnalysisDto analysis;
 }

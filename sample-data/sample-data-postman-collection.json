@@ -1,0 +1,1236 @@
+{
+	"info": {
+		"_postman_id": "47869e0d-7d7c-412e-b198-5f76d6ffaf49",
+		"name": "EVA-Tool-Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Analysis (DemPa-App)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"analysisId\", jsonData.rootEntityID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysisName\": \"The DemPa-App\",\r\n    \"analysisDescription\": \"App to support patients with dementia.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/analysis",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"analysis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Analysis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/analysis",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"analysis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Stakeholders (Person ...)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"stakeholder1Id\", jsonData.rootEntityID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Person Suffering From Dementia\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/stakeholders",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"stakeholders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Stakeholders (Health Insurance)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"stakeholder2Id\", jsonData.rootEntityID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"ORGANIZATION\",\r\n  \"stakeholderName\": \"Health Insurance\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/stakeholders",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"stakeholders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Stakeholders (Contact Person)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"stakeholder3Id\", jsonData.rootEntityID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Contact Person\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/stakeholders",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"stakeholders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Stakeholders (Nursing Homer)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"stakeholder4Id\", jsonData.rootEntityID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"ORGANIZATION\",\r\n  \"stakeholderName\": \"Nursing Home\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/stakeholders",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"stakeholders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Stakeholders (Altert Button User)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"stakeholder5Id\", jsonData.rootEntityID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Alert Button User\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/stakeholders",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"stakeholders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Stakeholders (Nursing Home Management)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"stakeholder6Id\", jsonData.rootEntityID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Nursing Homer Management\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/stakeholders",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"stakeholders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Stakeholders (Emergency Call System Operator)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"stakeholder7Id\", jsonData.rootEntityID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Emergency Call System Operator\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/stakeholders",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"stakeholders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Stakeholders (Society)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"stakeholder8Id\", jsonData.rootEntityID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"SOCIETY\",\r\n  \"stakeholderName\": \"Society\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/stakeholders",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"stakeholders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stakeholders",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/stakeholders",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"stakeholders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Values (Safety)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"value1Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"description\": \"Safety primarily means protecting.\",\r\n  \"guiId\": \"VAL1\",\r\n  \"name\": \"Safety\",\r\n  \"type\": \"SOCIAL\",\r\n  \"analysis\": {\r\n    \"rootEntityID\": \"{{analysisId}}\",\r\n    \"analysisName\": \"Die DemPa-App\",\r\n    \"analysisDescription\": \"App zur Unterstützung demenzkranker Patienten.\",\r\n    \"image\": \"nope\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/values",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"values"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Values (Care)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"value2Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"Care is given and decisions and responsibility are taken on behalf of the other – the one in need – to the extent that that person is no longer able to do these things themselves [...].\",\r\n    \"guiId\": \"VAL2\",\r\n    \"name\": \"Care\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/values",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"values"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Values (Liability)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"value3Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"Does the system save effort (time, money, responsibilities, …), or does it require additional resources for its operation (compared to a situation without the system)?\",\r\n    \"guiId\": \"VAL3\",\r\n    \"name\": \"Liability\",\r\n    \"type\": \"ECONOMIC\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/values",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"values"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Values (Autonomy)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"value4Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"The term autonomy […] is nowadays often equated with an individual’s maximum freedom of decision and action.\",\r\n    \"guiId\": \"VAL4\",\r\n    \"name\": \"Autonomy\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/values",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"values"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Values (Participation)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"value5Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"Participation […] means providing people with access, rights, services, and assets that enable them to live together with other people in society.\",\r\n    \"guiId\": \"VAL5\",\r\n    \"name\": \"Participation\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/values",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"values"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Values (Privacy)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"value6Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"(1) Transparency: inform data subject about data use. (2) Purpose limitation / minimization: Store as few data as possible, and use it only for its dedicated purpose. (3) Integrity: prevent unauthorized access. (4) The right to be forgotten.\",\r\n    \"guiId\": \"VAL6\",\r\n    \"name\": \"Privacy\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/values",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"values"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Values (Fairness)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"value7Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"Fairness means that the same standards are applied to everyone, and that ressources are provided according to degree of neediness. \",\r\n    \"guiId\": \"VAL7\",\r\n    \"name\": \"Fairness\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/values",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"values"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Values (Self-Conception)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"value8Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"A persons' freedom to evaluate and perceive herself according to her own personal mental model. Strongly related is the perceived self-efficacy, the expectation to successfully carry out intended acts based on one's competences.\",\r\n    \"guiId\": \"VAL8\",\r\n    \"name\": \"Self-Conception\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/values",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"values"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Values",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/values",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"values"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Impacts (poorlyImplemented)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact1Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"If poorly implemented, ILA might contribute to a general loss of privacy by technical support solutions.\",\r\n    \"value\": 0,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value1Id}}\",\r\n        \"name\": \"Safety\",\r\n        \"type\": \"SOCIAL\",\r\n        \"description\": \"Safety primarily means protecting a person against harm. It includes also the subjective feeling of \\\"being well protected\\\". \"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder1Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Person Suffering From Dementia\"\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Impacts (improve autonomy)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact2Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"ILA has the potential to generelly improve autonomy of persons suffering from dementia, if rolled out on a broad scale.\",\r\n    \"value\": 0,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value1Id}}\",\r\n        \"name\": \"Safety\",\r\n        \"type\": \"SOCIAL\",\r\n        \"description\": \"Safety primarily means protecting a person against harm. It includes also the subjective feeling of \\\"being well protected\\\". \"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder3Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Contact Person\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Impacts (Stk: Person)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact3Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"In case no contact person comes to help in a challenging situation, the sense of safety of the calling person might be severely impacted.\",\r\n    \"value\": -0.5,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value1Id}}\",\r\n        \"name\": \"Safety\",\r\n        \"type\": \"SOCIAL\",\r\n        \"description\": \"Safety primarily means protecting a person against harm. It includes also the subjective feeling of \\\"being well protected\\\". \"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder1Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Person Suffering From Dementia\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Impacts (Stk: Person)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact4Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"If ILA works as planned, a timely intervention may stop a challenging situation (say, a panic attack) into escalating into an actual emergency.\",\r\n    \"value\": 0.8,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value1Id}}\",\r\n        \"name\": \"Safety\",\r\n        \"type\": \"SOCIAL\",\r\n        \"description\": \"Safety primarily means protecting a person against harm. It includes also the subjective feeling of \\\"being well protected\\\". \"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder1Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Person Suffering From Dementia\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Impacts (Stk: Person)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact5Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"If the tracker that the person suffering from dementia wears is poorly maintained this might lead to no one reacting to an exceptional situation, thus leading to a false sense of safety.\",\r\n    \"value\": 0.8,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value1Id}}\",\r\n        \"name\": \"Safety\",\r\n        \"type\": \"SOCIAL\",\r\n        \"description\": \"Safety primarily means protecting a person against harm. It includes also the subjective feeling of \\\"being well protected\\\". \"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder1Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Person Suffering From Dementia\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Impacts (Stk: Person)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact6Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"A person suffering from dementia can leave her living quarters with the assurance that she will be helped, in case she loses her way, or has a panic attack.\",\r\n    \"value\": 0.9,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value4Id}}\",\r\n        \"name\": \"Autonomy\",\r\n        \"type\": \"SOCIAL\",\r\n        \"description\": \"The term autonomy […] is nowadays often equated with an individual’s maximum freedom of decision and action.\"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder1Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Person Suffering From Dementia\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Impacts (Stk: Person)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact7Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"Every time ILA produces \\\"false alerts\\\", the person suffering from dementia will feel checked on, or micro-managed. In the worst case, ILA might be perceived as a system that allows an external person to control one's movements.\",\r\n    \"value\": -0.8,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value4Id}}\",\r\n        \"name\": \"Autonomy\",\r\n        \"type\": \"SOCIAL\",\r\n        \"description\": \"The term autonomy […] is nowadays often equated with an individual’s maximum freedom of decision and action.\"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder1Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Person Suffering From Dementia\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Impacts (Stk: Contact Person)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact8Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"If there are several contact persons sharing the responsibility, in the worst case one contact might have to handle a lot more load than others.\",\r\n    \"value\": -0.3,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value7Id}}\",\r\n        \"name\": \"Fairness\",\r\n        \"type\": \"SOCIAL\",\r\n        \"description\": \"Fairness means that the same standards are applied to everyone, and that ressources are provided according to degree of neediness. \"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder3Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Contact Person\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. Impacts (Stk: Contact Person)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact9Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"The idea that \\\"my data is stored somewhere\\\" might be frightening for a contact person. (Violation of \\\"Transparency\\\" Principle)\",\r\n    \"value\": -0.3,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value6Id}}\",\r\n        \"name\": \"Privacy\",\r\n        \"type\": \"SOCIAL\",\r\n        \"description\": \"(1) Transparency: inform data subject about data use. (2) Purpose limitation / minimization: Store as few data as possible, and use it only for its dedicated purpose. (3) Integrity: prevent unauthorized access. (4) The right to be forgotten.\"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder3Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Contact Person\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. Impacts (Stk: Alert Button User)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact10Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"If the alert button user's data is not deleted from ILA's data bases after termination of an ILA account, undesired effects (like being contacted for no reason) might occur. (Violation of \\\"Right to be Forgotten\\\" Principle)\",\r\n    \"value\": -0.3,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value6Id}}\",\r\n        \"name\": \"Privacy\",\r\n        \"type\": \"SOCIAL\",\r\n        \"description\": \"(1) Transparency: inform data subject about data use. (2) Purpose limitation / minimization: Store as few data as possible, and use it only for its dedicated purpose. (3) Integrity: prevent unauthorized access. (4) The right to be forgotten.\"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder5Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Alert Button User\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11. Impacts (Stk: Alert Button User)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact11Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"If ILA requires the alarm button user to register in the system, she might worry what data is stored about her, and where. (Violation of \\\"Transparency\\\" Principle)\",\r\n    \"value\": -0.3,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value6Id}}\",\r\n        \"name\": \"Privacy\",\r\n        \"type\": \"SOCIAL\",\r\n        \"description\": \"(1) Transparency: inform data subject about data use. (2) Purpose limitation / minimization: Store as few data as possible, and use it only for its dedicated purpose. (3) Integrity: prevent unauthorized access. (4) The right to be forgotten.\"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder5Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Alert Button User\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12. Impacts (Stk: Alert Button User)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"impact12Id\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"analysis\": {\r\n        \"id\": \"{{analysisId}}\"\r\n    },\r\n    \"description\": \"An employee in a location with alert button might fear to have her actions tracked and judged - has she reacted properly if a person suffering from dementia has had a panic attack in her shop?\",\r\n    \"value\": -0.6,\r\n    \"valueEntity\": {\r\n        \"id\": \"{{value3Id}}\",\r\n        \"name\": \"Liability\",\r\n        \"type\": \"ECONOMIC\",\r\n        \"description\": \"Does the system save effort (time, money, responsibilities, …), or does it require additional resources for its operation (compared to a situation without the system)?\"\r\n    },\r\n    \"stakeholder\": {\r\n        \"id\": \"{{stakeholder5Id}}\",\r\n        \"level\": \"NATURAL_PERSON\",\r\n        \"name\": \"Alert Button User\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Impacts",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/impacts",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"impacts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

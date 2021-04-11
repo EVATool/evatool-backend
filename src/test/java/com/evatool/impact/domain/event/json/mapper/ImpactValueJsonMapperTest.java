@@ -1,167 +1,25 @@
 package com.evatool.impact.domain.event.json.mapper;
 
-import com.evatool.impact.common.exception.EventPayloadInvalidException;
 import org.junit.jupiter.api.Test;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyValue;
-import static com.evatool.impact.domain.event.json.mapper.ImpactValueJsonMapper.fromJson;
+import static com.evatool.impact.domain.event.json.mapper.ImpactValueJsonMapper.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class ImpactValueJsonMapperTest {
 
     @Test
-    void testFromJsonString_ImpactValueFromJson_EqualsImpactValue() {
+    void testToAndFrom_ImpactValue_EqualsRecreatedImpactValue() {
         // given
         var value = createDummyValue();
-        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"type\":\"%s\",\"description\":\"%s\"}", value.getId(), value.getName(), value.getType(), value.getDescription());
-
-        // when
-        var eventValue = fromJson(json);
-
-        // then
-        assertThat(eventValue).isEqualTo(value);
-    }
-
-    @Test
-    void testFromJsonString_JsonStringEmpty_ThrowEventPayloadInvalidException() {
-        // given
+        var json = toJson(value);
+        var string = ImpactValueJsonMapper.toString(json);
+        var recreatedJson = fromString(string);
+        var recreatedValue = fromJson(json);
 
         // when
 
         // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(""));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringNull_ThrowEventPayloadInvalidException() {
-        // given
-
-        // when
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(null));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringMissingColon_ThrowEventPayloadInvalidException() {
-        // given
-        var value = createDummyValue();
-
-        // when
-        var json = String.format("{\"id\"\"%s\",\"name\":\"%s\",\"type\":\"%s\",\"description\":\"%s\"}", value.getId(), value.getName(), value.getType(), value.getDescription());
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonHasNotRequiredFields_EqualsImpactValue() {
-        // given
-        var value = createDummyValue();
-        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"type\":\"%s\",\"description\":\"%s\",\"not required\":\"useless\"}", value.getId(), value.getName(), value.getType(), value.getDescription());
-
-        // when
-        var eventValue = fromJson(json);
-
-        // then
-        assertThat(eventValue).isEqualTo(value);
-    }
-
-    @Test
-    void testFromJsonString_JsonStringMissingIdField_ThrowEventPayloadInvalidException() {
-        // given
-        var value = createDummyValue();
-
-        // when
-        var json = String.format("{\"name\":\"%s\",\"type\":\"%s\",\"description\":\"%s\"}", value.getName(), value.getType(), value.getDescription());
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringMissingNameField_ThrowEventPayloadInvalidException() {
-        // given
-        var value = createDummyValue();
-
-        // when
-        var json = String.format("{\"id\":\"%s\",\"type\":\"%s\",\"description\":\"%s\"}", value.getId(), value.getType(), value.getDescription());
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringMissingTypeField_ThrowEventPayloadInvalidException() {
-        // given
-        var value = createDummyValue();
-
-        // when
-        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"description\":\"%s\"}", value.getId(), value.getName(), value.getDescription());
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-
-    @Test
-    void testFromJsonString_JsonStringMissingDescriptionField_ThrowEventPayloadInvalidException() {
-        // given
-        var value = createDummyValue();
-
-        // when
-        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"type\":\"%s\"}", value.getId(), value.getName(), value.getType());
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringNullIdField_ThrowEventPayloadInvalidException() {
-        // given
-        var value = createDummyValue();
-
-        // when
-        var json = String.format("{\"id\":null,\"name\":\"%s\",\"type\":\"%s\",\"description\":\"%s\"}", value.getName(), value.getType(), value.getDescription());
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringNullNameField_ThrowEventPayloadInvalidException() {
-        // given
-        var value = createDummyValue();
-
-        // when
-        var json = String.format("{\"id\":\"%s\",\"name\":null,\"type\":\"%s\",\"description\":\"%s\"}", value.getId(), value.getType(), value.getDescription());
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringNullTypeField_ThrowEventPayloadInvalidException() {
-        // given
-        var value = createDummyValue();
-
-        // when
-        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"type\":null,\"description\":\"%s\"}", value.getId(), value.getName(), value.getDescription());
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringNullDescriptionField_ThrowEventPayloadInvalidException() {
-        // given
-        var value = createDummyValue();
-
-        // when
-        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"type\":\"%s\",\"description\":null}", value.getId(), value.getName(), value.getType());
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+        assertThat(value).isEqualTo(recreatedValue);
     }
 }

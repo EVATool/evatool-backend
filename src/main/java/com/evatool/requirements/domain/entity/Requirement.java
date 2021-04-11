@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "REQ_Requirement")
 @Table(name = "REQ_Requirement")
 public class Requirement {
 

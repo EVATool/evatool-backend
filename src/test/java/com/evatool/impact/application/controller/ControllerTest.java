@@ -24,7 +24,7 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ControllerTest {
+abstract class ControllerTest {
 
     @Autowired
     protected TestRestTemplate testRestTemplate;
@@ -55,19 +55,19 @@ public class ControllerTest {
 
     protected ImpactDto saveFullDummyImpactDto() {
         var analysis = analysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
+        var value = valueRepository.save(createDummyValue(analysis));
         var impact = createDummyImpact(analysis);
-        impact.setValueEntity(valueRepository.save(impact.getValueEntity()));
+        impact.setValueEntity(value);
         impact.setStakeholder(stakeholderRepository.save(impact.getStakeholder()));
         return impactService.create(toDto(impact));
     }
 
-
     protected ImpactDto saveDummyImpactDtoChildren() {
         var impactDto = createDummyImpactDto();
-        impactDto.getValueEntity().setId(UUID.randomUUID());
+        analysisRepository.save(ImpactAnalysisDtoMapper.fromDto(impactDto.getAnalysis()));
+        impactDto.getValueEntity().setAnalysis(impactDto.getAnalysis());
         valueRepository.save(ImpactValueDtoMapper.fromDto(impactDto.getValueEntity()));
         stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder()));
-        analysisRepository.save(ImpactAnalysisDtoMapper.fromDto(impactDto.getAnalysis()));
         return impactDto;
     }
 }

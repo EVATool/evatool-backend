@@ -1,6 +1,5 @@
 package com.evatool.requirements.domain.events.json;
 
-import com.evatool.requirements.domain.entity.RequirementsImpact;
 import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;

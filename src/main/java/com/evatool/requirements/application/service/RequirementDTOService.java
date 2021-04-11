@@ -129,7 +129,7 @@ public class RequirementDTOService {
         }
         requirement.setVariants(requirementsVariantCollection);
         requirementPointController.createPoints(requirement,requirementDTO);
-        requirementRepository.save(requirement);
+        requirement = requirementRepository.save(requirement);
         eventPublisher.publishEvent(new RequirementCreatedEvent(requirement.toJson()));
         return requirement.getId();
     }
