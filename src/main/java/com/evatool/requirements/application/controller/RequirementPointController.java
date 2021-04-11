@@ -121,6 +121,7 @@ public class RequirementPointController {
 			this.removePoints(requirementDTO,equalsList);
 		}
 		this.createPoints(requirement,requirementDTO);
+		requirement = this.requirementRepository.save(requirement);
 		return requirement;
 	}
 

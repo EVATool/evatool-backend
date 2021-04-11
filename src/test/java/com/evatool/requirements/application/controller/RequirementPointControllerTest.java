@@ -140,6 +140,7 @@ class RequirementPointControllerTest {
 
         requirementDTOObj.setRequirementImpactPoints(requirementImpactPoints2);
         requirement1 = requirementPointController.updatePoints(requirement1,requirementDTOObj);
+        requirementImpactPoints2.add(newPoint);
 
         RequirementPoint requirementPointUpdated = ((List<RequirementPoint>)requirement1.getRequirementPointCollection()).get(0);;
 
@@ -149,7 +150,8 @@ class RequirementPointControllerTest {
         assertThat(requirementPointUpdated.getPoints()).isEqualTo(iterator2.next().getContent().getPoints());
         assertThat(requirementPointUpdated.getPoints()).isEqualTo(newPoint.getContent().getPoints());
 
-        requirementPointController.deletePointsForRequirement(requirement1);
+        requirementDTOObj.getRequirementImpactPoints().clear();
+        requirement1 = requirementPointController.updatePoints(requirement1,requirementDTOObj);
         assertThat(requirement1.getRequirementPointCollection().size()).isEqualTo(0);
 
     }
