@@ -78,7 +78,7 @@ class RequirementsControllerTest {
         assertThat(requirementsController.getRequirementById(requirementDTOObj.getRootEntityId())).isNotNull();
 
         //change requirement title
-        String testTitle = "REQnull";
+        String testTitle = "REQ1";
         requirementDTOObj.setUniqueString(testTitle);
         requirementsController.updateRequirement(requirementDTOObj);
 

@@ -1,12 +1,9 @@
 package com.evatool.requirements.domain.entity;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.ToString;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Table(name = "REQ_REQUIREMENTS_PER_ANALYSIS")
 @Entity(name = "REQ_REQUIREMENTS_PER_ANALYSIS")
@@ -17,21 +14,21 @@ public class RequirementIdPerAnalysis {
 
 
         @Id
-        @Type(type= "uuid-char")
-        @Column(columnDefinition = "CHAR(36)",name = "ID", updatable = false, nullable = false)
-        private UUID id=UUID.randomUUID();
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "id", updatable = false, nullable = false)
+        private int id;
 
         @Column(name = "ANALYSIS_ID", updatable = false, nullable = false)
         private String analysisId;
 
-        @Column(name = "REQUIRMENTS_PER_ANALYSIS", nullable = false)
+        @Column(name = "REQUIRMENTS_PER_ANALYSIS", updatable = false, nullable = false)
         private Integer requirmentsPerAnalysis;
 
-        public UUID getId() {
+        public int getId() {
                 return id;
         }
 
-        public void setId(UUID id) {
+        public void setId(int id) {
                 this.id = id;
         }
 

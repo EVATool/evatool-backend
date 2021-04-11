@@ -41,8 +41,6 @@ public class RequirementEventListener {
     RequirementValueRepository requirementValueRepository;
     @Autowired
     RequirementAnalysisRepository requirementAnalysisRepository;
-    @Autowired
-    RequirementIdPerAnalysisRepository requirementIdPerAnalysisRepository;
 
     @EventListener
     @Async
@@ -178,26 +176,18 @@ public class RequirementEventListener {
         }
         RequirementsAnalysis requirementsAnalysis = RequirementsAnalysis.fromJson(event.getJsonPayload());
         requirementAnalysisRepository.save(requirementsAnalysis);
-        RequirementIdPerAnalysis requirementIdPerAnalysis = new RequirementIdPerAnalysis();
-        requirementIdPerAnalysis.setAnalysisId(requirementsAnalysis.getAnalysisId().toString());
-        requirementIdPerAnalysis.setRequirmentsPerAnalysis(new Integer(0));
-        requirementIdPerAnalysisRepository.save(requirementIdPerAnalysis);
     }
 
     @EventListener
     @Async
-    public void analyseDeleted(AnalysisDeletedEvent event){
+    public void analyseDeleted(AnalysisDeletedEvent event) {
         logger.info("analyse deleted event");
-        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getSource().toString() ));
+        if (logger.isDebugEnabled())
+            logger.debug(String.format(DEBUGFORMAT, event.getClass(), event.getSource().toString()));
         if (!requirementAnalysisRepository.existsById(RequirementsAnalysis.fromJson(event.getJsonPayload()).getAnalysisId())) {
             throw new EventEntityDoesNotExistException();
         }
         RequirementsAnalysis requirementsAnalysis = RequirementsAnalysis.fromJson(event.getJsonPayload());
         requirementAnalysisRepository.delete(requirementsAnalysis);
-        RequirementIdPerAnalysis requirementIdPerAnalysis = new RequirementIdPerAnalysis();
-        requirementIdPerAnalysis.setId(requirementsAnalysis.getAnalysisId());
-        requirementIdPerAnalysis.setAnalysisId(requirementsAnalysis.getAnalysisId().toString());
-        requirementIdPerAnalysis.setRequirmentsPerAnalysis(new Integer(0));
-        requirementIdPerAnalysisRepository.delete(requirementIdPerAnalysis);
     }
 }

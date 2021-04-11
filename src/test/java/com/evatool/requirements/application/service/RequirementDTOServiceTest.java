@@ -76,7 +76,7 @@ class RequirementDTOServiceTest {
         assertThat(requirementDTO2.getRootEntityId()).isEqualTo(uuidRequirement);
 
         //update
-        String newTitle = "REQnull";
+        String newTitle = "REQ1";
         requirementDTO2.setUniqueString(newTitle);
         requirementDTOService.update(requirementDTO2);
 

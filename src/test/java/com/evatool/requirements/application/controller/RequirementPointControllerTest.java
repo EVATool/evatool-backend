@@ -79,15 +79,14 @@ class RequirementPointControllerTest {
         requirementPointController.updateRequirementPoint(Arrays.asList(requirementPoint1));
 
         RequirementPoint requirementPoint2 = ((List<RequirementPoint>)requirement.getRequirementPointCollection()).get(0);;
-        assertThat(requirementPoint1.getPoints()).isEqualTo(newPoint);
+        assertThat(requirementPoint2.getPoints()).isEqualTo(newPoint);
 
         RequirementsImpact requirementsImpact1 = ((List<RequirementPoint>)requirement.getRequirementPointCollection()).get(0).getRequirementsImpact();
         assertThat(requirementsImpact.getId()).isEqualTo(requirementsImpact1.getId());
 
         //delete
         requirement.getRequirementPointCollection().remove(requirementPoint);
-        requirementRepository.save(requirement);
-        requirementPointController.deleteRequirementPoint(requirementPoint);
+        requirement = requirementRepository.save(requirement);
         assertThat(requirement.getRequirementPointCollection()).isEmpty();
     }
 

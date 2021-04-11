@@ -2,6 +2,7 @@
 package com.evatool.requirements.domain.entity;
 
 import com.google.gson.Gson;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
@@ -17,8 +18,10 @@ public class Requirement {
 
     @Id
     @Type(type= "uuid-char")
+    @GeneratedValue(generator = "SuperEntityUuidGenerator")
+    @GenericGenerator(name = "SuperEntityUuidGenerator", strategy = "com.evatool.requirements.domain.entity.SuperEntityUuidGenerator")
     @Column(columnDefinition = "CHAR(36)")
-    private final UUID id = UUID.randomUUID();
+    private UUID id;
     private String description;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
