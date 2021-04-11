@@ -53,7 +53,7 @@ public class Stakeholder {
 
     @Getter
     @Setter
-    @ManyToOne // TODO has to become optional=false
+    @ManyToOne(optional = false) // TODO has to become optional=false
     private Analysis analysis;
 
     /**

@@ -5,7 +5,10 @@ import com.evatool.analysis.domain.model.AnalysisImpact;
 import com.google.gson.Gson;
 import lombok.Getter;
 
-import java.util.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.UUID;
 
 @Getter
 public class StakeholderDTO {
@@ -16,6 +19,7 @@ public class StakeholderDTO {
     private Collection<AnalysisImpact> impactList = new ArrayList<>();
     private String guiId;
 
+    @NotNull
     private UUID analysisId;
 
     public void setRootEntityID(UUID rootEntityID) {

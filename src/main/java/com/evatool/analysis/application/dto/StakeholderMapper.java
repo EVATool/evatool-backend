@@ -4,6 +4,7 @@ import com.evatool.analysis.application.controller.StakeholderControllerImpl;
 import com.evatool.analysis.domain.model.Stakeholder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
