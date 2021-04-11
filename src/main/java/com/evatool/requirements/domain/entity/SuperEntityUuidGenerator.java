@@ -20,20 +20,20 @@ public class SuperEntityUuidGenerator extends UUIDGenerator {
             var impact = (Requirement) object;
 
             // Check existing impacts for given analysis.
-            var impactsPerAnalysisQuery = session.createQuery("select a.requirmentsPerAnalysis from REQ_REQUIREMENTS_PER_ANALYSIS a where a.analysisId=?1", Integer.class);
+            var impactsPerAnalysisQuery = session.createQuery("select a.requirmentsPerAnalysis from req_requirements_per_analysis a where a.analysisId=?1", Integer.class);
             impactsPerAnalysisQuery.setParameter(1, impact.getRequirementsAnalysis().getAnalysisId().toString());
             var impactsPerAnalysisResult = impactsPerAnalysisQuery.getResultList();
             var impactsPerAnalysis = impactsPerAnalysisResult.isEmpty() ? 0 : impactsPerAnalysisResult.get(0);
 
             if (impactsPerAnalysis == 0) { // First impact for that analysis
                 impactsPerAnalysis = 1;
-                var insertQuery = session.createNativeQuery("insert into REQ_REQUIREMENTS_PER_ANALYSIS (ANALYSIS_ID, REQUIRMENTS_PER_ANALYSIS) values (?1, ?2)");
+                var insertQuery = session.createNativeQuery("insert into req_requirements_per_analysis (ANALYSIS_ID, REQUIRMENTS_PER_ANALYSIS) values (?1, ?2)");
                 insertQuery.setParameter(1, impact.getRequirementsAnalysis().getAnalysisId().toString());
                 insertQuery.setParameter(2, impactsPerAnalysis);
                 insertQuery.executeUpdate();
             } else {
                 impactsPerAnalysis += 1;
-                var updateQuery = session.createQuery("update REQ_REQUIREMENTS_PER_ANALYSIS set REQUIRMENTS_PER_ANALYSIS=?1 where ANALYSIS_ID=?2");
+                var updateQuery = session.createQuery("update req_requirements_per_analysis set REQUIRMENTS_PER_ANALYSIS=?1 where ANALYSIS_ID=?2");
                 updateQuery.setParameter(1, impactsPerAnalysis);
                 updateQuery.setParameter(2, impact.getRequirementsAnalysis().getAnalysisId().toString());
                 updateQuery.executeUpdate();

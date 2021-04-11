@@ -5,8 +5,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-@Table(name = "REQ_REQUIREMENTS_PER_ANALYSIS")
-@Entity(name = "REQ_REQUIREMENTS_PER_ANALYSIS")
+@Table(name = "req_requirements_per_analysis")
+@Entity(name = "req_requirements_per_analysis")
 @EqualsAndHashCode
 @ToString
 public class RequirementIdPerAnalysis {
