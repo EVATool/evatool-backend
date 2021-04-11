@@ -72,10 +72,22 @@ public class RequirementEventListener {
     public void impactUpdated(ImpactUpdatedEvent event) {
         logger.info("Impact updated event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
-        if (!requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
+        ImpactJson impactJson = ImpactJson.fromJson(event.getJsonPayload());
+        if (!requirementsImpactsRepository.existsById(UUID.fromString(impactJson.getId()))) {
             throw new EventEntityDoesNotExistException();
         }
-        requirementsImpactsRepository.save(RequirementsImpact.fromJson(event.getJsonPayload()));
+        RequirementsImpact requirementsImpact = RequirementsImpact.fromJson(event.getJsonPayload());
+        if(impactJson.getValueEntityId()!=null) {
+            Optional<RequirementValue> requirementValue = requirementValueRepository.findById(UUID.fromString(impactJson.getValueEntityId()));
+            if (requirementValue.isEmpty()) {
+                logger.error("Dimension ist nicht vorhanden. ID:[{}]", impactJson.getValueEntityId());
+            } else {
+                requirementsImpact.setRequirementValue(requirementValue.get());
+            }
+        }else{
+            logger.error("Für das Impact wurde keine DimensionId übermittelt. JsonBody:[{}]", impactJson);
+        }
+        requirementsImpactsRepository.save(requirementsImpact);
     }
 
     @EventListener
@@ -83,10 +95,12 @@ public class RequirementEventListener {
     public void impactDeleted(ImpactDeletedEvent event) {
         logger.info("Impact deleted event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
-        if (!requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
+        ImpactJson impactJson = ImpactJson.fromJson(event.getJsonPayload());
+        if (!requirementsImpactsRepository.existsById(UUID.fromString(impactJson.getId()))) {
             throw new EventEntityDoesNotExistException();
         }
-        requirementsImpactsRepository.delete(RequirementsImpact.fromJson(event.getJsonPayload()));
+        RequirementsImpact requirementsImpact = RequirementsImpact.fromJson(event.getJsonPayload());
+        requirementsImpactsRepository.delete(requirementsImpact);
     }
     @EventListener
     @Async
