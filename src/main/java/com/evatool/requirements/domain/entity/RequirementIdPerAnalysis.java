@@ -3,6 +3,7 @@ package com.evatool.requirements.domain.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -16,7 +17,8 @@ public class RequirementIdPerAnalysis {
 
 
         @Id
-        @Column(name = "ID", updatable = false, nullable = false)
+        @Type(type= "uuid-char")
+        @Column(columnDefinition = "CHAR(36)",name = "ID", updatable = false, nullable = false)
         private UUID id=UUID.randomUUID();
 
         @Column(name = "ANALYSIS_ID", updatable = false, nullable = false)
