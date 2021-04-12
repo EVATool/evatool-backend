@@ -115,13 +115,13 @@ public class VariantService {
     public void deleteVariant(UUID id) {
         logger.debug("delete [{}]",id);
         Variant variant = variantRepository.findVariantById(id);
-        if(!variantMapper.checkIfDeletable(id)){
+        if(Boolean.FALSE.equals(variantMapper.checkIfDeletable(id))){
             throw new VariantStillReferredException();
         }
         if (variant == null) {
             throw new VariantsEntityNotFoundException(id.toString());
         } else {
-            if(!variant.getArchived()){
+            if(Boolean.FALSE.equals(variant.getArchived())){
                 throw new VariantCannotDeleteException(id.toString());
             }
             variantRepository.delete(variant);

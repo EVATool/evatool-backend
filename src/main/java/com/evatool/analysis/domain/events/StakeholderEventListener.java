@@ -16,9 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-
 import java.util.Optional;
-import java.util.UUID;
+
 
 @Component
 public class StakeholderEventListener {
@@ -35,18 +34,15 @@ public class StakeholderEventListener {
 
     @EventListener
     public void impactCreated(ImpactCreatedEvent event) {
-        logger.info("Impact created event" + event.getJsonPayload());
+        logger.info("Impact created event");
         if (logger.isDebugEnabled()) logger.debug(String.format(DEBUGFORMAT, event.getClass(), event.getJsonPayload()));
         AnalysisImpactJson impactJson = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
         AnalysisImpact impact = new AnalysisImpact();
         impact.setId(impactJson.getId());
         impact.setImpactValue(impactJson.getValue());
         impact = analysisImpactRepository.save(impact);
-        System.out.println(impact.toString());
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholderId());
-        if(stakeholderOptional.isEmpty()){
-
-        }else{
+        if(!stakeholderOptional.isEmpty()){
             Stakeholder stakeholder = stakeholderOptional.get();
             stakeholder.getImpact().add(impact);
             stakeholderRepository.save(stakeholder);
@@ -63,7 +59,7 @@ public class StakeholderEventListener {
             throw new EntityNotFoundException(Stakeholder.class, impactJson.getStakeholderId());
         }else{
             Stakeholder stakeholder = stakeholderOptional.get();
-            stakeholder.getImpact().forEach((impact)->{
+            stakeholder.getImpact().forEach(impact->{
                 if(impact.getId() == impactJson.getId()){
                     impact.setImpactValue(impactJson.getValue());
                 }
