@@ -18,6 +18,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class StakeholderEventListener {
@@ -37,6 +38,9 @@ public class StakeholderEventListener {
         logger.info("Impact created event");
         if (logger.isDebugEnabled()) logger.debug(String.format(DEBUGFORMAT, event.getClass(), event.getJsonPayload()));
         AnalysisImpactJson impactJson = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
+        if(impactJson.getStakeholder() == null){
+            throw new EntityNotFoundException(Stakeholder.class, UUID.randomUUID());
+        }
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholder().getId());
         if(stakeholderOptional.isEmpty()){
             throw new EntityNotFoundException(Stakeholder.class, impactJson.getStakeholder().getId());
@@ -55,6 +59,9 @@ public class StakeholderEventListener {
         logger.info("impact updated event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         AnalysisImpactJson impactJson = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
+        if(impactJson.getStakeholder() == null){
+            throw new EntityNotFoundException(Stakeholder.class, UUID.randomUUID());
+        }
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholder().getId());
         if(stakeholderOptional.isEmpty()){
             throw new EntityNotFoundException(Stakeholder.class, impactJson.getStakeholder().getId());
@@ -75,6 +82,9 @@ public class StakeholderEventListener {
         logger.info("impact deleted event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
         AnalysisImpactJson impactJson = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
+        if(impactJson.getStakeholder() == null){
+            throw new EntityNotFoundException(Stakeholder.class, UUID.randomUUID());
+        }
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholder().getId());
         if(stakeholderOptional.isEmpty()){
             throw new EntityNotFoundException(Stakeholder.class, impactJson.getStakeholder().getId());
