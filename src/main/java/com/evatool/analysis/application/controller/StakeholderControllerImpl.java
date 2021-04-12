@@ -2,11 +2,9 @@ package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.dto.StakeholderDTO;
 import com.evatool.analysis.application.interfaces.StakeholderController;
-import com.evatool.analysis.application.services.StakeholderDTOService;
+import com.evatool.analysis.application.services.StakeholderService;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
-import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Stakeholder;
-import com.evatool.analysis.domain.repository.StakeholderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class StakeholderControllerImpl implements StakeholderController {
 
     @Autowired
-    private StakeholderDTOService stakeholderDTOService;
+    private StakeholderService stakeholderService;
 
 
     final Logger logger = LoggerFactory.getLogger(StakeholderControllerImpl.class);
@@ -33,19 +31,19 @@ public class StakeholderControllerImpl implements StakeholderController {
     @Override
     public List<EntityModel<StakeholderDTO>> getStakeholderList() {
         logger.info("[GET] /stakeholders");
-        return generateLinks(stakeholderDTOService.findAll());
+        return generateLinks(stakeholderService.findAll());
     }
 
     @Override
     public List<EntityModel<StakeholderDTO>> getStakeholderByAnalysis(UUID analysisId) {
         logger.info("[GET] /stakeholders?analysisId={id}");
-        List<Stakeholder> stakeholderList = stakeholderDTOService.getStakeholdersAsList();
+        List<Stakeholder> stakeholderList = stakeholderService.getStakeholdersAsList();
 
         stakeholderList.removeIf(stakeholder -> !stakeholder.getAnalysis().getAnalysisId().equals(analysisId));
         if (stakeholderList.isEmpty()){
             return Collections.emptyList();
         }
-        return generateLinks(stakeholderDTOService.findAll());
+        return generateLinks(stakeholderService.findAll());
     }
 
     @Override
@@ -57,26 +55,26 @@ public class StakeholderControllerImpl implements StakeholderController {
     @Override
     public EntityModel<StakeholderDTO> getStakeholderById(UUID id) {
         logger.info("[POST] /stakeholders");
-        return generateLinks(stakeholderDTOService.findById(id));
+        return generateLinks(stakeholderService.findById(id));
     }
 
     @Override
     public ResponseEntity<EntityModel<StakeholderDTO>> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
         logger.info("[POST] /stakeholders");
-        return new ResponseEntity<>(getStakeholderById(stakeholderDTOService.create(stakeholderDTO)), HttpStatus.CREATED);
+        return new ResponseEntity<>( new EntityModel<>(stakeholderService.create(stakeholderDTO)), HttpStatus.CREATED);
     }
 
     @Override
     public EntityModel<StakeholderDTO> updateStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
         logger.info("[PUT] /stakeholder");
-        stakeholderDTOService.update(stakeholderDTO);
+        stakeholderService.update(stakeholderDTO);
         return getStakeholderById(stakeholderDTO.getRootEntityID());
     }
 
     @Override
     public ResponseEntity<Void> deleteStakeholder(UUID id) {
         logger.info("[DELETE] /stakeholders/{id}");
-        stakeholderDTOService.deleteStakeholder(id);
+        stakeholderService.deleteStakeholder(id);
         return ResponseEntity.ok().build();
     }
 

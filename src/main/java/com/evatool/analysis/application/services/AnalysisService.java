@@ -20,9 +20,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class AnalysisDTOService {
+public class AnalysisService {
 
-    final Logger logger = LoggerFactory.getLogger(AnalysisDTOService.class);
+    final Logger logger = LoggerFactory.getLogger(AnalysisService.class);
 
     @Autowired
     private AnalysisMapper analysisMapper;

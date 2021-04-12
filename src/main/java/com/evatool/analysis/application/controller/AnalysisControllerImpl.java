@@ -4,7 +4,7 @@ import com.evatool.analysis.application.dto.AnalysisDTO;
 import com.evatool.analysis.application.dto.AnalysisMapper;
 import com.evatool.analysis.application.dto.ValueDtoMapper;
 import com.evatool.analysis.application.interfaces.AnalysisController;
-import com.evatool.analysis.application.services.AnalysisDTOService;
+import com.evatool.analysis.application.services.AnalysisService;
 import com.evatool.analysis.application.services.ValueServiceImpl;
 import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Value;
@@ -36,7 +36,7 @@ public class AnalysisControllerImpl implements AnalysisController {
   private AnalysisEventPublisher analysisEventPublisher;
 
   @Autowired
-  private AnalysisDTOService analysisDTOService;
+  private AnalysisService analysisService;
 
   @Autowired
   private ValueServiceImpl valueService;
@@ -50,32 +50,32 @@ public class AnalysisControllerImpl implements AnalysisController {
   public List<EntityModel<AnalysisDTO>> getAnalysisList(
           @ApiParam(value = "Is A Template") @Valid @RequestParam(value = "isTemplate", required = false) Boolean isTemplate) {
     logger.info("[GET] /analyses");
-    return generateLinks(analysisDTOService.findAll());
+    return generateLinks(analysisService.findAll());
   }
 
   @Override
   public EntityModel<AnalysisDTO> getAnalysisById(UUID id) {
     logger.info("[POST] /analyses");
-    return generateLinks(analysisDTOService.findById(id));
+    return generateLinks(analysisService.findById(id));
   }
 
   @Override
   public ResponseEntity<EntityModel<AnalysisDTO>> addAnalysis(@RequestBody AnalysisDTO analysisDTO) {
     logger.info("[POST] /analyses");
-    return new ResponseEntity<>(getAnalysisById(analysisDTOService.createAnalysisWithUUID(analysisDTO)), HttpStatus.CREATED);
+    return new ResponseEntity<>(getAnalysisById(analysisService.createAnalysisWithUUID(analysisDTO)), HttpStatus.CREATED);
   }
 
   @Override
   public EntityModel<AnalysisDTO> updateAnalysis(@RequestBody AnalysisDTO analysisDTO) {
     logger.info("[PUT] /analyses");
-    analysisDTOService.update(analysisDTO);
+    analysisService.update(analysisDTO);
     return getAnalysisById(analysisDTO.getRootEntityID());
   }
 
   @Override
   public ResponseEntity<Void> deleteAnalysis(UUID id) {
     logger.info("[DELETE] /analyses/{id}");
-    analysisDTOService.deleteAnalysis(id);
+    analysisService.deleteAnalysis(id);
     return ResponseEntity.ok().build();
   }
 
