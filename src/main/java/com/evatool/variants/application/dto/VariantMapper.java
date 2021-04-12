@@ -97,8 +97,7 @@ public class VariantMapper {
 
         if(!numberRange.isEmpty())
         {
-            Collections.max(numberRange,null);
-            return String.format("VAR%d", variants.size() + 1);
+            return String.format("VAR%d", Collections.max(numberRange,null) + 1);
         }
         else
         {
