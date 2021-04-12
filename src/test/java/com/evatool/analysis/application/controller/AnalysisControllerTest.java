@@ -42,7 +42,7 @@ class AnalysisControllerTest {
 
         //create analysis
         AnalysisDTO analysisDTO = analysisMapper.map(analysis);
-        AnalysisDTO analysisDTOObj = analysisController.addAnalysis(analysisDTO).getContent();
+        AnalysisDTO analysisDTOObj = analysisController.addAnalysis(analysisDTO).getBody().getContent();
 
         //check is analysis created
         assertThat(analysisController.getAnalysisById(analysisDTOObj.getRootEntityID())).isNotNull();
@@ -80,7 +80,7 @@ class AnalysisControllerTest {
 
         // when
         var newAnalysis = new Analysis("deep copy", "deep copy");
-        var newAnalysisDto = analysisController.deepCopyAnalysis(templateAnalysis.getAnalysisId(), analysisMapper.map(newAnalysis)).getContent();
+        var newAnalysisDto = analysisController.deepCopyAnalysis(templateAnalysis.getAnalysisId(), analysisMapper.map(newAnalysis)).getBody().getContent();
 
         // then
         var templateValues = valueRepository.findAllByAnalysisAnalysisId(templateAnalysis.getAnalysisId());

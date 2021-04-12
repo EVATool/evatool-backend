@@ -6,18 +6,19 @@ import com.evatool.analysis.application.dto.StakeholderMapper;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.common.error.execptions.IllegalDtoValueException;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
+import com.evatool.analysis.domain.events.StakeholderEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
-import com.evatool.variants.domain.entities.Variant;
+import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
+import com.evatool.global.event.requirements.RequirementDeletedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 @Service
 public class StakeholderDTOService {
@@ -33,17 +34,26 @@ public class StakeholderDTOService {
     @Autowired
     private AnalysisRepository analysisRepository;
 
-    public List<StakeholderDTO> findAll(List<Stakeholder> stakeholderDTOList) {
-        logger.info("findAll");
-        return stakeholderMapper.map(stakeholderDTOList);
+    @Autowired
+    private StakeholderEventPublisher eventPublisher;
+
+    public List<StakeholderDTO> findAll() {
+        List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
+        return stakeholderMapper.map(stakeholderList);
     }
 
-    public StakeholderDTO findById(Stakeholder stakeholder) {
-        logger.debug("findId [{}]",stakeholder);
-        return stakeholderMapper.map(stakeholder);
+    public List<Stakeholder> getStakeholdersAsList(){
+       return stakeholderRepository.findAll();
     }
 
-    public Stakeholder create(StakeholderDTO stakeholderDTO) {
+    public StakeholderDTO findById(UUID id) {
+        logger.debug("findById [{}]",id);
+        Optional<Stakeholder> stakeholder = stakeholderRepository.findById(id);
+        if(stakeholder.isEmpty()) throw new EntityNotFoundException(Stakeholder.class, id);
+        return stakeholderMapper.map(stakeholder.get());
+    }
+
+    public UUID create(StakeholderDTO stakeholderDTO) {
         logger.debug("create [{}]",stakeholderDTO);
 
         if(stakeholderDTO.getAnalysisId() == null){
@@ -68,11 +78,11 @@ public class StakeholderDTOService {
         {
             stakeholder.setGuiId(stakeholderDTO.getGuiId());
         }
-        return stakeholder;
+        return stakeholder.getStakeholderId();
     }
 
 
-    public Stakeholder update(StakeholderDTO stakeholderDTO){
+    public void update(StakeholderDTO stakeholderDTO){
 
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(stakeholderDTO.getRootEntityID());
         Stakeholder stakeholder = stakeholderOptional.orElseThrow();
@@ -83,8 +93,8 @@ public class StakeholderDTOService {
             stakeholder.setGuiId(generateGuiId(stakeholderDTO.getStakeholderLevel()));
         }
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
-
-        return stakeholder;
+        stakeholder = stakeholderRepository.save(stakeholder);
+        eventPublisher.publishEvent(new AnalysisUpdatedEvent(stakeholder.toJson()));
     }
 
     private String generateGuiId(StakeholderLevel stakeholderLevel) {
@@ -118,5 +128,14 @@ public class StakeholderDTOService {
             default:
                 return String.format("STA%d", sta[0] + 1);
         }
+    }
+
+    public void deleteStakeholder(UUID id) {
+        logger.info("delete [{}]",id);
+        Optional<Stakeholder> optionalStakeholder = stakeholderRepository.findById(id);
+        if(optionalStakeholder.isEmpty()) throw new EntityNotFoundException(Stakeholder.class, id);
+        Stakeholder stakeholder = optionalStakeholder.get();
+        stakeholderRepository.deleteById(id);
+        eventPublisher.publishEvent(new RequirementDeletedEvent(stakeholder.toJson()));
     }
 }
