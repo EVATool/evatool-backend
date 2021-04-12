@@ -21,9 +21,9 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class StakeholderDTOService {
+public class StakeholderService {
 
-    final Logger logger = LoggerFactory.getLogger(StakeholderDTOService.class);
+    final Logger logger = LoggerFactory.getLogger(StakeholderService.class);
 
     @Autowired
     private StakeholderMapper stakeholderMapper;
@@ -53,7 +53,7 @@ public class StakeholderDTOService {
         return stakeholderMapper.map(stakeholder.get());
     }
 
-    public UUID create(StakeholderDTO stakeholderDTO) {
+    public StakeholderDTO create(StakeholderDTO stakeholderDTO) {
         logger.debug("create [{}]",stakeholderDTO);
 
         if(stakeholderDTO.getAnalysisId() == null){
@@ -78,7 +78,9 @@ public class StakeholderDTOService {
         {
             stakeholder.setGuiId(stakeholderDTO.getGuiId());
         }
-        return stakeholder.getStakeholderId();
+        stakeholder = stakeholderRepository.save(stakeholder);
+       return stakeholderMapper.map(stakeholder);
+
     }
 
 
