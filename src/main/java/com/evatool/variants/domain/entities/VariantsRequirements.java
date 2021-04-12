@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.springframework.hateoas.RepresentationModel;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -27,6 +27,20 @@ public class VariantsRequirements extends RepresentationModel<VariantsRequiremen
 
     public static VariantsRequirements fromJson(String json) {
         return new Gson().fromJson(json, VariantsRequirements.class);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        VariantsRequirements that = (VariantsRequirements) o;
+        return Objects.equals(requirementId, that.requirementId) && Objects.equals(variants, that.variants);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), requirementId, variants);
     }
 
     public String toJson(){

@@ -20,7 +20,7 @@ public class AnalysisDTO {
     private String analysisName;
     private String analysisDescription;
     private String image;
-    private Date date;
+    private Date lastUpdate;
     private Boolean isTemplate;
     private String uniqueString;
 

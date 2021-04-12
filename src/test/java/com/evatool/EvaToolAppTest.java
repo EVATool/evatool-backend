@@ -8,6 +8,7 @@ import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
+import com.evatool.analysis.domain.repository.StakeholderRepository;
 import com.evatool.analysis.domain.repository.ValueRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
@@ -72,7 +73,7 @@ class EvaToolAppTest {
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
             var stakeholder = createDummyStakeholder();
-            var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, stakeholder.toJson());
+            var stakeholderCreatedEvent = new StakeholderCreatedEvent(stakeholder.toJson());
 
             // when
             analysisEventPublisher.publishEvent(stakeholderCreatedEvent);
@@ -87,7 +88,7 @@ class EvaToolAppTest {
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
             var stakeholder = createDummyStakeholder();
-            var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, stakeholder.toJson());
+            var stakeholderCreatedEvent = new StakeholderCreatedEvent(stakeholder.toJson());
             analysisEventPublisher.publishEvent(stakeholderCreatedEvent);
 
             // when
@@ -105,7 +106,7 @@ class EvaToolAppTest {
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
             var stakeholder = createDummyStakeholder();
-            var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, stakeholder.toJson());
+            var stakeholderCreatedEvent = new StakeholderCreatedEvent(stakeholder.toJson());
             analysisEventPublisher.publishEvent(stakeholderCreatedEvent);
 
             // when
@@ -315,6 +316,9 @@ class EvaToolAppTest {
         @Autowired
         RequirementValueRepository requirementValueRepository;
 
+        @Autowired
+        StakeholderRepository stakeholderRepository;
+
         @BeforeEach
         @AfterAll
         void clearDatabase() {
@@ -327,7 +331,10 @@ class EvaToolAppTest {
         }
 
         Impact createDummyImpact() {
-            var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(UUID.randomUUID(), "Name", "Level"));
+
+
+            var stakeholder1 = stakeholderRepository.save(new Stakeholder( "stakeholderName", 0, StakeholderLevel.NATURAL_PERSON));
+            var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(stakeholder1.getStakeholderId(), "Name", "Level"));
             var analysis = impactAnalysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
             var value = impactValueRepository.save(new ImpactValue(UUID.randomUUID(), "Name", "SOCIAL", "Description" ,analysis));
             return impactRepository.save(new Impact(0.0, "Description", value, stakeholder, analysis));

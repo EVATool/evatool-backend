@@ -79,8 +79,8 @@ public class VariantMapper {
         {
             variant.setGuiId(variantDto.getGuiId());
         }
-        if (variantDto.getArchived()){
-            if (checkIfDeletable(variantDto.getId())) {
+        if (Boolean.TRUE.equals(variantDto.getArchived())){
+            if (Boolean.TRUE.equals(checkIfDeletable(variantDto.getId()))) {
                 variant.setArchived(variantDto.getArchived());
             } else {
                 throw new VariantStillReferredException();
@@ -108,11 +108,9 @@ public class VariantMapper {
 
     public Boolean checkIfDeletable(UUID variantid) {
         List<VariantsRequirements> requirements = variantRequirementsRepository.findAll();
-        requirements.forEach(requirement -> {
-            requirement.getVariants().forEach(requirementVariant -> {
+        requirements.forEach(requirement -> requirement.getVariants().forEach(requirementVariant -> {
                 if (requirementVariant.getId() == variantid) requirements.remove(requirement);
-            });
-        });
+            }));
         return requirements.isEmpty();
     }
 }

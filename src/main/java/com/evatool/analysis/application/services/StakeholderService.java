@@ -6,22 +6,24 @@ import com.evatool.analysis.application.dto.StakeholderMapper;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.common.error.execptions.IllegalDtoValueException;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
+import com.evatool.analysis.domain.events.StakeholderEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
+import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
+import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
-public class StakeholderDTOService {
+public class StakeholderService {
 
-    final Logger logger = LoggerFactory.getLogger(StakeholderDTOService.class);
+    final Logger logger = LoggerFactory.getLogger(StakeholderService.class);
 
     @Autowired
     private StakeholderMapper stakeholderMapper;
@@ -32,17 +34,36 @@ public class StakeholderDTOService {
     @Autowired
     private AnalysisRepository analysisRepository;
 
-    public List<StakeholderDTO> findAll(List<Stakeholder> stakeholderDTOList) {
-        logger.info("findAll");
-        return stakeholderMapper.map(stakeholderDTOList);
+    @Autowired
+    private StakeholderEventPublisher eventPublisher;
+
+    public List<StakeholderDTO> findAll() {
+        List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
+        return stakeholderMapper.map(stakeholderList);
     }
 
-    public StakeholderDTO findById(Stakeholder stakeholder) {
-        logger.debug("findId [{}]",stakeholder);
-        return stakeholderMapper.map(stakeholder);
+    public List<Stakeholder> getStakeholdersAsList(){
+       return stakeholderRepository.findAll();
     }
 
-    public Stakeholder create(StakeholderDTO stakeholderDTO) {
+    public StakeholderDTO findById(UUID id) {
+        logger.debug("findById [{}]",id);
+        Optional<Stakeholder> stakeholder = stakeholderRepository.findById(id);
+        if(stakeholder.isEmpty()) throw new EntityNotFoundException(Stakeholder.class, id);
+        return stakeholderMapper.map(stakeholder.get());
+    }
+
+    public List<StakeholderDTO> getStakeholdersByAnalysisId(UUID analysisId){
+        List<Stakeholder> stakeholderList = getStakeholdersAsList();
+
+        stakeholderList.removeIf(stakeholder -> !stakeholder.getAnalysis().getAnalysisId().equals(analysisId));
+        if (stakeholderList.isEmpty()){
+            return Collections.emptyList();
+        }
+        return stakeholderMapper.map(stakeholderList);
+    }
+
+    public StakeholderDTO create(StakeholderDTO stakeholderDTO) {
         logger.debug("create [{}]",stakeholderDTO);
 
         if(stakeholderDTO.getAnalysisId() == null){
@@ -53,11 +74,13 @@ public class StakeholderDTOService {
         stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
         stakeholder.setPriority(stakeholderDTO.getPriority());
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
-        Analysis analysis = analysisRepository.findById(stakeholderDTO.getAnalysisId()).get();
-        if(analysis == null){
+        Optional<Analysis> analysisOptional = analysisRepository.findById(stakeholderDTO.getAnalysisId());
+
+        if(!analysisOptional.isPresent()){
             throw new EntityNotFoundException(Analysis.class,stakeholderDTO.getAnalysisId());
         }
-        stakeholder.setAnalysis(analysis);
+
+        stakeholder.setAnalysis(analysisOptional.get());
 
         if (stakeholderDTO.getGuiId() == null || stakeholderDTO.getGuiId().equals(""))
         {
@@ -67,14 +90,18 @@ public class StakeholderDTOService {
         {
             stakeholder.setGuiId(stakeholderDTO.getGuiId());
         }
-        return stakeholder;
+
+       return stakeholderMapper.map(stakeholderRepository.save(stakeholder));
     }
 
 
-    public Stakeholder update(StakeholderDTO stakeholderDTO){
+    public void update(StakeholderDTO stakeholderDTO) {
 
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(stakeholderDTO.getRootEntityID());
-        Stakeholder stakeholder = stakeholderOptional.orElseThrow();
+        if(!stakeholderOptional.isPresent()){
+            throw new EntityNotFoundException(Stakeholder.class,stakeholderDTO.getRootEntityID());
+        }
+        Stakeholder stakeholder = stakeholderOptional.get();
         stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
         stakeholder.setPriority(stakeholderDTO.getPriority());
         if(!stakeholderDTO.getStakeholderLevel().getStakeholderLevel().equals(stakeholder.getStakeholderLevel().getStakeholderLevel()))
@@ -82,8 +109,17 @@ public class StakeholderDTOService {
             stakeholder.setGuiId(generateGuiId(stakeholderDTO.getStakeholderLevel()));
         }
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
+        stakeholder = stakeholderRepository.save(stakeholder);
+        eventPublisher.publishEvent(new AnalysisUpdatedEvent(stakeholder.toJson()));
+    }
 
-        return stakeholder;
+    public void deleteStakeholder(UUID id) {
+        logger.info("delete [{}]",id);
+        Optional<Stakeholder> optionalStakeholder = stakeholderRepository.findById(id);
+        if(optionalStakeholder.isEmpty()) throw new EntityNotFoundException(Stakeholder.class, id);
+        Stakeholder stakeholder = optionalStakeholder.get();
+        stakeholderRepository.deleteById(id);
+        eventPublisher.publishEvent(new StakeholderCreatedEvent(stakeholder.toJson()));
     }
 
     private String generateGuiId(StakeholderLevel stakeholderLevel) {
