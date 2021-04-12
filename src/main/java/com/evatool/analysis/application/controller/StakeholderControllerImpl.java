@@ -25,7 +25,6 @@ public class StakeholderControllerImpl implements StakeholderController {
     @Autowired
     private StakeholderService stakeholderService;
 
-
     final Logger logger = LoggerFactory.getLogger(StakeholderControllerImpl.class);
 
     @Override
@@ -37,13 +36,7 @@ public class StakeholderControllerImpl implements StakeholderController {
     @Override
     public List<EntityModel<StakeholderDTO>> getStakeholderByAnalysis(UUID analysisId) {
         logger.info("[GET] /stakeholders?analysisId={id}");
-        List<Stakeholder> stakeholderList = stakeholderService.getStakeholdersAsList();
-
-        stakeholderList.removeIf(stakeholder -> !stakeholder.getAnalysis().getAnalysisId().equals(analysisId));
-        if (stakeholderList.isEmpty()){
-            return Collections.emptyList();
-        }
-        return generateLinks(stakeholderService.findAll());
+        return generateLinks(stakeholderService.getStakeholdersByAnalysisId(analysisId));
     }
 
     @Override

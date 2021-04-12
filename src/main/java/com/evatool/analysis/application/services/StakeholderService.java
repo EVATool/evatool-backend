@@ -53,6 +53,16 @@ public class StakeholderService {
         return stakeholderMapper.map(stakeholder.get());
     }
 
+    public List<StakeholderDTO> getStakeholdersByAnalysisId(UUID analysisId){
+        List<Stakeholder> stakeholderList = getStakeholdersAsList();
+
+        stakeholderList.removeIf(stakeholder -> !stakeholder.getAnalysis().getAnalysisId().equals(analysisId));
+        if (stakeholderList.isEmpty()){
+            return Collections.emptyList();
+        }
+        return stakeholderMapper.map(stakeholderList);
+    }
+
     public StakeholderDTO create(StakeholderDTO stakeholderDTO) {
         logger.debug("create [{}]",stakeholderDTO);
 
@@ -64,11 +74,13 @@ public class StakeholderService {
         stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
         stakeholder.setPriority(stakeholderDTO.getPriority());
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
-        Analysis analysis = analysisRepository.findById(stakeholderDTO.getAnalysisId()).get();
-        if(analysis == null){
+        Optional<Analysis> analysisOptional = analysisRepository.findById(stakeholderDTO.getAnalysisId());
+
+        if(!analysisOptional.isPresent()){
             throw new EntityNotFoundException(Analysis.class,stakeholderDTO.getAnalysisId());
         }
-        stakeholder.setAnalysis(analysis);
+
+        stakeholder.setAnalysis(analysisOptional.get());
 
         if (stakeholderDTO.getGuiId() == null || stakeholderDTO.getGuiId().equals(""))
         {
@@ -78,16 +90,18 @@ public class StakeholderService {
         {
             stakeholder.setGuiId(stakeholderDTO.getGuiId());
         }
-        stakeholder = stakeholderRepository.save(stakeholder);
-       return stakeholderMapper.map(stakeholder);
 
+       return stakeholderMapper.map(stakeholderRepository.save(stakeholder));
     }
 
 
-    public void update(StakeholderDTO stakeholderDTO){
+    public void update(StakeholderDTO stakeholderDTO) {
 
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(stakeholderDTO.getRootEntityID());
-        Stakeholder stakeholder = stakeholderOptional.orElseThrow();
+        if(!stakeholderOptional.isPresent()){
+            throw new EntityNotFoundException(Stakeholder.class,stakeholderDTO.getRootEntityID());
+        }
+        Stakeholder stakeholder = stakeholderOptional.get();
         stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
         stakeholder.setPriority(stakeholderDTO.getPriority());
         if(!stakeholderDTO.getStakeholderLevel().getStakeholderLevel().equals(stakeholder.getStakeholderLevel().getStakeholderLevel()))
@@ -97,6 +111,15 @@ public class StakeholderService {
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
         stakeholder = stakeholderRepository.save(stakeholder);
         eventPublisher.publishEvent(new AnalysisUpdatedEvent(stakeholder.toJson()));
+    }
+
+    public void deleteStakeholder(UUID id) {
+        logger.info("delete [{}]",id);
+        Optional<Stakeholder> optionalStakeholder = stakeholderRepository.findById(id);
+        if(optionalStakeholder.isEmpty()) throw new EntityNotFoundException(Stakeholder.class, id);
+        Stakeholder stakeholder = optionalStakeholder.get();
+        stakeholderRepository.deleteById(id);
+        eventPublisher.publishEvent(new RequirementDeletedEvent(stakeholder.toJson()));
     }
 
     private String generateGuiId(StakeholderLevel stakeholderLevel) {
@@ -130,14 +153,5 @@ public class StakeholderService {
             default:
                 return String.format("STA%d", sta[0] + 1);
         }
-    }
-
-    public void deleteStakeholder(UUID id) {
-        logger.info("delete [{}]",id);
-        Optional<Stakeholder> optionalStakeholder = stakeholderRepository.findById(id);
-        if(optionalStakeholder.isEmpty()) throw new EntityNotFoundException(Stakeholder.class, id);
-        Stakeholder stakeholder = optionalStakeholder.get();
-        stakeholderRepository.deleteById(id);
-        eventPublisher.publishEvent(new RequirementDeletedEvent(stakeholder.toJson()));
     }
 }
