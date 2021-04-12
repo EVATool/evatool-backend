@@ -39,7 +39,7 @@ public class StakeholderEventListener {
         AnalysisImpactJson impactJson = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholder().getId());
         if(stakeholderOptional.isEmpty()){
-
+            throw new EntityNotFoundException(Stakeholder.class, impactJson.getStakeholder().getId());
         }else{
             Stakeholder stakeholder = stakeholderOptional.get();
             AnalysisImpact impact = new AnalysisImpact();
@@ -57,13 +57,14 @@ public class StakeholderEventListener {
         AnalysisImpactJson impactJson = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholder().getId());
         if(stakeholderOptional.isEmpty()){
-
+            throw new EntityNotFoundException(Stakeholder.class, impactJson.getStakeholder().getId());
         }else{
             Stakeholder stakeholder = stakeholderOptional.get();
-            AnalysisImpact impact = new AnalysisImpact();
-            impact.setId(impactJson.getId());
-            impact.setImpactValue(impactJson.getValue());
-            stakeholder.getImpact().add(impact);
+            stakeholder.getImpact().forEach((impact)->{
+                if(impact.getId() == impactJson.getId()){
+                    impact.setImpactValue(impactJson.getValue());
+                }
+            });
             stakeholderRepository.save(stakeholder);
         }
     }
