@@ -12,6 +12,6 @@ public class AnalysisImpactJson {
 
     private UUID id;
     private Float value;
-    private ImpactStakeholder stakeholder;
+    private UUID stakeholderId;
 }
 
