@@ -319,6 +319,9 @@ class EvaToolAppTest {
         @Autowired
         StakeholderRepository stakeholderRepository;
 
+        @Autowired
+        AnalysisRepository analysisRepository;
+
         @BeforeEach
         @AfterAll
         void clearDatabase() {
@@ -328,12 +331,15 @@ class EvaToolAppTest {
             impactValueRepository.deleteAll();
             impactStakeholderRepository.deleteAll();
             impactAnalysisRepository.deleteAll();
+            stakeholderRepository.deleteAll();
         }
 
         Impact createDummyImpact() {
-
-
-            var stakeholder1 = stakeholderRepository.save(new Stakeholder( "stakeholderName", 0, StakeholderLevel.NATURAL_PERSON));
+            var analysisAnalysis = new Analysis("TITLE","Description");
+            analysisAnalysis = analysisRepository.save(analysisAnalysis);
+            var stakeholder1 = new Stakeholder( "stakeholderName", 0, StakeholderLevel.NATURAL_PERSON);
+            stakeholder1.setAnalysis(analysisAnalysis);
+            stakeholder1 = stakeholderRepository.save(stakeholder1);
             var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(stakeholder1.getStakeholderId(), "Name", "Level"));
             var analysis = impactAnalysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));
             var value = impactValueRepository.save(new ImpactValue(UUID.randomUUID(), "Name", "SOCIAL", "Description" ,analysis));
