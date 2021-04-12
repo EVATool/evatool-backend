@@ -30,13 +30,6 @@ public class Analysis {
     @OneToOne(cascade = CascadeType.ALL)
     private NumericId numericId;
 
-    public String getUniqueString() {
-        if (this.numericId == null || this.numericId.getNumericId() == null)
-            return null;
-        else
-            return "ANA" + this.numericId.getNumericId();
-    }
-
     /**
      * Name of the Analysis {@link String}
      */
@@ -88,5 +81,12 @@ public class Analysis {
     public String toJson(){
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public String getUniqueString() {
+        if (this.numericId == null || this.numericId.getNumericId() == null)
+            return null;
+        else
+            return "ANA" + this.numericId.getNumericId();
     }
 }

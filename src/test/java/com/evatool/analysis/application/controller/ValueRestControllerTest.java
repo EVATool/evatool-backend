@@ -47,7 +47,7 @@ class ValueRestControllerTest {
     private ValueDto saveDummyValueChildren() {
         var value = createDummyValue();
         var analysisDto = getAnalysisDTO("name", "desc");
-        var analysis =  analysisRepository.save(analysisDTOService.create(analysisDto));
+        var analysis = analysisRepository.save(analysisDTOService.createAnalysis(analysisDto));
         value.setAnalysis(analysis);
         System.out.println(analysis);
         var valueDto = toDto(value);
@@ -61,7 +61,7 @@ class ValueRestControllerTest {
     private ValueDto saveFullDummyValueDto(ValueType valueType) {
         var value = createDummyValue();
         var analysisDto = getAnalysisDTO("name", "desc");
-        var analysis =  analysisRepository.save(analysisDTOService.create(analysisDto));
+        var analysis =  analysisRepository.save(analysisDTOService.createAnalysis(analysisDto));
         value.setAnalysis(analysis);
         value.setType(valueType);
         System.out.println(analysis);

@@ -1,12 +1,7 @@
 package com.evatool.analysis.domain.enums;
 
 
-/**
- * This Enum represents the Stakeholder Level
- *
- * @author fobaidi
- * @author MHallweg
- */
+
 public enum StakeholderLevel {
 
     NATURAL_PERSON("natural person"),

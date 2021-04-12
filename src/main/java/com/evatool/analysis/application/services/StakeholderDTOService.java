@@ -3,15 +3,22 @@ package com.evatool.analysis.application.services;
 
 import com.evatool.analysis.application.dto.StakeholderDTO;
 import com.evatool.analysis.application.dto.StakeholderMapper;
+import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
+import com.evatool.analysis.common.error.execptions.IllegalDtoValueException;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
+import com.evatool.analysis.domain.events.StakeholderEventPublisher;
+import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
+import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
+import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
+import com.evatool.global.event.requirements.RequirementDeletedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class StakeholderDTOService {
@@ -24,22 +31,44 @@ public class StakeholderDTOService {
     @Autowired
     private StakeholderRepository stakeholderRepository;
 
-    public List<StakeholderDTO> findAll(List<Stakeholder> stakeholderDTOList) {
-        logger.info("findAll");
-        return stakeholderMapper.map(stakeholderDTOList);
+    @Autowired
+    private AnalysisRepository analysisRepository;
+
+    @Autowired
+    private StakeholderEventPublisher eventPublisher;
+
+    public List<StakeholderDTO> findAll() {
+        List<Stakeholder> stakeholderList = stakeholderRepository.findAll();
+        return stakeholderMapper.map(stakeholderList);
     }
 
-    public StakeholderDTO findById(Stakeholder stakeholder) {
-        logger.debug("findId [{}]",stakeholder);
-        return stakeholderMapper.map(stakeholder);
+    public List<Stakeholder> getStakeholdersAsList(){
+       return stakeholderRepository.findAll();
     }
 
-    public Stakeholder create(StakeholderDTO stakeholderDTO) {
+    public StakeholderDTO findById(UUID id) {
+        logger.debug("findById [{}]",id);
+        Optional<Stakeholder> stakeholder = stakeholderRepository.findById(id);
+        if(stakeholder.isEmpty()) throw new EntityNotFoundException(Stakeholder.class, id);
+        return stakeholderMapper.map(stakeholder.get());
+    }
+
+    public UUID create(StakeholderDTO stakeholderDTO) {
         logger.debug("create [{}]",stakeholderDTO);
+
+        if(stakeholderDTO.getAnalysisId() == null){
+            throw new IllegalDtoValueException("Analysis id is null.");
+        }
+
         Stakeholder stakeholder = new Stakeholder();
         stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
         stakeholder.setPriority(stakeholderDTO.getPriority());
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
+        Analysis analysis = analysisRepository.findById(stakeholderDTO.getAnalysisId()).get();
+        if(analysis == null){
+            throw new EntityNotFoundException(Analysis.class,stakeholderDTO.getAnalysisId());
+        }
+        stakeholder.setAnalysis(analysis);
 
         if (stakeholderDTO.getGuiId() == null || stakeholderDTO.getGuiId().equals(""))
         {
@@ -49,24 +78,64 @@ public class StakeholderDTOService {
         {
             stakeholder.setGuiId(stakeholderDTO.getGuiId());
         }
-        return stakeholder;
+        return stakeholder.getStakeholderId();
+    }
+
+
+    public void update(StakeholderDTO stakeholderDTO){
+
+        Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(stakeholderDTO.getRootEntityID());
+        Stakeholder stakeholder = stakeholderOptional.orElseThrow();
+        stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
+        stakeholder.setPriority(stakeholderDTO.getPriority());
+        if(!stakeholderDTO.getStakeholderLevel().getStakeholderLevel().equals(stakeholder.getStakeholderLevel().getStakeholderLevel()))
+        {
+            stakeholder.setGuiId(generateGuiId(stakeholderDTO.getStakeholderLevel()));
+        }
+        stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
+        stakeholder = stakeholderRepository.save(stakeholder);
+        eventPublisher.publishEvent(new AnalysisUpdatedEvent(stakeholder.toJson()));
     }
 
     private String generateGuiId(StakeholderLevel stakeholderLevel) {
         List<Stakeholder> stakeholders = stakeholderRepository.findAll();
 
-       long stakeholderLevelSize =  stakeholders.stream().filter(stakeholder -> stakeholder.getStakeholderLevel().equals(stakeholderLevel)).count();
+        final int[] ind = {0};
+        final int[] org = {0};
+        final int[] soc = {0};
+        final int[] sta = {0};
 
-        switch (stakeholderLevel.getStakeholderLevel()){
+
+        stakeholders.forEach(stakeholder -> {
+            if(stakeholder.getGuiId().contains("IND") && Integer.parseInt(stakeholder.getGuiId().split("IND")[1]) >= ind[0]){
+                ind[0] = Integer.parseInt(stakeholder.getGuiId().split("IND")[1]);
+            }
+            else if(stakeholder.getGuiId().contains("ORG") && Integer.parseInt(stakeholder.getGuiId().split("ORG")[1]) >= org[0]){
+                org[0] = Integer.parseInt(stakeholder.getGuiId().split("ORG")[1]);
+            }
+            else if(stakeholder.getGuiId().contains("SOC") && Integer.parseInt(stakeholder.getGuiId().split("SOC")[1]) >= soc[0]){
+                soc[0] = Integer.parseInt(stakeholder.getGuiId().split("SOC")[1]);
+            }
+        });
+
+        switch (stakeholderLevel.getStakeholderLevel()) {
             case "natural person":
-                return String.format("IND%d", stakeholderLevelSize + 1);
+                return String.format("IND%d", ind[0] + 1);
             case "organization":
-                return String.format("ORG%d", stakeholderLevelSize + 1);
+                return String.format("ORG%d", org[0] + 1);
             case "society":
-                return String.format("SOC%d", stakeholderLevelSize + 1);
+                return String.format("SOC%d", soc[0] + 1);
             default:
-                return String.format("STA%d", stakeholderLevelSize + 1);
+                return String.format("STA%d", sta[0] + 1);
         }
     }
 
+    public void deleteStakeholder(UUID id) {
+        logger.info("delete [{}]",id);
+        Optional<Stakeholder> optionalStakeholder = stakeholderRepository.findById(id);
+        if(optionalStakeholder.isEmpty()) throw new EntityNotFoundException(Stakeholder.class, id);
+        Stakeholder stakeholder = optionalStakeholder.get();
+        stakeholderRepository.deleteById(id);
+        eventPublisher.publishEvent(new RequirementDeletedEvent(stakeholder.toJson()));
+    }
 }

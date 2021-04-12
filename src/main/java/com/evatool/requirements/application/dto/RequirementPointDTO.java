@@ -12,7 +12,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 public class RequirementPointDTO {
 
-
     private UUID entityId;
     private String impactDescription;
     private Double points;

@@ -16,6 +16,8 @@ public class StakeholderDTO {
     private Collection<AnalysisImpact> impactList = new ArrayList<>();
     private String guiId;
 
+    private UUID analysisId;
+
     public void setRootEntityID(UUID rootEntityID) {
         this.rootEntityID = rootEntityID;
     }
@@ -25,6 +27,13 @@ public class StakeholderDTO {
             throw new IllegalArgumentException("stakeholder Name cannot be null.");
         }
         this.stakeholderName = stakeholderName;
+    }
+
+    public void setAnalysisId(UUID analysisId) {
+        if (analysisId == null) {
+            throw new IllegalArgumentException("analysisId cannot be null.");
+        }
+        this.analysisId = analysisId;
     }
 
     public void setStakeholderLevel(StakeholderLevel stakeholderLevel) {

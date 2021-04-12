@@ -51,6 +51,11 @@ public class Stakeholder {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<AnalysisImpact> impact = new ArrayList<>();
 
+    @Getter
+    @Setter
+    @ManyToOne // TODO has to become optional=false
+    private Analysis analysis;
+
     /**
      * GuiId of the Stakeholder {@link String}
      */
@@ -69,7 +74,7 @@ public class Stakeholder {
 
     public void setStakeholderLevel(StakeholderLevel stakeholderLevel) {
         if (stakeholderLevel == null){
-            throw new IllegalArgumentException("Level name cannot be null.");
+            throw new IllegalArgumentException("Stakeholder level cannot be null.");
         }
         this.stakeholderLevel = stakeholderLevel;
     }

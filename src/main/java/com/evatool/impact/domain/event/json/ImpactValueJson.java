@@ -29,7 +29,7 @@ public class ImpactValueJson {
 
     @Getter
     @Setter
-    private UUID analysisId; // TODO add tests in mapper
+    private UUID analysisId;
 
     public boolean equalsEntity(ImpactValue that) {
         if (that == null) return false;

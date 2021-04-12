@@ -7,7 +7,9 @@ import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.NumericId;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
+import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
+import com.evatool.global.event.requirements.RequirementDeletedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AnalysisDTOService {
@@ -30,9 +33,9 @@ public class AnalysisDTOService {
     @Autowired
     private AnalysisEventPublisher eventPublisher;
 
-    public List<AnalysisDTO> findAll(List<Analysis> analysisDTOList) {
-        logger.info("findAll");
-        return analysisMapper.map(analysisDTOList);
+    public List<AnalysisDTO> findAll() {
+        List<Analysis> analysisList = analysisRepository.findAll();
+        return analysisMapper.map(analysisList);
     }
 
     public List<Analysis> findAllByIdTemplate(boolean isTemplate) {
@@ -41,15 +44,38 @@ public class AnalysisDTOService {
         return analyses;
     }
 
-    public AnalysisDTO findById(Analysis analysis) {
-        logger.debug("findId [{}]", analysis);
-        return analysisMapper.map(analysis);
+    public AnalysisDTO findById(UUID id) {
+        logger.debug("findById [{}]",id);
+        Optional<Analysis> analysis = analysisRepository.findById(id);
+        if(analysis.isEmpty()) throw new EntityNotFoundException(Analysis.class, id);
+        return analysisMapper.map(analysis.get());
     }
 
-    public Analysis create(AnalysisDTO analysisDTO) {
-        logger.debug("create [{}]", analysisDTO);
-        Analysis analysis = analysisMapper.map(analysisDTO);
+    public UUID createAnalysisWithUUID(AnalysisDTO analysisDTO) {
+        logger.debug("create [{}]",analysisDTO);
+        Analysis analysis = new Analysis();
+        analysis.setAnalysisName(analysisDTO.getAnalysisName());
+        analysis.setDescription(analysisDTO.getAnalysisDescription());
+        analysis.setImage(analysisDTO.getImage());
+        analysis.setLastUpdate(analysisDTO.getLastUpdate());
+        analysis.setImage(analysisDTO.getImage());
 
+        analysis = analysisRepository.save(analysis);
+        eventPublisher.publishEvent(new AnalysisCreatedEvent(analysis.toJson()));
+        return analysis.getAnalysisId();
+    }
+
+    public Analysis createAnalysis(AnalysisDTO analysisDTO) {
+        logger.debug("create [{}]",analysisDTO);
+        Analysis analysis = new Analysis();
+        analysis.setAnalysisName(analysisDTO.getAnalysisName());
+        analysis.setDescription(analysisDTO.getAnalysisDescription());
+        analysis.setImage(analysisDTO.getImage());
+        analysis.setLastUpdate(analysisDTO.getLastUpdate());
+        analysis.setImage(analysisDTO.getImage());
+
+        analysis = analysisRepository.save(analysis);
+        eventPublisher.publishEvent(new AnalysisCreatedEvent(analysis.toJson()));
         return analysis;
     }
 
@@ -68,5 +94,14 @@ public class AnalysisDTOService {
 
         analysis = analysisRepository.save(analysis);
         eventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toJson()));
+    }
+
+    public void deleteAnalysis(UUID id) {
+        logger.info("delete [{}]",id);
+        Optional<Analysis> analysisOptional = analysisRepository.findById(id);
+        if(analysisOptional.isEmpty()) throw new EntityNotFoundException(Analysis.class, id);
+        Analysis analysis = analysisOptional.get();
+        analysisRepository.deleteById(id);
+        eventPublisher.publishEvent(new RequirementDeletedEvent(analysis.toJson()));
     }
 }
