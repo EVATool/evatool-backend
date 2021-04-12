@@ -1,7 +1,10 @@
 package com.evatool.analysis.domain.events;
 
 
+import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
 import com.evatool.analysis.domain.events.json.AnalysisImpactJson;
+import com.evatool.analysis.domain.model.AnalysisImpact;
+import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.repository.AnalysisImpactRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
 import com.evatool.global.event.impact.ImpactCreatedEvent;
@@ -13,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class StakeholderEventListener {
@@ -31,14 +36,36 @@ public class StakeholderEventListener {
     public void impactCreated(ImpactCreatedEvent event) {
         logger.info("Impact created event");
         if (logger.isDebugEnabled()) logger.debug(String.format(DEBUGFORMAT, event.getClass(), event.getJsonPayload()));
-        AnalysisImpactJson impact = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
+        AnalysisImpactJson impactJson = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
+        Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholder().getId());
+        if(stakeholderOptional.isEmpty()){
+
+        }else{
+            Stakeholder stakeholder = stakeholderOptional.get();
+            AnalysisImpact impact = new AnalysisImpact();
+            impact.setId(impactJson.getId());
+            impact.setImpactValue(impactJson.getValue());
+            stakeholder.getImpact().add(impact);
+            stakeholderRepository.save(stakeholder);
+        }
     }
 
     @EventListener
     public void impactUpdated(ImpactUpdatedEvent event) {
         logger.info("impact updated event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
-        AnalysisImpactJson impact = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
+        AnalysisImpactJson impactJson = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
+        Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholder().getId());
+        if(stakeholderOptional.isEmpty()){
+
+        }else{
+            Stakeholder stakeholder = stakeholderOptional.get();
+            AnalysisImpact impact = new AnalysisImpact();
+            impact.setId(impactJson.getId());
+            impact.setImpactValue(impactJson.getValue());
+            stakeholder.getImpact().add(impact);
+            stakeholderRepository.save(stakeholder);
+        }
     }
 
 
@@ -46,7 +73,18 @@ public class StakeholderEventListener {
     public void impactDeleted(ImpactDeletedEvent event) {
         logger.info("impact deleted event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
-        AnalysisImpactJson impact = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
+        AnalysisImpactJson impactJson = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
+        Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholder().getId());
+        if(stakeholderOptional.isEmpty()){
+            throw new EntityNotFoundException(Stakeholder.class, impactJson.getStakeholder().getId());
+        }else{
+            Stakeholder stakeholder = stakeholderOptional.get();
+            AnalysisImpact impact = new AnalysisImpact();
+            impact.setId(impactJson.getId());
+            impact.setImpactValue(impactJson.getValue());
+            stakeholder.getImpact().remove(impact);
+            stakeholderRepository.save(stakeholder);
+        }
     }
 
 
