@@ -7,7 +7,6 @@ import com.evatool.analysis.domain.events.ValueEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.model.Value;
-import com.evatool.analysis.domain.repository.AnalysisImpactRepository;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
 import com.evatool.analysis.domain.repository.ValueRepository;
@@ -74,7 +73,7 @@ class EvaToolAppTest {
         void testCreatedEvent_ModulesReceive_ModulesPersist() {
             // given
             var stakeholder = createDummyStakeholder();
-            var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, stakeholder.toJson());
+            var stakeholderCreatedEvent = new StakeholderCreatedEvent(stakeholder.toJson());
 
             // when
             analysisEventPublisher.publishEvent(stakeholderCreatedEvent);
@@ -89,7 +88,7 @@ class EvaToolAppTest {
         void testUpdatedEvent_ModulesReceive_ModulesPersist() {
             // given
             var stakeholder = createDummyStakeholder();
-            var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, stakeholder.toJson());
+            var stakeholderCreatedEvent = new StakeholderCreatedEvent(stakeholder.toJson());
             analysisEventPublisher.publishEvent(stakeholderCreatedEvent);
 
             // when
@@ -107,7 +106,7 @@ class EvaToolAppTest {
         void testDeletedEvent_ModulesReceive_ModulesPersist() {
             // given
             var stakeholder = createDummyStakeholder();
-            var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, stakeholder.toJson());
+            var stakeholderCreatedEvent = new StakeholderCreatedEvent(stakeholder.toJson());
             analysisEventPublisher.publishEvent(stakeholderCreatedEvent);
 
             // when

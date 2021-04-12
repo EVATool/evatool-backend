@@ -12,7 +12,7 @@ import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
-import com.evatool.global.event.requirements.RequirementDeletedEvent;
+import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +119,7 @@ public class StakeholderService {
         if(optionalStakeholder.isEmpty()) throw new EntityNotFoundException(Stakeholder.class, id);
         Stakeholder stakeholder = optionalStakeholder.get();
         stakeholderRepository.deleteById(id);
-        eventPublisher.publishEvent(new RequirementDeletedEvent(stakeholder.toJson()));
+        eventPublisher.publishEvent(new StakeholderCreatedEvent(stakeholder.toJson()));
     }
 
     private String generateGuiId(StakeholderLevel stakeholderLevel) {
