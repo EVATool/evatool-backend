@@ -63,7 +63,7 @@ class ImpactStakeholderEventListenerTest extends EventListenerTest {
             stakeholderRepository.save(stakeholder);
 
             // when
-            var stakeholderDeletedEvent = new StakeholderDeletedEvent(this, json);
+            var stakeholderDeletedEvent = new StakeholderDeletedEvent( json);
             impactStakeholderEventListener.onStakeholderDeletedEvent(stakeholderDeletedEvent);
 
             // then
@@ -78,7 +78,7 @@ class ImpactStakeholderEventListenerTest extends EventListenerTest {
             var json = ImpactStakeholderJsonMapper.toJson(stakeholder);
 
             // when
-            var stakeholderDeletedEvent = new StakeholderDeletedEvent(this, json);
+            var stakeholderDeletedEvent = new StakeholderDeletedEvent( json);
 
             // then
             assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactStakeholderEventListener.onStakeholderDeletedEvent(stakeholderDeletedEvent));
@@ -94,7 +94,7 @@ class ImpactStakeholderEventListenerTest extends EventListenerTest {
 
             // when
             var impact = saveFullDummyImpact(stakeholder);
-            var stakeholderDeletedEvent = new StakeholderDeletedEvent(this, json);
+            var stakeholderDeletedEvent = new StakeholderDeletedEvent( json);
             impactStakeholderEventListener.onStakeholderDeletedEvent(stakeholderDeletedEvent);
             var impacts = impactRepository.findAllByStakeholderId(stakeholder.getId());
 
@@ -114,7 +114,7 @@ class ImpactStakeholderEventListenerTest extends EventListenerTest {
             stakeholderRepository.save(stakeholder);
 
             // when
-            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent(this, json);
+            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent( json);
             impactStakeholderEventListener.onStakeholderUpdatedEvent(stakeholderUpdatedEvent);
 
             // then
@@ -129,7 +129,7 @@ class ImpactStakeholderEventListenerTest extends EventListenerTest {
             var json = ImpactStakeholderJsonMapper.toJson(stakeholder);
 
             // when
-            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent(this, json);
+            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent( json);
 
             // then
             assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactStakeholderEventListener.onStakeholderUpdatedEvent(stakeholderUpdatedEvent));

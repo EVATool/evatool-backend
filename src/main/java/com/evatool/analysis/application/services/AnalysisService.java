@@ -7,6 +7,7 @@ import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.NumericId;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
+import com.evatool.analysis.domain.repository.StakeholderRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import com.evatool.global.event.requirements.RequirementDeletedEvent;
@@ -32,6 +33,9 @@ public class AnalysisService {
 
     @Autowired
     private AnalysisEventPublisher eventPublisher;
+
+    @Autowired
+    private StakeholderRepository stakeholderRepository;
 
     public List<AnalysisDTO> findAll() {
         List<Analysis> analysisList = analysisRepository.findAll();
@@ -101,6 +105,12 @@ public class AnalysisService {
         Optional<Analysis> analysisOptional = analysisRepository.findById(id);
         if(analysisOptional.isEmpty()) throw new EntityNotFoundException(Analysis.class, id);
         Analysis analysis = analysisOptional.get();
+        //delete Stakeholder
+        stakeholderRepository.findAll().forEach(stakeholder -> {
+            if(stakeholder.getAnalysis().getAnalysisId() == id){
+                stakeholderRepository.delete(stakeholder);
+            }
+        });
         analysisRepository.deleteById(id);
         eventPublisher.publishEvent(new RequirementDeletedEvent(analysis.toJson()));
     }
