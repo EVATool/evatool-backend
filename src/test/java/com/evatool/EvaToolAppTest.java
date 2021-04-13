@@ -93,7 +93,7 @@ class EvaToolAppTest {
 
             // when
             stakeholder.setStakeholderName("Family");
-            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent(this, stakeholder.toJson());
+            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent( stakeholder.toJson());
             analysisEventPublisher.publishEvent(stakeholderUpdatedEvent);
             var impactStakeholder = impactStakeholderRepository.findById(stakeholder.getStakeholderId()).orElse(null);
 
@@ -110,7 +110,7 @@ class EvaToolAppTest {
             analysisEventPublisher.publishEvent(stakeholderCreatedEvent);
 
             // when
-            var stakeholderDeletedEvent = new StakeholderDeletedEvent(this, stakeholder.toJson());
+            var stakeholderDeletedEvent = new StakeholderDeletedEvent( stakeholder.toJson());
             analysisEventPublisher.publishEvent(stakeholderDeletedEvent);
             var impactStakeholder = impactStakeholderRepository.findById(stakeholder.getStakeholderId()).orElse(null);
 
@@ -335,10 +335,10 @@ class EvaToolAppTest {
         }
 
         Impact createDummyImpact() {
-            var analysisAnalysis = new Analysis("TITLE","Description");
-            analysisAnalysis = analysisRepository.save(analysisAnalysis);
+            var anaAnalysis = new Analysis("", "");
+            anaAnalysis = analysisRepository.save(anaAnalysis);
             var stakeholder1 = new Stakeholder( "stakeholderName", 0, StakeholderLevel.NATURAL_PERSON);
-            stakeholder1.setAnalysis(analysisAnalysis);
+            stakeholder1.setAnalysis(anaAnalysis);
             stakeholder1 = stakeholderRepository.save(stakeholder1);
             var stakeholder = impactStakeholderRepository.save(new ImpactStakeholder(stakeholder1.getStakeholderId(), "Name", "Level"));
             var analysis = impactAnalysisRepository.save(new ImpactAnalysis(UUID.randomUUID()));

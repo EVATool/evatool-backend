@@ -13,6 +13,8 @@ import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
+import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
+import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,8 +92,9 @@ public class StakeholderService {
         {
             stakeholder.setGuiId(stakeholderDTO.getGuiId());
         }
-
-       return stakeholderMapper.map(stakeholderRepository.save(stakeholder));
+        Stakeholder stakeholder1 = stakeholderRepository.save(stakeholder);
+        eventPublisher.publishEvent(new StakeholderCreatedEvent(stakeholder1.toJson()));
+       return stakeholderMapper.map(stakeholder1);
     }
 
 
@@ -110,7 +113,7 @@ public class StakeholderService {
         }
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
         stakeholder = stakeholderRepository.save(stakeholder);
-        eventPublisher.publishEvent(new AnalysisUpdatedEvent(stakeholder.toJson()));
+        eventPublisher.publishEvent(new StakeholderUpdatedEvent(stakeholder.toJson()));
     }
 
     public void deleteStakeholder(UUID id) {
@@ -119,7 +122,7 @@ public class StakeholderService {
         if(optionalStakeholder.isEmpty()) throw new EntityNotFoundException(Stakeholder.class, id);
         Stakeholder stakeholder = optionalStakeholder.get();
         stakeholderRepository.deleteById(id);
-        eventPublisher.publishEvent(new StakeholderCreatedEvent(stakeholder.toJson()));
+        eventPublisher.publishEvent(new StakeholderDeletedEvent(stakeholder.toJson()));
     }
 
     private String generateGuiId(StakeholderLevel stakeholderLevel) {
