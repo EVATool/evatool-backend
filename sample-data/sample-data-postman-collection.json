@@ -24,7 +24,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"analysisName\": \"The DemPa-App\",\r\n    \"analysisDescription\": \"App to support patients with dementia.\"\r\n}",
+					"raw": "{\r\n    \"analysisName\": \"The DemPa-App\",\r\n    \"analysisDescription\": \"App to support patients with dementia.\",\r\n    \"isTemplate\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1227,6 +1227,144 @@
 					],
 					"path": [
 						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Variant (OwnHome)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"analysisId\": \"{{analysisId}}\",\r\n  \"archived\": false,\r\n  \"description\": \"Person suffering from dementia lives in his/her own home (e.g. appartment or house)\",\r\n  \"title\": \"Own Home\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/variants",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"variants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Variant (NursingHome)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"analysisId\": \"{{analysisId}}\",\r\n  \"archived\": false,\r\n  \"description\": \"Person suffering from dementia lives in in a nursing home\",\r\n  \"title\": \"Nursing Home\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/variants",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"variants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Variant (AdminContact)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"analysisId\": \"{{analysisId}}\",\r\n  \"archived\": false,\r\n  \"description\": \"ILA is administered by a contact person\",\r\n  \"title\": \"Admin Contact\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/variants",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"variants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Variant (SelfPaid)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"analysisId\": \"{{analysisId}}\",\r\n  \"archived\": false,\r\n  \"description\": \"ILA is paid for by the person suffering from dementia, or a relative\",\r\n  \"title\": \"Self Paid\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/variants",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"variants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Variant",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/variants",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"variants"
 					]
 				}
 			},
