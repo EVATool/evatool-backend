@@ -32,8 +32,6 @@ public class AnalysisControllerImpl implements AnalysisController {
   @Autowired
   private AnalysisRepository analysisRepository;
 
-  @Autowired
-  private AnalysisEventPublisher analysisEventPublisher;
 
   @Autowired
   private AnalysisService analysisService;
@@ -41,8 +39,6 @@ public class AnalysisControllerImpl implements AnalysisController {
   @Autowired
   private ValueServiceImpl valueService;
 
-  @Autowired
-  private AnalysisMapper analysisMapper;
 
   final Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);
 

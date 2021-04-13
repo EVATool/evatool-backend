@@ -1,4 +1,4 @@
-package com.evatool.analysis.model.repo;
+package com.evatool.analysis.domain.repo;
 import com.evatool.analysis.common.TestDataGenerator;
 import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.repository.StakeholderRepository;

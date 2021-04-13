@@ -31,7 +31,7 @@ public class AnalysisMapper {
         analysisDTO.setRootEntityID(analysis.getAnalysisId());
         analysisDTO.setImage(analysis.getImage());
         analysisDTO.setLastUpdate(analysis.getLastUpdate());
-        analysisDTO.setIsTemplate(analysis.getIsTemplate());
+        analysisDTO.setTemplate(analysis.getIsTemplate());
         analysisDTO.setUniqueString(analysis.getUniqueString());
         return analysisDTO;
     }

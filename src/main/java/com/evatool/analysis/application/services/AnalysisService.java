@@ -62,7 +62,7 @@ public class AnalysisService {
         analysis.setDescription(analysisDTO.getAnalysisDescription());
         analysis.setImage(analysisDTO.getImage());
         analysis.setLastUpdate(analysisDTO.getLastUpdate());
-        analysis.setImage(analysisDTO.getImage());
+        analysis.setIsTemplate(analysisDTO.getIsTemplate());
 
         analysis = analysisRepository.save(analysis);
         eventPublisher.publishEvent(new AnalysisCreatedEvent(analysis.toJson()));
@@ -76,7 +76,8 @@ public class AnalysisService {
         analysis.setDescription(analysisDTO.getAnalysisDescription());
         analysis.setImage(analysisDTO.getImage());
         analysis.setLastUpdate(analysisDTO.getLastUpdate());
-        analysis.setImage(analysisDTO.getImage());
+        analysis.setIsTemplate(analysisDTO.getIsTemplate());
+
 
         analysis = analysisRepository.save(analysis);
         eventPublisher.publishEvent(new AnalysisCreatedEvent(analysis.toJson()));

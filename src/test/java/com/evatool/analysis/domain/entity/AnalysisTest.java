@@ -1,4 +1,4 @@
-package com.evatool.analysis.model.entity;
+package com.evatool.analysis.domain.entity;
 
 import org.junit.jupiter.api.Test;
 

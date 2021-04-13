@@ -83,6 +83,10 @@ public class Analysis {
         return gson.toJson(this);
     }
 
+    public static Analysis fromJson(String json){
+        return new Gson().fromJson(json, Analysis.class);
+    }
+
     public String getUniqueString() {
         if (this.numericId == null || this.numericId.getNumericId() == null)
             return null;
