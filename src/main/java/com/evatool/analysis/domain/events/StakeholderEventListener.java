@@ -62,6 +62,7 @@ public class StakeholderEventListener {
             stakeholder.getImpact().forEach(impact->{
                 if(impact.getId() == impactJson.getId()){
                     impact.setImpactValue(impactJson.getValue());
+                    analysisImpactRepository.save(impact);
                 }
             });
             stakeholderRepository.save(stakeholder);
