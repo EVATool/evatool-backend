@@ -8,8 +8,8 @@ public class StakeholderDeletedEvent extends ApplicationEvent {
     @Getter
     private final String jsonPayload;
 
-    public StakeholderDeletedEvent(Object source, String jsonPayload) {
-        super(source);
+    public StakeholderDeletedEvent(String jsonPayload) {
+        super(jsonPayload);
         this.jsonPayload = jsonPayload;
     }
 }
