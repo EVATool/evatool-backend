@@ -128,14 +128,7 @@ public class ValueControllerImpl {
             @ApiResponse(code = 200, message = "OK")})
     public List<EntityModel<ValueDto>> getValuesByAnalysisId(@RequestParam("analysisId") UUID analysisId){
         logger.info("[GET] /values?analysisId={id}");
-        List<Value> valueList = valueRepository.findAll();
-
-        valueList.removeIf(value -> !value.getAnalysis().getAnalysisId().equals(analysisId));
-        if (valueList.isEmpty()){
-            return Collections.emptyList();
-        }
-        List<ValueDto> valueDtoList = new ArrayList<>();
-        valueList.forEach(value -> {valueDtoList.add(ValueDtoMapper.toDto(value));});
+        List<ValueDto> valueDtoList = valueService.findAllByAnalysisId(analysisId);
         return getValueWithLinks(valueDtoList);
     }
 
