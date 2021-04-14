@@ -66,7 +66,7 @@ class VariantsControllerTest {
         assertThat(updatedVariant).isNotNull();
         assertThat(updatedVariant.getTitle()).isEqualTo(newTitle);
         UUID tempId = updatedVariant.getId();
-        assertThrows(VariantCannotDeleteException.class, () -> variantController.deleteVariant(updatedVariant.getId()));
+        assertThrows(VariantCannotDeleteException.class, () -> variantController.deleteVariant(tempId));
 
         updatedVariant.setArchived(true);
         variantController.updateVariant(updatedVariant);
