@@ -9,8 +9,8 @@ import com.evatool.analysis.domain.model.NumericId;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.domain.repository.StakeholderRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
+import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
-import com.evatool.global.event.requirements.RequirementDeletedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +112,8 @@ public class AnalysisService {
                 stakeholderRepository.delete(stakeholder);
             }
         });
+
         analysisRepository.deleteById(id);
-        eventPublisher.publishEvent(new RequirementDeletedEvent(analysis.toJson()));
+        eventPublisher.publishEvent(new AnalysisDeletedEvent(analysis.toJson()));
     }
 }

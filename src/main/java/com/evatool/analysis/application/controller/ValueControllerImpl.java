@@ -4,7 +4,6 @@ import com.evatool.analysis.application.dto.ValueDto;
 import com.evatool.analysis.application.dto.ValueDtoMapper;
 import com.evatool.analysis.application.services.ValueService;
 import com.evatool.analysis.domain.enums.ValueType;
-import com.evatool.analysis.domain.model.Stakeholder;
 import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.ValueRepository;
 import io.swagger.annotations.ApiOperation;
@@ -127,16 +126,9 @@ public class ValueControllerImpl {
     @ApiOperation(value = "Read all value by analysis")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK")})
-    private List<EntityModel<ValueDto>> getValuesByAnalysisId(@RequestParam("analysisId") UUID analysisId){
+    public List<EntityModel<ValueDto>> getValuesByAnalysisId(@RequestParam("analysisId") UUID analysisId){
         logger.info("[GET] /values?analysisId={id}");
-        List<Value> valueList = valueRepository.findAll();
-
-        valueList.removeIf(value -> !value.getAnalysis().getAnalysisId().equals(analysisId));
-        if (valueList.isEmpty()){
-            return Collections.emptyList();
-        }
-        List<ValueDto> valueDtoList = new ArrayList<>();
-        valueList.forEach(value -> {valueDtoList.add(ValueDtoMapper.toDto(value));});
+        List<ValueDto> valueDtoList = valueService.findAllByAnalysisId(analysisId);
         return getValueWithLinks(valueDtoList);
     }
 

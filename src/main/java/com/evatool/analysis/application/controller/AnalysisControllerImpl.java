@@ -1,12 +1,10 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.dto.AnalysisDTO;
-import com.evatool.analysis.application.dto.AnalysisMapper;
 import com.evatool.analysis.application.dto.ValueDtoMapper;
 import com.evatool.analysis.application.interfaces.AnalysisController;
 import com.evatool.analysis.application.services.AnalysisService;
 import com.evatool.analysis.application.services.ValueServiceImpl;
-import com.evatool.analysis.domain.events.AnalysisEventPublisher;
 import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import io.swagger.annotations.ApiParam;

@@ -4,7 +4,6 @@ import com.evatool.analysis.application.dto.StakeholderDTO;
 import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.application.services.StakeholderService;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
-import com.evatool.analysis.domain.model.Stakeholder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +51,9 @@ public class StakeholderControllerImpl implements StakeholderController {
     }
 
     @Override
-    public ResponseEntity<EntityModel<StakeholderDTO>> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
+    public EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
         logger.info("[POST] /stakeholders");
-        return new ResponseEntity<>( new EntityModel<>(stakeholderService.create(stakeholderDTO)), HttpStatus.CREATED);
+        return generateLinks(stakeholderService.create(stakeholderDTO));
     }
 
     @Override
