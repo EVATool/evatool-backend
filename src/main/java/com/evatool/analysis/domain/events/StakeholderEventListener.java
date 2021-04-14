@@ -62,7 +62,7 @@ public class StakeholderEventListener {
             impact.setImpactValue(impactJson.getValue());
             impact = analysisImpactRepository.save(impact);
             Optional<Stakeholder> stakeholderOptional  = stakeholderRepository.findById(impactJson.getStakeholderId());
-            if(!impactOptional.isEmpty()) {
+            if(impactOptional.isPresent()) {
                 Stakeholder stakeholder = stakeholderOptional.get();
                 if(!stakeholder.getImpact().contains(impact)){
                     stakeholder.getImpact().add(impact);
