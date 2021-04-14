@@ -4,7 +4,6 @@ import com.evatool.analysis.application.dto.StakeholderDTO;
 import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.application.services.StakeholderService;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
-import com.evatool.analysis.domain.model.Stakeholder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
