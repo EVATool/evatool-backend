@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 public class AnalysisDTO {
@@ -22,50 +23,4 @@ public class AnalysisDTO {
     private Date lastUpdate;
     private Boolean isTemplate;
     private String uniqueString;
-
-    public void setRootEntityID(UUID rootEntityID) {
-        this.rootEntityID = rootEntityID;
-    }
-
-    public void setAnalysisName(String analysisName) {
-        if (analysisName == null){
-            throw new IllegalArgumentException("Analysis name cannot be null.");
-        }
-        this.analysisName = analysisName;
-    }
-
-    public void setAnalysisDescription(String analysisDescription) {
-        if (analysisDescription == null){
-            throw new IllegalArgumentException("Analysis description cannot be null.");
-        }
-        this.analysisDescription = analysisDescription;
-    }
-
-    public void setImage(String image) {
-        if (image == null){
-            throw new IllegalArgumentException("Analysis image cannot be null.");
-        }
-        this.image = image;
-    }
-
-    public void setLastUpdate(Date lastUpdate) {
-        if (lastUpdate == null){
-            throw new IllegalArgumentException("Analysis last update cannot be null.");
-        }
-        this.lastUpdate = lastUpdate;
-    }
-
-    public void setTemplate(Boolean template) {
-        if (template == null){
-            throw new IllegalArgumentException("Analysis template cannot be null.");
-        }
-        isTemplate = template;
-    }
-
-    public void setUniqueString(String uniqueString) {
-        if (uniqueString == null){
-            throw new IllegalArgumentException("Analysis unique string cannot be null.");
-        }
-        this.uniqueString = uniqueString;
-    }
 }
