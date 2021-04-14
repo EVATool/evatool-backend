@@ -47,7 +47,7 @@ public class Stakeholder {
 
 
     @Getter
-    @OneToMany
+    @OneToMany(orphanRemoval=true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<AnalysisImpact> impact = new ArrayList<>();
 

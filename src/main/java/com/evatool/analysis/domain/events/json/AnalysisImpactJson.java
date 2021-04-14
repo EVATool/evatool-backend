@@ -2,8 +2,6 @@ package com.evatool.analysis.domain.events.json;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.Column;
 import java.util.UUID;
 
 @Getter
