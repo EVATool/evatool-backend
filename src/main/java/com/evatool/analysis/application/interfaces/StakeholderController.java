@@ -50,7 +50,7 @@ public interface StakeholderController {
             @ApiResponse(code = 201, message = "The entity is inserted"),
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    ResponseEntity<EntityModel<StakeholderDTO>> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO);
+    EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO);
 
     @PutMapping("/stakeholders")
     @ApiOperation(value = "This method updated an stakeholder by his id")

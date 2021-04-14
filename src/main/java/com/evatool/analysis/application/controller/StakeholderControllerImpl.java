@@ -51,9 +51,9 @@ public class StakeholderControllerImpl implements StakeholderController {
     }
 
     @Override
-    public ResponseEntity<EntityModel<StakeholderDTO>> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
+    public EntityModel<StakeholderDTO> addStakeholder(@RequestBody StakeholderDTO stakeholderDTO) {
         logger.info("[POST] /stakeholders");
-        return new ResponseEntity<>( new EntityModel<>(stakeholderService.create(stakeholderDTO)), HttpStatus.CREATED);
+        return generateLinks(stakeholderService.create(stakeholderDTO));
     }
 
     @Override
