@@ -17,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 public class AnalysisExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(AnalysisExceptionHandler.class);
+    private static final String UNPROCESSABLEENTITY = "{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)";
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<AnalysisErrorMessage> handleEntityNotFoundException(EntityNotFoundException exception, WebRequest webRequest) {
@@ -27,21 +28,21 @@ public class AnalysisExceptionHandler {
 
     @ExceptionHandler(IllegalDtoValueException.class)
     public ResponseEntity<AnalysisErrorMessage> handleIllegalDtoValueException(IllegalDtoValueException exception, WebRequest webRequest) {
-        logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
+        logger.info(UNPROCESSABLEENTITY, exception.getClass().getSimpleName());
         AnalysisErrorMessage errorMessage = new AnalysisErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
         return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(EntityIdMustBeNullException.class)
     public ResponseEntity<AnalysisErrorMessage> handleEntityIdMustBeNullException(EntityIdMustBeNullException exception, WebRequest webRequest) {
-        logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
+        logger.info(UNPROCESSABLEENTITY, exception.getClass().getSimpleName());
         AnalysisErrorMessage errorMessage = new AnalysisErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
         return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(EntityIdRequiredException.class)
     public ResponseEntity<AnalysisErrorMessage> handleEntityIdRequiredException(EntityIdRequiredException exception, WebRequest webRequest) {
-        logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
+        logger.info(UNPROCESSABLEENTITY, exception.getClass().getSimpleName());
         AnalysisErrorMessage errorMessage = new AnalysisErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
         return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
     }

@@ -13,8 +13,8 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
-public class ImpactExceptionHandler {
-    private static final Logger logger = LoggerFactory.getLogger(ImpactExceptionHandler.class);
+public class VariantExceptionHandler {
+    private static final Logger logger = LoggerFactory.getLogger(VariantExceptionHandler.class);
 
     @ExceptionHandler(IllegalAnalysisException.class)
     public ResponseEntity<VariantsErrorMessage> handleEntityNotFoundException(IllegalAnalysisException exception, WebRequest webRequest) {

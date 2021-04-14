@@ -331,6 +331,8 @@ class EvaToolAppTest {
             impactValueRepository.deleteAll();
             impactStakeholderRepository.deleteAll();
             impactAnalysisRepository.deleteAll();
+            stakeholderRepository.deleteAll();
+            analysisRepository.deleteAll();
         }
 
         Impact createDummyImpact() {
