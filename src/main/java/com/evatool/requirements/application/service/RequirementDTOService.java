@@ -87,7 +87,9 @@ public class RequirementDTOService {
         requirement.setDescription(requirementDTO.getRequirementDescription());
         Collection<UUID> uuidsVariants = new ArrayList<>();
         for(EntityModel<VariantsDTO> entry:requirementDTO.getVariantsTitle()) {
-            uuidsVariants.add(entry.getContent().getEntityId());
+            if(entry.getContent()!=null) {
+                uuidsVariants.add(entry.getContent().getEntityId());
+            }
         }
         Collection<RequirementsVariant> requirementsVariantCollectionDTO = requirementsVariantsRepository.findAllById(uuidsVariants);
         //Remove the Variants which are removed
@@ -123,9 +125,13 @@ public class RequirementDTOService {
         }
         Collection<RequirementsVariant> requirementsVariantCollection = new ArrayList<>();
         for(EntityModel<VariantsDTO> entry:requirementDTO.getVariantsTitle()) {
-            Optional<RequirementsVariant> requirementsVariant = requirementsVariantsRepository.findById(entry.getContent().getEntityId());
-            if(requirementsVariant.isEmpty()) throw new EntityNotFoundException(RequirementsVariant.class,entry.getContent().getEntityId());
-            requirementsVariantCollection.add(requirementsVariant.get());
+            if(entry.getContent()!=null) {
+                Optional<RequirementsVariant> requirementsVariant = requirementsVariantsRepository.findById(entry.getContent().getEntityId());
+                if (requirementsVariant.isEmpty()) {
+                    throw new EntityNotFoundException(RequirementsVariant.class, entry.getContent().getEntityId());
+                }
+                requirementsVariantCollection.add(requirementsVariant.get());
+            }
         }
         requirement.setVariants(requirementsVariantCollection);
         requirementPointController.createPoints(requirement,requirementDTO);
