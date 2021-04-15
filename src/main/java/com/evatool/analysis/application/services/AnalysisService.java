@@ -90,7 +90,7 @@ public class AnalysisService {
             throw new EntityNotFoundException(Analysis.class, analysisDTO.getRootEntityID());
 
         Analysis analysis = analysisMapper.map(analysisDTO);
-        if (analysisDTO.getUniqueString() != null) {
+        if (analysisDTO.getUniqueString().equals("")) {
             var numericId = new NumericId();
             numericId.setNumericId(Integer.valueOf(analysisDTO.getUniqueString().replace("ANA", "")));
             analysis.setNumericId(numericId);
