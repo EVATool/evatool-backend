@@ -1,6 +1,7 @@
 package com.evatool.requirements.application.dto;
 
 import com.evatool.requirements.application.controller.RequirementsController;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.hateoas.EntityModel;
 
 import java.util.ArrayList;
@@ -12,7 +13,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 public class ValueDTO {
 
+    @ApiModelProperty(example = "0f1ab1fe-9dff-11eb-a8b3-0242ac130003", required = true)
     private UUID entityId;
+    @ApiModelProperty(example = "Title of the value")
     private String valueTitle;
 
     public ValueDTO() {

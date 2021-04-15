@@ -1,6 +1,7 @@
 package com.evatool.requirements.application.dto;
 
 import com.evatool.requirements.application.controller.RequirementsController;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.hateoas.EntityModel;
 
 import java.util.ArrayList;
@@ -13,8 +14,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class VariantsDTO {
 
 
+    @ApiModelProperty(example = "c985a8b8-9e00-11eb-a8b3-0242ac130003",required = true)
     private UUID entityId;
+    @ApiModelProperty(example = "Title of Variant")
     private String variantsTitle;
+    @ApiModelProperty(example = "true")
     private Boolean archived;
 
     public VariantsDTO() {
