@@ -423,7 +423,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"description\": \"Safety primarily means protecting.\",\r\n  \"guiId\": \"VAL1\",\r\n  \"name\": \"Safety\",\r\n  \"type\": \"SOCIAL\",\r\n  \"analysis\": {\r\n    \"rootEntityID\": \"{{analysisId}}\",\r\n    \"analysisName\": \"Die DemPa-App\",\r\n    \"analysisDescription\": \"App zur Unterstützung demenzkranker Patienten.\",\r\n    \"image\": \"nope\"\r\n  }\r\n}",
+					"raw": "{\r\n  \"description\": \"Safety primarily means protecting.\",\r\n  \"guiId\": \"VAL1\",\r\n  \"name\": \"Safety\",\r\n  \"type\": \"SOCIAL\",\r\n  \"archived\": false,\r\n  \"analysis\": {\r\n    \"rootEntityID\": \"{{analysisId}}\",\r\n    \"analysisName\": \"Die DemPa-App\",\r\n    \"analysisDescription\": \"App zur Unterstützung demenzkranker Patienten.\",\r\n    \"image\": \"nope\"\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -462,7 +462,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"Care is given and decisions and responsibility are taken on behalf of the other – the one in need – to the extent that that person is no longer able to do these things themselves [...].\",\r\n    \"guiId\": \"VAL2\",\r\n    \"name\": \"Care\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"description\": \"Care is given and decisions and responsibility are taken on behalf of the other – the one in need – to the extent that that person is no longer able to do these things themselves [...].\",\r\n    \"guiId\": \"VAL2\",\r\n    \"name\": \"Care\",\r\n    \"type\": \"SOCIAL\",\r\n    \"archived\": false,\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -501,7 +501,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"Does the system save effort (time, money, responsibilities, …), or does it require additional resources for its operation (compared to a situation without the system)?\",\r\n    \"guiId\": \"VAL3\",\r\n    \"name\": \"Liability\",\r\n    \"type\": \"ECONOMIC\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"description\": \"Does the system save effort (time, money, responsibilities, …), or does it require additional resources for its operation (compared to a situation without the system)?\",\r\n    \"guiId\": \"VAL3\",\r\n    \"name\": \"Liability\",\r\n    \"type\": \"ECONOMIC\",\r\n    \"archived\": false,\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -540,7 +540,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"The term autonomy […] is nowadays often equated with an individual’s maximum freedom of decision and action.\",\r\n    \"guiId\": \"VAL4\",\r\n    \"name\": \"Autonomy\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"description\": \"The term autonomy […] is nowadays often equated with an individual’s maximum freedom of decision and action.\",\r\n    \"guiId\": \"VAL4\",\r\n    \"name\": \"Autonomy\",\r\n    \"type\": \"SOCIAL\",\r\n    \"archived\": false,\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -579,7 +579,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"Participation […] means providing people with access, rights, services, and assets that enable them to live together with other people in society.\",\r\n    \"guiId\": \"VAL5\",\r\n    \"name\": \"Participation\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"description\": \"Participation […] means providing people with access, rights, services, and assets that enable them to live together with other people in society.\",\r\n    \"guiId\": \"VAL5\",\r\n    \"name\": \"Participation\",\r\n    \"type\": \"SOCIAL\",\r\n    \"archived\": false,\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -618,7 +618,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"(1) Transparency: inform data subject about data use. (2) Purpose limitation / minimization: Store as few data as possible, and use it only for its dedicated purpose. (3) Integrity: prevent unauthorized access. (4) The right to be forgotten.\",\r\n    \"guiId\": \"VAL6\",\r\n    \"name\": \"Privacy\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"description\": \"(1) Transparency: inform data subject about data use. (2) Purpose limitation / minimization: Store as few data as possible, and use it only for its dedicated purpose. (3) Integrity: prevent unauthorized access. (4) The right to be forgotten.\",\r\n    \"guiId\": \"VAL6\",\r\n    \"name\": \"Privacy\",\r\n    \"type\": \"SOCIAL\",\r\n    \"archived\": false,\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -657,7 +657,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"Fairness means that the same standards are applied to everyone, and that ressources are provided according to degree of neediness. \",\r\n    \"guiId\": \"VAL7\",\r\n    \"name\": \"Fairness\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"description\": \"Fairness means that the same standards are applied to everyone, and that ressources are provided according to degree of neediness. \",\r\n    \"guiId\": \"VAL7\",\r\n    \"name\": \"Fairness\",\r\n    \"type\": \"SOCIAL\",\r\n    \"archived\": false,\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -696,7 +696,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"A persons' freedom to evaluate and perceive herself according to her own personal mental model. Strongly related is the perceived self-efficacy, the expectation to successfully carry out intended acts based on one's competences.\",\r\n    \"guiId\": \"VAL8\",\r\n    \"name\": \"Self-Conception\",\r\n    \"type\": \"SOCIAL\",\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"description\": \"A persons' freedom to evaluate and perceive herself according to her own personal mental model. Strongly related is the perceived self-efficacy, the expectation to successfully carry out intended acts based on one's competences.\",\r\n    \"guiId\": \"VAL8\",\r\n    \"name\": \"Self-Conception\",\r\n    \"type\": \"SOCIAL\",\r\n    \"archived\": false,\r\n    \"analysis\": {\r\n        \"rootEntityID\": \"{{analysisId}}\",\r\n        \"analysisName\": \"The DemPa-App\",\r\n        \"analysisDescription\": \"App to support patients with dementia.\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1234,6 +1234,19 @@
 		},
 		{
 			"name": "1. Variant (OwnHome)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"variant1Id\", jsonData.id);\r",
+							"postman.setEnvironmentVariable(\"variant1Desc\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -1261,6 +1274,19 @@
 		},
 		{
 			"name": "2. Variant (NursingHome)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"variant2Id\", jsonData.id);\r",
+							"postman.setEnvironmentVariable(\"variant2Desc\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -1288,6 +1314,19 @@
 		},
 		{
 			"name": "3. Variant (AdminContact)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"variant3Id\", jsonData.id);\r",
+							"postman.setEnvironmentVariable(\"variant3Desc\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -1315,6 +1354,19 @@
 		},
 		{
 			"name": "4. Variant (SelfPaid)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"variant4Id\", jsonData.id);\r",
+							"postman.setEnvironmentVariable(\"variant4Desc\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -1365,6 +1417,87 @@
 					],
 					"path": [
 						"variants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Requirement",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"projectID\": \"{{analysisId}}\",\r\n    \"requirementDescription\": \"ILA must provide training material (e.g. videos) in easy language, explaining system and its advantages, but also the contact person's liability and the system's limitations.\",\r\n    \"variantsTitle\": [\r\n        {\r\n            \"entityId\": \"{{variant1Id}}\",\r\n            \"variantsTitle\": \"{{variant1Desc}}\"\r\n        }\r\n    ],\r\n    \"requirementImpactPoints\": [\r\n        {\r\n            \"entityId\": \"{{impact1Id}}\",\r\n            \"points\": 1.0\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/requirements",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"requirements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Requirement",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"projectID\": \"{{analysisId}}\",\r\n    \"requirementDescription\": \"If there are multiple contact persons, each with limited availability: in that case, ILA's registration process for contact persons must be designed in a such a way that times where none of the contact persons is available, this is immediately visible and obvious.\",\r\n    \"variantsTitle\": [\r\n        {\r\n            \"entityId\": \"{{variant1Id}}\",\r\n            \"variantsTitle\": \"{{variant1Desc}}\"\r\n        }\r\n    ],\r\n    \"requirementImpactPoints\": [\r\n        {\r\n            \"entityId\": \"{{impact1Id}}\",\r\n            \"points\": 1.0\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/requirements",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"requirements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Requirement",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"projectID\": \"{{analysisId}}\",\r\n    \"requirementDescription\": \"The administrator must be able to set grace period before an alert about leaving the \\\"usual zone\\\" is triggered.\",\r\n    \"variantsTitle\": [\r\n        {\r\n            \"entityId\": \"{{variant1Id}}\",\r\n            \"variantsTitle\": \"{{variant1Desc}}\"\r\n        }\r\n    ],\r\n    \"requirementImpactPoints\": [\r\n        {\r\n            \"entityId\": \"{{impact1Id}}\",\r\n            \"points\": 1.0\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/requirements",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"requirements"
 					]
 				}
 			},
