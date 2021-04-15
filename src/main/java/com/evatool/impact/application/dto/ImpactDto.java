@@ -22,7 +22,7 @@ public class ImpactDto {
     @Setter
     private UUID id;
 
-    @ApiModelProperty(example = "IMP01")
+    @ApiModelProperty(example = "IMP10")
     @Getter
     @Setter
     private String uniqueString;

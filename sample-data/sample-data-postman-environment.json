@@ -151,9 +151,49 @@
 			"key": "impact12Id",
 			"value": "\"\"",
 			"enabled": true
+		},
+		{
+			"key": "variant1Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "variant2Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "variant3Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "variant4Id",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "variant1Desc",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "variant2Desc",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "variant3Desc",
+			"value": "\"\"",
+			"enabled": true
+		},
+		{
+			"key": "variant4Desc",
+			"value": "\"\"",
+			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2021-04-13T08:05:45.193Z",
-	"_postman_exported_using": "Postman/8.2.1"
+	"_postman_exported_at": "2021-04-15T16:04:31.666Z",
+	"_postman_exported_using": "Postman/8.2.2"
 }
