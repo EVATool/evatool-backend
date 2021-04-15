@@ -55,7 +55,8 @@ public class VariantController {
     @ApiOperation(value = "getVariantsByAnalysis", notes = "get list of all variants by analysis id", nickname = "getVariantsByAnalysis")
     @ApiResponse(code = 201, message = "Created successfully", response = VariantDto.class, responseContainer = "Variant")
     @GetMapping(value = VARIANTS,params = "analysisId")
-    public ResponseEntity<List<EntityModel<VariantDto>>> getVariantsByAnalysis(@RequestParam("analysisId") UUID analysisId){
+    public ResponseEntity<List<EntityModel<VariantDto>>> getVariantsByAnalysis(
+            @RequestParam("analysisId") UUID analysisId){
         logger.info("[GET] /variants?analysisId={id}");
         return new ResponseEntity<>(generateLinks(variantService.getVariantsByAnalysis(analysisId)), HttpStatus.OK);
     }
