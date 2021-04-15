@@ -34,17 +34,17 @@ public class VariantController {
     @Autowired
     VariantService variantService;
 
-    @ApiOperation(value = "postVariant", notes = "post a new variant", nickname = "postVariant")
+    @ApiOperation(value = "postVariant", notes = "post a new variant", nickname = "postVariant", tags = "Variants")
     @ApiResponse(code = 201, message = "Created successfully", response = VariantDto.class, responseContainer = "Variant")
-    @PostMapping(VARIANTS)
+    @PostMapping(value = VARIANTS, consumes = {"application/json"} , produces = {"application/json"})
     public ResponseEntity<EntityModel<VariantDto>> createVariant(@RequestBody VariantDto newVariantDto) {
         logger.info("[POST] /variants");
         return new ResponseEntity<>(generateLinks(variantService.createVariant(newVariantDto)), HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "getVariant", notes = "get a variant", nickname = "getVariant")
+    @ApiOperation(value = "getVariant", notes = "get a variant", nickname = "getVariant", tags = "Variants")
     @ApiResponse(code = 201, message = "Created successfully", response = VariantDto.class, responseContainer = "Variant")
-    @GetMapping(VARIANTS_ID)
+    @GetMapping(value = VARIANTS_ID, produces = {"application/json"})
     public ResponseEntity<EntityModel<VariantDto>> getVariant(
             @ApiParam(name = "variantId", value = "identification of a Variant", required = true)
             @PathVariable UUID id) {
@@ -52,26 +52,26 @@ public class VariantController {
         return new ResponseEntity<>(generateLinks(variantService.getVariant(id)), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "getVariantsByAnalysis", notes = "get list of all variants by analysis id", nickname = "getVariantsByAnalysis")
+    @ApiOperation(value = "getVariantsByAnalysis", notes = "get list of all variants by analysis id", nickname = "getVariantsByAnalysis", tags = "Variants")
     @ApiResponse(code = 201, message = "Created successfully", response = VariantDto.class, responseContainer = "Variant")
-    @GetMapping(value = VARIANTS,params = "analysisId")
+    @GetMapping(value = VARIANTS, params = "analysisId", produces = {"application/json"})
     public ResponseEntity<List<EntityModel<VariantDto>>> getVariantsByAnalysis(@RequestParam("analysisId") UUID analysisId){
         logger.info("[GET] /variants?analysisId={id}");
         return new ResponseEntity<>(generateLinks(variantService.getVariantsByAnalysis(analysisId)), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "getAllVariants", notes = "get list of all variants", nickname = "getAllVariants")
+    @ApiOperation(value = "getAllVariants", notes = "get list of all variants", nickname = "getAllVariants", tags = "Variants")
     @ApiResponse(code = 200, message = "Successful retrieval", response = VariantDto.class, responseContainer = "List")
-    @GetMapping(VARIANTS)
+    @GetMapping(value = VARIANTS, produces = {"application/json"})
     public ResponseEntity<List<EntityModel<VariantDto>>> getAllVariants() {
         logger.info("[GET] /variants");
 
         return new ResponseEntity<>(generateLinks(variantService.getAllVariants()), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "putVariants", notes = "put a variants", nickname = "putVariant")
+    @ApiOperation(value = "putVariants", notes = "put a variants", nickname = "putVariant", tags = "Variants")
     @ApiResponse(code = 200, message = "Successful changed", response = VariantDto.class, responseContainer = "List")
-    @PutMapping(VARIANTS)
+    @PutMapping(value = VARIANTS, consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<EntityModel<VariantDto>> updateVariant(
             @ApiParam(name = "variantId", value = "identification of a Variant", required = true)
             @RequestBody VariantDto updatedVariantDto) {
@@ -79,9 +79,9 @@ public class VariantController {
         return new ResponseEntity<>(generateLinks(variantService.updateVariant(updatedVariantDto)), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "deleteVariants", notes = "delete a variants", nickname = "deleteVariant")
+    @ApiOperation(value = "deleteVariants", notes = "delete a variants", nickname = "deleteVariant", tags = "Variants")
     @ApiResponse(code = 200, message = "Successful deleted", response = VariantDto.class, responseContainer = "List")
-    @DeleteMapping(value = VARIANTS_ID)
+    @DeleteMapping(value = VARIANTS_ID, produces = {"application/json"})
     public ResponseEntity<Void> deleteVariant(
             @ApiParam(name = "variantId", value = "identification of a Variant", required = true)
             @PathVariable UUID id) {
