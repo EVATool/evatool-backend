@@ -24,7 +24,7 @@ public class AnalysisDTO {
     @ApiModelProperty(example = "Lorem ipsum dolor sit amet, consectetur adipisici elit")
     private String analysisDescription;
 
-    @ApiModelProperty(example = "https://img.webme.com/pic/g/gruenbaum-handball/teamfoto_d-jugend.jpg")
+    @ApiModelProperty(example = "https://img.teamfoto_d-.jpg")
     private String image;
 
     @ApiModelProperty(example = "31.12.9999")
