@@ -38,7 +38,7 @@ public class Value {
     private ValueType type;
 
     @Getter
-    @Column(name = "DESCRIPTION", nullable = false)
+    @Column(name = "DESCRIPTION", nullable = false, length = 4096)
     private String description;
 
     @Getter

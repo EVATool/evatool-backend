@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static com.evatool.impact.common.TestDataGenerator.createDummyRequirement;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class ImpactRequirementTest {
+class ImpactRequirementTest {
 
     @Test
     void testConstructor_NullId_ThrowIllegalArgumentException() {

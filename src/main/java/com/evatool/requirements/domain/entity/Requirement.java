@@ -22,6 +22,7 @@ public class Requirement {
     @GenericGenerator(name = "SuperEntityUuidGenerator", strategy = "com.evatool.requirements.domain.entity.SuperEntityUuidGenerator")
     @Column(columnDefinition = "CHAR(36)")
     private UUID id;
+    @Column(length = 4096)
     private String description;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)

@@ -12,7 +12,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ValueDtoMapperTest {
+class ValueDtoMapperTest {
 
     @Test
     void testToDto_RecreatedValue_EqualsValue() {
