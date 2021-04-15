@@ -30,13 +30,11 @@ public class AnalysisControllerImpl implements AnalysisController {
   @Autowired
   private AnalysisRepository analysisRepository;
 
-
   @Autowired
   private AnalysisService analysisService;
 
   @Autowired
   private ValueServiceImpl valueService;
-
 
   final Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);
 
