@@ -4,7 +4,6 @@ package com.evatool.requirements.application.controller;
 import com.evatool.requirements.application.dto.RequirementDTO;
 import com.evatool.requirements.application.service.RequirementDTOService;
 import com.evatool.requirements.domain.repository.RequirementPointRepository;
-import com.evatool.requirements.domain.repository.RequirementRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -32,9 +31,6 @@ public class RequirementsController {
 
 	@Autowired
 	private RequirementDTOService dtoService;
-
-	@Autowired
-	private RequirementRepository requirementRepository;
 
 	@Autowired
 	private RequirementPointRepository requirementPointRepository;
