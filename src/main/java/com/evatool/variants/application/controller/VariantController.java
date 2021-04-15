@@ -22,8 +22,6 @@ import static com.evatool.variants.application.services.VariantsUriHelper.VARIAN
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-
-@Api(value = "VariantsController", tags = "variants")
 @RestController
 public class VariantController {
 
