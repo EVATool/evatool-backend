@@ -1,59 +1,56 @@
 package com.evatool.analysis.application.interfaces;
 
 import com.evatool.analysis.application.dto.AnalysisDTO;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-@Api("API-endpoint for a analysis")
 public interface AnalysisController {
 
-    @GetMapping("/analysis")
-    @ApiOperation(value = "This method returns a list of all analysis")
+    @GetMapping(value = "/analysis", produces = {"application/json"})
+    @ApiOperation(value = "This method returns a list of all analysis", nickname = "AnalysesAsList", tags = "Analysis")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "All entities returned")})
-    List<EntityModel<AnalysisDTO>> getAnalysisList(@PathVariable Boolean isTemplate);
+    List<EntityModel<AnalysisDTO>> getAnalysisList(@ApiParam(value = "Is Template?") @Valid @PathVariable Boolean isTemplate);
 
-    @GetMapping("/analysis/{id}")
-    @ApiOperation(value = "This method returns a value of an analysis by ID")
+    @GetMapping(value = "/analysis/{id}", produces = {"application/json"})
+    @ApiOperation(value = "This method returns a value of an analysis by ID", nickname = "findAnalysis", tags = "Analysis")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "The entity was found"),
             @ApiResponse(code = 400, message = "The id was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    EntityModel<AnalysisDTO> getAnalysisById(@PathVariable UUID id);
+    EntityModel<AnalysisDTO> getAnalysisById(@ApiParam(value = "Analysis ID") @Valid @PathVariable UUID id);
 
-    @PostMapping("/analysis")
-    @ApiOperation(value = "This method add an analysis")
+    @PostMapping(value = "/analysis", consumes = {"application/json"}, produces = {"application/json"})
+    @ApiOperation(value = "This method add an analysis", tags = "Analysis")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "The entity is inserted"),
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    ResponseEntity<EntityModel<AnalysisDTO>> addAnalysis(@RequestBody AnalysisDTO analysisDTO);
+    ResponseEntity<EntityModel<AnalysisDTO>> addAnalysis(@ApiParam(value = "Analysis") @Valid @RequestBody AnalysisDTO analysisDTO);
 
-    @PutMapping("/analysis")
-    @ApiOperation(value = "This method updated an Analysis by his ID")
+    @PutMapping(value = "/analysis", consumes = {"application/json"}, produces = {"application/json"})
+    @ApiOperation(value = "This method updated an Analysis by his ID", tags = "Analysis")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity is deleted"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    EntityModel<AnalysisDTO> updateAnalysis(@RequestBody AnalysisDTO analysisDTO);
+    EntityModel<AnalysisDTO> updateAnalysis(@ApiParam(value = "Analysis") @Valid @RequestBody AnalysisDTO analysisDTO);
 
-    @DeleteMapping("/analysis/{id}")
-    @ApiOperation(value = "This method delete an analysis By his ID ")
+    @DeleteMapping(value = "/analysis/{id}")
+    @ApiOperation(value = "This method delete an analysis By his ID ", tags = "Analysis")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity is updated"),
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    ResponseEntity<Void> deleteAnalysis(@PathVariable UUID id);
+    ResponseEntity<Void> deleteAnalysis(@ApiParam("Analysis ID")@PathVariable UUID id);
 
     @PostMapping("/analysis/deep-copy/{id}")
-    @ApiOperation(value = "This method deep copies an analysis with its values")
+    @ApiOperation(value = "This method deep copies an analysis with its values", tags = "Analysis")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity is updated"),
             @ApiResponse(code = 400, message = "The entity is invalid"),
