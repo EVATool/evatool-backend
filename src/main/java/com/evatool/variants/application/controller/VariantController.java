@@ -25,7 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
-@Api(value = "VariantsController", tags = "variants")
+@Api(value = "VariantsController", tags = "Variants")
 @RestController
 public class VariantController {
 

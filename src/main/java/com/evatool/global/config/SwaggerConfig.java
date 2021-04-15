@@ -43,9 +43,13 @@ public class SwaggerConfig {
 
     private ApiInfo getAPIMetaData() {
         String archiLabUrl = "https://archi-lab.io/";
-        return new ApiInfo("EVA-tool", "The backend of the Eva-tool","1.0",
-                "",
-                new Contact("Stefan Bente", archiLabUrl,"stefan.bente@th-koeln.de").toString(),
-                archiLabUrl, archiLabUrl);
+        Contact contact = new Contact("Stefan Bente", archiLabUrl, "stefan.bente@th-koeln.de");
+        ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder()
+                .description("The backend of the Eva-tool")
+                .title("EVA-tool")
+                .version("1.0")
+                .contact(contact);
+        return apiInfoBuilder.build();
+        
     }
 }
