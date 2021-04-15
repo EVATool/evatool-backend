@@ -14,5 +14,7 @@ public interface RequirementRepository extends JpaRepository<Requirement, UUID> 
 
     Collection<Requirement> findByRequirementsAnalysis(RequirementsAnalysis requirementsAnalysis);
 
+    void deleteAllByRequirementsAnalysis(RequirementsAnalysis requirementsAnalysis);
+
 }
 
