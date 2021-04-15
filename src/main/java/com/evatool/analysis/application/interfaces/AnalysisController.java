@@ -35,7 +35,7 @@ public interface AnalysisController {
             @ApiResponse(code = 201, message = "The entity is inserted"),
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    EntityModel<AnalysisDTO> addAnalysis(@RequestBody AnalysisDTO analysisDTO);
+    ResponseEntity<EntityModel<AnalysisDTO>> addAnalysis(@RequestBody AnalysisDTO analysisDTO);
 
     @PutMapping("/analysis")
     @ApiOperation(value = "This method updated an Analysis by his ID")
@@ -58,5 +58,5 @@ public interface AnalysisController {
             @ApiResponse(code = 200, message = "The entity is updated"),
             @ApiResponse(code = 400, message = "The entity is invalid"),
             @ApiResponse(code = 404, message = "The entity is not found")})
-    EntityModel<AnalysisDTO> deepCopyAnalysis(@PathVariable UUID id, @RequestBody AnalysisDTO analysisDTO);
+    ResponseEntity<EntityModel<AnalysisDTO>> deepCopyAnalysis(@PathVariable UUID id, @RequestBody AnalysisDTO analysisDTO);
 }

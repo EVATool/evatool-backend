@@ -8,8 +8,8 @@ public class StakeholderUpdatedEvent extends ApplicationEvent {
     @Getter
     private final String jsonPayload;
 
-    public StakeholderUpdatedEvent(Object source, String jsonPayload) {
-        super(source);
+    public StakeholderUpdatedEvent(String jsonPayload) {
+        super(jsonPayload);
         this.jsonPayload = jsonPayload;
     }
 }

@@ -4,6 +4,7 @@ import com.evatool.analysis.domain.enums.StakeholderLevel;
 import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
-
+@ToString
 @Entity
 @Table(name = "ANA_STAKEHOLDER")
 public class Stakeholder {
@@ -53,7 +54,7 @@ public class Stakeholder {
 
     @Getter
     @Setter
-    @ManyToOne(optional = false) // TODO has to become optional=false
+    @ManyToOne(optional = false)
     private Analysis analysis;
 
     /**

@@ -1,4 +1,4 @@
-package com.evatool.analysis.model.repo;
+package com.evatool.analysis.domain.repo;
 
 import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.domain.repository.AnalysisRepository;

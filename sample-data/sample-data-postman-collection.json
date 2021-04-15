@@ -24,7 +24,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"analysisName\": \"The DemPa-App\",\r\n    \"analysisDescription\": \"App to support patients with dementia.\"\r\n}",
+					"raw": "{\r\n    \"analysisName\": \"The DemPa-App\",\r\n    \"analysisDescription\": \"App to support patients with dementia.\",\r\n    \"isTemplate\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -81,7 +81,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Person Suffering From Dementia\"\r\n}",
+					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Person Suffering From Dementia\",\r\n  \"analysisId\":  \"{{analysisId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -120,7 +120,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"ORGANIZATION\",\r\n  \"stakeholderName\": \"Health Insurance\"\r\n}",
+					"raw": "{\r\n    \"priority\": 1,\r\n    \"stakeholderLevel\": \"ORGANIZATION\",\r\n    \"stakeholderName\": \"Health Insurance\",\r\n    \"analysisId\": \"{{analysisId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -159,7 +159,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Contact Person\"\r\n}",
+					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Contact Person\",\r\n  \"analysisId\": \"{{analysisId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -198,7 +198,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"ORGANIZATION\",\r\n  \"stakeholderName\": \"Nursing Home\"\r\n}",
+					"raw": "{\r\n    \"priority\": 1,\r\n    \"stakeholderLevel\": \"ORGANIZATION\",\r\n    \"stakeholderName\": \"Nursing Home\",\r\n    \"analysisId\": \"{{analysisId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -237,7 +237,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Alert Button User\"\r\n}",
+					"raw": "{\r\n    \"priority\": 1,\r\n    \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n    \"stakeholderName\": \"Alert Button User\",\r\n    \"analysisId\": \"{{analysisId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -276,7 +276,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Nursing Homer Management\"\r\n}",
+					"raw": "{\r\n    \"priority\": 1,\r\n    \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n    \"stakeholderName\": \"Nursing Homer Management\",\r\n    \"analysisId\": \"{{analysisId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -315,7 +315,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n  \"stakeholderName\": \"Emergency Call System Operator\"\r\n}",
+					"raw": "{\r\n    \"priority\": 1,\r\n    \"stakeholderLevel\": \"NATURAL_PERSON\",\r\n    \"stakeholderName\": \"Emergency Call System Operator\",\r\n    \"analysisId\": \"{{analysisId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -354,7 +354,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"priority\": 1,\r\n  \"stakeholderLevel\": \"SOCIETY\",\r\n  \"stakeholderName\": \"Society\"\r\n}",
+					"raw": "{\r\n    \"priority\": 1,\r\n    \"stakeholderLevel\": \"SOCIETY\",\r\n    \"stakeholderName\": \"Society\",\r\n    \"analysisId\": \"{{analysisId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1227,6 +1227,144 @@
 					],
 					"path": [
 						"impacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Variant (OwnHome)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"analysisId\": \"{{analysisId}}\",\r\n  \"archived\": false,\r\n  \"description\": \"Person suffering from dementia lives in his/her own home (e.g. appartment or house)\",\r\n  \"title\": \"Own Home\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/variants",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"variants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Variant (NursingHome)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"analysisId\": \"{{analysisId}}\",\r\n  \"archived\": false,\r\n  \"description\": \"Person suffering from dementia lives in in a nursing home\",\r\n  \"title\": \"Nursing Home\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/variants",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"variants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Variant (AdminContact)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"analysisId\": \"{{analysisId}}\",\r\n  \"archived\": false,\r\n  \"description\": \"ILA is administered by a contact person\",\r\n  \"title\": \"Admin Contact\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/variants",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"variants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Variant (SelfPaid)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"analysisId\": \"{{analysisId}}\",\r\n  \"archived\": false,\r\n  \"description\": \"ILA is paid for by the person suffering from dementia, or a relative\",\r\n  \"title\": \"Self Paid\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/variants",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"variants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Variant",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/variants",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"variants"
 					]
 				}
 			},

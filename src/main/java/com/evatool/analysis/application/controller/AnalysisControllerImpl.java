@@ -1,23 +1,18 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.dto.AnalysisDTO;
-import com.evatool.analysis.application.dto.AnalysisMapper;
 import com.evatool.analysis.application.dto.ValueDtoMapper;
 import com.evatool.analysis.application.interfaces.AnalysisController;
-import com.evatool.analysis.application.services.AnalysisDTOService;
+import com.evatool.analysis.application.services.AnalysisService;
 import com.evatool.analysis.application.services.ValueServiceImpl;
-import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
-import com.evatool.analysis.domain.events.AnalysisEventPublisher;
-import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
-import com.evatool.global.event.analysis.AnalysisCreatedEvent;
-import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,73 +30,53 @@ public class AnalysisControllerImpl implements AnalysisController {
   @Autowired
   private AnalysisRepository analysisRepository;
 
-  @Autowired
-  private AnalysisEventPublisher analysisEventPublisher;
 
   @Autowired
-  private AnalysisDTOService analysisDTOService;
+  private AnalysisService analysisService;
 
   @Autowired
   private ValueServiceImpl valueService;
 
-  @Autowired
-  private AnalysisMapper analysisMapper;
 
   final Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);
 
   @Override
   public List<EntityModel<AnalysisDTO>> getAnalysisList(
           @ApiParam(value = "Is A Template") @Valid @RequestParam(value = "isTemplate", required = false) Boolean isTemplate) {
-    logger.info("[GET] /analysis");
-    List<Analysis> analysisList = analysisRepository.findAll();
-    if (analysisList.isEmpty()) {
-      return Collections.emptyList();
-    }
-    return generateLinks(analysisDTOService.findAll(analysisList));
+    logger.info("[GET] /analyses");
+    return generateLinks(analysisService.findAll());
   }
 
   @Override
   public EntityModel<AnalysisDTO> getAnalysisById(UUID id) {
-    logger.info("[GET] /analysis/{id}");
-    Optional<Analysis> analysis = analysisRepository.findById(id);
-    if (analysis.isEmpty()) {
-      throw new EntityNotFoundException(Analysis.class, id);
-    }
-    return generateLinks(analysisDTOService.findById(analysis.get()));
+    logger.info("[POST] /analyses");
+    return generateLinks(analysisService.findById(id));
   }
 
   @Override
-  public EntityModel<AnalysisDTO> addAnalysis(@RequestBody AnalysisDTO analysisDTO) {
-    logger.info("[POST] /analysis");
-    Analysis analysis = analysisRepository.save(analysisDTOService.create(analysisDTO));
-    analysisEventPublisher.publishEvent(new AnalysisCreatedEvent(analysis.toJson()));
-    return getAnalysisById(analysis.getAnalysisId());
+  public ResponseEntity<EntityModel<AnalysisDTO>> addAnalysis(@RequestBody AnalysisDTO analysisDTO) {
+    logger.info("[POST] /analyses");
+    return new ResponseEntity<>(getAnalysisById(analysisService.createAnalysisWithUUID(analysisDTO)), HttpStatus.CREATED);
   }
 
   @Override
   public EntityModel<AnalysisDTO> updateAnalysis(@RequestBody AnalysisDTO analysisDTO) {
-    logger.info("[PUT] /analysis");
-    analysisDTOService.update(analysisDTO);
+    logger.info("[PUT] /analyses");
+    analysisService.update(analysisDTO);
     return getAnalysisById(analysisDTO.getRootEntityID());
   }
 
   @Override
   public ResponseEntity<Void> deleteAnalysis(UUID id) {
-    logger.info("[DELETE] /analysis/{id}");
-    Optional<Analysis> analysisOptional = analysisRepository.findById(id);
-    if (analysisOptional.isEmpty()) {
-      throw new EntityNotFoundException(Analysis.class, id);
-    }
-    Analysis analysis = analysisOptional.get();
-    analysisRepository.deleteById(id);
-    analysisEventPublisher.publishEvent(new AnalysisDeletedEvent(analysis.toString()));
+    logger.info("[DELETE] /analyses/{id}");
+    analysisService.deleteAnalysis(id);
     return ResponseEntity.ok().build();
   }
 
   @Override
-  public EntityModel<AnalysisDTO> deepCopyAnalysis(UUID id, AnalysisDTO analysisDTO) {
+  public ResponseEntity<EntityModel<AnalysisDTO>> deepCopyAnalysis(UUID id, AnalysisDTO analysisDTO) {
     var newAnalysisDto = addAnalysis(analysisDTO);
-    var newAnalysis = analysisRepository.findById(newAnalysisDto.getContent().getRootEntityID()).get();
+    var newAnalysis = analysisRepository.findById(newAnalysisDto.getBody().getContent().getRootEntityID()).get();
 
     var templateAnalysisValues = valueService.findAllByAnalysisId(id);
     for (var value : templateAnalysisValues) {

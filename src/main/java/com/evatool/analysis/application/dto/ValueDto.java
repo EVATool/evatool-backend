@@ -7,48 +7,32 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-@ApiModel(value = "ImpactValue", description = "ImpactValue of an Values")
+@ApiModel(value = "Value", description = "ImpactValue of an Values")
+@Getter
+@Setter
 @EqualsAndHashCode
 @ToString
 public class ValueDto {
 
     @ApiModelProperty
-    @Getter
-    @Setter
     private UUID id;
 
     @ApiModelProperty(required = true)
-    @Getter
-    @Setter
-    @NotNull
     private String name;
 
     @ApiModelProperty(required = true)
-    @Getter
-    @Setter
-    @NotNull
     private ValueType type;
 
     @ApiModelProperty(required = true)
-    @Getter
-    @Setter
-    @NotNull
     private String description;
 
     @ApiModelProperty(required = true)
-    @Getter
-    @Setter
-    @NotNull
     private AnalysisDTO analysis;
 
     @ApiModelProperty(required = true)
-    @Getter
-    @Setter
-    @NotNull
-    private Boolean archived = false;
+    private Boolean archived ;
+
+
 }

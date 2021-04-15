@@ -1,7 +1,7 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.application.dto.ValueDto;
-import com.evatool.analysis.application.services.AnalysisDTOService;
+import com.evatool.analysis.application.services.AnalysisService;
 import com.evatool.analysis.application.services.ValueService;
 import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
@@ -34,7 +34,7 @@ class ValueRestControllerTest {
     private ValueService valueService;
 
     @Autowired
-    private AnalysisDTOService analysisDTOService;
+    private AnalysisService analysisService;
 
     @Autowired
     private AnalysisRepository analysisRepository;
@@ -47,7 +47,7 @@ class ValueRestControllerTest {
     private ValueDto saveDummyValueChildren() {
         var value = createDummyValue();
         var analysisDto = getAnalysisDTO("name", "desc");
-        var analysis =  analysisRepository.save(analysisDTOService.create(analysisDto));
+        var analysis = analysisRepository.save(analysisService.createAnalysis(analysisDto));
         value.setAnalysis(analysis);
         System.out.println(analysis);
         var valueDto = toDto(value);
@@ -61,7 +61,7 @@ class ValueRestControllerTest {
     private ValueDto saveFullDummyValueDto(ValueType valueType) {
         var value = createDummyValue();
         var analysisDto = getAnalysisDTO("name", "desc");
-        var analysis =  analysisRepository.save(analysisDTOService.create(analysisDto));
+        var analysis =  analysisRepository.save(analysisService.createAnalysis(analysisDto));
         value.setAnalysis(analysis);
         value.setType(valueType);
         System.out.println(analysis);
