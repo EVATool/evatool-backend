@@ -2,7 +2,6 @@
 package com.evatool.requirements.domain.repository;
 
 import com.evatool.requirements.domain.entity.RequirementPoint;
-import com.evatool.requirements.domain.entity.RequirementsImpact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -16,16 +16,15 @@ import com.evatool.requirements.common.exceptions.EventEntityAlreadyExistsExcept
 import com.evatool.requirements.common.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.domain.events.json.ImpactJson;
 import com.evatool.requirements.domain.repository.*;
-import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class RequirementEventListener {
@@ -41,6 +40,10 @@ public class RequirementEventListener {
     RequirementValueRepository requirementValueRepository;
     @Autowired
     RequirementAnalysisRepository requirementAnalysisRepository;
+    @Autowired
+    RequirementRepository requirementRepository;
+    @Autowired
+    RequirementPointRepository requirementPointRepository;
 
     @EventListener
     @Async
@@ -178,6 +181,7 @@ public class RequirementEventListener {
         requirementAnalysisRepository.save(requirementsAnalysis);
     }
 
+    @Transactional
     @EventListener
     @Async
     public void analyseDeleted(AnalysisDeletedEvent event) {
@@ -188,6 +192,13 @@ public class RequirementEventListener {
             throw new EventEntityDoesNotExistException();
         }
         RequirementsAnalysis requirementsAnalysis = RequirementsAnalysis.fromJson(event.getJsonPayload());
+        Collection<Requirement> requirementCollection = requirementRepository.findByRequirementsAnalysis(requirementsAnalysis);
+        Collection<RequirementPoint> pointCollection = new ArrayList<>();
+        for(Requirement requirement: requirementCollection){
+            pointCollection.addAll(requirement.getRequirementPointCollection());
+        }
+        requirementRepository.deleteAllByRequirementsAnalysis(requirementsAnalysis);
+        requirementPointRepository.deleteAll(pointCollection);
         requirementAnalysisRepository.delete(requirementsAnalysis);
     }
 }
