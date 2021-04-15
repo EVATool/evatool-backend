@@ -16,22 +16,22 @@ import java.util.UUID;
 @ToString
 public class ValueDto {
 
-    @ApiModelProperty
+    @ApiModelProperty(example ="f33c6fa8-1697-11ea-8d71-362b9e155667")
     private UUID id;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(example = " Care ", required = true)
     private String name;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(example = " Social ",required = true)
     private ValueType type;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(example = " Lorem ipsum dolor sit amet, consectetur adipisici elit ",required = true)
     private String description;
 
     @ApiModelProperty(required = true)
     private AnalysisDTO analysis;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(example = " TRUE ",required = true)
     private Boolean archived ;
 
 
