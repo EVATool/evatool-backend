@@ -44,8 +44,7 @@ public class AnalysisService {
 
     public List<Analysis> findAllByIdTemplate(boolean isTemplate) {
         logger.info("findAll");
-        var analyses = analysisRepository.findAllByIsTemplate(isTemplate);
-        return analyses;
+        return analysisRepository.findAllByIsTemplate(isTemplate);
     }
 
     public AnalysisDTO findById(UUID id) {

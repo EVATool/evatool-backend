@@ -39,7 +39,6 @@ public class AnalysisMapper {
     public Analysis map(AnalysisDTO analysisDTO) {
         logger.info("Map to entity");
         var analysis = modelMapper.map(analysisDTO, Analysis.class);
-        logger.info(analysis.toString());
         return analysis;
     }
 }

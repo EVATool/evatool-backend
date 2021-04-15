@@ -150,8 +150,6 @@ class RequirementPointControllerTest {
 
         requirementDTOObj.getRequirementImpactPoints().clear();
         requirement1 = requirementPointController.updatePoints(requirement1,requirementDTOObj);
-        assertThat(requirement1.getRequirementPointCollection().size()).isZero();
-
+        assertThat(requirement1.getRequirementPointCollection()).isEmpty();
     }
-
 }
