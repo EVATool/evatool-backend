@@ -370,6 +370,23 @@ class EvaToolAppTest {
 
             // when
             impact.setValue(1.0);
+            var impact2 = createDummyImpact();
+            impact.setStakeholder(impact2.getStakeholder());
+            impactEventPublisher.publishImpactUpdated(impact);
+            var requirementImpact = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
+
+            // then
+            assertThat(requirementImpact).isNotNull();
+        }
+
+        @Test
+        void testUpdatedEvent_ModulesReceive_ModulesPersistStakeholder() {
+            // given
+            var impact = createDummyImpact();
+            impactEventPublisher.publishImpactCreated(impact);
+
+            // when
+            impact.setValue(1.0);
             impactEventPublisher.publishImpactUpdated(impact);
             var requirementImpact = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
 

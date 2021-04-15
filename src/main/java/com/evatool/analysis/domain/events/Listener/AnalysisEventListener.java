@@ -1,9 +1,9 @@
 package com.evatool.analysis.domain.events.Listener;
 
+import com.evatool.analysis.common.error.execptions.EventEntityAlreadyExistsException;
 import com.evatool.analysis.domain.model.Analysis;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
-import com.evatool.requirements.common.exceptions.EventEntityAlreadyExistsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

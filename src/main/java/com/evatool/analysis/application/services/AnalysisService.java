@@ -112,6 +112,7 @@ public class AnalysisService {
                 stakeholderRepository.delete(stakeholder);
             }
         });
+
         analysisRepository.deleteById(id);
         eventPublisher.publishEvent(new AnalysisDeletedEvent(analysis.toJson()));
     }

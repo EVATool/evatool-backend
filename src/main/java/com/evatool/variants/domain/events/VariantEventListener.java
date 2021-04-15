@@ -11,6 +11,7 @@ import com.evatool.variants.common.error.exceptions.EventEntityDoesNotExistExcep
 import com.evatool.variants.common.error.exceptions.IllegalEventPayloadException;
 import com.evatool.variants.domain.entities.VariantsAnalysis;
 import com.evatool.variants.domain.entities.VariantsRequirements;
+import com.evatool.variants.domain.repositories.VariantRepository;
 import com.evatool.variants.domain.repositories.VariantRequirementsRepository;
 import com.evatool.variants.domain.repositories.VariantsAnalysisRepository;
 import com.google.gson.Gson;
@@ -21,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
 
 @Component
 public class VariantEventListener {
@@ -34,6 +37,9 @@ public class VariantEventListener {
 
     @Autowired
     VariantRequirementsRepository variantRequirementsRepository;
+
+    @Autowired
+    VariantRepository variantRepository;
 
     @EventListener
     public void analyseCreated(AnalysisCreatedEvent event){
@@ -53,7 +59,9 @@ public class VariantEventListener {
         }
     }
 
+    @Transactional
     @EventListener
+    @Async
     public void analyseDeleted(AnalysisDeletedEvent event){
         logger.info("analyse created event");
         if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
@@ -64,10 +72,14 @@ public class VariantEventListener {
 
         try {
             VariantsAnalysis variantsAnalysis = gson.fromJson(event.getJsonPayload(), VariantsAnalysis.class);
+            variantRepository.deleteAllByVariantsAnalysis(variantsAnalysis);
             variantsAnalysisRepository.delete(variantsAnalysis);
         }
-        catch (Exception e){
+        catch (IllegalEventPayloadException e){
             throw new IllegalEventPayloadException(event.getJsonPayload());
+        }
+        catch (Exception e){
+            throw e;
         }
     }
 

@@ -43,7 +43,7 @@ class StakeholderControllerTest {
         //create stakeholder
         StakeholderDTO stakeholderDTO = getStakeholderDTO(stakeholder.getStakeholderName(), stakeholder.getPriority(), stakeholder.getStakeholderLevel());
         stakeholderDTO.setAnalysisId(stakeholder.getAnalysis().getAnalysisId());
-        StakeholderDTO stakeholderDTOObj = stakeholderController.addStakeholder(stakeholderDTO).getBody().getContent();
+        StakeholderDTO stakeholderDTOObj = stakeholderController.addStakeholder(stakeholderDTO).getContent();
 
 
         //check is stakeholder created

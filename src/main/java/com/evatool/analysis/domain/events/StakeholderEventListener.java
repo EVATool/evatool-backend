@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -42,7 +44,7 @@ public class StakeholderEventListener {
         impact.setImpactValue(impactJson.getValue());
         impact = analysisImpactRepository.save(impact);
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholderId());
-        if(!stakeholderOptional.isEmpty()){
+        if (!stakeholderOptional.isEmpty()) {
             Stakeholder stakeholder = stakeholderOptional.get();
             stakeholder.getImpact().add(impact);
             stakeholderRepository.save(stakeholder);
@@ -52,15 +54,34 @@ public class StakeholderEventListener {
     @EventListener
     public void impactUpdated(ImpactUpdatedEvent event) {
         logger.info("impact updated event");
-        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
+        if (logger.isDebugEnabled()) logger.debug(String.format(DEBUGFORMAT, event.getClass(), event.getJsonPayload()));
         AnalysisImpactJson impactJson = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
         Optional<AnalysisImpact> impactOptional = analysisImpactRepository.findById(impactJson.getId());
-        if(impactOptional.isEmpty()){
+        if (impactOptional.isEmpty()) {
             throw new EntityNotFoundException(AnalysisImpact.class, impactJson.getId());
-        }else{
+        } else {
             AnalysisImpact impact = impactOptional.get();
             impact.setImpactValue(impactJson.getValue());
-            analysisImpactRepository.save(impact);
+            impact = analysisImpactRepository.save(impact);
+            Iterable<Stakeholder> stakeholders = stakeholderRepository.findAll();
+            AnalysisImpact finalImpact1 = impact;
+            stakeholders.forEach(stakeholder -> {
+                if(stakeholder.getImpact().contains(finalImpact1)){
+                    if(stakeholder.getStakeholderId() != impactJson.getStakeholderId()){
+                        stakeholder.getImpact().remove(finalImpact1);
+                        stakeholderRepository.save(stakeholder);
+                    }
+                }
+            });
+            Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholderId());
+            if (impactOptional.isPresent()) {
+                Stakeholder stakeholder = stakeholderOptional.get();
+                AnalysisImpact finalImpact = impact;
+                if (stakeholder.getImpact().stream().noneMatch(impact1 -> impact1.getId().equals(finalImpact.getId()))) {
+                    stakeholder.getImpact().add(finalImpact);
+                    stakeholderRepository.save(stakeholder);
+                }
+            }
         }
     }
 
@@ -68,15 +89,15 @@ public class StakeholderEventListener {
     @EventListener
     public void impactDeleted(ImpactDeletedEvent event) {
         logger.info("impact deleted event");
-        if(logger.isDebugEnabled())logger.debug(String.format(DEBUGFORMAT,event.getClass(), event.getJsonPayload()));
+        if (logger.isDebugEnabled()) logger.debug(String.format(DEBUGFORMAT, event.getClass(), event.getJsonPayload()));
         AnalysisImpactJson impactJson = gson.fromJson(event.getJsonPayload(), AnalysisImpactJson.class);
         AnalysisImpact impact = new AnalysisImpact();
         impact.setId(impactJson.getId());
         impact.setImpactValue(impactJson.getValue());
         Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(impactJson.getStakeholderId());
-        if(stakeholderOptional.isEmpty()){
+        if (stakeholderOptional.isEmpty()) {
             analysisImpactRepository.delete(impact);
-        }else{
+        } else {
             Stakeholder stakeholder = stakeholderOptional.get();
             stakeholder.getImpact().remove(impact);
             stakeholderRepository.save(stakeholder);
