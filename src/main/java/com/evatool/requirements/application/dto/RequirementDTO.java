@@ -1,14 +1,19 @@
 package com.evatool.requirements.application.dto;
 import com.google.gson.Gson;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.hateoas.EntityModel;
 
 import java.util.*;
 
 public class RequirementDTO {
 
+    @ApiModelProperty(example = "f33c6fa8-1697-11ea-8d71-362b9e155667")
     private UUID rootEntityId;
+    @ApiModelProperty(example = "57be65dc-9dfe-11eb-a8b3-0242ac130003", required = true)
     private UUID projectID;
+    @ApiModelProperty(example = "REQ1")
     private String uniqueString;
+    @ApiModelProperty(example = "Simple description for a requirement.")
     private String requirementDescription;
     private Set<EntityModel<ValueDTO>> values = new HashSet<>();
     private Set<EntityModel<RequirementPointDTO>> requirementPointDTOMap = new HashSet<>();

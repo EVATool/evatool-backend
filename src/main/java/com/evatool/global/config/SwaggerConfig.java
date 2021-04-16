@@ -7,6 +7,7 @@ import org.springframework.hateoas.client.LinkDiscoverer;
 import org.springframework.hateoas.client.LinkDiscoverers;
 import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
 import org.springframework.plugin.core.SimplePluginRegistry;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 
@@ -42,9 +43,13 @@ public class SwaggerConfig {
 
     private ApiInfo getAPIMetaData() {
         String archiLabUrl = "https://archi-lab.io/";
-        return new ApiInfo("EVA-tool", "The backend of the Eva-tool","1.0",
-                "",
-                new Contact("Stefan Bente", archiLabUrl,"stefan.bente@th-koeln.de"),
-                archiLabUrl, archiLabUrl);
+        Contact contact = new Contact("Stefan Bente", archiLabUrl, "stefan.bente@th-koeln.de");
+        ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder()
+                .description("The backend of the Eva-tool")
+                .title("EVA-tool")
+                .version("1.0")
+                .contact(contact);
+        return apiInfoBuilder.build();
+        
     }
 }
