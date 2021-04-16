@@ -20,7 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@Api(value = "ValueController")
+@Api(value = "ValueController",  tags = "Value")
 public class ValueControllerImpl {
 
     private static final Logger logger = LoggerFactory.getLogger(ValueControllerImpl.class);
