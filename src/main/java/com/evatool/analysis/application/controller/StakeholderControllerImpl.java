@@ -22,7 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@Api(value = "StakeholderController")
+@Api(value = "StakeholderController", tags = "Stakeholder")
 public class StakeholderControllerImpl implements StakeholderController {
 
     @Autowired

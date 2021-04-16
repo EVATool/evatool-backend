@@ -1,7 +1,6 @@
 package com.evatool.variants.application.controller;
 
 
-import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.variants.application.dto.VariantDto;
 import com.evatool.variants.application.services.VariantService;
 import io.swagger.annotations.*;
@@ -22,6 +21,7 @@ import static com.evatool.variants.application.services.VariantsUriHelper.VARIAN
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Api(tags = "Variants")
 @RestController
 public class VariantController {
 
