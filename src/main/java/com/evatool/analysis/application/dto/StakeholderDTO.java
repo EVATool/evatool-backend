@@ -35,6 +35,7 @@ public class StakeholderDTO {
     private String guiId;
 
     @NotNull
+    @ApiModelProperty(example = "f33c6e3a6-7894-11ea-8d71-362478955667")
     private UUID analysisId;
 
     @Override
