@@ -4,13 +4,10 @@ import com.evatool.analysis.application.dto.AnalysisDTO;
 import com.evatool.analysis.application.dto.AnalysisMapper;
 import com.evatool.analysis.application.interfaces.AnalysisController;
 import com.evatool.analysis.common.error.execptions.EntityNotFoundException;
-import com.evatool.analysis.domain.enums.ValueType;
 import com.evatool.analysis.domain.model.Analysis;
-import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
 import com.evatool.analysis.domain.repository.ValueRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Nested;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

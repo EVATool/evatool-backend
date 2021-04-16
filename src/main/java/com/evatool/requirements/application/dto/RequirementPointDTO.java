@@ -1,6 +1,7 @@
 package com.evatool.requirements.application.dto;
 
 import com.evatool.requirements.application.controller.RequirementsController;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.hateoas.EntityModel;
 
 import java.util.ArrayList;
@@ -11,9 +12,11 @@ import java.util.UUID;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 public class RequirementPointDTO {
-
+    @ApiModelProperty(example = "10f95876-9e00-11eb-a8b3-0242ac130003",required = true)
     private UUID entityId;
+    @ApiModelProperty(example = "If poorly implemented, ILA might contribute to a general loss of privacy by technical support solutions.")
     private String impactDescription;
+    @ApiModelProperty(example = "0.7")
     private Double points;
 
     public RequirementPointDTO() {

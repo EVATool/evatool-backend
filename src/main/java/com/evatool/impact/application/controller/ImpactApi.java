@@ -19,7 +19,7 @@ import static com.evatool.impact.application.controller.UriUtil.IMPACTS_ID;
 public interface ImpactApi {
 
     @GetMapping(value = IMPACTS_ID, produces = {"application/json"})
-    @ApiOperation(value = "Read impact by ID", nickname = "findImpact", tags = "Impact")
+    @ApiOperation(value = "Read impact by ID", nickname = "findImpact", tags = "Impacts")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK", response = ImpactDto.class),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -27,7 +27,7 @@ public interface ImpactApi {
     ResponseEntity<EntityModel<ImpactDto>> findById(@ApiParam("Impact ID") @Valid @PathVariable UUID id);
 
     @GetMapping(value = IMPACTS, produces = {"application/json"})
-    @ApiOperation(value = "Read all impacts", tags = "Impact")
+    @ApiOperation(value = "Read all impacts", tags = "Impacts")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -35,7 +35,7 @@ public interface ImpactApi {
     ResponseEntity<List<EntityModel<ImpactDto>>> findAll(@ApiParam(value = "Analysis Id") @Valid @RequestParam(value = "analysisId", required = false) UUID analysisId);
 
     @PostMapping(value = IMPACTS, consumes = {"application/json"}, produces = {"application/json"})
-    @ApiOperation(value = "Create a new impact", tags = "Impact")
+    @ApiOperation(value = "Create a new impact", tags = "Impacts")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -44,7 +44,7 @@ public interface ImpactApi {
     ResponseEntity<EntityModel<ImpactDto>> create(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto);
 
     @PutMapping(value = IMPACTS, consumes = {"application/json"}, produces = {"application/json"})
-    @ApiOperation(value = "Update an impact", tags = "Impact")
+    @ApiOperation(value = "Update an impact", tags = "Impacts")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Updated"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -52,7 +52,7 @@ public interface ImpactApi {
     ResponseEntity<EntityModel<ImpactDto>> update(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto);
 
     @DeleteMapping(IMPACTS_ID)
-    @ApiOperation(value = "Delete impact by ID", tags = "Impact")
+    @ApiOperation(value = "Delete impact by ID", tags = "Impacts")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Deleted"),
             @ApiResponse(code = 400, message = "Bad Request"),

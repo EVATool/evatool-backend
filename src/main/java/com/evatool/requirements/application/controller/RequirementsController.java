@@ -4,7 +4,6 @@ package com.evatool.requirements.application.controller;
 import com.evatool.requirements.application.dto.RequirementDTO;
 import com.evatool.requirements.application.service.RequirementDTOService;
 import com.evatool.requirements.domain.repository.RequirementPointRepository;
-import com.evatool.requirements.domain.repository.RequirementRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -34,13 +33,10 @@ public class RequirementsController {
 	private RequirementDTOService dtoService;
 
 	@Autowired
-	private RequirementRepository requirementRepository;
-
-	@Autowired
 	private RequirementPointRepository requirementPointRepository;
 
 	@GetMapping("/requirements")
-	@ApiOperation(value = "This method returns a list of all Requirements.")
+	@ApiOperation(value = "This method returns a list of all Requirements.", tags = "Requirements")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "All entities returned")})
 	public List<EntityModel<RequirementDTO>> getRequirementList() {
@@ -49,7 +45,7 @@ public class RequirementsController {
 	}
 
 	@GetMapping(value = "/requirements",params = "analysisId")
-	@ApiOperation(value = "This method returns a list of all Requirements for an Analysis Id.")
+	@ApiOperation(value = "This method returns a list of all Requirements for an Analysis Id.", tags = "Requirements")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "All entities returned"),
 			@ApiResponse(code = 400, message = "The id was invalid"),
@@ -60,7 +56,7 @@ public class RequirementsController {
 	}
 
 	@GetMapping("/requirements/{id}")
-	@ApiOperation(value = "Read requirement by ID")
+	@ApiOperation(value = "Read requirement by ID", tags = "Requirements")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "The entity was found"),
 			@ApiResponse(code = 400, message = "The id was invalid"),
@@ -71,7 +67,7 @@ public class RequirementsController {
 	}
 
 	@PostMapping("/requirements")
-	@ApiOperation(value = "Create requirement")
+	@ApiOperation(value = "Create requirement", tags = "Requirements")
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "The entity was inserted"),
 			@ApiResponse(code = 400, message = "The entity was invalid"),
@@ -82,7 +78,7 @@ public class RequirementsController {
 	}
 
 	@PutMapping("/requirements")
-	@ApiOperation(value = "Update requirement by ID")
+	@ApiOperation(value = "Update requirement by ID", tags = "Requirements")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "The entity was deleted"),
 			@ApiResponse(code = 404, message = "The entity was not found")})
@@ -93,7 +89,7 @@ public class RequirementsController {
 	}
 
 	@DeleteMapping("/requirements/{id}")
-	@ApiOperation(value = "Delete requirement by ID")
+	@ApiOperation(value = "Delete requirement by ID", tags = "Requirements")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "The entity was updated"),
 			@ApiResponse(code = 400, message = "The entity was invalid"),
@@ -104,6 +100,7 @@ public class RequirementsController {
 		return ResponseEntity.ok().build();
 	}
 
+	@ApiOperation(value = "Get requirements by impact", tags = "Requirements")
 	@GetMapping("/requirements/referenced-by-impact/{impactId}")
 	public ResponseEntity<Boolean> referencedByImpact(@PathVariable UUID impactId) {
 		var requirementPoints = requirementPointRepository.findAllByRequirementsImpactId(impactId);
