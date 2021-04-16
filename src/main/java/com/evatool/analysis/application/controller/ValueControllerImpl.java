@@ -3,11 +3,9 @@ package com.evatool.analysis.application.controller;
 import com.evatool.analysis.application.dto.ValueDto;
 import com.evatool.analysis.application.services.ValueService;
 import com.evatool.analysis.domain.enums.ValueType;
-import com.evatool.analysis.domain.repository.ValueRepository;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,16 +27,12 @@ public class ValueControllerImpl {
 
     private final ValueService valueService;
 
-    @Autowired
-    private ValueRepository valueRepository;
-
-
     public ValueControllerImpl(ValueService valueService) {
         this.valueService = valueService;
     }
 
-    @GetMapping("/values/{id}")
-    @ApiOperation(value = "Read value by ID")
+    @GetMapping(value = "/values/{id}", produces = {"application/json"})
+    @ApiOperation(value = "Read value by ID", nickname = "findValues", tags = "Value")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -49,8 +43,8 @@ public class ValueControllerImpl {
         return new ResponseEntity<>(getValueWithLinks(valueDto), HttpStatus.OK);
     }
 
-    @GetMapping("/values")
-    @ApiOperation(value = "Read all values")
+    @GetMapping(value = "/values", produces = {"application/json"})
+    @ApiOperation(value = "Read all values", tags = "Value")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request")})
@@ -70,8 +64,8 @@ public class ValueControllerImpl {
         return new ResponseEntity<>(getValueWithLinks(valueDtoList), HttpStatus.OK);
     }
 
-    @PostMapping("/values")
-    @ApiOperation(value = "Create a new value")
+    @PostMapping(value = "/values", consumes = {"application/json"}, produces = {"application/json"})
+    @ApiOperation(value = "Create a new value", tags = "Value")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -83,8 +77,8 @@ public class ValueControllerImpl {
         return new ResponseEntity<>(getValueWithLinks(insertedValueDto), HttpStatus.CREATED);
     }
 
-    @PutMapping("/values")
-    @ApiOperation(value = "Update a value")
+    @PutMapping(value = "/values", produces = {"application/json"})
+    @ApiOperation(value = "Update a value",tags = "Value")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Updated"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -96,8 +90,8 @@ public class ValueControllerImpl {
         return new ResponseEntity<>(getValueWithLinks(updatedValueDto), HttpStatus.OK);
     }
 
-    @DeleteMapping("/values/{id}")
-    @ApiOperation(value = "Delete value by ID")
+    @DeleteMapping(value = "/values/{id}", produces = {"application/json"})
+    @ApiOperation(value = "Delete value by ID", tags = "Value")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Deleted"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -108,8 +102,8 @@ public class ValueControllerImpl {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/values/types")
-    @ApiOperation(value = "Read all value types")
+    @GetMapping(value = "/values/types", produces = {"application/json"})
+    @ApiOperation(value = "Read all value types", tags = "Value")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK")})
     public ResponseEntity<List<ValueType>> findAllTypes() {
@@ -117,8 +111,8 @@ public class ValueControllerImpl {
         return new ResponseEntity<>(valueService.findAllTypes(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/values", params = "analysisId")
-    @ApiOperation(value = "Read all value by analysis")
+    @GetMapping(value = "/values", params = "analysisId", produces = {"application/json"})
+    @ApiOperation(value = "Read all value by analysis", tags = "Value")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK")})
     public List<EntityModel<ValueDto>> getValuesByAnalysisId(@RequestParam("analysisId") UUID analysisId){
