@@ -7,6 +7,7 @@ import com.evatool.analysis.application.services.AnalysisService;
 import com.evatool.analysis.application.services.ValueServiceImpl;
 import com.evatool.analysis.domain.model.Value;
 import com.evatool.analysis.domain.repository.AnalysisRepository;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@Api(value = "AnalysisController")
 public class AnalysisControllerImpl implements AnalysisController {
 
   @Autowired

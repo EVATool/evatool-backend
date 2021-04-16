@@ -100,6 +100,7 @@ public class RequirementsController {
 		return ResponseEntity.ok().build();
 	}
 
+	@ApiOperation(value = "Get requirements by impact", tags = "Requirements")
 	@GetMapping("/requirements/referenced-by-impact/{impactId}")
 	public ResponseEntity<Boolean> referencedByImpact(@PathVariable UUID impactId) {
 		var requirementPoints = requirementPointRepository.findAllByRequirementsImpactId(impactId);

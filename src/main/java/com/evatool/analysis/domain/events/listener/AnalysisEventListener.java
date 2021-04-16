@@ -1,4 +1,4 @@
-package com.evatool.analysis.domain.events.Listener;
+package com.evatool.analysis.domain.events.listener;
 
 import com.evatool.analysis.common.error.execptions.EventEntityAlreadyExistsException;
 import com.evatool.analysis.domain.model.Analysis;

@@ -4,21 +4,25 @@ import com.evatool.analysis.application.dto.StakeholderDTO;
 import com.evatool.analysis.application.interfaces.StakeholderController;
 import com.evatool.analysis.application.services.StakeholderService;
 import com.evatool.analysis.domain.enums.StakeholderLevel;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@Api(value = "StakeholderController")
 public class StakeholderControllerImpl implements StakeholderController {
 
     @Autowired

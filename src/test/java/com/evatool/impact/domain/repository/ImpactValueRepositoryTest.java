@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ImpactValueRepositoryTest extends RepositoryTest {
+class ImpactValueRepositoryTest extends RepositoryTest {
 
     @Test
     void testFindAllByAnalysisId_AnalysisWithTwoImpactValues_ReturnImpactValuesByAnalysisId() {

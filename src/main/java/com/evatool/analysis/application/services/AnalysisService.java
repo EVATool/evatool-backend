@@ -44,8 +44,7 @@ public class AnalysisService {
 
     public List<Analysis> findAllByIdTemplate(boolean isTemplate) {
         logger.info("findAll");
-        var analyses = analysisRepository.findAllByIsTemplate(isTemplate);
-        return analyses;
+        return analysisRepository.findAllByIsTemplate(isTemplate);
     }
 
     public AnalysisDTO findById(UUID id) {
@@ -91,7 +90,7 @@ public class AnalysisService {
             throw new EntityNotFoundException(Analysis.class, analysisDTO.getRootEntityID());
 
         Analysis analysis = analysisMapper.map(analysisDTO);
-        if (analysisDTO.getUniqueString() != null) {
+        if (analysisDTO.getUniqueString().equals("")) {
             var numericId = new NumericId();
             numericId.setNumericId(Integer.valueOf(analysisDTO.getUniqueString().replace("ANA", "")));
             analysis.setNumericId(numericId);
