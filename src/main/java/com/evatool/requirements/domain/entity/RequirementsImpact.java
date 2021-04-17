@@ -17,6 +17,7 @@ public class RequirementsImpact {
     @Type(type= "uuid-char")
     @Column(columnDefinition = "CHAR(36)")
     private UUID id = UUID.randomUUID();
+    @Column(length = 4096)
     private String description;
     private Double value;
 

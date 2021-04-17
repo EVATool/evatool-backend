@@ -29,7 +29,7 @@ public class ImpactValue extends SuperEntity {
     private String type;
 
     @Getter
-    @Column(name = "DESCRIPTION", nullable = false)
+    @Column(name = "DESCRIPTION", nullable = false, length = 4096)
     private String description;
 
     @Getter

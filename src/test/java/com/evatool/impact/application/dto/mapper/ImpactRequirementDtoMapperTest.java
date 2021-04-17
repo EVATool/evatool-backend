@@ -6,7 +6,7 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyRequirement
 import static com.evatool.impact.common.TestDataGenerator.createDummyRequirementDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ImpactRequirementDtoMapperTest {
+class ImpactRequirementDtoMapperTest {
 
     @Test
     void testToDto_RecreatedRequirement_EqualsRequirement() {

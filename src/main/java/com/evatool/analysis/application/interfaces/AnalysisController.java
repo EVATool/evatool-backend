@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@Api(value = "AnalysisController", tags = "Analysis")
 public interface AnalysisController {
 
     @GetMapping(value = "/analysis", produces = {"application/json"})

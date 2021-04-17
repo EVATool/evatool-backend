@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
-
+@Api(value = "StakeholderController", tags = "Stakeholder")
 public interface StakeholderController {
 
     @GetMapping(value = "/stakeholders", produces = {"application/json"})

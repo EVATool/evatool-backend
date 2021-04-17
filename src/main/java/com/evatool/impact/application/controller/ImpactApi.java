@@ -1,10 +1,7 @@
 package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.ImpactDto;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +13,7 @@ import java.util.UUID;
 import static com.evatool.impact.application.controller.UriUtil.IMPACTS;
 import static com.evatool.impact.application.controller.UriUtil.IMPACTS_ID;
 
+@Api(tags = "Impacts")
 public interface ImpactApi {
 
     @GetMapping(value = IMPACTS_ID, produces = {"application/json"})
