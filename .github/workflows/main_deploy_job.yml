@@ -14,52 +14,54 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
+#      - uses: actions/checkout@v2
+#      - name: Set up JDK 11
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 11
+#
+#      - name: Test
+#        run: |
+#          mvn test --file pom.xml
+#
+#      - name: Build
+#        run: |
+#          sed -i 's/DB_PASSWORD_PLACEHOLDER/${{ secrets.DB_PASSWORD }}/g' src/main/resources/application-prod.properties
+#          mvn clean install -P prod -Dmaven.test.skip=true --file pom.xml
+#
+#      - name: Transfer docker folder to remote server
+#        uses: garygrossgarten/github-action-scp@release
+#        with:
+#          local: docker
+#          remote: evatool/backend/docker
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.USER }}
+#          privatekey: ${{ secrets.SSH_PRIVATE_KEY }}
+#          port: ${{ secrets.PORT }}
+#
+#      - name: Transfer jar to remote server
+#        uses: garygrossgarten/github-action-scp@release
+#        with:
+#          local: target/evatool-0.0.1-SNAPSHOT.jar
+#          remote: evatool/backend/docker/evatoolapp.jar
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.USER }}
+#          privatekey: ${{ secrets.SSH_PRIVATE_KEY }}
+#          port: ${{ secrets.PORT }}
+#
+#      - name: Run docker script
+#        uses: appleboy/ssh-action@master
+#        env:
+#          HOST: ${{ secrets.HOST }}
+#          USERNAME: ${{ secrets.USER }}
+#          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#          PORT: ${{ secrets.PORT }}
+#          SCRIPT: sh evatool/backend/docker/deploy.sh
 
-      - name: Test
-        run: |
-          mvn test --file pom.xml
-
-      - name: Build
-        run: |
-          sed -i 's/DB_PASSWORD_PLACEHOLDER/${{ secrets.DB_PASSWORD }}/g' src/main/resources/application-prod.properties
-          mvn clean install -P prod -Dmaven.test.skip=true --file pom.xml
-
-      - name: Transfer docker folder to remote server
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: docker
-          remote: evatool/backend/docker
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          privatekey: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-
-      - name: Transfer jar to remote server
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: target/evatool-0.0.1-SNAPSHOT.jar
-          remote: evatool/backend/docker/evatoolapp.jar
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          privatekey: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-
-      - name: Run docker script
-        uses: appleboy/ssh-action@master
-        env:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USER }}
-          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          PORT: ${{ secrets.PORT }}
-          SCRIPT: sh evatool/backend/docker/deploy.sh
 
 
-
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
