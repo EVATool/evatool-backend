@@ -63,11 +63,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: copy file
-        uses: canastro/copy-file-action@master
-        with:
-          source: "target/evatool-0.0.1-SNAPSHOT.jar"
-          target: "docker/evatoolapp.jar"
+      - name: copy jar to docker folder
+        run: |
+          cp target/evatool-0.0.1-SNAPSHOT.jar docker/evatoolapp.jar
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
