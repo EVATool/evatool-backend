@@ -14,20 +14,23 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-#      - uses: actions/checkout@v2
-#      - name: Set up JDK 11
-#        uses: actions/setup-java@v1
-#        with:
-#          java-version: 11
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
 #
 #      - name: Test
 #        run: |
 #          mvn test --file pom.xml
 #
-#      - name: Build
-#        run: |
-#          sed -i 's/DB_PASSWORD_PLACEHOLDER/${{ secrets.DB_PASSWORD }}/g' src/main/resources/application-prod.properties
-#          mvn clean install -P prod -Dmaven.test.skip=true --file pom.xml
+      - name: Build
+        run: |
+          sed -i 's/DB_PASSWORD_PLACEHOLDER/${{ secrets.DB_PASSWORD }}/g' src/main/resources/application-prod.properties
+          mvn clean install -P prod -Dmaven.test.skip=true --file pom.xml
 #
 #      - name: Transfer docker folder to remote server
 #        uses: garygrossgarten/github-action-scp@release
@@ -60,12 +63,11 @@ jobs:
 
 
 
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: copy jar to docker folder
-        run: |
-          cp target/evatool-0.0.1-SNAPSHOT.jar docker/evatoolapp.jar
+      - name: copy file
+        uses: canastro/copy-file-action@master
+        with:
+          source: "target/evatool-0.0.1-SNAPSHOT.jar"
+          target: "docker/evatoolapp.jar"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
