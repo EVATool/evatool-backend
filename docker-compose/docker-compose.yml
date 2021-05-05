@@ -8,9 +8,6 @@ networks:
     frontend:
 
 services:
-#    app:
-#        container_name: evatool
-#        build: .
     database:
         container_name: evatool_database
         image: mysql:8.0.24

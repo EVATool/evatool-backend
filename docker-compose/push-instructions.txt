@@ -1,19 +1,16 @@
-docker login --username token?
+HOW TO INSTALL:
 
-docker push ???
-
-docker run --name evatool evatool/evatool:latest
-
-docker run --name evatool -e HOST_URL='evatool.org' -e FRONTEND_PORT=80 -e BACKEND_PORT=443 -e DB_PORT=3306 -e DB_PASSWORD='sqdd1432' evatool/evatool:latest
-
-docker start evatool
-
-
+git pull... (of new repo)
+cd docker
+docker-compose -p evatool up
 
 TODO
 - Get env vars into frontend
 - Get env vars into backend
-- Get mysql to start in not 5 minutes
-- Get docker-compose to work
-- Get docker compose to push parameterizable image to docker hub
+- Get mysql to start in not 5 minutes (!)
+- Get docker-compose to work (only add keycloak)
+- Make how to install and wiki stuff in new evatool repo (including everything in this folder)
+  - Pull gitrepo
+  - adjust env variables
+  - docker compose
 - Deploy to UID server in both main deploy GitHub Actions
