@@ -11,8 +11,6 @@ services:
     database:
         container_name: evatool_database
         image: mysql:8.0.24
-        command: --default-authentication-plugin=mysql_native_password
-#        restart: always
         environment:
             MYSQL_ROOT_PASSWORD: 'password'
         ports:
@@ -26,7 +24,6 @@ services:
     backend:
         container_name: evatool_backend
         image: evatool/evatool-backend:latest
-#        restart: always
 #        environment:
 #            DB_PORT: ${DB_PORT}
 #            DB_PASSWORD: ${DB_PASSWORD}
@@ -42,7 +39,6 @@ services:
     frontend:
         container_name: evatool_frontend
         image: evatool/evatool-frontend:latest
-#        restart: always
 #        environment:
 #            HOST_URL: ${HOST_URL}
 #            BACKEND_PORT: ${BACKEND_PORT}
@@ -57,7 +53,6 @@ services:
 #    keycloak:
 #        container_name: evatool_keycloak
 #        image: ??
-#        restart: always
 #        environment:
 #            - ???
 #        networks:

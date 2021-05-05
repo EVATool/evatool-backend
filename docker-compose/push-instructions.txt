@@ -2,6 +2,7 @@ HOW TO INSTALL:
 
 git pull... (of new repo)
 cd docker
+adjust env variables
 docker-compose -p evatool up
 
 TODO
@@ -10,7 +11,5 @@ TODO
 - Get mysql to start in not 5 minutes (!)
 - Get docker-compose to work (only add keycloak)
 - Make how to install and wiki stuff in new evatool repo (including everything in this folder)
-  - Pull gitrepo
-  - adjust env variables
-  - docker compose
 - Deploy to UID server in both main deploy GitHub Actions
+- use UID server as dev server and also as public demo?
