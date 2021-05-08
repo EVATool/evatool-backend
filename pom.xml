@@ -19,7 +19,6 @@
     <properties>
         <java.version>11</java.version>
         <sonar.projectKey>evatool_backend</sonar.projectKey>
-        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
         <sonar.organization>evatool</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
