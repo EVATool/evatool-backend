@@ -27,12 +27,6 @@ jobs:
         run: |
           mvn clean install -P prod -Dmaven.test.skip=true --file pom.xml
 
-      - name: Copy jar file to docker folder
-        uses: canastro/copy-file-action@master
-        with:
-          source: "target/evatool-0.0.1-SNAPSHOT.jar"
-          target: "docker/evatoolapp.jar"
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
