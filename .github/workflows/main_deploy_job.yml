@@ -1,4 +1,4 @@
-name: Deploy Backend to DockerHub (main)
+name: Deploy to DockerHub (main)
 
 on:
   push:
