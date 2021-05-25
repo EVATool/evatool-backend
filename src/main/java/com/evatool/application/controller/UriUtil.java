@@ -12,6 +12,7 @@ public class UriUtil {
         // Java Generic handling is problematic (code duplication)
         // Child entities nullable or not?
         // Remove Rest level 3?
+        // Figure out secure way of using env vars on remote server deployment
     }
 
     public static final String ANALYSES = "/analyses";
