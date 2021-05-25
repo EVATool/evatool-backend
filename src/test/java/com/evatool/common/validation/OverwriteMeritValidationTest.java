@@ -11,7 +11,7 @@ public class OverwriteMeritValidationTest {
     void testSetDelta_DecreaseNegativeImpact_Throw() {
         // given
         var originalMerit = -0.5f;
-        var overwriteMerit = -0.1f;
+        var overwriteMerit = -0.6f;
 
         // when
         var error = validateOverwriteMerit(overwriteMerit, originalMerit);
@@ -37,7 +37,7 @@ public class OverwriteMeritValidationTest {
     void testSetDelta_IncreasePositiveImpactAboveOriginal_Throw() {
         // given
         var originalMerit = 0.5f;
-        var overwriteMerit = 0.1f;
+        var overwriteMerit = 0.6f;
 
         // when
         var error = validateOverwriteMerit(overwriteMerit, originalMerit);
