@@ -1,8 +1,8 @@
-name: Deploy to DockerHub (main)
+name: Deploy to DockerHub (dev)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ dev ]
 
 jobs:
   deploy:
@@ -17,10 +17,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-
-      - name: Test
-        run: |
-          mvn test --file pom.xml
 
       - name: Build
         run: |
@@ -44,22 +40,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: evatool/evatool-backend:latest
+          tags: evatool/evatool-backend:experimental
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-
-      - name: Run docker-compose on remote server
-        uses: appleboy/ssh-action@master
-        env:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USER }}
-          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          PORT: ${{ secrets.PORT }}
-        run: |
-          cd evatool
-          git pull https://github.com/EVATool/evatool
-          cd docker
-          docker-compose down
-          docker image prune -f
-          docker-compose -d up
