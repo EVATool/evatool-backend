@@ -1,8 +1,8 @@
-name: Deploy to DockerHub (dev)
+name: Deploy to DockerHub (exp)
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ exp ]
 
 jobs:
   deploy:
