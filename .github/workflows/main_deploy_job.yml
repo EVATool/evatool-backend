@@ -58,7 +58,7 @@ jobs:
           PORT: ${{ secrets.PORT }}
           SCRIPT: |
             cd evatool
-            git pull https://github.com/EVATool/evatool
+            //git pull https://github.com/EVATool/evatool
             cd docker
             docker-compose down
             docker image prune -f -a
