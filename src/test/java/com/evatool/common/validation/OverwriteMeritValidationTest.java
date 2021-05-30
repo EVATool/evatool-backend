@@ -5,10 +5,36 @@ import org.junit.jupiter.api.Test;
 import static com.evatool.common.validation.OverwriteMeritValidation.validateOverwriteMerit;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class OverwriteMeritValidationTest {
+class OverwriteMeritValidationTest {
 
     @Test
-    void testSetDelta_DecreaseNegativeImpact_Throw() {
+    void testValidateOverwriteMerit_FulFillPositiveImpact_OK() {
+        // given
+        var originalMerit = 0.5f;
+        var overwriteMerit = 0.3f;
+
+        // when
+        var error = validateOverwriteMerit(overwriteMerit, originalMerit);
+
+        // then
+        assertThat(error).isNull();
+    }
+
+    @Test
+    void testValidateOverwriteMerit_AmendNegativeImpact_OK() {
+        // given
+        var originalMerit = -0.5f;
+        var overwriteMerit = -0.3f;
+
+        // when
+        var error = validateOverwriteMerit(overwriteMerit, originalMerit);
+
+        // then
+        assertThat(error).isNull();
+    }
+
+    @Test
+    void testValidateOverwriteMerit_DecreaseNegativeImpact_Throw() {
         // given
         var originalMerit = -0.5f;
         var overwriteMerit = -0.6f;
@@ -21,7 +47,7 @@ public class OverwriteMeritValidationTest {
     }
 
     @Test
-    void testSetDelta_IncreaseNegativeImpactAboveZero_Throw() {
+    void testValidateOverwriteMerit_IncreaseNegativeImpactAboveZero_Throw() {
         // given
         var originalMerit = -0.5f;
         var overwriteMerit = 0.7f;
@@ -34,7 +60,7 @@ public class OverwriteMeritValidationTest {
     }
 
     @Test
-    void testSetDelta_IncreasePositiveImpactAboveOriginal_Throw() {
+    void testValidateOverwriteMerit_IncreasePositiveImpactAboveOriginal_Throw() {
         // given
         var originalMerit = 0.5f;
         var overwriteMerit = 0.6f;
@@ -47,7 +73,7 @@ public class OverwriteMeritValidationTest {
     }
 
     @Test
-    void testSetDelta_DecreasePositiveImpactBelowZero_Throw() {
+    void testValidateOverwriteMerit_DecreasePositiveImpactBelowZero_Throw() {
         // given
         var originalMerit = 0.5f;
         var overwriteMerit = -0.6f;
