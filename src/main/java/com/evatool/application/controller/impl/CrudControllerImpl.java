@@ -20,37 +20,37 @@ public abstract class CrudControllerImpl<S extends SuperEntity, T extends SuperD
 
     private static final Logger logger = LoggerFactory.getLogger(CrudControllerImpl.class);
 
-    protected final CrudServiceImpl<S, T> service;
+    protected final CrudServiceImpl<S, T> superService;
 
-    protected CrudControllerImpl(CrudServiceImpl<S, T> service) {
-        this.service = service;
+    protected CrudControllerImpl(CrudServiceImpl<S, T> superService) {
+        this.superService = superService;
     }
 
     @Override
     public ResponseEntity<EntityModel<T>> findById(UUID id) {
         logger.debug("Find By Id");
-        var dtoFound = service.findById(id);
+        var dtoFound = superService.findById(id);
         return new ResponseEntity<>(withLinks(dtoFound), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<EntityModel<T>> create(T dto) {
         logger.debug("Create");
-        var dtoInserted = service.create(dto);
+        var dtoInserted = superService.create(dto);
         return new ResponseEntity<>(withLinks(dtoInserted), HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<EntityModel<T>> update(T dto) {
         logger.debug("Update");
-        var dtoUpdated = service.update(dto);
+        var dtoUpdated = superService.update(dto);
         return new ResponseEntity<>(withLinks(dtoUpdated), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Void> deleteById(UUID id) {
         logger.debug("Delete");
-        service.deleteById(id);
+        superService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
