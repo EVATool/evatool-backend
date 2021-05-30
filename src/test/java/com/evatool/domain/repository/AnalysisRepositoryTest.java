@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AnalysisRepositoryTest extends CrudRepositoryTest<Analysis> {
+class AnalysisRepositoryTest extends CrudRepositoryTest<Analysis> {
 
     @Test
     void testCascadeDelete() {

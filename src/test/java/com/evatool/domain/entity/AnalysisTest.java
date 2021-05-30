@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.Date;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -34,7 +36,7 @@ class AnalysisTest extends SuperEntityTest {
         assertThat(analysis.getLastUpdated()).isNotNull();
     }
 
-    @Disabled
+    @Disabled("This test is disabled because the @PreUpdate annotation does not work")
     @Test
     @SneakyThrows
     void testWasUpdated_Update_LastUpdatedChanges() {
@@ -43,7 +45,7 @@ class AnalysisTest extends SuperEntityTest {
         var initialTime = analysis.getLastUpdated();
 
         // when
-        Thread.sleep(2);
+        initialTime = new Date(initialTime.getTime() - 1);
         analysis.setName("updated");
         analysisRepository.save(analysis);
 
@@ -59,7 +61,7 @@ class AnalysisTest extends SuperEntityTest {
         var initialTime = analysis.getLastUpdated();
 
         // when
-        Thread.sleep(2);
+        initialTime = new Date(initialTime.getTime() - 1);
         var impact = getPersistedImpact(analysis);
         impactRepository.save(impact);
 
@@ -67,7 +69,7 @@ class AnalysisTest extends SuperEntityTest {
         assertThat(initialTime).isBefore(analysis.getLastUpdated());
     }
 
-    @Disabled
+    @Disabled("This test is disabled because the @PreUpdate annotation does not work")
     @Test
     @SneakyThrows
     void testWasUpdated_ChildUpdate_LastUpdatedChanges() {
@@ -77,7 +79,7 @@ class AnalysisTest extends SuperEntityTest {
         var initialTime = analysis.getLastUpdated();
 
         // when
-        Thread.sleep(2);
+        initialTime = new Date(initialTime.getTime() - 1);
         impact.setMerit(0.0f);
         impactRepository.save(impact);
 
@@ -94,7 +96,7 @@ class AnalysisTest extends SuperEntityTest {
         var initialTime = analysis.getLastUpdated();
 
         // when
-        Thread.sleep(2);
+        initialTime = new Date(initialTime.getTime() - 1);
         impactRepository.delete(impact);
 
         // then
