@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -127,16 +128,16 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
     private VariantControllerImpl variantController;
 
     public T getDtoFromResponseEntity(ResponseEntity<EntityModel<T>> response) {
-        return getDtoFromEntityModel(response.getBody());
+        return getDtoFromEntityModel(Objects.requireNonNull(response.getBody()));
     }
 
     public T getDtoFromEntityModel(EntityModel<T> entityModel) {
-        return ((EntityModel<T>) entityModel).getContent();
+        return entityModel.getContent();
     }
 
     public Iterable<T> getDtoFromResponseList(ResponseEntity<Iterable<EntityModel<T>>> response) {
         var dtoList = new ArrayList<T>();
-        response.getBody().forEach(dto -> dtoList.add(getDtoFromEntityModel(dto)));
+        Objects.requireNonNull(response.getBody()).forEach(dto -> dtoList.add(getDtoFromEntityModel(dto)));
         return dtoList;
     }
 }

@@ -31,7 +31,7 @@ public class VariantDto extends PrefixIdDto implements AnalysisChildDto {
     @NotNull
     private UUID analysisId;
 
-    //@ApiModelProperty(required = false)
+    //@ApiModelProperty(required = false) // TODO
     //private UUID[] subVariantIds;
 
     public VariantDto(String name, String description, Boolean archived, UUID analysisId) {

@@ -101,7 +101,7 @@ abstract class CrudControllerRestTest<S extends SuperEntity, T extends SuperDto>
     }
 
     public String getUri() {
-        var type = getDtoClass();
+        Class<? extends T> type = getDtoClass();
         if (type == AnalysisDto.class) {
             return UriUtil.ANALYSES;
         } else if (type == ImpactDto.class) {
@@ -125,8 +125,7 @@ abstract class CrudControllerRestTest<S extends SuperEntity, T extends SuperDto>
 
     public Class<T[]> getDtoClassArray() {
         var type = getDtoClass();
-        var arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
-        return arrayType;
+        return (Class<T[]>) Array.newInstance(type, 0).getClass();
     }
 
     @Autowired

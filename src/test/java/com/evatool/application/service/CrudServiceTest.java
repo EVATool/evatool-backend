@@ -10,6 +10,8 @@ import com.evatool.domain.repository.CrudRepositoryTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class CrudServiceTest<S extends SuperEntity, T extends SuperDto> extends CrudRepositoryTest<S> {
@@ -27,18 +29,18 @@ public abstract class CrudServiceTest<S extends SuperEntity, T extends SuperDto>
         assertThat(dtoFound).isEqualTo(dto);
     }
 
-//    @Test
-//    void testFindAll() {
-//        // given
-//        var dto1 = getPersistedDto();
-//        var dto2 = getPersistedDto();
-//
-//        // when
-//        var dtoListFound = getService().findAll();
-//
-//        // then
-//        assertThat(dtoListFound).isEqualTo(Arrays.asList(dto1, dto2));
-//    }
+    @Test
+    void testFindAll() {
+        // given
+        var dto1 = getPersistedDto();
+        var dto2 = getPersistedDto();
+
+        // when
+        var dtoListFound = getService().findAll();
+
+        // then
+        assertThat(dtoListFound).isEqualTo(Arrays.asList(dto1, dto2));
+    }
 
     @Test
     @Override
@@ -83,19 +85,19 @@ public abstract class CrudServiceTest<S extends SuperEntity, T extends SuperDto>
         assertThat(dtoListFound).isEmpty();
     }
 
-//    @Test
-//    void deleteAll() {
-//        // given
-//        var dto1 = getPersistedDto();
-//        var dto2 = getPersistedDto();
-//
-//        // when
-//        getService().deleteAll();
-//        var dtoListFound = getService().findAll();
-//
-//        // then
-//        assertThat(dtoListFound).isEmpty();
-//    }
+    @Test
+    void deleteAll() {
+        // given
+        var dto1 = getPersistedDto();
+        var dto2 = getPersistedDto();
+
+        // when
+        getService().deleteAll();
+        var dtoListFound = getService().findAll();
+
+        // then
+        assertThat(dtoListFound).isEmpty();
+    }
 
     public T getPersistedDto() {
         var type = getDtoClass();

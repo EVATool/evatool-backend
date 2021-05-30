@@ -46,7 +46,7 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
         if (optional.isEmpty()) {
             throw new EntityNotFoundException(repository.getClass().getSimpleName().replace("Repository", ""), id);
         }
-        return (O) optional.get();
+        return optional.get();
     }
 
     protected <O extends SuperEntity> UUID[] getSuperEntityIds(Set<O> entitySet) {
