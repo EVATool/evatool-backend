@@ -24,6 +24,20 @@ class AnalysisControllerRestTest extends CrudControllerRestTest<Analysis, Analys
     }
 
     @Test
+    void testFindAll() {
+        // given
+        getPersistedAnalysis();
+        getPersistedAnalysis();
+        getPersistedAnalysis();
+
+        // when
+        var response = rest.getForEntity(getUri(), AnalysisDto[].class);
+
+        // then
+        assertThat(response.getBody()).hasSize(3);
+    }
+
+    @Test
     void testDeepCopy() {
         // given
         var templateAnalysis = getPersistedAnalysis();
