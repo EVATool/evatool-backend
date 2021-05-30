@@ -2,7 +2,6 @@ package com.evatool.application.service.api;
 
 import com.evatool.application.dto.SuperDto;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface CrudService<T extends SuperDto> {

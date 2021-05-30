@@ -6,8 +6,6 @@ import com.evatool.domain.entity.Value;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ValueControllerRestTest extends CrudControllerRestTest<Value, ValueDto> implements FindByAnalysisControllerRestTest {

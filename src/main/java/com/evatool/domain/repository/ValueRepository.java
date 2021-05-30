@@ -1,7 +1,6 @@
 package com.evatool.domain.repository;
 
 import com.evatool.domain.entity.Value;
-import com.evatool.domain.entity.Variant;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
