@@ -43,8 +43,8 @@ public class RequirementMapper extends PrefixIdMapper<Requirement, RequirementDt
         );
         if (dto.getVariantIds() != null) {
             for (var variantId : dto.getVariantIds()) {
-                var variant = variantRepository.findById(variantId);
-                variant.ifPresent(value -> entity.getVariants().add(value));
+                var variantOptional = variantRepository.findById(variantId);
+                variantOptional.ifPresent(variant -> entity.getVariants().add(variant));
             }
         }
         super.amendFromDto(entity, dto);
