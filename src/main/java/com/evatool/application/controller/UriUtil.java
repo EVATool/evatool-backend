@@ -9,6 +9,7 @@ public class UriUtil {
         // TODO Sample data (repo postman script)
 
         // Backlog
+        // Remove middle layer tests? (only test rest call?)
         // Java Generic handling is problematic (code duplication)
         // Child entities nullable or not?
         // Remove Rest level 3?
