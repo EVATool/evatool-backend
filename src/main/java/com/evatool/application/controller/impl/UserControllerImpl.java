@@ -29,9 +29,9 @@ public class UserControllerImpl extends CrudControllerImpl<User, UserDto> implem
     }
 
     @Override
-    public ResponseEntity<Iterable<EntityModel<UserDto>>> findByExternalUserId(String externalUserId) {
+    public ResponseEntity<EntityModel<UserDto>> findByExternalUserId(String externalUserId) {
         var dtoFound = service.findByExternalUserId(externalUserId);
-        return new ResponseEntity(withLinks(dtoFound), HttpStatus.OK);
+        return new ResponseEntity<>(withLinks(dtoFound), HttpStatus.OK);
     }
 
     @Override

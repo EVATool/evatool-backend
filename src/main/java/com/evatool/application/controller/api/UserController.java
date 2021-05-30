@@ -17,6 +17,6 @@ public interface UserController extends CrudController<UserDto> {
     @ApiOperation(value = "Find entity by requirement id")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<Iterable<EntityModel<UserDto>>> findByExternalUserId(@Valid @RequestParam String externalUserId);
+    ResponseEntity<EntityModel<UserDto>> findByExternalUserId(@Valid @RequestParam String externalUserId);
 
 }

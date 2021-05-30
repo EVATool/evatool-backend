@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StakeholderRepositoryTest extends CrudRepositoryTest<Stakeholder> implements FindByAnalysisRepositoryTest {
+class StakeholderRepositoryTest extends CrudRepositoryTest<Stakeholder> implements FindByAnalysisRepositoryTest {
 
     @Test
     void testCascadeDelete() {
