@@ -101,7 +101,7 @@ abstract class CrudControllerRestTest<S extends SuperEntity, T extends SuperDto>
     }
 
     public String getUri() {
-        Class<? extends T> type = getDtoClass();
+        Class<?> type = getDtoClass();
         if (type == AnalysisDto.class) {
             return UriUtil.ANALYSES;
         } else if (type == ImpactDto.class) {
