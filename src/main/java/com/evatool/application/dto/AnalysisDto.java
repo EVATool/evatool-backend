@@ -32,7 +32,7 @@ public class AnalysisDto extends PrefixIdDto {
 
     @ApiModelProperty(required = false)
     @EqualsAndHashCode.Exclude
-    private Date lastUpdated; // TODO change to Long?
+    private Date lastUpdated;
 
     public AnalysisDto(String name, String description, Boolean isTemplate, String imageUrl, Date lastUpdated) {
         this.name = name;

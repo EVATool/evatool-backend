@@ -33,12 +33,14 @@ public class StakeholderDto extends PrefixIdDto implements AnalysisChildDto {
     @NotNull
     private UUID analysisId;
 
-    // TODO add impacted (slider in stakeholder table)
+    @ApiModelProperty(required = false)
+    private Float impacted;
 
-    public StakeholderDto(String name, StakeholderPriority priority, StakeholderLevel level, UUID analysisId) {
+    public StakeholderDto(String name, StakeholderPriority priority, StakeholderLevel level, UUID analysisId, Float impacted) {
         this.name = name;
         this.priority = priority;
         this.level = level;
         this.analysisId = analysisId;
+        this.impacted = impacted;
     }
 }

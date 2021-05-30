@@ -112,6 +112,19 @@ public class Stakeholder extends PrefixIdEntity implements FindByAnalysis {
         this.analysis = analysis;
     }
 
+    public Float getImpacted() {
+        if (this.impacts.isEmpty()) {
+            return null;
+        }
+
+        var impactSum = 0f;
+        var impactNum = this.impacts.size();
+        for (var impact : this.impacts) {
+            impactSum += impact.getMerit();
+        }
+        return impactSum / impactNum;
+    }
+
     @Override
     public String getPrefix() {
         String prefix;

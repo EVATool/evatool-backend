@@ -6,7 +6,7 @@ public class OverwriteMeritValidation {
 
     }
 
-    public static String validateOverwriteMerit(Float overwriteMerit, Float originalMerit) { // TODO Tests
+    public static String validateOverwriteMerit(Float overwriteMerit, Float originalMerit) {
         var delta = overwriteMerit - originalMerit;
         if (originalMerit < 0 && delta < 0) {
             return "An impact with a negative value can only be increased";

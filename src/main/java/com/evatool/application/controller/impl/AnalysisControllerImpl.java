@@ -46,7 +46,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @GetMapping(UriUtil.ANALYSES)
-    public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> findAll() { // TODO Tests
+    public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> findAll() {
         var dtoListFound = service.findAll();
         return new ResponseEntity<>(withLinks(dtoListFound), HttpStatus.OK);
     }

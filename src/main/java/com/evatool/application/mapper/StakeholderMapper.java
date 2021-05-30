@@ -25,7 +25,8 @@ public class StakeholderMapper extends PrefixIdMapper<Stakeholder, StakeholderDt
                 entity.getName(),
                 entity.getPriority(),
                 entity.getLevel(),
-                entity.getAnalysis().getId()
+                entity.getAnalysis().getId(),
+                entity.getImpacted()
         );
         super.amendToDto(entity, dto);
         return dto;
