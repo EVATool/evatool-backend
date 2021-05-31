@@ -99,7 +99,7 @@ public class Analysis extends PrefixIdEntity {
 
     @PrePersist
     @PreUpdate
-    void update() {
+    void prePersistUpdate() {
         logger.debug("Pre Post/Pre Update");
         wasUpdated();
     }
