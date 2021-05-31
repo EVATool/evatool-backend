@@ -35,7 +35,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
     public T findById(UUID id) {
         logger.debug("Find By Id");
         if (id == null) {
-            throw new PropertyCannotBeNullException(getEntityClass(), "id");
+            throw new PropertyCannotBeNullException(getEntityClass().getSimpleName(), "id");
         }
         var optional = crudRepository.findById(id);
         if (optional.isEmpty()) {
@@ -59,7 +59,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
     public T create(T dto) {
         logger.debug("Create");
         if (dto.getId() != null) {
-            throw new PropertyMustBeNullException(getDtoClass(), "id");
+            throw new PropertyMustBeNullException(getDtoClass().getSimpleName(), "id");
         }
         var entity = baseMapper.fromDto(dto);
         entity = crudRepository.save(entity);
@@ -70,7 +70,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
     public T update(T dto) {
         logger.debug("Update");
         if (dto.getId() == null) {
-            throw new PropertyCannotBeNullException(getEntityClass(), "id");
+            throw new PropertyCannotBeNullException(getEntityClass().getSimpleName(), "id");
         }
         var optional = crudRepository.findById(dto.getId());
         if (optional.isEmpty()) {
@@ -85,7 +85,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
     public void deleteById(UUID id) {
         logger.debug("Delete");
         if (id == null) {
-            throw new PropertyCannotBeNullException(getEntityClass(), "id");
+            throw new PropertyCannotBeNullException(getEntityClass().getSimpleName(), "id");
         }
         var optional = crudRepository.findById(id);
         if (optional.isEmpty()) {
