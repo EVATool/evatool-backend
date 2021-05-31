@@ -24,14 +24,17 @@ public class Analysis extends PrefixIdEntity {
     private static final Logger logger = LoggerFactory.getLogger(Analysis.class);
 
     @Getter
+    @Setter
     @Column(name = "name", nullable = false)
     private String name;
 
     @Getter
+    @Setter
     @Column(name = "description", nullable = false, length = 2048)
     private String description;
 
     @Getter
+    @Setter
     @Column(name = "is_template", nullable = false)
     private Boolean isTemplate;
 
@@ -102,30 +105,6 @@ public class Analysis extends PrefixIdEntity {
     void prePersistUpdate() {
         logger.debug("Pre Post/Pre Update");
         wasUpdated();
-    }
-
-    public void setName(String name) {
-        logger.debug("Set Name");
-        if (name == null) {
-            throw new IllegalArgumentException("Name cannot be null");
-        }
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        logger.debug("Set Description");
-        if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null");
-        }
-        this.description = description;
-    }
-
-    private void setIsTemplate(Boolean isTemplate) {
-        logger.debug("Set IsTemplate");
-        if (isTemplate == null) {
-            throw new IllegalArgumentException("Is template cannot be null");
-        }
-        this.isTemplate = isTemplate;
     }
 
     public void wasUpdated() {

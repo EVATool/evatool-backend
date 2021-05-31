@@ -4,6 +4,7 @@ import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -23,20 +24,24 @@ public class Stakeholder extends PrefixIdEntity implements FindByAnalysis {
     private static final Logger logger = LoggerFactory.getLogger(Stakeholder.class);
 
     @Getter
+    @Setter
     @Column(name = "name", nullable = false)
     private String name;
 
     @Getter
+    @Setter
     @Column(name = "priority", nullable = false)
     @Enumerated(EnumType.STRING)
     private StakeholderPriority priority;
 
     @Getter
+    @Setter
     @Column(name = "level", nullable = false)
     @Enumerated(EnumType.STRING)
     private StakeholderLevel level;
 
     @Getter
+    @Setter
     @ManyToOne(optional = false)
     private Analysis analysis;
 
@@ -78,38 +83,6 @@ public class Stakeholder extends PrefixIdEntity implements FindByAnalysis {
     void postRemove() {
         logger.debug("Post Remove");
         analysis.getStakeholders().remove(this);
-    }
-
-    public void setName(String name) {
-        logger.debug("Set Name");
-        if (name == null) {
-            throw new IllegalArgumentException("Name cannot be null");
-        }
-        this.name = name;
-    }
-
-    public void setPriority(StakeholderPriority priority) {
-        logger.debug("Set Priority");
-        if (priority == null) {
-            throw new IllegalArgumentException("Priority cannot be null");
-        }
-        this.priority = priority;
-    }
-
-    public void setLevel(StakeholderLevel level) {
-        logger.debug("Set Level");
-        if (level == null) {
-            throw new IllegalArgumentException("Level cannot be null");
-        }
-        this.level = level;
-    }
-
-    private void setAnalysis(Analysis analysis) {
-        logger.debug("Set Analysis");
-        if (analysis == null) {
-            throw new IllegalArgumentException("Analysis cannot be null");
-        }
-        this.analysis = analysis;
     }
 
     public Float getImpacted() {

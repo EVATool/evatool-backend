@@ -14,20 +14,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class StakeholderTest extends SuperEntityTest {
 
     @Test
-    void testConstructor_PassNull_Throws() {
-        // given
-        var analysis = getPersistedAnalysis();
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Stakeholder(null, StakeholderPriority.ONE, StakeholderLevel.INDIVIDUAL, analysis));
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Stakeholder("", null, StakeholderLevel.INDIVIDUAL, analysis));
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Stakeholder("", StakeholderPriority.ONE, null, analysis));
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Stakeholder("", StakeholderPriority.ONE, StakeholderLevel.INDIVIDUAL, null));
-    }
-
-    @Test
     void testGetImpacted_NoImpacts_ReturnNull() {
         // given
         var stakeholder = getPersistedStakeholder();

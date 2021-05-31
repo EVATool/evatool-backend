@@ -8,13 +8,4 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 @DataJpaTest
 class UserTest extends SuperEntityTest {
 
-    @Test
-    void testConstructor_PassNull_Throws() {
-        // given
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new User(null));
-    }
 }

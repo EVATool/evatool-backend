@@ -3,6 +3,7 @@ package com.evatool.domain.entity;
 import com.evatool.common.enums.ValueType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -22,22 +23,27 @@ public class Value extends SuperEntity implements FindByAnalysis {
     private static final Logger logger = LoggerFactory.getLogger(Value.class);
 
     @Getter
+    @Setter
     @Column(name = "name", nullable = false)
     private String name;
 
     @Getter
+    @Setter
     @Column(name = "description", nullable = false, length = 2048)
     private String description;
 
     @Getter
+    @Setter
     @Column(name = "type", nullable = false)
     private ValueType type;
 
     @Getter
+    @Setter
     @Column(name = "is_archived", nullable = false)
     private Boolean isArchived;
 
     @Getter
+    @Setter
     @ManyToOne(optional = false)
     private Analysis analysis;
 
@@ -80,45 +86,5 @@ public class Value extends SuperEntity implements FindByAnalysis {
     void postRemove() {
         logger.debug("Post Remove");
         analysis.getValues().remove(this);
-    }
-
-    public void setName(String name) {
-        logger.debug("Set Name");
-        if (name == null) {
-            throw new IllegalArgumentException("Name cannot be null");
-        }
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        logger.debug("Set Description");
-        if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null");
-        }
-        this.description = description;
-    }
-
-    public void setType(ValueType type) {
-        logger.debug("Set Value Type");
-        if (type == null) {
-            throw new IllegalArgumentException("Type cannot be null");
-        }
-        this.type = type;
-    }
-
-    public void setIsArchived(Boolean isArchived) {
-        logger.debug("Set IsArchived");
-        if (isArchived == null) {
-            throw new IllegalArgumentException("Archived cannot be null");
-        }
-        this.isArchived = isArchived;
-    }
-
-    private void setAnalysis(Analysis analysis) {
-        logger.debug("Set Analysis");
-        if (analysis == null) {
-            throw new IllegalArgumentException("Analysis cannot be null");
-        }
-        this.analysis = analysis;
     }
 }

@@ -2,6 +2,7 @@ package com.evatool.domain.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -21,10 +22,12 @@ public class Requirement extends PrefixIdEntity implements FindByAnalysis {
     private static final Logger logger = LoggerFactory.getLogger(Requirement.class);
 
     @Getter
+    @Setter
     @Column(name = "description", nullable = false, length = 2048)
     private String description;
 
     @Getter
+    @Setter
     @ManyToOne(optional = false)
     private Analysis analysis;
 
@@ -70,22 +73,6 @@ public class Requirement extends PrefixIdEntity implements FindByAnalysis {
     void postRemove() {
         logger.debug("Post Remove");
         analysis.getRequirements().remove(this);
-    }
-
-    public void setDescription(String description) {
-        logger.debug("Set Description");
-        if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null");
-        }
-        this.description = description;
-    }
-
-    private void setAnalysis(Analysis analysis) {
-        logger.debug("Set Analysis");
-        if (analysis == null) {
-            throw new IllegalArgumentException("Analysis cannot be null");
-        }
-        this.analysis = analysis;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.evatool.domain.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -26,17 +27,21 @@ public class Impact extends PrefixIdEntity implements FindByAnalysis {
 
     @Column(name = "description", nullable = false, length = 2048)
     @Getter
+    @Setter
     private String description;
 
     @Getter
+    @Setter
     @ManyToOne(optional = false)
     private Value value;
 
     @Getter
+    @Setter
     @ManyToOne(optional = false)
     private Stakeholder stakeholder;
 
     @Getter
+    @Setter
     @ManyToOne(optional = false)
     private Analysis analysis;
 
@@ -86,44 +91,10 @@ public class Impact extends PrefixIdEntity implements FindByAnalysis {
     }
 
     public void setMerit(Float merit) {
-        if (merit == null) {
-            throw new IllegalArgumentException("Merit cannot be null");
-        } else if (Math.abs(merit) > 1) {
+        if (Math.abs(merit) > 1) {
             throw new IllegalArgumentException("Merit must be in [-1, 1]");
         }
         this.merit = merit;
-    }
-
-    public void setDescription(String description) {
-        logger.debug("Set Description");
-        if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null");
-        }
-        this.description = description;
-    }
-
-    public void setValue(Value value) {
-        logger.debug("Set Value");
-        if (value == null) {
-            throw new IllegalArgumentException("Value cannot be null");
-        }
-        this.value = value;
-    }
-
-    public void setStakeholder(Stakeholder stakeholder) {
-        logger.debug("Set Stakeholder");
-        if (stakeholder == null) {
-            throw new IllegalArgumentException("Stakeholder cannot be null");
-        }
-        this.stakeholder = stakeholder;
-    }
-
-    private void setAnalysis(Analysis analysis) {
-        logger.debug("Set Analysis");
-        if (analysis == null) {
-            throw new IllegalArgumentException("Analysis cannot be null");
-        }
-        this.analysis = analysis;
     }
 
     @Override

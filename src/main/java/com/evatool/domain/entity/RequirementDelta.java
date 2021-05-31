@@ -2,6 +2,7 @@ package com.evatool.domain.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +25,12 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
     private Float overwriteMerit;
 
     @Getter
+    @Setter
     @ManyToOne(optional = false)
     private Impact impact;
 
     @Getter
+    @Setter
     @ManyToOne(optional = false)
     private Requirement requirement;
 
@@ -78,22 +81,6 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
             throw new IllegalArgumentException(error);
         }
         this.overwriteMerit = overwriteMerit;
-    }
-
-    public void setImpact(Impact impact) {
-        logger.debug("Set Impact");
-        if (impact == null) {
-            throw new IllegalArgumentException("Impact cannot be null");
-        }
-        this.impact = impact;
-    }
-
-    public void setRequirement(Requirement requirement) {
-        logger.debug("Set Requirement");
-        if (requirement == null) {
-            throw new IllegalArgumentException("Requirement cannot be null");
-        }
-        this.requirement = requirement;
     }
 
     public Float getOriginalMerit(){

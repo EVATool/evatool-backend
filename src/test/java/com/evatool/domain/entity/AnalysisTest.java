@@ -14,18 +14,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class AnalysisTest extends SuperEntityTest {
 
     @Test
-    void testConstructor_PassNull_Throws() {
-        // given
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Analysis(null, "", false));
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Analysis("", null, false));
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Analysis("", "", null));
-    }
-
-    @Test
     void testWasUpdated_Persist_LastUpdatedIsNotNull() {
         // given
         var analysis = getPersistedAnalysis();

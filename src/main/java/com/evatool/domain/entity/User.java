@@ -2,6 +2,7 @@ package com.evatool.domain.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ public class User extends SuperEntity {
     private static final Logger logger = LoggerFactory.getLogger(User.class);
 
     @Getter
+    @Setter
     @Column(name = "external_user_id", nullable = false)
     private String externalUserId;
 
@@ -30,13 +32,5 @@ public class User extends SuperEntity {
 
     private User() {
 
-    }
-
-    private void setExternalUserId(String externalUserId) {
-        logger.debug("Set External User Id");
-        if (externalUserId == null) {
-            throw new IllegalArgumentException("External user ID cannot be null");
-        }
-        this.externalUserId = externalUserId;
     }
 }
