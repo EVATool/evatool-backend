@@ -26,8 +26,10 @@ public class RequirementDeltaDto extends SuperDto implements AnalysisChildDto {
     @NotNull
     private Float overwriteMerit;
 
+    @ApiModelProperty
     private Float originalMerit;
 
+    @ApiModelProperty
     private Color meritColor;
 
     @ApiModelProperty(required = true)

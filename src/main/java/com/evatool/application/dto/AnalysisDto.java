@@ -27,8 +27,10 @@ public class AnalysisDto extends PrefixIdDto {
     @NotNull
     private Boolean isTemplate;
 
+    @ApiModelProperty
     private String imageUrl;
 
+    @ApiModelProperty
     @EqualsAndHashCode.Exclude
     private Date lastUpdated;
 

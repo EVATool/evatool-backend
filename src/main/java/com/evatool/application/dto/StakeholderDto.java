@@ -33,6 +33,7 @@ public class StakeholderDto extends PrefixIdDto implements AnalysisChildDto {
     @NotNull
     private UUID analysisId;
 
+    @ApiModelProperty
     private Float impacted;
 
     public StakeholderDto(String name, StakeholderPriority priority, StakeholderLevel level, UUID analysisId, Float impacted) {
