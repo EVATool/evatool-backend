@@ -18,7 +18,7 @@ class ErrorMessageTest {
         var errorMessage = new ErrorMessage(exception, "/path", HttpStatus.OK);
 
         // then
-        assertThat(errorMessage.getTimestamp()).isBeforeOrEqualsTo(new Date());
+        assertThat(errorMessage.getTimestamp().getTime()).isLessThanOrEqualTo(new Date().getTime());
         assertThat(errorMessage.getHttpStatusCode()).isEqualTo(200);
         assertThat(errorMessage.getHttpStatus()).isEqualTo("OK");
         assertThat(errorMessage.getTrace()).contains("java.lang.Exception: Test");

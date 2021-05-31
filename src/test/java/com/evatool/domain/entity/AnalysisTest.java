@@ -49,7 +49,7 @@ class AnalysisTest extends SuperEntityTest {
         analysisRepository.save(analysis);
 
         // then
-        assertThat(initialTime).isBeforeOrEqualsTo(analysis.getLastUpdated());
+        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdated().getTime());
     }
 
     @Test
@@ -64,7 +64,7 @@ class AnalysisTest extends SuperEntityTest {
         impactRepository.save(impact);
 
         // then
-        assertThat(initialTime).isBeforeOrEqualsTo(analysis.getLastUpdated());
+        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdated().getTime());
     }
 
     @Disabled("This test is disabled because the @PreUpdate annotation does not work")
@@ -81,7 +81,7 @@ class AnalysisTest extends SuperEntityTest {
         impactRepository.save(impact);
 
         // then
-        assertThat(initialTime).isBeforeOrEqualsTo(analysis.getLastUpdated());
+        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdated().getTime());
     }
 
     @Test
@@ -96,6 +96,6 @@ class AnalysisTest extends SuperEntityTest {
         impactRepository.delete(impact);
 
         // then
-        assertThat(initialTime).isBeforeOrEqualsTo(analysis.getLastUpdated());
+        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdated().getTime());
     }
 }
