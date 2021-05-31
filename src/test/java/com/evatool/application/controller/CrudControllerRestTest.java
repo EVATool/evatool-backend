@@ -2,6 +2,7 @@ package com.evatool.application.controller;
 
 import com.evatool.application.dto.*;
 import com.evatool.domain.entity.SuperEntity;
+import com.evatool.domain.repository.DataTest;
 import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,10 @@ import java.lang.reflect.Array;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-abstract class CrudControllerRestTest<S extends SuperEntity, T extends SuperDto> extends CrudControllerTest<S, T> {
+abstract class CrudControllerRestTest<S extends SuperEntity, T extends SuperDto> extends DataTest<S, T> {
 
     @Test
-    @Override
-    public void testFindById() {
+    void testFindById() {
         // given
         var dto = getPersistedDto();
 
@@ -36,8 +36,7 @@ abstract class CrudControllerRestTest<S extends SuperEntity, T extends SuperDto>
     }
 
     @Test
-    @Override
-    public void testCreate() {
+    void testCreate() {
         // given
         var dto = getFloatingDto();
 
@@ -53,8 +52,7 @@ abstract class CrudControllerRestTest<S extends SuperEntity, T extends SuperDto>
     }
 
     @Test
-    @Override
-    public void testUpdate() {
+    void testUpdate() {
         // given
         var dto = getPersistedDto();
 
@@ -71,8 +69,7 @@ abstract class CrudControllerRestTest<S extends SuperEntity, T extends SuperDto>
     }
 
     @Test
-    @Override
-    public void testDeleteById() {
+    void testDeleteById() {
         // given
         var dto = getPersistedDto();
 
@@ -87,7 +84,7 @@ abstract class CrudControllerRestTest<S extends SuperEntity, T extends SuperDto>
     }
 
     @Test
-    public void restLevel3() {
+    void restLevel3() {
         // given
         var dto = getPersistedDto();
 

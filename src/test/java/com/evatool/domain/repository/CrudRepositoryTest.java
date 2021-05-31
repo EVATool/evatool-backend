@@ -7,10 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest {
+abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest {
 
     @Test
-    public void testFindById() {
+    void testFindById() {
         // given
         var entity = getPersistedEntity();
 
@@ -22,7 +22,7 @@ public abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         // given
         var entity = getFloatingEntity();
 
@@ -35,7 +35,7 @@ public abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
         // given
         var entity = getPersistedEntity();
 
@@ -49,7 +49,7 @@ public abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest
     }
 
     @Test
-    public void testDeleteById() {
+    void testDeleteById() {
         // given
         var entity = getPersistedEntity();
 
