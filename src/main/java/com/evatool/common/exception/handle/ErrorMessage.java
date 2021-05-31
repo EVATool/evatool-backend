@@ -20,10 +20,10 @@ public class ErrorMessage {
     private final Date timestamp;
 
     @Getter
-    private final int status;
+    private final int httpStatusCode;
 
     @Getter
-    private final String error;
+    private final String httpStatus;
 
     @Getter
     private final String trace;
@@ -34,11 +34,11 @@ public class ErrorMessage {
     @Getter
     private final String path;
 
-    public ErrorMessage(Exception exception, String path, HttpStatus httpStatus) {
+    public ErrorMessage(Exception exception, String path, HttpStatus httpStatusCode) {
         logger.debug("Constructor");
         this.timestamp = new Timestamp(System.currentTimeMillis());
-        this.status = httpStatus.value();
-        this.error = httpStatus.toString();
+        this.httpStatusCode = httpStatusCode.value();
+        this.httpStatus = httpStatusCode.toString().replaceAll("\\d", "").trim();
         var sw = new StringWriter();
         var pw = new PrintWriter(sw);
         exception.printStackTrace(pw);
