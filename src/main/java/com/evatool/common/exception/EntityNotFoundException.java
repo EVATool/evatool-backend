@@ -3,15 +3,15 @@ package com.evatool.common.exception;
 import java.util.UUID;
 
 public class EntityNotFoundException extends RuntimeException {
-    public EntityNotFoundException(Class<?> entityClass, UUID id) {
-        this(entityClass.getSimpleName(), id);
-    }
-
     public EntityNotFoundException(String entityClass, UUID id) {
-        this(String.format("The entity of type '%s' with id '%s' was not found", entityClass, id == null ? "null" : id.toString()));
+        this(entityClass, id, "id");
     }
 
-    public EntityNotFoundException(String message) {
-        super(message);
+    public EntityNotFoundException(String entityClass, UUID id, String field) {
+        this(entityClass, id == null ? "null" : id.toString(), field);
+    }
+
+    public EntityNotFoundException(String entityClass, String id, String field) {
+        super(String.format("The entity of type '%s' with %s '%s' was not found", entityClass, field, id));
     }
 }

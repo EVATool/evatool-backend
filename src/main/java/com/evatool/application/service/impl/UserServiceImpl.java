@@ -27,9 +27,7 @@ public class UserServiceImpl extends CrudServiceImpl<User, UserDto> implements U
         logger.debug("Find By External User Id");
         var optional = repository.findByExternalUserId(externalUserId);
         if (optional.isEmpty()) {
-            throw new EntityNotFoundException(String.format(
-                    "The entity of type '%s' with externalUserId '%s' was not found",
-                    User.class.getSimpleName(), externalUserId));
+            throw new EntityNotFoundException(User.class.getSimpleName(), externalUserId, "externalUserId");
         }
         var entity = optional.get();
         return baseMapper.toDto(entity);
