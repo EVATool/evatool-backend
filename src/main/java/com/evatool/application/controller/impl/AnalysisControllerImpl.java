@@ -30,20 +30,6 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
         this.service = service;
     }
 
-    @GetMapping(value = "/test", params = {"!text"})
-    public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> test(@Valid @RequestParam Map<String, String> params) {
-        for (var key : params.keySet()) {
-            System.out.println(String.format("Key: %s, Value: %s", key, params.get(key)));
-        }
-        return null;
-    }
-
-    @GetMapping(value = "/test")
-    public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> test2(@Valid @RequestParam(name = "text") String lol) {
-        System.out.println(lol);
-        return null;
-    }
-
     @Override
     @GetMapping(UriUtil.ANALYSES)
     public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> findAll() {

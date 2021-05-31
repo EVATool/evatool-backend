@@ -15,15 +15,6 @@ class AnalysisControllerRestTest extends CrudControllerRestTest<Analysis, Analys
     private AnalysisControllerImpl controller;
 
     @Test
-    void test() {
-
-        getRest().getForEntity("/test?key1=value1&key2=value2&key3=v1,v2,v3", Void.class);
-
-        getRest().getForEntity("/test?text=textValue", Void.class);
-
-    }
-
-    @Test
     void testFindAll() {
         // given
         getPersistedAnalysis();
