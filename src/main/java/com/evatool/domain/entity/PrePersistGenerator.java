@@ -54,7 +54,6 @@ public class PrePersistGenerator extends UUIDGenerator {
             child.setSequenceId(counter);
         }
 
-
         return super.generate(session, object);
     }
 }
