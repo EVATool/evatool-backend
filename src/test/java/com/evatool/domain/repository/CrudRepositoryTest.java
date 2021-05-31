@@ -22,7 +22,7 @@ public abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest
     }
 
     @Test
-    public void create() {
+    public void testCreate() {
         // given
         var entity = getFloatingEntity();
 
@@ -35,7 +35,7 @@ public abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest
     }
 
     @Test
-    public void update() {
+    public void testUpdate() {
         // given
         var entity = getPersistedEntity();
 
@@ -49,7 +49,7 @@ public abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest
     }
 
     @Test
-    public void deleteById() {
+    public void testDeleteById() {
         // given
         var entity = getPersistedEntity();
 

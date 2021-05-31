@@ -34,7 +34,7 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
 
     @Test
     @Override
-    public void create() {
+    public void testCreate() {
         // given
         var dto = getFloatingDto();
 
@@ -50,7 +50,7 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
 
     @Test
     @Override
-    public void update() {
+    public void testUpdate() {
         // given
         var dto = getPersistedDto();
 
@@ -67,7 +67,7 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
 
     @Test
     @Override
-    public void deleteById() {
+    public void testDeleteById() {
         // given
         var dto = getPersistedDto();
 

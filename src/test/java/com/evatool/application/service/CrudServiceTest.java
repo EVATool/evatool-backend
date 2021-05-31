@@ -5,14 +5,19 @@ import com.evatool.application.service.impl.*;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
 import com.evatool.common.enums.ValueType;
+import com.evatool.common.exception.EntityNotFoundException;
+import com.evatool.common.exception.PropertyCannotBeNullException;
+import com.evatool.common.exception.PropertyMustBeNullException;
 import com.evatool.domain.entity.SuperEntity;
 import com.evatool.domain.repository.CrudRepositoryTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public abstract class CrudServiceTest<S extends SuperEntity, T extends SuperDto> extends CrudRepositoryTest<S> {
 
@@ -44,7 +49,7 @@ public abstract class CrudServiceTest<S extends SuperEntity, T extends SuperDto>
 
     @Test
     @Override
-    public void create() {
+    public void testCreate() {
         // given
         var dto = getFloatingDto();
 
@@ -58,7 +63,7 @@ public abstract class CrudServiceTest<S extends SuperEntity, T extends SuperDto>
 
     @Test
     @Override
-    public void update() {
+    public void testUpdate() {
         // given
         var dto = getPersistedDto();
 
@@ -73,7 +78,7 @@ public abstract class CrudServiceTest<S extends SuperEntity, T extends SuperDto>
 
     @Test
     @Override
-    public void deleteById() {
+    public void testDeleteById() {
         // given
         var dto = getPersistedDto();
 
@@ -86,7 +91,7 @@ public abstract class CrudServiceTest<S extends SuperEntity, T extends SuperDto>
     }
 
     @Test
-    void deleteAll() {
+    void testDeleteAll() {
         // given
         var dto1 = getPersistedDto();
         var dto2 = getPersistedDto();
@@ -97,6 +102,89 @@ public abstract class CrudServiceTest<S extends SuperEntity, T extends SuperDto>
 
         // then
         assertThat(dtoListFound).isEmpty();
+    }
+
+    @Test
+    void testFindById_IdEqualsNull_Throws() {
+        // given
+
+        // when
+        var service = getService();
+
+        // then
+        assertThatExceptionOfType(PropertyCannotBeNullException.class).isThrownBy(() -> service.findById(null));
+    }
+
+    @Test
+    void testFindById_EntityWithIdNotFound_Throws() {
+        // given
+        var id = UUID.randomUUID();
+
+        // when
+        var service = getService();
+
+        // then
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> service.findById(id));
+    }
+
+    @Test
+    void testCreate_IdNotNull_Throws() {
+        // given
+        var dto = getPersistedDto();
+
+        // when
+        var service = getService();
+
+        // then
+        assertThatExceptionOfType(PropertyMustBeNullException.class).isThrownBy(() -> service.create(dto));
+    }
+
+    @Test
+    void testUpdate_IdEqualsNull_Throws() {
+        // given
+        var dto = getFloatingDto();
+
+        // when
+        var service = getService();
+
+        // then
+        assertThatExceptionOfType(PropertyCannotBeNullException.class).isThrownBy(() -> service.update(dto));
+    }
+
+    @Test
+    void testUpdate_EntityWithIdNotFound_Throws() {
+        // given
+        var dto = getFloatingDto();
+        dto.setId(UUID.randomUUID());
+
+        // when
+        var service = getService();
+
+        // then
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> service.update(dto));
+    }
+
+    @Test
+    void testDelete_IdEqualsNull_Throws() {
+        // given
+
+        // when
+        var service = getService();
+
+        // then
+        assertThatExceptionOfType(PropertyCannotBeNullException.class).isThrownBy(() -> service.deleteById(null));
+    }
+
+    @Test
+    void testDelete_EntityWithIdNotFound_Throws() {
+        // given
+        var id = UUID.randomUUID();
+
+        // when
+        var service = getService();
+
+        // then
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> service.deleteById(id));
     }
 
     public T getPersistedDto() {
