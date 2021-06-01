@@ -43,4 +43,7 @@ class RequirementDeltaMapperTest extends SuperMapperTest<RequirementDelta, Requi
         assertThat(dto.getMinOverwriteMerit()).isEqualTo(0f);
         assertThat(dto.getMaxOverwriteMerit()).isEqualTo(0.5f);
     }
+
+    // TODO colorToHex tests
+
 }
