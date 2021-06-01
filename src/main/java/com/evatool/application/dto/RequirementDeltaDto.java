@@ -36,9 +36,6 @@ public class RequirementDeltaDto extends SuperDto implements AnalysisChildDto {
     private Float maxOverwriteMerit;
 
     @ApiModelProperty
-    private Boolean isGoal;
-
-    @ApiModelProperty
     private Color meritColor;
 
     @ApiModelProperty(required = true)
@@ -53,13 +50,12 @@ public class RequirementDeltaDto extends SuperDto implements AnalysisChildDto {
     private UUID analysisId;
 
     public RequirementDeltaDto(Float overwriteMerit, Float originalMerit, Float minOverwriteMerit,
-                               Float maxOverwriteMerit, Boolean isGoal, Color meritColor, UUID impactId,
+                               Float maxOverwriteMerit, Color meritColor, UUID impactId,
                                UUID requirementId, UUID analysisId) {
         this.overwriteMerit = overwriteMerit;
         this.originalMerit = originalMerit;
         this.minOverwriteMerit = minOverwriteMerit;
         this.maxOverwriteMerit = maxOverwriteMerit;
-        this.isGoal = isGoal;
         this.meritColor = meritColor;
         this.impactId = impactId;
         this.requirementId = requirementId;

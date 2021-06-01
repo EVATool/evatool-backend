@@ -27,6 +27,9 @@ public class ImpactDto extends PrefixIdDto implements AnalysisChildDto {
     @NotNull
     private String description;
 
+    @ApiModelProperty
+    private Boolean isGoal;
+
     @ApiModelProperty(required = true)
     @NotNull
     private UUID valueId;
@@ -39,9 +42,10 @@ public class ImpactDto extends PrefixIdDto implements AnalysisChildDto {
     @NotNull
     private UUID analysisId;
 
-    public ImpactDto(Float merit, String description, UUID valueId, UUID stakeholderId, UUID analysisId) {
+    public ImpactDto(Float merit, String description, Boolean isGoal, UUID valueId, UUID stakeholderId, UUID analysisId) {
         this.merit = merit;
         this.description = description;
+        this.isGoal = isGoal;
         this.valueId = valueId;
         this.stakeholderId = stakeholderId;
         this.analysisId = analysisId;
