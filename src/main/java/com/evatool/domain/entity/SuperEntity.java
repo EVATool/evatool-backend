@@ -26,7 +26,7 @@ public abstract class SuperEntity {
     @GeneratedValue(generator = "PrePersistGenerator")
     @GenericGenerator(name = "PrePersistGenerator", strategy = "com.evatool.domain.entity.PrePersistGenerator")
     @Type(type = "uuid-char")
-    @Column(name = "ID", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
     protected UUID id;
 
     public void setId(UUID id) {
