@@ -28,6 +28,9 @@ public class RequirementDeltaMapper extends SuperMapper<RequirementDelta, Requir
         var dto = new RequirementDeltaDto(
                 entity.getOverwriteMerit(),
                 entity.getOriginalMerit(),
+                entity.getOriginalMerit() > 0 ? -1 : entity.getOriginalMerit(),
+                entity.getOriginalMerit() < 0 ? 1 : entity.getOriginalMerit(),
+                entity.getOriginalMerit() > 0,
                 entity.getMeritColor(),
                 entity.getImpact().getId(),
                 entity.getRequirement().getId(),
