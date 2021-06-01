@@ -25,15 +25,14 @@ class RequirementDeltaTest extends SuperEntityTest {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> delta.setOverwriteMerit(3f));
     }
 
+    // TODO figure out exactly what colors to display and THEN write tests
     @ParameterizedTest
     @CsvSource({ // merit, overwriteMerit, red, green, blue
             //"0, 0, 120, 120, 120",
             //"1, 0, 170, 170, 170",
             //"1, 1, 220, 220, 220",
-
             "-1, -1, 255, 0, 0",
             "1, 1, 0, 255, 0",
-
     })
     void testGetMeritColor(Float merit, Float overwriteMerit, int r, int g, int b) {
         // given
