@@ -32,7 +32,7 @@ public class ImpactMapper extends PrefixIdMapper<Impact, ImpactDto> {
         var dto = new ImpactDto(
                 entity.getMerit(),
                 entity.getDescription(),
-                entity.getMerit() >= 0,
+                entity.getIsGoal(),
                 entity.getValue().getId(),
                 entity.getStakeholder().getId(),
                 entity.getAnalysis().getId()

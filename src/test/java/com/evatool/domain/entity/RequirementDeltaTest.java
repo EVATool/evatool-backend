@@ -26,7 +26,15 @@ class RequirementDeltaTest extends SuperEntityTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"1, 1, 0, 255, 0"})
+    @CsvSource({ // merit, overwriteMerit, red, green, blue
+            //"0, 0, 120, 120, 120",
+            //"1, 0, 170, 170, 170",
+            //"1, 1, 220, 220, 220",
+
+            "-1, -1, 255, 0, 0",
+            "1, 1, 0, 255, 0",
+
+    })
     void testGetMeritColor(Float merit, Float overwriteMerit, int r, int g, int b) {
         // given
         var delta = getPersistedRequirementDelta();
@@ -37,6 +45,7 @@ class RequirementDeltaTest extends SuperEntityTest {
 
         // then
         var color = delta.getMeritColor();
+        System.out.println(String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue()));
         assertThat(color).isEqualTo(new Color(r, g, b));
     }
 }
