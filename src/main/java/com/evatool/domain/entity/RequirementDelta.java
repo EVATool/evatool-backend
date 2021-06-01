@@ -83,7 +83,7 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
         this.overwriteMerit = overwriteMerit;
     }
 
-    public Float getOriginalMerit(){
+    public Float getOriginalMerit() {
         return impact.getMerit();
     }
 
