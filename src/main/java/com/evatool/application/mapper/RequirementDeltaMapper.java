@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+
 @Service
 public class RequirementDeltaMapper extends SuperMapper<RequirementDelta, RequirementDeltaDto> {
 
@@ -30,7 +32,7 @@ public class RequirementDeltaMapper extends SuperMapper<RequirementDelta, Requir
                 entity.getOriginalMerit(),
                 entity.getOriginalMerit() > 0 ? -1 : entity.getOriginalMerit(),
                 entity.getOriginalMerit() < 0 ? 1 : entity.getOriginalMerit(),
-                entity.getMeritColor(),
+                colorToHex(entity.getMeritColor()),
                 entity.getImpact().getId(),
                 entity.getRequirement().getId(),
                 entity.getRequirement().getAnalysis().getId()
@@ -49,5 +51,9 @@ public class RequirementDeltaMapper extends SuperMapper<RequirementDelta, Requir
         );
         super.amendFromDto(entity, dto);
         return entity;
+    }
+
+    private String colorToHex(Color color) {
+        return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
     }
 }

@@ -8,7 +8,6 @@ import lombok.*;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
-import java.awt.*;
 import java.util.UUID;
 
 @ApiModel(value = "RequirementDeltaDto")
@@ -36,7 +35,7 @@ public class RequirementDeltaDto extends SuperDto implements AnalysisChildDto {
     private Float maxOverwriteMerit;
 
     @ApiModelProperty
-    private Color meritColor;
+    private String meritColorCode;
 
     @ApiModelProperty(required = true)
     @NotNull
@@ -50,13 +49,13 @@ public class RequirementDeltaDto extends SuperDto implements AnalysisChildDto {
     private UUID analysisId;
 
     public RequirementDeltaDto(Float overwriteMerit, Float originalMerit, Float minOverwriteMerit,
-                               Float maxOverwriteMerit, Color meritColor, UUID impactId,
+                               Float maxOverwriteMerit, String meritColorCode, UUID impactId,
                                UUID requirementId, UUID analysisId) {
         this.overwriteMerit = overwriteMerit;
         this.originalMerit = originalMerit;
         this.minOverwriteMerit = minOverwriteMerit;
         this.maxOverwriteMerit = maxOverwriteMerit;
-        this.meritColor = meritColor;
+        this.meritColorCode = meritColorCode;
         this.impactId = impactId;
         this.requirementId = requirementId;
         this.analysisId = analysisId;
