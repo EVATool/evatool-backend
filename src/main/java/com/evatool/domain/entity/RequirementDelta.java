@@ -91,9 +91,9 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
         if (impact.getMerit() == 0) {
             return new Color(120, 120, 120);
         } else if (Boolean.TRUE.equals(impact.getIsGoal())) {
-            return new Color(1-this.overwriteMerit, 1, 1-this.overwriteMerit);
+            return new Color(1 - this.overwriteMerit, 1, 1 - this.overwriteMerit);
         } else if (!Boolean.TRUE.equals(impact.getIsGoal())) {
-            return new Color(1,1- -this.overwriteMerit,1- -this.overwriteMerit);
+            return new Color(1, 1 + this.overwriteMerit, 1 + this.overwriteMerit);
         } else {
             throw new IllegalStateException("The current combination of merit (" + impact.getMerit() + ") " +
                     "and overwriteMerit (" + overwriteMerit + ") does not have a color.");
