@@ -51,4 +51,5 @@ public class UriUtil {
     public static final String VARIANTS_ID = "/variants/{id}";
     public static final String VARIANTS_REL = "variants";
 
+    public static final String EXPORT_ANALYSIS_AS_POSTMAN_ID = "export/analysis/{id}";
 }
