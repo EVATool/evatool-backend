@@ -7,12 +7,7 @@ public class UriUtil {
         // TODO get PreUpdate to fire on repo.save() and re-enable tests (ensure cascade when child entity is changed/persisted)
         // TODO what happens when requirement references impact with a requirementDelta and the merit of that impact changes (overwrite merit is invalid -> reset? do not allow?) [and more complex cases]
         // TODO Sample data (repo postman script)
-
-        // Backlog
-        // Remove middle layer tests? (only test rest call?)
-        // Java Generic handling is problematic (code duplication)
-        // Child entities nullable or not?
-        // Remove Rest level 3?
+        // TODO Java Generic handling is problematic (code duplication)
     }
 
     public static final String ANALYSES = "/analyses";
