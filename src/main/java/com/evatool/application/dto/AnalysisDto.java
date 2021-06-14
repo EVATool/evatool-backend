@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
 import java.util.Date;
 
 @ApiModel(value = "AnalysisDto")
@@ -32,13 +33,18 @@ public class AnalysisDto extends PrefixIdDto {
 
     @ApiModelProperty
     @EqualsAndHashCode.Exclude
-    private Date lastUpdated;
+    private Long lastUpdated;
 
-    public AnalysisDto(String name, String description, Boolean isTemplate, String imageUrl, Date lastUpdated) {
+    @ApiModelProperty
+    @EqualsAndHashCode.Exclude
+    private String lastUpdatedPreformatted;
+
+    public AnalysisDto(String name, String description, Boolean isTemplate, String imageUrl, Long lastUpdated, String lastUpdatedPreformatted) {
         this.name = name;
         this.description = description;
         this.isTemplate = isTemplate;
         this.imageUrl = imageUrl;
         this.lastUpdated = lastUpdated;
+        this.lastUpdatedPreformatted = lastUpdatedPreformatted;
     }
 }

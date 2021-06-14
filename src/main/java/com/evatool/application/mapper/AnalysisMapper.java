@@ -19,7 +19,8 @@ public class AnalysisMapper extends PrefixIdMapper<Analysis, AnalysisDto> {
                 entity.getDescription(),
                 entity.getIsTemplate(),
                 entity.getImageUrl(),
-                entity.getLastUpdated()
+                entity.getLastUpdated(),
+                entity.getLastUpdatedPreformatted()
         );
         super.amendToDto(entity, dto);
         return dto;

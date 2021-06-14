@@ -43,6 +43,7 @@ public class Analysis extends PrefixIdEntity {
     @Column(name = "image_url")
     private String imageUrl;
 
+    @Getter
     @Column(name = "last_updated", nullable = false)
     @EqualsAndHashCode.Exclude
     private Long lastUpdated;
@@ -112,8 +113,12 @@ public class Analysis extends PrefixIdEntity {
         lastUpdated = new Date().getTime();
     }
 
-    public Date getLastUpdated() {
+    public Date getLastUpdatedDate() {
         return Date.from(Instant.ofEpochMilli(lastUpdated));
+    }
+
+    public String getLastUpdatedPreformatted() {
+        return getLastUpdatedDate().toString();
     }
 
     @Override

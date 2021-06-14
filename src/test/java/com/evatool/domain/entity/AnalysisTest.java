@@ -21,7 +21,7 @@ class AnalysisTest extends SuperEntityTest {
         // when
 
         // then
-        assertThat(analysis.getLastUpdated()).isNotNull();
+        assertThat(analysis.getLastUpdatedDate()).isNotNull();
     }
 
     @Disabled("This test is disabled because the @PreUpdate annotation does not work")
@@ -30,14 +30,14 @@ class AnalysisTest extends SuperEntityTest {
     void testWasUpdated_Update_LastUpdatedChanges() {
         // given
         var analysis = getPersistedAnalysis();
-        var initialTime = analysis.getLastUpdated();
+        var initialTime = analysis.getLastUpdatedDate();
 
         // when
         analysis.setName("updated");
         analysisRepository.save(analysis);
 
         // then
-        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdated().getTime());
+        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdatedDate().getTime());
     }
 
     @Test
@@ -45,14 +45,14 @@ class AnalysisTest extends SuperEntityTest {
     void testWasUpdated_ChildPersist_LastUpdatedChanges() {
         // given
         var analysis = getPersistedAnalysis();
-        var initialTime = analysis.getLastUpdated();
+        var initialTime = analysis.getLastUpdatedDate();
 
         // when
         var impact = getPersistedImpact(analysis);
         impactRepository.save(impact);
 
         // then
-        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdated().getTime());
+        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdatedDate().getTime());
     }
 
     @Disabled("This test is disabled because the @PreUpdate annotation does not work")
@@ -62,14 +62,14 @@ class AnalysisTest extends SuperEntityTest {
         // given
         var analysis = getPersistedAnalysis();
         var impact = getPersistedImpact(analysis);
-        var initialTime = analysis.getLastUpdated();
+        var initialTime = analysis.getLastUpdatedDate();
 
         // when
         impact.setMerit(0.0f);
         impactRepository.save(impact);
 
         // then
-        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdated().getTime());
+        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdatedDate().getTime());
     }
 
     @Test
@@ -78,12 +78,12 @@ class AnalysisTest extends SuperEntityTest {
         // given
         var analysis = getPersistedAnalysis();
         var impact = getPersistedImpact(analysis);
-        var initialTime = analysis.getLastUpdated();
+        var initialTime = analysis.getLastUpdatedDate();
 
         // when
         impactRepository.delete(impact);
 
         // then
-        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdated().getTime());
+        assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdatedDate().getTime());
     }
 }

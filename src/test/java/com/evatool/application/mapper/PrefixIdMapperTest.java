@@ -17,7 +17,7 @@ class PrefixIdMapperTest {
     @Test
     void testAmendFromDto_PrefixIdInvalid_Throw() {
         // given
-        var dto = new AnalysisDto("", "", false, null, null);
+        var dto = new AnalysisDto("", "", false, null, null, null);
 
         // when
         dto.setPrefixSequenceId("Invalid");
