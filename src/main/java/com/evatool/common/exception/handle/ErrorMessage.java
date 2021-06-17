@@ -1,5 +1,6 @@
 package com.evatool.common.exception.handle;
 
+import com.evatool.common.exception.functional.FunctionalException;
 import lombok.Getter;
 import lombok.ToString;
 import org.slf4j.Logger;
@@ -34,6 +35,9 @@ public class ErrorMessage {
     @Getter
     private final String path;
 
+    @Getter
+    private final Integer functionalErrorCode;
+
     public ErrorMessage(Exception exception, String path, HttpStatus httpStatusCode) {
         logger.debug("Constructor");
         this.timestamp = new Timestamp(System.currentTimeMillis());
@@ -45,5 +49,10 @@ public class ErrorMessage {
         this.trace = sw.toString();
         this.message = exception.getMessage();
         this.path = path;
+        if (exception instanceof FunctionalException) {
+            this.functionalErrorCode = ((FunctionalException) exception).getFunctionalErrorCode();
+        } else {
+            this.functionalErrorCode = null;
+        }
     }
 }

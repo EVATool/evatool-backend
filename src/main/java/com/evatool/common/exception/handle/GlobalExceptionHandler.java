@@ -1,6 +1,7 @@
 package com.evatool.common.exception.handle;
 
 import com.evatool.common.exception.*;
+import com.evatool.common.exception.functional.EntityStillReferencedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,11 @@ import org.springframework.web.context.request.WebRequest;
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    @ExceptionHandler(EntityStillReferencedException.class)
+    public ResponseEntity<ErrorMessage> handle(EntityStillReferencedException exception, WebRequest webRequest) {
+        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
+    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorMessage> handle(EntityNotFoundException exception, WebRequest webRequest) {
