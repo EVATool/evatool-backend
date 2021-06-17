@@ -61,6 +61,7 @@ jobs:
             git pull https://github.com/EVATool/evatool
             cd docker
             docker-compose down
+            docker image prune -f -a
             #docker image rm -f evatool/evatool-frontend:latest
             docker image rm -f evatool/evatool-backend:latest
             docker-compose up -d
