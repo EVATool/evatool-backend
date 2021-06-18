@@ -38,6 +38,9 @@ public class ErrorMessage {
     @Getter
     private final Integer functionalErrorCode;
 
+    @Getter
+    private final Object tag;
+
     public ErrorMessage(Exception exception, String path, HttpStatus httpStatusCode) {
         logger.debug("Constructor");
         this.timestamp = new Timestamp(System.currentTimeMillis());
@@ -50,9 +53,12 @@ public class ErrorMessage {
         this.message = exception.getMessage();
         this.path = path;
         if (exception instanceof FunctionalException) {
-            this.functionalErrorCode = ((FunctionalException) exception).getFunctionalErrorCode();
+            var functionalException = (FunctionalException) exception;
+            this.functionalErrorCode = functionalException.getFunctionalErrorCode();
+            this.tag = functionalException.getTag();
         } else {
             this.functionalErrorCode = null;
+            this.tag = null;
         }
     }
 }
