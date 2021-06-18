@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.UUID;
 
+import static com.evatool.application.service.FunctionalErrorCodes.VALUE_REFERENCED_BY_IMPACT;
+
 @Service
 public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implements ValueService {
 
@@ -41,7 +43,7 @@ public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implement
     @Override
     public void deleteById(UUID id) {
         if (IterableUtil.iterableSize(impactRepository.findAllByValueId(id)) > 0) {
-            throw new EntityStillReferencedException("This value is still referenced by an impact", 1001, id);
+            throw new EntityStillReferencedException("This value is still referenced by an impact", VALUE_REFERENCED_BY_IMPACT, id);
         }
         super.deleteById(id);
     }
