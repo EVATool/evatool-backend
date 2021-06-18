@@ -9,6 +9,6 @@ import java.util.UUID;
 @Repository
 public interface ImpactRepository extends CrudRepository<Impact, UUID>, FindByAnalysisRepository<Impact> {
 
-    Iterable<Impact> findAllByValueId(UUID valueId);
+    Iterable<Impact> findAllByValueId(UUID valueId); // TODO tests
 
 }
