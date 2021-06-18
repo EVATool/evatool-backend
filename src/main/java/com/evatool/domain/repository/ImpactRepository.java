@@ -11,4 +11,6 @@ public interface ImpactRepository extends CrudRepository<Impact, UUID>, FindByAn
 
     Iterable<Impact> findAllByValueId(UUID valueId); // TODO tests
 
+    Iterable<Impact> findAllByStakeholderId(UUID valueId); // TODO tests
+
 }

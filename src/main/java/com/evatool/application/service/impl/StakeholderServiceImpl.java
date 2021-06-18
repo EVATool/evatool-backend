@@ -5,7 +5,10 @@ import com.evatool.application.mapper.StakeholderMapper;
 import com.evatool.application.service.api.StakeholderService;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
+import com.evatool.common.exception.functional.EntityStillReferencedException;
+import com.evatool.common.util.IterableUtil;
 import com.evatool.domain.entity.Stakeholder;
+import com.evatool.domain.repository.ImpactRepository;
 import com.evatool.domain.repository.StakeholderRepository;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -13,6 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.UUID;
+
+import static com.evatool.application.service.FunctionalErrorCodes.STAKEHOLDER_REFERENCED_BY_IMPACT;
 
 @Service
 public class StakeholderServiceImpl extends CrudServiceImpl<Stakeholder, StakeholderDto> implements StakeholderService {
@@ -25,10 +31,22 @@ public class StakeholderServiceImpl extends CrudServiceImpl<Stakeholder, Stakeho
     @Getter
     private final StakeholderMapper mapper;
 
-    public StakeholderServiceImpl(StakeholderRepository repository, StakeholderMapper mapper) {
+    @Getter
+    private final ImpactRepository impactRepository;
+
+    public StakeholderServiceImpl(StakeholderRepository repository, StakeholderMapper mapper, ImpactRepository impactRepository) {
         super(repository, mapper);
         this.repository = repository;
         this.mapper = mapper;
+        this.impactRepository = impactRepository;
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+        if (IterableUtil.iterableSize(impactRepository.findAllByStakeholderId(id)) > 0) {
+            throw new EntityStillReferencedException("This stakeholder is still referenced by an impact", STAKEHOLDER_REFERENCED_BY_IMPACT, id);
+        }
+        super.deleteById(id);
     }
 
     @Override
