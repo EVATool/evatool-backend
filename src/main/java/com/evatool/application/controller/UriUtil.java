@@ -3,7 +3,7 @@ package com.evatool.application.controller;
 public class UriUtil {
 
     private UriUtil() {
-        // TODO throw EntityStillReferencedException when deleting...?
+        // TODO EntityStillReferencedException: Put calculations in tag
 
         // TODO TestEntities for testing intermediate classes (this must lead to CrudServiceTest only testing exceptions once and not in subsequent inherited classes)
         // TODO get PreUpdate to fire on repo.save() and re-enable tests (ensure cascade when child entity is changed/persisted)
