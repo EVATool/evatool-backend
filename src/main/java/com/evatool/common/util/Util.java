@@ -26,6 +26,7 @@ public class Util {
         index = 0;
         for (var id : ids) {
             idArray[index] = id;
+            index++;
         }
         return idArray;
     }

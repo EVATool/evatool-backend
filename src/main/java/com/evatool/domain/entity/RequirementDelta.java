@@ -112,11 +112,11 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
         }
     }
 
-    public Float getMinOverwriteMerit() {
+    public Float getMinOverwriteMerit() { // TODO tests
         return getOriginalMerit() > 0 ? 0 : getOriginalMerit();
     }
 
-    public Float getMaxOverwriteMerit() {
+    public Float getMaxOverwriteMerit() { // TODO tests
         return getOriginalMerit() < 0 ? 0 : getOriginalMerit();
     }
 
