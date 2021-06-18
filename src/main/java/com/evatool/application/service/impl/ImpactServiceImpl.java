@@ -4,7 +4,7 @@ import com.evatool.application.dto.ImpactDto;
 import com.evatool.application.mapper.ImpactMapper;
 import com.evatool.application.service.api.ImpactService;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
-import com.evatool.common.util.IterableUtil;
+import com.evatool.common.util.Util;
 import com.evatool.domain.entity.Impact;
 import com.evatool.domain.repository.ImpactRepository;
 import com.evatool.domain.repository.RequirementDeltaRepository;
@@ -40,8 +40,13 @@ public class ImpactServiceImpl extends CrudServiceImpl<Impact, ImpactDto> implem
 
     @Override
     public void deleteById(UUID id) {
-        if (IterableUtil.iterableSize(requirementDeltaRepository.findAllByImpactId(id)) > 0) {
-            throw new EntityStillReferencedException("This impact is still referenced by a requirement delta", IMPACT_REFERENCED_BY_REQUIREMENT_DELTA, id);
+        var referencedRequirementDeltas = requirementDeltaRepository.findAllByImpactId(id);
+        if (Util.iterableSize(referencedRequirementDeltas) > 0) {
+            var deltaIds = Util.entitySetToIdArray(referencedRequirementDeltas);
+            var tag = "null";
+            throw new EntityStillReferencedException("This impact is still referenced by a requirement delta",
+                    IMPACT_REFERENCED_BY_REQUIREMENT_DELTA,
+                    id);
         }
         super.deleteById(id);
     }

@@ -5,7 +5,7 @@ import com.evatool.application.mapper.ValueMapper;
 import com.evatool.application.service.api.ValueService;
 import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
-import com.evatool.common.util.IterableUtil;
+import com.evatool.common.util.Util;
 import com.evatool.domain.entity.Value;
 import com.evatool.domain.repository.ImpactRepository;
 import com.evatool.domain.repository.ValueRepository;
@@ -42,7 +42,7 @@ public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implement
 
     @Override
     public void deleteById(UUID id) {
-        if (IterableUtil.iterableSize(impactRepository.findAllByValueId(id)) > 0) {
+        if (Util.iterableSize(impactRepository.findAllByValueId(id)) > 0) {
             throw new EntityStillReferencedException("This value is still referenced by an impact", VALUE_REFERENCED_BY_IMPACT, id);
         }
         super.deleteById(id);

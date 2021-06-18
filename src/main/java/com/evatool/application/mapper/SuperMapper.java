@@ -2,6 +2,7 @@ package com.evatool.application.mapper;
 
 import com.evatool.application.dto.SuperDto;
 import com.evatool.common.exception.EntityNotFoundException;
+import com.evatool.common.util.Util;
 import com.evatool.domain.entity.SuperEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,17 +48,6 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
             throw new EntityNotFoundException(repository.getClass().getSimpleName().replace("Repository", ""), id);
         }
         return optional.get();
-    }
-
-    protected <O extends SuperEntity> UUID[] getSuperEntityIds(Set<O> entitySet) {
-        logger.debug("Get Super Entity Ids");
-        var ids = new UUID[entitySet.size()];
-        var index = 0;
-        for (var o : entitySet) {
-            ids[index] = o.getId();
-            index++;
-        }
-        return ids;
     }
 
     protected Class<S> getEntityClass() {

@@ -4,7 +4,7 @@ import com.evatool.application.dto.VariantDto;
 import com.evatool.application.mapper.VariantMapper;
 import com.evatool.application.service.api.VariantService;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
-import com.evatool.common.util.IterableUtil;
+import com.evatool.common.util.Util;
 import com.evatool.domain.entity.Variant;
 import com.evatool.domain.repository.RequirementRepository;
 import com.evatool.domain.repository.VariantRepository;
@@ -40,7 +40,7 @@ public class VariantServiceImpl extends CrudServiceImpl<Variant, VariantDto> imp
 
     @Override
     public void deleteById(UUID id) {
-        if (IterableUtil.iterableSize(requirementRepository.findAllByVariantsId(id)) > 0) {
+        if (Util.iterableSize(requirementRepository.findAllByVariantsId(id)) > 0) {
             throw new EntityStillReferencedException("This variant is still referenced by a requirement", VARIANT_REFERENCED_BY_REQUIREMENT, id);
         }
         super.deleteById(id);

@@ -6,7 +6,7 @@ import com.evatool.application.service.api.StakeholderService;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
-import com.evatool.common.util.IterableUtil;
+import com.evatool.common.util.Util;
 import com.evatool.domain.entity.Stakeholder;
 import com.evatool.domain.repository.ImpactRepository;
 import com.evatool.domain.repository.StakeholderRepository;
@@ -43,7 +43,7 @@ public class StakeholderServiceImpl extends CrudServiceImpl<Stakeholder, Stakeho
 
     @Override
     public void deleteById(UUID id) {
-        if (IterableUtil.iterableSize(impactRepository.findAllByStakeholderId(id)) > 0) {
+        if (Util.iterableSize(impactRepository.findAllByStakeholderId(id)) > 0) {
             throw new EntityStillReferencedException("This stakeholder is still referenced by an impact", STAKEHOLDER_REFERENCED_BY_IMPACT, id);
         }
         super.deleteById(id);
