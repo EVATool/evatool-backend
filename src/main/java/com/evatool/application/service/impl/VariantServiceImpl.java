@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static com.evatool.application.service.FunctionalErrorCodes.VALUE_REFERENCED_BY_IMPACT;
+import static com.evatool.application.service.FunctionalErrorCodes.VARIANT_REFERENCED_BY_REQUIREMENT;
 
 @Service
 public class VariantServiceImpl extends CrudServiceImpl<Variant, VariantDto> implements VariantService {
@@ -41,7 +41,7 @@ public class VariantServiceImpl extends CrudServiceImpl<Variant, VariantDto> imp
     @Override
     public void deleteById(UUID id) {
         if (IterableUtil.iterableSize(requirementRepository.findAllByVariantsId(id)) > 0) {
-            throw new EntityStillReferencedException("This variant is still referenced by a requirement", VALUE_REFERENCED_BY_IMPACT, id);
+            throw new EntityStillReferencedException("This variant is still referenced by a requirement", VARIANT_REFERENCED_BY_REQUIREMENT, id);
         }
         super.deleteById(id);
     }
