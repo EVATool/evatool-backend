@@ -15,7 +15,7 @@ public class Util {
         return counter;
     }
 
-    public static <O extends SuperEntity> UUID[] entitySetToIdArray(Iterable<O> entitySet) { // Tests
+    public static <O extends SuperEntity> UUID[] entityIterableToIdArray(Iterable<O> entitySet) { // Tests
         var ids = new ArrayList<UUID>();
         var index = 0;
         for (var o : entitySet) {

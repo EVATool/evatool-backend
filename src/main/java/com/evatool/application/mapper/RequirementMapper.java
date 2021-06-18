@@ -29,7 +29,7 @@ public class RequirementMapper extends PrefixIdMapper<Requirement, RequirementDt
         var dto = new RequirementDto(
                 entity.getDescription(),
                 entity.getAnalysis().getId(),
-                Util.entitySetToIdArray(entity.getVariants())
+                Util.entityIterableToIdArray(entity.getVariants())
         );
         super.amendToDto(entity, dto);
         return dto;

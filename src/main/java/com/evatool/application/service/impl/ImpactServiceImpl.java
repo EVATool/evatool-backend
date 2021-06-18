@@ -6,6 +6,7 @@ import com.evatool.application.service.api.ImpactService;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
 import com.evatool.common.util.Util;
 import com.evatool.domain.entity.Impact;
+import com.evatool.domain.entity.Requirement;
 import com.evatool.domain.repository.ImpactRepository;
 import com.evatool.domain.repository.RequirementDeltaRepository;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import static com.evatool.application.service.FunctionalErrorCodes.IMPACT_REFERENCED_BY_REQUIREMENT_DELTA;
@@ -42,11 +44,20 @@ public class ImpactServiceImpl extends CrudServiceImpl<Impact, ImpactDto> implem
     public void deleteById(UUID id) {
         var referencedRequirementDeltas = requirementDeltaRepository.findAllByImpactId(id);
         if (Util.iterableSize(referencedRequirementDeltas) > 0) {
-            var deltaIds = Util.entitySetToIdArray(referencedRequirementDeltas);
-            var tag = "null";
+            var referencedRequirements = new ArrayList<Requirement>();
+            referencedRequirementDeltas.forEach(delta -> referencedRequirements.add(delta.getRequirement()));
+            var referencedRequirementsIds = Util.entityIterableToIdArray(referencedRequirements);
+            var deltaIds = Util.entityIterableToIdArray(referencedRequirementDeltas);
+
+            var tag = new Object() {
+                public final UUID impactId = id;
+                public final UUID[] requirementIds = referencedRequirementsIds;
+                public final UUID[] requirementDeltaIds = deltaIds;
+            };
+
             throw new EntityStillReferencedException("This impact is still referenced by a requirement delta",
                     IMPACT_REFERENCED_BY_REQUIREMENT_DELTA,
-                    id);
+                    tag);
         }
         super.deleteById(id);
     }
