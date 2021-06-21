@@ -4,6 +4,7 @@ import com.evatool.application.dto.ImpactDto;
 import com.evatool.application.mapper.ImpactMapper;
 import com.evatool.application.service.api.ImpactService;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
+import com.evatool.common.exception.functional.tag.ImpactReferencedByRequirement;
 import com.evatool.common.util.Util;
 import com.evatool.domain.entity.Impact;
 import com.evatool.domain.entity.Requirement;
@@ -46,14 +47,11 @@ public class ImpactServiceImpl extends CrudServiceImpl<Impact, ImpactDto> implem
         if (Util.iterableSize(referencedRequirementDeltas) > 0) {
             var referencedRequirements = new ArrayList<Requirement>();
             referencedRequirementDeltas.forEach(delta -> referencedRequirements.add(delta.getRequirement()));
-            var referencedRequirementsIds = Util.entityIterableToIdArray(referencedRequirements);
-            var deltaIds = Util.entityIterableToIdArray(referencedRequirementDeltas);
 
-            var tag = new Object() {
-                public final UUID impactId = id;
-                public final UUID[] requirementIds = referencedRequirementsIds;
-                public final UUID[] requirementDeltaIds = deltaIds;
-            };
+            var requirementIds = Util.entityIterableToIdArray(referencedRequirements);
+            var requirementDeltaIds = Util.entityIterableToIdArray(referencedRequirementDeltas);
+
+            var tag = new ImpactReferencedByRequirement(id, requirementIds, requirementDeltaIds);
 
             throw new EntityStillReferencedException("This impact is still referenced by a requirement delta",
                     IMPACT_REFERENCED_BY_REQUIREMENT_DELTA,
