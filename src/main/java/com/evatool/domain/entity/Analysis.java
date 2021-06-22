@@ -123,7 +123,11 @@ public class Analysis extends PrefixIdEntity {
 
     @Override
     public String getPrefix() {
-        return "ANA";
+        if (Boolean.TRUE.equals(isTemplate)) {
+            return "TMP";
+        } else {
+            return "ANA";
+        }
     }
 
     @Override
