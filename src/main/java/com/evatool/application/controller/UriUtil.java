@@ -3,6 +3,9 @@ package com.evatool.application.controller;
 public class UriUtil {
 
     private UriUtil() {
+        // TODO all of a sudden, sending get with invalid UUID causes 500...
+        //  I think the ControllerAdvice caught the Exception that would otherwise be caught by spring (disable generic catch?)
+
         // TODO TestEntities for testing intermediate classes (this must lead to CrudServiceTest only testing exceptions once and not in subsequent inherited classes)
         // TODO get PreUpdate to fire on repo.save() and re-enable tests (ensure cascade when child entity is changed/persisted)th
         // TODO verify domain logic (cascade, orphanRemoval, etc) in tests
