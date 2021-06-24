@@ -8,8 +8,6 @@ public class UriUtil {
         // TODO verify domain logic (cascade, orphanRemoval, etc) in tests
         // TODO what happens when requirement references impact with a requirementDelta and the merit of that impact changes (overwrite merit is invalid -> reset? do not allow?) [and more complex cases]
         // TODO Sample data (repo postman script)
-        // TODO Return ErrorMessage for Exceptions like MethodArgumentTypeMismatchException when spring detects invalid @Valid annotated values.
-        //  Adding an @ExceptionHandler(Exception.class) to the ControllerAdvice will make all spring validation useless and return 500 instead of 400.
         // TODO Java Generic handling is problematic (code duplication)
     }
 

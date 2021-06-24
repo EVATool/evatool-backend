@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -47,10 +46,14 @@ public class GlobalExceptionHandler {
         return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorMessage> handle(MethodArgumentNotValidException exception, WebRequest webRequest) {
-        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
-    }
+    // TODO All exceptions that are thrown by spring for validation (e.g. MethodArgumentNotValidException, MethodArgumentTypeMismatchException)
+    //  should be caught here in order to return with ErrorMessage and 400. If thats the case, then 500 can also return
+    //  return ErrorMessage, becuase it wont catch exception that are used for spring validation.
+
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ErrorMessage> handle(Exception exception, WebRequest webRequest) {
+//        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
     private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception, WebRequest webRequest, HttpStatus httpStatus) {
         logger.warn("{} handled. Returning HttpStatus {}. Message: {}", exception.getClass().getSimpleName(), httpStatus, exception.getMessage());
