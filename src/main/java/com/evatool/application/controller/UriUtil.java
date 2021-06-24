@@ -4,7 +4,8 @@ public class UriUtil {
 
     private UriUtil() {
         // TODO TestEntities for testing intermediate classes (this must lead to CrudServiceTest only testing exceptions once and not in subsequent inherited classes)
-        // TODO get PreUpdate to fire on repo.save() and re-enable tests (ensure cascade when child entity is changed/persisted)th
+        // TODO get PreUpdate to fire on repo.save() and re-enable tests (ensure cascade when child entity is changed/persisted)
+        //  not fired in tests but on life version...
         // TODO verify domain logic (cascade, orphanRemoval, etc) in tests
         // TODO what happens when requirement references impact with a requirementDelta and the merit of that impact changes (overwrite merit is invalid -> reset? do not allow?) [and more complex cases]
         // TODO Sample data (repo postman script)
