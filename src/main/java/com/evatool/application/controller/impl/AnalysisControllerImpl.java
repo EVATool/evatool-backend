@@ -44,7 +44,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
         logger.debug("Deep Copy");
         return new ResponseEntity<>(withLinks(service.deepCopy(templateAnalysisId, analysisDto)), HttpStatus.CREATED);
     }
-a 
+
     @Override
     @GetMapping(UriUtil.ANALYSES_ID)
     public ResponseEntity<EntityModel<AnalysisDto>> findById(UUID id) {
