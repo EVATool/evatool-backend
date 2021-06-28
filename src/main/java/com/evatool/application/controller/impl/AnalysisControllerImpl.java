@@ -14,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
-import javax.validation.Valid;
-import java.util.Map;
 import java.util.UUID;
 
 @Api(tags = "Analysis API-Endpoint")
@@ -33,6 +31,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @GetMapping(UriUtil.ANALYSES)
+    @RolesAllowed("user")
     public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> findAll() {
         var dtoListFound = service.findAll();
         return new ResponseEntity<>(withLinks(dtoListFound), HttpStatus.OK);
@@ -47,7 +46,6 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @GetMapping(UriUtil.ANALYSES_ID)
-    @RolesAllowed("user")
     public ResponseEntity<EntityModel<AnalysisDto>> findById(UUID id) {
         return super.findById(id);
     }
