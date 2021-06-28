@@ -63,7 +63,6 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
     @Override
     @PutMapping(UriUtil.ANALYSES)
     @PreAuthorize(AuthUtil.BY_ADMIN)
-    @CrossOrigin
     public ResponseEntity<EntityModel<AnalysisDto>> update(AnalysisDto dto) {
         return super.update(dto);
     }
