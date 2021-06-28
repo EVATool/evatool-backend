@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.UUID;
 
 @Api(tags = "Analysis API-Endpoint")
@@ -32,7 +31,6 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
     }
 
     @Override
-    @RolesAllowed({AuthUtil.ADMIN_ROLE})
     @GetMapping(UriUtil.ANALYSES)
     @PreAuthorize("hasAuthority('" + AuthUtil.ADMIN_ROLE + "')")
     public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> findAll() {
