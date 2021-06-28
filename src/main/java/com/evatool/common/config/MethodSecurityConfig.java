@@ -9,9 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @Configuration
-@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
-@ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     @Override
     protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
