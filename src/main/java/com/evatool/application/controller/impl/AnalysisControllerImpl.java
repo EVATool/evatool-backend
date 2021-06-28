@@ -31,7 +31,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
     }
 
     @Override
-    //@RolesAllowed({AuthUtil.ADMIN_ROLE, AuthUtil.USER_ROLE})
+    @RolesAllowed({AuthUtil.ADMIN_ROLE})
     @GetMapping(UriUtil.ANALYSES)
     public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> findAll() {
         var dtoListFound = service.findAll();
