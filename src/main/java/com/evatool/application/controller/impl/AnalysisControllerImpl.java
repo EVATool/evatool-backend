@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.Map;
 import java.util.UUID;
@@ -46,6 +47,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @GetMapping(UriUtil.ANALYSES_ID)
+    @RolesAllowed("user")
     public ResponseEntity<EntityModel<AnalysisDto>> findById(UUID id) {
         return super.findById(id);
     }
