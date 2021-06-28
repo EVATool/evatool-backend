@@ -53,6 +53,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @PostMapping(UriUtil.ANALYSES)
+    @PreAuthorize("hasRole('" + AuthUtil.ADMIN_ROLE + "')")
     public ResponseEntity<EntityModel<AnalysisDto>> create(AnalysisDto dto) {
         return super.create(dto);
     }
