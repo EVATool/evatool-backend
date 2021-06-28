@@ -1,4 +1,4 @@
-package com.evatool.application.controller;
+package com.evatool.common.util;
 
 public class AuthUtil {
 

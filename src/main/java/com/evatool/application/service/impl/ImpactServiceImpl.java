@@ -5,7 +5,7 @@ import com.evatool.application.mapper.ImpactMapper;
 import com.evatool.application.service.api.ImpactService;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
 import com.evatool.common.exception.functional.tag.ImpactReferencedByRequirements;
-import com.evatool.common.util.Util;
+import com.evatool.common.util.IterableUtil;
 import com.evatool.domain.entity.Impact;
 import com.evatool.domain.entity.Requirement;
 import com.evatool.domain.repository.ImpactRepository;
@@ -44,12 +44,12 @@ public class ImpactServiceImpl extends CrudServiceImpl<Impact, ImpactDto> implem
     @Override
     public void deleteById(UUID id) {
         var referencedRequirementDeltas = requirementDeltaRepository.findAllByImpactId(id);
-        if (Util.iterableSize(referencedRequirementDeltas) > 0) {
+        if (IterableUtil.iterableSize(referencedRequirementDeltas) > 0) {
             var referencedRequirements = new ArrayList<Requirement>();
             referencedRequirementDeltas.forEach(delta -> referencedRequirements.add(delta.getRequirement()));
 
-            var requirementIds = Util.entityIterableToIdArray(referencedRequirements);
-            var requirementDeltaIds = Util.entityIterableToIdArray(referencedRequirementDeltas);
+            var requirementIds = IterableUtil.entityIterableToIdArray(referencedRequirements);
+            var requirementDeltaIds = IterableUtil.entityIterableToIdArray(referencedRequirementDeltas);
 
             var tag = new ImpactReferencedByRequirements(id, requirementIds, requirementDeltaIds);
 

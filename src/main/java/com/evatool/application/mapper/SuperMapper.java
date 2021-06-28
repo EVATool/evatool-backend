@@ -2,7 +2,6 @@ package com.evatool.application.mapper;
 
 import com.evatool.application.dto.SuperDto;
 import com.evatool.common.exception.EntityNotFoundException;
-import com.evatool.common.util.Util;
 import com.evatool.domain.entity.SuperEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 @Service

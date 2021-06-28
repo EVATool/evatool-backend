@@ -5,7 +5,10 @@ import com.evatool.domain.entity.SuperEntity;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Util {
+public class IterableUtil {
+
+    private IterableUtil() {
+    }
 
     public static int iterableSize(Iterable iterable) {
         int counter = 0;

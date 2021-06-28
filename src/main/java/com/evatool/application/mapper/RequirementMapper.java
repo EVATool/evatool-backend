@@ -1,7 +1,7 @@
 package com.evatool.application.mapper;
 
 import com.evatool.application.dto.RequirementDto;
-import com.evatool.common.util.Util;
+import com.evatool.common.util.IterableUtil;
 import com.evatool.domain.entity.Requirement;
 import com.evatool.domain.repository.AnalysisRepository;
 import com.evatool.domain.repository.VariantRepository;
@@ -29,7 +29,7 @@ public class RequirementMapper extends PrefixIdMapper<Requirement, RequirementDt
         var dto = new RequirementDto(
                 entity.getDescription(),
                 entity.getAnalysis().getId(),
-                Util.entityIterableToIdArray(entity.getVariants())
+                IterableUtil.entityIterableToIdArray(entity.getVariants())
         );
         super.amendToDto(entity, dto);
         return dto;

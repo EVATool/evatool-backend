@@ -1,6 +1,6 @@
 package com.evatool.application.controller.impl;
 
-import com.evatool.application.controller.UriUtil;
+import com.evatool.common.util.UriUtil;
 import com.evatool.application.controller.api.UserController;
 import com.evatool.application.dto.UserDto;
 import com.evatool.application.service.impl.UserServiceImpl;

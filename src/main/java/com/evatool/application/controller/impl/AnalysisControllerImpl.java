@@ -1,6 +1,6 @@
 package com.evatool.application.controller.impl;
 
-import com.evatool.application.controller.UriUtil;
+import com.evatool.common.util.UriUtil;
 import com.evatool.application.controller.api.AnalysisController;
 import com.evatool.application.dto.AnalysisDto;
 import com.evatool.application.service.impl.AnalysisServiceImpl;
@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.UUID;
 
 @Api(tags = "Analysis API-Endpoint")

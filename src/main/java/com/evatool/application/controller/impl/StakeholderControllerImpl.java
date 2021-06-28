@@ -1,6 +1,6 @@
 package com.evatool.application.controller.impl;
 
-import com.evatool.application.controller.UriUtil;
+import com.evatool.common.util.UriUtil;
 import com.evatool.application.controller.api.StakeholderController;
 import com.evatool.application.dto.StakeholderDto;
 import com.evatool.application.service.impl.StakeholderServiceImpl;

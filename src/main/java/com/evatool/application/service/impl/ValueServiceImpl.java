@@ -6,7 +6,7 @@ import com.evatool.application.service.api.ValueService;
 import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
 import com.evatool.common.exception.functional.tag.ValueReferencedByImpacts;
-import com.evatool.common.util.Util;
+import com.evatool.common.util.IterableUtil;
 import com.evatool.domain.entity.Value;
 import com.evatool.domain.repository.ImpactRepository;
 import com.evatool.domain.repository.ValueRepository;
@@ -44,8 +44,8 @@ public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implement
     @Override
     public void deleteById(UUID id) {
         var referencedImpacts = impactRepository.findAllByValueId(id);
-        if (Util.iterableSize(referencedImpacts) > 0) {
-            var impactIds = Util.entityIterableToIdArray(referencedImpacts);
+        if (IterableUtil.iterableSize(referencedImpacts) > 0) {
+            var impactIds = IterableUtil.entityIterableToIdArray(referencedImpacts);
 
             var tag = new ValueReferencedByImpacts(id, impactIds);
 

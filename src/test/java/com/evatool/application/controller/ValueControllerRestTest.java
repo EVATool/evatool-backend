@@ -2,6 +2,7 @@ package com.evatool.application.controller;
 
 import com.evatool.application.dto.ValueDto;
 import com.evatool.common.enums.ValueType;
+import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Value;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
