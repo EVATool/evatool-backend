@@ -32,7 +32,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @GetMapping(UriUtil.ANALYSES)
-    @PreAuthorize("hasRole('" + AuthUtil.ADMIN_ROLE + "')")
+    //@PreAuthorize("hasRole('" + AuthUtil.ADMIN_ROLE + "')")
     public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> findAll() {
         var dtoListFound = service.findAll();
         return new ResponseEntity<>(withLinks(dtoListFound), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @PostMapping(UriUtil.ANALYSES)
-    @PreAuthorize("hasRole('" + AuthUtil.ADMIN_ROLE + "')")
+    //@PreAuthorize("hasRole('" + AuthUtil.ADMIN_ROLE + "')")
     public ResponseEntity<EntityModel<AnalysisDto>> create(AnalysisDto dto) {
         return super.create(dto);
     }
