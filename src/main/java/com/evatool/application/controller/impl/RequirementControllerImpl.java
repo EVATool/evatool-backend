@@ -1,9 +1,9 @@
 package com.evatool.application.controller.impl;
 
-import com.evatool.common.util.UriUtil;
 import com.evatool.application.controller.api.RequirementController;
 import com.evatool.application.dto.RequirementDto;
 import com.evatool.application.service.impl.RequirementServiceImpl;
+import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Requirement;
 import io.swagger.annotations.Api;
 import lombok.Getter;

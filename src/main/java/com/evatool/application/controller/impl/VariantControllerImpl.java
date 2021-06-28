@@ -1,9 +1,9 @@
 package com.evatool.application.controller.impl;
 
-import com.evatool.common.util.UriUtil;
 import com.evatool.application.controller.api.VariantController;
 import com.evatool.application.dto.VariantDto;
 import com.evatool.application.service.impl.VariantServiceImpl;
+import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Variant;
 import io.swagger.annotations.Api;
 import lombok.Getter;

@@ -1,9 +1,9 @@
 package com.evatool.application.controller.impl;
 
-import com.evatool.common.util.UriUtil;
 import com.evatool.application.controller.api.ImpactController;
 import com.evatool.application.dto.ImpactDto;
 import com.evatool.application.service.impl.ImpactServiceImpl;
+import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Impact;
 import io.swagger.annotations.Api;
 import lombok.Getter;

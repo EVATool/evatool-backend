@@ -1,11 +1,11 @@
 package com.evatool.application.controller.impl;
 
-import com.evatool.common.util.UriUtil;
 import com.evatool.application.controller.api.StakeholderController;
 import com.evatool.application.dto.StakeholderDto;
 import com.evatool.application.service.impl.StakeholderServiceImpl;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
+import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Stakeholder;
 import io.swagger.annotations.Api;
 import lombok.Getter;

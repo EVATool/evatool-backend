@@ -1,9 +1,9 @@
 package com.evatool.application.controller.impl;
 
-import com.evatool.common.util.UriUtil;
 import com.evatool.application.controller.api.UserController;
 import com.evatool.application.dto.UserDto;
 import com.evatool.application.service.impl.UserServiceImpl;
+import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.User;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;

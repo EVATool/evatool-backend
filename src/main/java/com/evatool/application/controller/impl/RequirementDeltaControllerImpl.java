@@ -1,9 +1,9 @@
 package com.evatool.application.controller.impl;
 
-import com.evatool.common.util.UriUtil;
 import com.evatool.application.controller.api.RequirementDeltaController;
 import com.evatool.application.dto.RequirementDeltaDto;
 import com.evatool.application.service.impl.RequirementDeltaServiceImpl;
+import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.RequirementDelta;
 import io.swagger.annotations.Api;
 import lombok.Getter;

@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
-import java.util.Date;
 
 @ApiModel(value = "AnalysisDto")
 @EqualsAndHashCode(callSuper = true)

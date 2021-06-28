@@ -1,9 +1,9 @@
 package com.evatool.application.controller.impl;
 
-import com.evatool.common.util.UriUtil;
 import com.evatool.application.controller.api.AnalysisController;
 import com.evatool.application.dto.AnalysisDto;
 import com.evatool.application.service.impl.AnalysisServiceImpl;
+import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Analysis;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
