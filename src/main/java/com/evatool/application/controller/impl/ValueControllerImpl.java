@@ -24,6 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Api(tags = "Value API-Endpoint")
 @RestController
+@CrossOrigin
 public class ValueControllerImpl extends CrudControllerImpl<Value, ValueDto> implements ValueController {
 
     private static final Logger logger = LoggerFactory.getLogger(ValueControllerImpl.class);

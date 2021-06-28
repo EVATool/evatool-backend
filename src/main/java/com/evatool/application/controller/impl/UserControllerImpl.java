@@ -19,6 +19,7 @@ import java.util.UUID;
 
 @Api(tags = "User API-Endpoint")
 @RestController
+@CrossOrigin
 public class UserControllerImpl extends CrudControllerImpl<User, UserDto> implements UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserControllerImpl.class);

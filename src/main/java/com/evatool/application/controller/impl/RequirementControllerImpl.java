@@ -23,6 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Api(tags = "Requirement API-Endpoint")
 @RestController
+@CrossOrigin
 public class RequirementControllerImpl extends CrudControllerImpl<Requirement, RequirementDto> implements RequirementController {
 
     private static final Logger logger = LoggerFactory.getLogger(RequirementControllerImpl.class);

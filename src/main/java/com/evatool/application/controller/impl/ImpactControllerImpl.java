@@ -22,6 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Api(tags = "Impact API-Endpoint")
 @RestController
+@CrossOrigin
 public class ImpactControllerImpl extends CrudControllerImpl<Impact, ImpactDto> implements ImpactController {
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactControllerImpl.class);

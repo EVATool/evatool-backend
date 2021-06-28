@@ -25,6 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Api(tags = "Stakeholder API-Endpoint")
 @RestController
+@CrossOrigin
 public class StakeholderControllerImpl extends CrudControllerImpl<Stakeholder, StakeholderDto> implements StakeholderController {
 
     private static final Logger logger = LoggerFactory.getLogger(StakeholderControllerImpl.class);

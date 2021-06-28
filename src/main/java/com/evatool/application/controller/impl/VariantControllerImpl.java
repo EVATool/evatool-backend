@@ -23,6 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Api(tags = "Variant API-Endpoint")
 @RestController
+@CrossOrigin
 public class VariantControllerImpl extends CrudControllerImpl<Variant, VariantDto> implements VariantController {
 
     private static final Logger logger = LoggerFactory.getLogger(VariantControllerImpl.class);

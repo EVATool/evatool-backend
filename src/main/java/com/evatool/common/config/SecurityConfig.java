@@ -49,18 +49,11 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.csrf().disable()
-                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
+                .cors().and()
                 .authorizeRequests()
                 .anyRequest()
                 .permitAll();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+
 }
