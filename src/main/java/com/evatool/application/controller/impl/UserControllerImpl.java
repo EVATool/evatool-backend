@@ -3,6 +3,7 @@ package com.evatool.application.controller.impl;
 import com.evatool.application.controller.api.UserController;
 import com.evatool.application.dto.UserDto;
 import com.evatool.application.service.impl.UserServiceImpl;
+import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.User;
 import io.swagger.annotations.Api;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -29,6 +31,7 @@ public class UserControllerImpl extends CrudControllerImpl<User, UserDto> implem
     }
 
     @Override
+    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
     public ResponseEntity<EntityModel<UserDto>> findByExternalUserId(String externalUserId) {
         var dtoFound = service.findByExternalUserId(externalUserId);
         return new ResponseEntity<>(withLinks(dtoFound), HttpStatus.OK);
@@ -36,24 +39,28 @@ public class UserControllerImpl extends CrudControllerImpl<User, UserDto> implem
 
     @Override
     @GetMapping(UriUtil.USERS_ID)
+    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
     public ResponseEntity<EntityModel<UserDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.USERS)
+    @PreAuthorize(AuthUtil.BY_ADMIN)
     public ResponseEntity<EntityModel<UserDto>> create(UserDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.USERS)
+    @PreAuthorize(AuthUtil.BY_ADMIN)
     public ResponseEntity<EntityModel<UserDto>> update(UserDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.USERS_ID)
+    @PreAuthorize(AuthUtil.BY_ADMIN)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }

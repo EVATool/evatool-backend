@@ -3,6 +3,7 @@ package com.evatool.application.controller.impl;
 import com.evatool.application.controller.api.RequirementDeltaController;
 import com.evatool.application.dto.RequirementDeltaDto;
 import com.evatool.application.service.impl.RequirementDeltaServiceImpl;
+import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.RequirementDelta;
 import io.swagger.annotations.Api;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -34,30 +36,35 @@ public class RequirementDeltaControllerImpl extends CrudControllerImpl<Requireme
 
     @Override
     @GetMapping(value = UriUtil.REQUIREMENTS_DELTA, params = {"!impactId", "!requirementId"})
+    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
     public ResponseEntity<Iterable<EntityModel<RequirementDeltaDto>>> findAllByAnalysisId(UUID analysisId) {
         return RequirementDeltaController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.REQUIREMENTS_DELTA_ID)
+    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
     public ResponseEntity<EntityModel<RequirementDeltaDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.REQUIREMENTS_DELTA)
+    @PreAuthorize(AuthUtil.BY_ADMIN)
     public ResponseEntity<EntityModel<RequirementDeltaDto>> create(RequirementDeltaDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.REQUIREMENTS_DELTA)
+    @PreAuthorize(AuthUtil.BY_ADMIN)
     public ResponseEntity<EntityModel<RequirementDeltaDto>> update(RequirementDeltaDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.REQUIREMENTS_DELTA_ID)
+    @PreAuthorize(AuthUtil.BY_ADMIN)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }

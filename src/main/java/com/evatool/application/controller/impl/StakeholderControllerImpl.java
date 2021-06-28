@@ -5,6 +5,7 @@ import com.evatool.application.dto.StakeholderDto;
 import com.evatool.application.service.impl.StakeholderServiceImpl;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
+import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Stakeholder;
 import io.swagger.annotations.Api;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -37,42 +39,49 @@ public class StakeholderControllerImpl extends CrudControllerImpl<Stakeholder, S
 
     @Override
     @GetMapping(UriUtil.STAKEHOLDERS_LEVELS)
+    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
     public ResponseEntity<Iterable<StakeholderLevel>> findAllStakeholderLevels() {
         return new ResponseEntity<>(service.findAllStakeholderLevels(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping(UriUtil.STAKEHOLDERS_PRIORITIES)
+    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
     public ResponseEntity<Iterable<StakeholderPriority>> findAllStakeholderPriorities() {
         return new ResponseEntity<>(service.findAllStakeholderPriorities(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping(UriUtil.STAKEHOLDERS)
+    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
     public ResponseEntity<Iterable<EntityModel<StakeholderDto>>> findAllByAnalysisId(UUID analysisId) {
         return StakeholderController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.STAKEHOLDERS_ID)
+    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
     public ResponseEntity<EntityModel<StakeholderDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.STAKEHOLDERS)
+    @PreAuthorize(AuthUtil.BY_ADMIN)
     public ResponseEntity<EntityModel<StakeholderDto>> create(StakeholderDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.STAKEHOLDERS)
+    @PreAuthorize(AuthUtil.BY_ADMIN)
     public ResponseEntity<EntityModel<StakeholderDto>> update(StakeholderDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.STAKEHOLDERS_ID)
+    @PreAuthorize(AuthUtil.BY_ADMIN)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }
