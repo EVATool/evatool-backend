@@ -3,6 +3,7 @@ package com.evatool.application.controller.impl;
 import com.evatool.application.controller.api.AnalysisController;
 import com.evatool.application.dto.AnalysisDto;
 import com.evatool.application.service.impl.AnalysisServiceImpl;
+import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Analysis;
 import io.swagger.annotations.Api;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.UUID;
 
 @Api(tags = "Analysis API-Endpoint")
@@ -29,6 +31,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
     }
 
     @Override
+    @RolesAllowed({AuthUtil.ADMIN_ROLE, AuthUtil.USER_ROLE})
     @GetMapping(UriUtil.ANALYSES)
     public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> findAll() {
         var dtoListFound = service.findAll();
