@@ -44,7 +44,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
         logger.debug("Deep Copy");
         return new ResponseEntity<>(withLinks(service.deepCopy(templateAnalysisId, analysisDto)), HttpStatus.CREATED);
     }
-
+a 
     @Override
     @GetMapping(UriUtil.ANALYSES_ID)
     public ResponseEntity<EntityModel<AnalysisDto>> findById(UUID id) {
@@ -60,12 +60,14 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @PutMapping(UriUtil.ANALYSES)
+    @PreAuthorize("hasRole('" + AuthUtil.ADMIN_ROLE + "')")
     public ResponseEntity<EntityModel<AnalysisDto>> update(AnalysisDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.ANALYSES_ID)
+    @PreAuthorize("hasRole('" + AuthUtil.ADMIN_ROLE + "')")
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }
