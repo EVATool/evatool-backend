@@ -3,7 +3,8 @@ package com.evatool.common.util;
 public class UriUtil {
 
     private UriUtil() {
-        // TODO clean configs
+        // TODO How to disable keycloak?
+
         // TODO what happens when requirement references impact with a requirementDelta and the merit of that impact changes (overwrite merit is invalid -> reset? do not allow?) [and more complex cases]
         // TODO Java Generic handling is problematic (code duplication)
         // TODO Deep copy everything (?)
