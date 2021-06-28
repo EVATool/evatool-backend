@@ -3,7 +3,6 @@ package com.evatool.application.controller.impl;
 import com.evatool.application.controller.api.AnalysisController;
 import com.evatool.application.dto.AnalysisDto;
 import com.evatool.application.service.impl.AnalysisServiceImpl;
-import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Analysis;
 import io.swagger.annotations.Api;
@@ -16,6 +15,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
+
+import static com.evatool.common.util.AuthUtil.ByAdmin;
+import static com.evatool.common.util.AuthUtil.ByAdminOrUser;
 
 @Api(tags = "Analysis API-Endpoint")
 @RestController
@@ -32,7 +34,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @GetMapping(UriUtil.ANALYSES)
-    @PreAuthorize("hasRole('" + AuthUtil.ADMIN_ROLE + "')")
+    @PreAuthorize(ByAdminOrUser)
     public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> findAll() {
         var dtoListFound = service.findAll();
         return new ResponseEntity<>(withLinks(dtoListFound), HttpStatus.OK);
@@ -40,6 +42,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @PostMapping(UriUtil.ANALYSES_DEEP_COPY)
+    @PreAuthorize(ByAdmin)
     public ResponseEntity<EntityModel<AnalysisDto>> deepCopy(UUID templateAnalysisId, AnalysisDto analysisDto) {
         logger.debug("Deep Copy");
         return new ResponseEntity<>(withLinks(service.deepCopy(templateAnalysisId, analysisDto)), HttpStatus.CREATED);
@@ -47,27 +50,28 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @GetMapping(UriUtil.ANALYSES_ID)
+    @PreAuthorize(ByAdminOrUser)
     public ResponseEntity<EntityModel<AnalysisDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.ANALYSES)
-    @PreAuthorize("hasRole('" + AuthUtil.ADMIN_ROLE + "')")
+    @PreAuthorize(ByAdmin)
     public ResponseEntity<EntityModel<AnalysisDto>> create(AnalysisDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.ANALYSES)
-    @PreAuthorize("hasRole('" + AuthUtil.ADMIN_ROLE + "')")
+    @PreAuthorize(ByAdmin)
     public ResponseEntity<EntityModel<AnalysisDto>> update(AnalysisDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.ANALYSES_ID)
-    @PreAuthorize("hasRole('" + AuthUtil.ADMIN_ROLE + "')")
+    @PreAuthorize(ByAdmin)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }
