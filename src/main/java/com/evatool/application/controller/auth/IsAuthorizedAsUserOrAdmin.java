@@ -8,6 +8,6 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 @PreAuthorize("hasAuthority('" + AuthUtil.USER_ROLE + "')" +
-        "|| hasAuthority('" + AuthUtil.ADMIN_ROLE + "')")
+        " || hasAuthority('" + AuthUtil.ADMIN_ROLE + "')")
 public @interface IsAuthorizedAsUserOrAdmin {
 }
