@@ -15,6 +15,7 @@ import java.util.List;
 
 import static org.springframework.security.access.annotation.Jsr250SecurityConfig.DENY_ALL_ATTRIBUTE;
 
+// This class denies all requests if a method of a rest controller is not annotated with auth annotations at all.
 public class CustomPermissionAllowedMethodSecurityMetadataSource extends AbstractFallbackMethodSecurityMetadataSource {
     @Override
     protected Collection findAttributes(Class<?> clazz) {
