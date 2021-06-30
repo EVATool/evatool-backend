@@ -17,7 +17,5 @@ class RequirementDeltaControllerRestTest extends CrudControllerRestTest<Requirem
         var response = rest.postForEntity(UriUtil.REQUIREMENTS_DELTA, httpEntity, getDtoClass());
 
         System.out.println(response.getStatusCode());
-
     }
-
 }
