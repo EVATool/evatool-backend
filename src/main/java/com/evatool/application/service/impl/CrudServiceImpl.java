@@ -7,11 +7,19 @@ import com.evatool.common.exception.EntityNotFoundException;
 import com.evatool.common.exception.PropertyCannotBeNullException;
 import com.evatool.common.exception.PropertyMustBeNullException;
 import com.evatool.domain.entity.SuperEntity;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.keycloak.representations.AccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +39,16 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         this.baseMapper = baseMapper;
     }
 
+    public static HttpServletRequest getCurrentHttpRequest() {
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (requestAttributes instanceof ServletRequestAttributes) {
+            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+            return request;
+        }
+        logger.debug("Not called in the context of an HTTP request");
+        return null;
+    }
+
     @Override
     public T findById(UUID id) {
         logger.debug("Find By Id");
@@ -48,6 +66,20 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
     @Override
     public Iterable<T> findAll() {
         logger.debug("Find All");
+
+
+        var request = getCurrentHttpRequest();
+        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) request.getUserPrincipal();
+        KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
+        KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
+        AccessToken accessToken = session.getToken();
+
+        //emailID = accessToken.getEmail();
+        var issuer = accessToken.getIssuer();
+        var realm = issuer.substring(issuer.lastIndexOf("/") + 1);
+        System.out.println(realm);
+
+
         List<T> dtoList = new ArrayList<>();
         for (var entity : crudRepository.findAll()) {
             dtoList.add(baseMapper.toDto(entity));
