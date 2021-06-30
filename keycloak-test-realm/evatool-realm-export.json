@@ -1,7 +1,7 @@
 {
   "id": "evatool-realm",
   "realm": "evatool-realm",
-  "notBefore": 1624899408,
+  "notBefore": 1625063992,
   "defaultSignatureAlgorithm": "RS256",
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
