@@ -49,6 +49,10 @@ public class TenantHandler {
             return;
         }
 
+        var realm = getCurrentRealm();
+        if (!entity.getRealm().equals(realm)) {
+            throw new CrossRealmAccessException();
+        }
     }
 
     public static <S extends SuperEntity> Iterable<S> handleFind(Iterable<S> entities) {
