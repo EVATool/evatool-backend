@@ -2,6 +2,7 @@ package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.ImpactDto;
 import com.evatool.application.mapper.ImpactMapper;
+import com.evatool.application.service.TenantHandler;
 import com.evatool.application.service.api.ImpactService;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
 import com.evatool.common.exception.functional.tag.ImpactReferencedByRequirements;
@@ -44,6 +45,8 @@ public class ImpactServiceImpl extends CrudServiceImpl<Impact, ImpactDto> implem
     @Override
     public void deleteById(UUID id) {
         var referencedRequirementDeltas = requirementDeltaRepository.findAllByImpactId(id);
+        referencedRequirementDeltas = TenantHandler.handleFind(referencedRequirementDeltas);
+
         if (IterableUtil.iterableSize(referencedRequirementDeltas) > 0) {
             var referencedRequirements = new ArrayList<Requirement>();
             referencedRequirementDeltas.forEach(delta -> referencedRequirements.add(delta.getRequirement()));

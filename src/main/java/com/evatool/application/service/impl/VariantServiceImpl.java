@@ -2,6 +2,7 @@ package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.VariantDto;
 import com.evatool.application.mapper.VariantMapper;
+import com.evatool.application.service.TenantHandler;
 import com.evatool.application.service.api.VariantService;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
 import com.evatool.common.exception.functional.tag.VariantReferencedByRequirements;
@@ -42,6 +43,8 @@ public class VariantServiceImpl extends CrudServiceImpl<Variant, VariantDto> imp
     @Override
     public void deleteById(UUID id) {
         var referencedRequirements = requirementRepository.findAllByVariantsId(id);
+        referencedRequirements = TenantHandler.handleFind(referencedRequirements);
+
         if (IterableUtil.iterableSize(referencedRequirements) > 0) {
             var requirementIds = IterableUtil.entityIterableToIdArray(referencedRequirements);
 

@@ -48,7 +48,7 @@ public class AnalysisServiceImpl extends CrudServiceImpl<Analysis, AnalysisDto> 
             valueDto.setAnalysisId(deepCopyAnalysis.getId());
             valueRepository.save(valueMapper.fromDto(valueDto));
         });
-        
+
         return deepCopyAnalysis;
     }
 }
