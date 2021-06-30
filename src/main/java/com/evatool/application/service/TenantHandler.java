@@ -1,5 +1,6 @@
 package com.evatool.application.service;
 
+import com.evatool.common.exception.CrossRealmAccessException;
 import com.evatool.domain.entity.SuperEntity;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
@@ -72,7 +73,8 @@ public class TenantHandler {
             return;
         }
 
-        entity.setRealm(getCurrentRealm());
+        var realm = getCurrentRealm();
+        entity.setRealm(realm);
     }
 
     public static <S extends SuperEntity> void handleUpdate(S entity) {
@@ -80,6 +82,10 @@ public class TenantHandler {
             return;
         }
 
+        var realm = getCurrentRealm();
+        if (!entity.getRealm().equals(realm)) {
+            throw new CrossRealmAccessException();
+        }
     }
 
     public static <S extends SuperEntity> void handleDelete(S entity) {
@@ -87,5 +93,9 @@ public class TenantHandler {
             return;
         }
 
+        var realm = getCurrentRealm();
+        if (!entity.getRealm().equals(realm)) {
+            throw new CrossRealmAccessException();
+        }
     }
 }

@@ -81,6 +81,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
             throw new EntityNotFoundException(getClass().getSimpleName(), dto.getId());
         }
         var entity = baseMapper.fromDto(dto);
+        TenantHandler.handleUpdate(entity);
         entity = crudRepository.save(entity);
         return baseMapper.toDto(entity);
     }
@@ -95,6 +96,8 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         if (optional.isEmpty()) {
             throw new EntityNotFoundException(getClass().getSimpleName(), id);
         }
+        var entity = optional.get();
+        TenantHandler.handleDelete(entity);
         crudRepository.deleteById(id);
     }
 
