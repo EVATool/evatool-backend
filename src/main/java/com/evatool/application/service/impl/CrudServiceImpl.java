@@ -49,6 +49,18 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         return null;
     }
 
+    public static String getCurrentRealm() {
+        var request = getCurrentHttpRequest();
+        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) request.getUserPrincipal();
+        KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
+        KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
+        AccessToken accessToken = session.getToken();
+
+        var issuer = accessToken.getIssuer();
+        var realm = issuer.substring(issuer.lastIndexOf("/") + 1);
+        return realm;
+    }
+
     @Override
     public T findById(UUID id) {
         logger.debug("Find By Id");
@@ -68,19 +80,13 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         logger.debug("Find All");
 
 
-        var request = getCurrentHttpRequest();
-        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) request.getUserPrincipal();
-        KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-        KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
-        AccessToken accessToken = session.getToken();
-
-        var issuer = accessToken.getIssuer();
-        var realm = issuer.substring(issuer.lastIndexOf("/") + 1);
+        var realm = getCurrentRealm();
         System.out.println(realm);
 
 
         List<T> dtoList = new ArrayList<>();
         for (var entity : crudRepository.findAll()) {
+            System.out.println(entity.getRealm());
             dtoList.add(baseMapper.toDto(entity));
         }
         return dtoList;
@@ -93,6 +99,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
             throw new PropertyMustBeNullException(getDtoClass().getSimpleName(), "id");
         }
         var entity = baseMapper.fromDto(dto);
+        entity.setRealm(getCurrentRealm());
         entity = crudRepository.save(entity);
         return baseMapper.toDto(entity);
     }
