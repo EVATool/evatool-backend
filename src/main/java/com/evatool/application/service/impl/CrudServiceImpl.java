@@ -58,7 +58,10 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         List<T> dtoList = new ArrayList<>();
         for (var entity : crudRepository.findAll()) {
             System.out.println(entity.getRealm());
+            if(realm.equals(entity.getRealm())){
+
             dtoList.add(baseMapper.toDto(entity));
+            }
         }
         return dtoList;
     }

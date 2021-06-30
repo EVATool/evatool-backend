@@ -1,5 +1,6 @@
 package com.evatool.application.service;
 
+import com.evatool.domain.entity.SuperEntity;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -38,6 +39,23 @@ public class TenantHandler {
         return realm;
     }
 
+    public static void handleGet(SuperEntity entity) {
 
+    }
 
+    public static void handleGet(Iterable<SuperEntity> entities) {
+
+    }
+
+    public static void handlePost(SuperEntity entity) {
+
+    }
+
+    public static void handlePut(SuperEntity entity) {
+
+    }
+
+    public static void handleDelete(SuperEntity entity) {
+
+    }
 }
