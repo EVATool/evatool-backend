@@ -1,0 +1,17 @@
+standalone.bat -Djboss.socket.binding.port-offset=1
+
+http://localhost:8081/auth/
+
+Import realms (or create new)
+- set valid redirect and web to "*"
+- add roles (reader, writer)
+- add users (admin, user)
+- set users passwords
+
+
+
+
+
+
+
+
