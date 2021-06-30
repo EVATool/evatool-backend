@@ -74,7 +74,6 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
         AccessToken accessToken = session.getToken();
 
-        //emailID = accessToken.getEmail();
         var issuer = accessToken.getIssuer();
         var realm = issuer.substring(issuer.lastIndexOf("/") + 1);
         System.out.println(realm);
