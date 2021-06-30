@@ -12,10 +12,14 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 public class TenantHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(TenantHandler.class);
+
+    // TODO get this from application settings (can be set in docker env vars).
+    private static final boolean multiTenancyActive = true;
 
     public static HttpServletRequest getCurrentHttpRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
@@ -39,23 +43,49 @@ public class TenantHandler {
         return realm;
     }
 
-    public static <S extends SuperEntity> void handleGet(S entity) {
+    public static <S extends SuperEntity> void handleFind(S entity) {
+        if (!multiTenancyActive) {
+            return;
+        }
 
     }
 
-    public static <S extends SuperEntity> void handleGet(Iterable<S> entities) {
+    public static <S extends SuperEntity> Iterable<S> handleFind(Iterable<S> entities) {
+        if (!multiTenancyActive) {
+            return entities;
+        }
 
+        var realm = getCurrentRealm();
+        var realmEntities = new ArrayList<S>();
+
+        for (var entity : entities) {
+            if (!entity.getRealm().equals(realm)) {
+                realmEntities.add(entity);
+            }
+        }
+
+        return realmEntities;
     }
 
-    public static <S extends SuperEntity> void handlePost(S entity) {
+    public static <S extends SuperEntity> void handleCreate(S entity) {
+        if (!multiTenancyActive) {
+            return;
+        }
 
+        entity.setRealm(getCurrentRealm());
     }
 
-    public static <S extends SuperEntity> void handlePut(S entity) {
+    public static <S extends SuperEntity> void handleUpdate(S entity) {
+        if (!multiTenancyActive) {
+            return;
+        }
 
     }
 
     public static <S extends SuperEntity> void handleDelete(S entity) {
+        if (!multiTenancyActive) {
+            return;
+        }
 
     }
 }

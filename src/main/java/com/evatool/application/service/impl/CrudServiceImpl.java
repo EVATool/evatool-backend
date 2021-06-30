@@ -51,7 +51,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         logger.debug("Find All");
         List<T> dtoList = new ArrayList<>();
         var entities = crudRepository.findAll();
-        TenantHandler.handleGet(entities);
+        TenantHandler.handleFind(entities);
         for (var entity : entities) {
             dtoList.add(baseMapper.toDto(entity));
         }
@@ -65,7 +65,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
             throw new PropertyMustBeNullException(getDtoClass().getSimpleName(), "id");
         }
         var entity = baseMapper.fromDto(dto);
-        entity.setRealm(TenantHandler.getCurrentRealm());
+        TenantHandler.handleCreate(entity);
         entity = crudRepository.save(entity);
         return baseMapper.toDto(entity);
     }
