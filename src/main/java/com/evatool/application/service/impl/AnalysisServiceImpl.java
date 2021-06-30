@@ -40,12 +40,15 @@ public class AnalysisServiceImpl extends CrudServiceImpl<Analysis, AnalysisDto> 
     public AnalysisDto deepCopy(UUID templateAnalysisId, AnalysisDto analysisDto) {
         logger.debug("Deep Copy");
         var deepCopyAnalysis = create(analysisDto);
-        var templateValues = valueRepository.findAllByAnalysisId(templateAnalysisId);
+        var templateAnalysis = findById(templateAnalysisId);
+
+        var templateValues = valueRepository.findAllByAnalysisId(templateAnalysis.getId());
         templateValues.forEach(value -> {
             var valueDto = valueMapper.toDto(value);
             valueDto.setAnalysisId(deepCopyAnalysis.getId());
             valueRepository.save(valueMapper.fromDto(valueDto));
         });
+        
         return deepCopyAnalysis;
     }
 }
