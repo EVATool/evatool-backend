@@ -39,23 +39,23 @@ public class TenantHandler {
         return realm;
     }
 
-    public static void handleGet(SuperEntity entity) {
+    public static <S extends SuperEntity> void handleGet(S entity) {
 
     }
 
-    public static void handleGet(Iterable<SuperEntity> entities) {
+    public static <S extends SuperEntity> void handleGet(Iterable<S> entities) {
 
     }
 
-    public static void handlePost(SuperEntity entity) {
+    public static <S extends SuperEntity> void handlePost(S entity) {
 
     }
 
-    public static void handlePut(SuperEntity entity) {
+    public static <S extends SuperEntity> void handlePut(S entity) {
 
     }
 
-    public static void handleDelete(SuperEntity entity) {
+    public static <S extends SuperEntity> void handleDelete(S entity) {
 
     }
 }

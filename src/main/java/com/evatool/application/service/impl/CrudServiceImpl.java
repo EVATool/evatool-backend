@@ -49,19 +49,11 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
     @Override
     public Iterable<T> findAll() {
         logger.debug("Find All");
-
-
-        var realm = TenantHandler.getCurrentRealm();
-        System.out.println(realm);
-
-
         List<T> dtoList = new ArrayList<>();
-        for (var entity : crudRepository.findAll()) {
-            System.out.println(entity.getRealm());
-            if(realm.equals(entity.getRealm())){
-
+        var entities = crudRepository.findAll();
+        TenantHandler.handleGet(entities);
+        for (var entity : entities) {
             dtoList.add(baseMapper.toDto(entity));
-            }
         }
         return dtoList;
     }
