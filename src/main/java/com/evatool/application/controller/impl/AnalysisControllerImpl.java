@@ -7,6 +7,10 @@ import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Analysis;
 import io.swagger.annotations.Api;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.keycloak.representations.AccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
@@ -14,7 +18,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 @Api(tags = "Analysis API-Endpoint")
@@ -31,10 +39,42 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
         this.service = service;
     }
 
+    public static HttpServletRequest getCurrentHttpRequest(){
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (requestAttributes instanceof ServletRequestAttributes) {
+            HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
+            return request;
+        }
+        logger.debug("Not called in the context of an HTTP request");
+        return null;
+    }
+
     @Override
     @GetMapping(UriUtil.ANALYSES)
     @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
     public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> findAll() {
+
+        var request = getCurrentHttpRequest();
+        System.out.println(request);
+        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) request.getUserPrincipal();
+        System.out.println(token);
+        KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
+        System.out.println(principal);
+        KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
+        AccessToken accessToken = session.getToken();
+        var username = accessToken.getPreferredUsername();
+        //emailID = accessToken.getEmail();
+        var realmName = accessToken.getIssuer();
+        var realmAccess = accessToken.getRealmAccess();
+        var roles = realmAccess.getRoles();
+
+//        var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        System.out.println(principal);
+//        var keycloakAuthenticationToken = (KeycloakAuthenticationToken) principal;
+//        System.out.println(keycloakAuthenticationToken);
+//        var accessToken = keycloakAuthenticationToken.getAccount().getKeycloakSecurityContext().getToken();
+//        System.out.println(accessToken);
+
         var dtoListFound = service.findAll();
         return new ResponseEntity<>(withLinks(dtoListFound), HttpStatus.OK);
     }
