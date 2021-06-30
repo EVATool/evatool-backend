@@ -52,7 +52,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         logger.debug("Find All");
         List<T> dtoList = new ArrayList<>();
         var entities = crudRepository.findAll();
-        TenantHandler.handleFind(entities);
+        entities = TenantHandler.handleFind(entities);
         for (var entity : entities) {
             dtoList.add(baseMapper.toDto(entity));
         }
@@ -106,7 +106,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
     public void deleteAll() {
         logger.debug("Delete All");
         var entities = crudRepository.findAll();
-        TenantHandler.handleFind(entities);
+        entities = TenantHandler.handleFind(entities);
         crudRepository.deleteAll(entities);
     }
 

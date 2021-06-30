@@ -63,7 +63,9 @@ public class TenantHandler {
         var realm = getCurrentRealm();
         var realmEntities = new ArrayList<S>();
 
+        System.out.println(realm);
         for (var entity : entities) {
+            System.out.println(entity.getRealm());
             if (entity.getRealm().equals(realm)) {
                 realmEntities.add(entity);
             }
