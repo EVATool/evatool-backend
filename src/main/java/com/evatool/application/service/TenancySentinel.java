@@ -24,14 +24,14 @@ public class TenancySentinel {
 
     private static boolean authEnabled;
 
-    @Value("${evatool.auth.enabled}")
+    @Value("${evatool.auth.enabled:false}")
     public void setAuthEnabled(boolean authEnabled) {
         TenancySentinel.authEnabled = authEnabled;
     }
 
     private static boolean multiTenancyEnabled;
 
-    @Value("${evatool.auth.multi-tenancy.enabled}")
+    @Value("${evatool.auth.multi-tenancy.enabled:false}")
     public void setMultiTenancyActive(boolean multiTenancyEnabled) {
         TenancySentinel.multiTenancyEnabled = multiTenancyEnabled;
     }
