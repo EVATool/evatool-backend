@@ -30,7 +30,7 @@ public abstract class SuperEntity {
     protected UUID id;
 
     @Getter
-    @Column(name = "realm", updatable = false)
+    @Column(name = "realm", updatable = false, nullable = false)
     private String realm;
 
     public void setId(UUID id) {

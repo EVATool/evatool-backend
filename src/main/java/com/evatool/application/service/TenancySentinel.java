@@ -22,11 +22,19 @@ public class TenancySentinel {
 
     private static final Logger logger = LoggerFactory.getLogger(TenancySentinel.class);
 
-    @Value("${evatool.multi-tenancy.enabled}")
-    public void setMultiTenancyActive(boolean multiTenancyActive) {
-        TenancySentinel.multiTenancyActive = multiTenancyActive;
+    private static boolean authEnabled;
+
+    @Value("${evatool.auth.enabled}")
+    public void setAuthEnabled(boolean authEnabled) {
+        TenancySentinel.authEnabled = authEnabled;
     }
-    private static boolean multiTenancyActive;
+
+    private static boolean multiTenancyEnabled;
+
+    @Value("${evatool.auth.multi-tenancy.enabled}")
+    public void setMultiTenancyActive(boolean multiTenancyEnabled) {
+        TenancySentinel.multiTenancyEnabled = multiTenancyEnabled;
+    }
 
     public static HttpServletRequest getCurrentHttpRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
@@ -51,7 +59,7 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> void handleFind(S entity) {
-        if (!multiTenancyActive) {
+        if (!multiTenancyEnabled) {
             return;
         }
 
@@ -62,7 +70,7 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> Iterable<S> handleFind(Iterable<S> entities) {
-        if (!multiTenancyActive) {
+        if (!multiTenancyEnabled) {
             return entities;
         }
 
@@ -79,7 +87,10 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> void handleCreate(S entity) {
-        if (!multiTenancyActive) {
+        if (!authEnabled) {
+            entity.setRealm("evatool-realm"); // Set to default for migration from non-auth evatool to auth evatool.
+            return;
+        } else if (!multiTenancyEnabled) {
             return;
         }
 
@@ -88,7 +99,7 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> void handleUpdate(S entity) {
-        if (!multiTenancyActive) {
+        if (!multiTenancyEnabled) {
             return;
         }
 
@@ -99,7 +110,7 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> void handleDelete(S entity) {
-        if (!multiTenancyActive) {
+        if (!multiTenancyEnabled) {
             return;
         }
 
