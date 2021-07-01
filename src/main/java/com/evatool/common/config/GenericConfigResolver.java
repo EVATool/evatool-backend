@@ -39,10 +39,10 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 //        return realm;
 
         var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        // TODO This requries the realm to be send from fontend.
+        // TODO This requires the realm to be send from frontend.
         //  How to get realm from keycloak Token or request?
         //  The method used in TenancySentinel to retrieve the realm does not work here.
-        //  Only token retrival works (get realm from token string?)
+        //  Only token retrieval works (get realm from token string?)
         var realm = request.getHeader("Realm");
         return realm;
     }
