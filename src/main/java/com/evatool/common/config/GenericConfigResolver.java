@@ -24,7 +24,6 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
         var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         System.out.println(request.getRequestURI());
         System.out.println(request.getHeader("Authorization"));
-        System.out.println(request.getUserPrincipal());
         if (request.getUserPrincipal() == null) {
             return null;
         }
@@ -51,7 +50,7 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 
         if (realmName == null) {
             realmName = "DUMMY-DOES-NOT-EXIST-PLACEHOLDER-REALM";
-            throw new CrossRealmAccessException(); // TODO CHANGE
+            //throw new CrossRealmAccessException(); // TODO CHANGE
         }
 
         var adapterConfig = new AdapterConfig();
