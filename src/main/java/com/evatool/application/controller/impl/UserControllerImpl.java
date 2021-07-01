@@ -32,7 +32,7 @@ public class UserControllerImpl extends CrudControllerImpl<User, UserDto> implem
     }
 
     @Override
-    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<UserDto>> findByExternalUserId(String externalUserId) {
         var dtoFound = service.findByExternalUserId(externalUserId);
         return new ResponseEntity<>(withLinks(dtoFound), HttpStatus.OK);
@@ -40,28 +40,28 @@ public class UserControllerImpl extends CrudControllerImpl<User, UserDto> implem
 
     @Override
     @GetMapping(UriUtil.USERS_ID)
-    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<UserDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.USERS)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<UserDto>> create(UserDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.USERS)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<UserDto>> update(UserDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.USERS_ID)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }

@@ -38,35 +38,35 @@ public class VariantControllerImpl extends CrudControllerImpl<Variant, VariantDt
 
     @Override
     @GetMapping(UriUtil.VARIANTS)
-    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Iterable<EntityModel<VariantDto>>> findAllByAnalysisId(UUID analysisId) {
         return VariantController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.VARIANTS_ID)
-    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<VariantDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.VARIANTS)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<VariantDto>> create(VariantDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.VARIANTS)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<VariantDto>> update(VariantDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.VARIANTS_ID)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }

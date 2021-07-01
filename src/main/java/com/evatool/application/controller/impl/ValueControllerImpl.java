@@ -39,42 +39,42 @@ public class ValueControllerImpl extends CrudControllerImpl<Value, ValueDto> imp
 
     @Override
     @GetMapping(UriUtil.VALUES_TYPES)
-    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Iterable<ValueType>> findAllValuesTypes() {
         return new ResponseEntity<>(service.findAllValueTypes(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping(UriUtil.VALUES)
-    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Iterable<EntityModel<ValueDto>>> findAllByAnalysisId(UUID analysisId) {
         return ValueController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.VALUES_ID)
-    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<ValueDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.VALUES)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<ValueDto>> create(ValueDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.VALUES)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<ValueDto>> update(ValueDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.VALUES_ID)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }

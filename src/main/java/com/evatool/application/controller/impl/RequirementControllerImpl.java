@@ -38,35 +38,35 @@ public class RequirementControllerImpl extends CrudControllerImpl<Requirement, R
 
     @Override
     @GetMapping(UriUtil.REQUIREMENTS)
-    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Iterable<EntityModel<RequirementDto>>> findAllByAnalysisId(UUID analysisId) {
         return RequirementController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.REQUIREMENTS_ID)
-    @PreAuthorize(AuthUtil.BY_ADMIN_OR_USER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<RequirementDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.REQUIREMENTS)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<RequirementDto>> create(RequirementDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.REQUIREMENTS)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<RequirementDto>> update(RequirementDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.REQUIREMENTS_ID)
-    @PreAuthorize(AuthUtil.BY_ADMIN)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }
