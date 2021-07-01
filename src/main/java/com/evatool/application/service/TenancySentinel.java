@@ -22,12 +22,11 @@ public class TenancySentinel {
 
     private static final Logger logger = LoggerFactory.getLogger(TenancySentinel.class);
 
-    private static boolean multiTenancyActive;
-
     @Value("${multi-tenancy.enabled}")
-    public void setMultiTenancyActiveStatic(boolean multiTenancyActive) {
+    public void setMultiTenancyActive(boolean multiTenancyActive) {
         TenancySentinel.multiTenancyActive = multiTenancyActive;
     }
+    private static boolean multiTenancyActive;
 
     public static HttpServletRequest getCurrentHttpRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
