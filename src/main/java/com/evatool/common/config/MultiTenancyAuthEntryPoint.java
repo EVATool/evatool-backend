@@ -14,21 +14,12 @@ public class MultiTenancyAuthEntryPoint extends KeycloakAuthenticationEntryPoint
         super(adapterDeploymentContext, apiRequestMatcher);
     }
 
+    // TODO Fix redirection of backend when using keycloak (is tenency the problem? There is commented out coded in the AuthEntryPoint)
+    //  https://stackoverflow.com/questions/64202799/keycloak-is-it-possible-to-let-the-users-to-choose-a-realm-in-login-page/64225384
+    //  https://www.baeldung.com/keycloak-custom-login-page
 //    @Override
 //    protected void commenceLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//
-//        String path = request.getRequestURI();
-//        int multitenantIndex = path.indexOf("tenant/");
-//        if (multitenantIndex == -1) {
-//            throw new IllegalStateException("Not able to resolve realm from the request path!");
-//        }
-//
-//        String realm = path.substring(path.indexOf("tenant/")).split("/")[1];
-//        if (realm.contains("?")) {
-//            realm = realm.split("\\?")[0];
-//        }
-//
-//        String contextAwareLoginUri = request.getContextPath() + "/tenant/" + realm + DEFAULT_LOGIN_URI;
+//        String contextAwareLoginUri = request.getContextPath() + DEFAULT_LOGIN_URI;
 //        response.sendRedirect(contextAwareLoginUri);
 //    }
 }

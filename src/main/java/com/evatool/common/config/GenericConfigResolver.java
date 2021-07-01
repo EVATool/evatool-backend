@@ -49,15 +49,15 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 
     @Override
     public KeycloakDeployment resolve(OIDCHttpFacade.Request request) {
-        var realmName = getCurrentRealm();
-        this.logger.info("Request to URI " + request.getURI() + " to realm " + realmName);
+        var realm = getCurrentRealm();
+        logger.info("Request to URI {} to realm {}", request.getURI(), realm);
 
-        if (realmName == null) { // TODO Exceptions that are thrown here are ignored by GlobalExceptionHandler (How to return 403 here?)
-            realmName = "DUMMY-DOES-NOT-EXIST-PLACEHOLDER-REALM"; // This is supposed to cause a 404.
+        if (realm == null) { // TODO Exceptions that are thrown here are ignored by GlobalExceptionHandler (How to return 403 here?)
+            realm = "DUMMY-DOES-NOT-EXIST-PLACEHOLDER-REALM"; // This is supposed to cause a 404.
         }
 
         var adapterConfig = new AdapterConfig();
-        adapterConfig.setRealm(realmName);
+        adapterConfig.setRealm(realm);
         adapterConfig.setResource("evatool-app");
         adapterConfig.setPublicClient(true);
         adapterConfig.setAuthServerUrl(keycloakUrl);
