@@ -45,7 +45,7 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 
         var uri = request.getURI();
         var realmName = getCurrentRealm();
-
+        realmName = "evatool-realm";
         System.out.println(realmName);
 
         if (realmName == null) {
