@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         System.out.println("PRE HANDLE");
+
         System.out.println(request.getRequestURI());
         request.setAttribute("realm", "evatool-realm");
         System.out.println(request.getAttribute("realm"));
@@ -18,12 +19,10 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        System.out.println("POST");
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) throws Exception {
-        System.out.println("AFTER");
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) {
     }
 }

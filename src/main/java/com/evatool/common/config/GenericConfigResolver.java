@@ -36,20 +36,22 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 
 
         var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        return (String) request.getAttribute("realm");
+        request.setAttribute("realm", "evatool-realm");
+        System.out.println(request.getRequestURI());
+        var realm = (String) request.getAttribute("realm");
+        System.out.println(realm);
+        return realm;
     }
 
     @Override
     public KeycloakDeployment resolve(OIDCHttpFacade.Request request) {
 
-        var uri = request.getURI();
         var realmName = getCurrentRealm();
-        realmName = "evatool-realm";
+        //realmName = "evatool-realm";
         System.out.println(realmName);
 
         if (realmName == null) {
             realmName = "DUMMY-DOES-NOT-EXIST-PLACEHOLDER-REALM";
-            //throw new CrossRealmAccessException(); // TODO CHANGE
         }
 
         var adapterConfig = new AdapterConfig();
