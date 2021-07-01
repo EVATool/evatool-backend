@@ -52,7 +52,8 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
         var realm = getCurrentRealm();
         logger.info("Request to URI {} to realm {}", request.getURI(), realm);
 
-        if (realm == null) { // TODO Exceptions that are thrown here are ignored by GlobalExceptionHandler (How to return 403 here?)
+        if (realm == null || realm.equals("")) { // TODO Exceptions that are thrown here are ignored by GlobalExceptionHandler (How to return 403 or 404 here?)
+            //throw new IllegalStateException("...");
             realm = "DUMMY-DOES-NOT-EXIST-PLACEHOLDER-REALM"; // This is supposed to cause a 404.
         }
 
