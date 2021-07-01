@@ -31,7 +31,7 @@ public abstract class SuperEntity {
 
     @Getter
     @Column(name = "realm", updatable = false, nullable = false)
-    private String realm;
+    private String realm = "evatool-realm";
 
     public void setId(UUID id) {
         logger.debug("Set Id");

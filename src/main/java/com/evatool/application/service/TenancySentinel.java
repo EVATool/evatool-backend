@@ -86,8 +86,7 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> void handleCreate(S entity) {
-        if (!authEnabled || !multiTenancyEnabled) {
-            entity.setRealm("evatool-realm"); // Set to default for migration from non-auth evatool to auth evatool.
+        if (!multiTenancyEnabled) {
             return;
         }
 
