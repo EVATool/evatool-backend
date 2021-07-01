@@ -34,7 +34,7 @@ public class TenancySentinel {
             HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
             return request;
         }
-        logger.debug("Not called in the context of an HTTP request");
+        logger.debug("Not called in the context of an HTTP request"); // TODO throw exception?
         return null;
     }
 
