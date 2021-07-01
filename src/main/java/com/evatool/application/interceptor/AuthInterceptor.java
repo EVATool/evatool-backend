@@ -12,6 +12,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("PRE HANDLE");
         request.setAttribute("realm", "evatool-realm");
+        System.out.println(request.getAttribute("realm"));
         return true;
     }
 

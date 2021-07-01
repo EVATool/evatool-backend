@@ -1,14 +1,9 @@
 package com.evatool.common.config;
 
-import com.evatool.common.exception.CrossRealmAccessException;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.KeycloakDeployment;
 import org.keycloak.adapters.KeycloakDeploymentBuilder;
 import org.keycloak.adapters.OIDCHttpFacade;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.adapters.config.AdapterConfig;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,23 +16,27 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
     private String keycloakUrl = "http://localhost:8081/auth/"; // TODO get from env variables
 
     public static String getCurrentRealm() {
+//        var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+//        System.out.println(request.getRequestURI());
+//        System.out.println(request.getHeader("Authorization"));
+//        if (request.getUserPrincipal() == null) {
+//            return null;
+//        }
+//        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) request.getUserPrincipal();
+//        System.out.println(token);
+//        if (token == null) { // Request not authenticated.
+//            return null;
+//        }
+//        KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
+//        KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
+//        AccessToken accessToken = session.getToken();
+//        var issuer = accessToken.getIssuer();
+//        var realm = issuer.substring(issuer.lastIndexOf("/") + 1);
+//        return realm;
+
+
         var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        System.out.println(request.getRequestURI());
-        System.out.println(request.getHeader("Authorization"));
-        if (request.getUserPrincipal() == null) {
-            return null;
-        }
-        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) request.getUserPrincipal();
-        System.out.println(token);
-        if (token == null) { // Request not authenticated.
-            return null;
-        }
-        KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-        KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
-        AccessToken accessToken = session.getToken();
-        var issuer = accessToken.getIssuer();
-        var realm = issuer.substring(issuer.lastIndexOf("/") + 1);
-        return realm;
+        return (String) request.getAttribute("realm");
     }
 
     @Override
@@ -45,7 +44,7 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 
         var uri = request.getURI();
         var realmName = getCurrentRealm();
-        realmName = "evatool-realm";
+        //realmName = "evatool-realm";
         System.out.println(realmName);
 
         if (realmName == null) {
