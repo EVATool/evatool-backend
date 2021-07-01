@@ -5,10 +5,14 @@ import org.keycloak.adapters.KeycloakDeployment;
 import org.keycloak.adapters.KeycloakDeploymentBuilder;
 import org.keycloak.adapters.OIDCHttpFacade;
 import org.keycloak.representations.adapters.config.AdapterConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class GenericConfigResolver implements KeycloakConfigResolver {
+
+    private static final Logger logger = LoggerFactory.getLogger(GenericConfigResolver.class);
 
     @SuppressWarnings("unused")
     private static AdapterConfig adapterConfig;
@@ -34,20 +38,21 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 //        var realm = issuer.substring(issuer.lastIndexOf("/") + 1);
 //        return realm;
 
-
         var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        System.out.println(request.getRequestURI());
+        // TODO This requries the realm to be send from fontend.
+        //  How to get realm from keycloak Token or request?
+        //  The method used in TenancySentinel to retrieve the realm does not work here.
+        //  Only token retrival works (get realm from token string?)
         var realm = request.getHeader("Realm");
-        System.out.println(realm);
         return realm;
     }
 
     @Override
     public KeycloakDeployment resolve(OIDCHttpFacade.Request request) {
         var realmName = getCurrentRealm();
-        realmName = "evatool-realm";
+        this.logger.info("Request to URI " + request.getURI() + " to realm " + realmName);
 
-        if (realmName == null) {
+        if (realmName == null) { // TODO Exceptions that are thrown here are ignored by GlobalExceptionHandler (How to return 403 here?)
             realmName = "DUMMY-DOES-NOT-EXIST-PLACEHOLDER-REALM"; // This is supposed to cause a 404.
         }
 

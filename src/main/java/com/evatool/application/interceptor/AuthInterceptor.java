@@ -7,20 +7,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AuthInterceptor implements HandlerInterceptor {
+    // TODO The preHandle method get executed AFTER many auth requests have been processed.
+    //  It should fire BEFORE they are processed in order to inject the realm name into the headers.
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        System.out.println("PRE HANDLE");
-        //request.setAttribute("Realm", "evatool-realm");
-        System.out.println(request.getAttribute("Realm"));
+        System.out.println("INTERCEPTOR - PRE HANDLE");
+        //System.out.println(request.getHeader("Realm"));
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
+        System.out.println("INTERCEPTOR - POST HANDLE");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) {
+        System.out.println("INTERCEPTOR - AFTER COMPLETION");
     }
 }
