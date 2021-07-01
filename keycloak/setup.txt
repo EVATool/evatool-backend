@@ -5,7 +5,7 @@ http://localhost:8081/auth/
 Import realms (or create new)
 - set valid redirect and web to "*"
 - add roles (reader, writer)
-- add users (admin, user)
+- add users (admin [reader, writer], user [reader])
 - set users passwords
 
 

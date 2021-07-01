@@ -46,6 +46,14 @@
   "roles": {
     "realm": [
       {
+        "id": "6a41aa70-beb8-4065-87e4-b1182c60443c",
+        "name": "writer",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "evatool-realm",
+        "attributes": {}
+      },
+      {
         "id": "dc1111e7-c1ee-48df-8873-78b8623d81fe",
         "name": "default-roles-evatool-realm",
         "description": "${role_default-roles}",
@@ -67,25 +75,17 @@
         "attributes": {}
       },
       {
-        "id": "b37d51ae-3632-49bb-bc97-473715fbec84",
-        "name": "admin",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "evatool-realm",
-        "attributes": {}
-      },
-      {
-        "id": "698f7b14-63fc-4802-9c85-c1aad5a7571a",
-        "name": "user",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "evatool-realm",
-        "attributes": {}
-      },
-      {
         "id": "1ca3ecfd-be56-4787-b27c-f97c2e159509",
         "name": "uma_authorization",
         "description": "${role_uma_authorization}",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "evatool-realm",
+        "attributes": {}
+      },
+      {
+        "id": "781ccf68-0107-42b5-8e8d-42c4fb48b17d",
+        "name": "reader",
         "composite": false,
         "clientRole": false,
         "containerId": "evatool-realm",

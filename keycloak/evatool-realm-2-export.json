@@ -46,6 +46,14 @@
   "roles": {
     "realm": [
       {
+        "id": "c561b2af-a3c3-4dff-9a15-e265314c6ec6",
+        "name": "reader",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "evatool-realm-2",
+        "attributes": {}
+      },
+      {
         "id": "37d1f743-a9b5-4927-be2e-2ca1924eca13",
         "name": "uma_authorization",
         "description": "${role_uma_authorization}",
@@ -64,16 +72,8 @@
         "attributes": {}
       },
       {
-        "id": "d8f20d93-b902-4f77-b633-333c18ce9b28",
-        "name": "user",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "evatool-realm-2",
-        "attributes": {}
-      },
-      {
-        "id": "8f8c7f58-4f43-428f-a6a0-fce6fd08bb45",
-        "name": "admin",
+        "id": "fe1da0b4-c67d-4ca9-880a-9b75ae2d6418",
+        "name": "writer",
         "composite": false,
         "clientRole": false,
         "containerId": "evatool-realm-2",
