@@ -41,9 +41,6 @@ public class TenancySentinel {
     public static String getCurrentRealm() {
         var request = getCurrentHttpRequest();
         KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) request.getUserPrincipal();
-        if (token == null) { // Request not authenticated.
-            return null;
-        }
         KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
         KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
         AccessToken accessToken = session.getToken();
