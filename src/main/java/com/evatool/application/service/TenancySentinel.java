@@ -8,6 +8,8 @@ import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -15,12 +17,17 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
+@Service
 public class TenancySentinel {
 
     private static final Logger logger = LoggerFactory.getLogger(TenancySentinel.class);
 
-    // TODO get this from application settings (can be set in docker env vars).
-    private static final boolean multiTenancyActive = true;
+    private static boolean multiTenancyActive;
+
+    @Value("${multi-tenancy.enabled}")
+    public void setMultiTenancyActiveStatic(boolean multiTenancyActive) {
+        TenancySentinel.multiTenancyActive = multiTenancyActive;
+    }
 
     public static HttpServletRequest getCurrentHttpRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
@@ -56,6 +63,7 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> Iterable<S> handleFind(Iterable<S> entities) {
+        System.out.println(multiTenancyActive);
         if (!multiTenancyActive) {
             return entities;
         }
