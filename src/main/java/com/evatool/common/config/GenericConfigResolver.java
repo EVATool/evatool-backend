@@ -7,9 +7,11 @@ import org.keycloak.adapters.OIDCHttpFacade;
 import org.keycloak.representations.adapters.config.AdapterConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+//@ConditionalOnProperty(value = "evatool.auth.enabled", havingValue = "true")
 public class GenericConfigResolver implements KeycloakConfigResolver {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericConfigResolver.class);
