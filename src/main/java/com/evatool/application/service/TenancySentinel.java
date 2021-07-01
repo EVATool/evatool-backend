@@ -22,7 +22,7 @@ public class TenancySentinel {
 
     private static final Logger logger = LoggerFactory.getLogger(TenancySentinel.class);
 
-    @Value("${multi-tenancy.enabled}")
+    @Value("${evatool.multi-tenancy.enabled}") // TODO test that this is false if its not specified.
     public void setMultiTenancyActive(boolean multiTenancyActive) {
         TenancySentinel.multiTenancyActive = multiTenancyActive;
     }
