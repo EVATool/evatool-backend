@@ -10,7 +10,7 @@ public class UriUtil {
 
         // TODO TestEntities for testing intermediate classes (this must lead to CrudServiceTest only testing exceptions once and not in subsequent inherited classes)
         // TODO get PreUpdate to fire on repo.save() and re-enable tests (ensure cascade when child entity is changed/persisted) not fired in tests but on life version
-        // TODO verify domain logic (cascade, orphanRemoval, etc) in tests
+        // TODO verify domain logic (cascade, orphanRemoval, etc) in tests [is done correctly in life version but does not happen in tests]
     }
 
     public static final String ANALYSES = "/analyses";
