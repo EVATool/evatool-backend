@@ -15,9 +15,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
-public class TenantHandler {
+public class TenancySentinel {
 
-    private static final Logger logger = LoggerFactory.getLogger(TenantHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(TenancySentinel.class);
 
     // TODO get this from application settings (can be set in docker env vars).
     private static final boolean multiTenancyActive = true;

@@ -2,7 +2,7 @@ package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.StakeholderDto;
 import com.evatool.application.mapper.StakeholderMapper;
-import com.evatool.application.service.TenantHandler;
+import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.StakeholderService;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
@@ -46,7 +46,7 @@ public class StakeholderServiceImpl extends CrudServiceImpl<Stakeholder, Stakeho
     @Override
     public void deleteById(UUID id) {
         var referencedImpacts = impactRepository.findAllByStakeholderId(id);
-        referencedImpacts = TenantHandler.handleFind(referencedImpacts);
+        referencedImpacts = TenancySentinel.handleFind(referencedImpacts);
 
         if (IterableUtil.iterableSize(referencedImpacts) > 0) {
             var impactIds = IterableUtil.entityIterableToIdArray(referencedImpacts);

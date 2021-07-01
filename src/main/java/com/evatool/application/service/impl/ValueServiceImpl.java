@@ -2,7 +2,7 @@ package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.ValueDto;
 import com.evatool.application.mapper.ValueMapper;
-import com.evatool.application.service.TenantHandler;
+import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ValueService;
 import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
@@ -45,7 +45,7 @@ public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implement
     @Override
     public void deleteById(UUID id) {
         var referencedImpacts = impactRepository.findAllByValueId(id);
-        referencedImpacts = TenantHandler.handleFind(referencedImpacts);
+        referencedImpacts = TenancySentinel.handleFind(referencedImpacts);
 
         if (IterableUtil.iterableSize(referencedImpacts) > 0) {
             var impactIds = IterableUtil.entityIterableToIdArray(referencedImpacts);

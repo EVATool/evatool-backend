@@ -2,7 +2,7 @@ package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.UserDto;
 import com.evatool.application.mapper.UserMapper;
-import com.evatool.application.service.TenantHandler;
+import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.UserService;
 import com.evatool.common.exception.EntityNotFoundException;
 import com.evatool.domain.entity.User;
@@ -31,7 +31,7 @@ public class UserServiceImpl extends CrudServiceImpl<User, UserDto> implements U
             throw new EntityNotFoundException(User.class.getSimpleName(), externalUserId, "externalUserId");
         }
         var entity = optional.get();
-        TenantHandler.handleFind(entity);
+        TenancySentinel.handleFind(entity);
         return baseMapper.toDto(entity);
     }
 }
