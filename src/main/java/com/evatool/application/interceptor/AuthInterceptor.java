@@ -11,10 +11,8 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         System.out.println("PRE HANDLE");
-
-        System.out.println(request.getRequestURI());
-        request.setAttribute("realm", "evatool-realm");
-        System.out.println(request.getAttribute("realm"));
+        //request.setAttribute("Realm", "evatool-realm");
+        System.out.println(request.getAttribute("Realm"));
         return true;
     }
 

@@ -37,7 +37,7 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 
         var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         System.out.println(request.getRequestURI());
-        var realm = (String) request.getAttribute("realm");
+        var realm = request.getHeader("Realm");
         System.out.println(realm);
         return realm;
     }
@@ -45,6 +45,7 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
     @Override
     public KeycloakDeployment resolve(OIDCHttpFacade.Request request) {
         var realmName = getCurrentRealm();
+        realmName = "evatool-realm";
 
         if (realmName == null) {
             realmName = "DUMMY-DOES-NOT-EXIST-PLACEHOLDER-REALM"; // This is supposed to cause a 404.
