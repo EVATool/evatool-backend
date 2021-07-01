@@ -2,16 +2,16 @@ standalone.bat -Djboss.socket.binding.port-offset=1
 
 http://localhost:8081/auth/
 
-Import realms (or create new)
-- set valid redirect and web to "*"
+Import default realm (evatool-realm)
+
+Create new realm:
+- create new realm
+- select the newly create realm realm
+- create the client evatool-app
+- select the newly created client
+- set valid redirect and web to "*" (this is just so it works, this is not recommended due to security reasons)
 - add roles (reader, writer)
 - add users (admin [reader, writer], user [reader])
-- set users passwords
+- set users passwords (NOT TEMPORARY)
 
-
-
-
-
-
-
-
+There does not seem to be a way to automate this process.
