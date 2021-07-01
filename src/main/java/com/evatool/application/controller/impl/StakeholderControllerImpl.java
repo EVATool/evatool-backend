@@ -40,49 +40,49 @@ public class StakeholderControllerImpl extends CrudControllerImpl<Stakeholder, S
 
     @Override
     @GetMapping(UriUtil.STAKEHOLDERS_LEVELS)
-    @PreAuthorize(AuthUtil.BY_WRITER)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<Iterable<StakeholderLevel>> findAllStakeholderLevels() {
         return new ResponseEntity<>(service.findAllStakeholderLevels(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping(UriUtil.STAKEHOLDERS_PRIORITIES)
-    @PreAuthorize(AuthUtil.BY_WRITER)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<Iterable<StakeholderPriority>> findAllStakeholderPriorities() {
         return new ResponseEntity<>(service.findAllStakeholderPriorities(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping(UriUtil.STAKEHOLDERS)
-    @PreAuthorize(AuthUtil.BY_WRITER)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<Iterable<EntityModel<StakeholderDto>>> findAllByAnalysisId(UUID analysisId) {
         return StakeholderController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.STAKEHOLDERS_ID)
-    @PreAuthorize(AuthUtil.BY_WRITER)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<StakeholderDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.STAKEHOLDERS)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<StakeholderDto>> create(StakeholderDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.STAKEHOLDERS)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<StakeholderDto>> update(StakeholderDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.STAKEHOLDERS_ID)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }

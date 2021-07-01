@@ -37,35 +37,35 @@ public class ImpactControllerImpl extends CrudControllerImpl<Impact, ImpactDto> 
 
     @Override
     @GetMapping(UriUtil.IMPACTS)
-    @PreAuthorize(AuthUtil.BY_WRITER)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<Iterable<EntityModel<ImpactDto>>> findAllByAnalysisId(UUID analysisId) {
         return ImpactController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.IMPACTS_ID)
-    @PreAuthorize(AuthUtil.BY_WRITER)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<ImpactDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.IMPACTS)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<ImpactDto>> create(ImpactDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.IMPACTS)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<ImpactDto>> update(ImpactDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.IMPACTS_ID)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }

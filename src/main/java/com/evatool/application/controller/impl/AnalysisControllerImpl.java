@@ -33,7 +33,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @GetMapping(UriUtil.ANALYSES)
-    @PreAuthorize(AuthUtil.BY_WRITER)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<Iterable<EntityModel<AnalysisDto>>> findAll() {
         var dtoListFound = service.findAll();
         return new ResponseEntity<>(withLinks(dtoListFound), HttpStatus.OK);
@@ -41,7 +41,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @PostMapping(UriUtil.ANALYSES_DEEP_COPY)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<AnalysisDto>> deepCopy(UUID templateAnalysisId, AnalysisDto analysisDto) {
         logger.debug("Deep Copy");
         return new ResponseEntity<>(withLinks(service.deepCopy(templateAnalysisId, analysisDto)), HttpStatus.CREATED);
@@ -49,28 +49,28 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     @Override
     @GetMapping(UriUtil.ANALYSES_ID)
-    @PreAuthorize(AuthUtil.BY_WRITER)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<AnalysisDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.ANALYSES)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<AnalysisDto>> create(AnalysisDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.ANALYSES)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<AnalysisDto>> update(AnalysisDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.ANALYSES_ID)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }

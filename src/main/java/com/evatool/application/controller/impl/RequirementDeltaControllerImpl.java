@@ -37,35 +37,35 @@ public class RequirementDeltaControllerImpl extends CrudControllerImpl<Requireme
 
     @Override
     @GetMapping(value = UriUtil.REQUIREMENTS_DELTA, params = {"!impactId", "!requirementId"})
-    @PreAuthorize(AuthUtil.BY_WRITER)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<Iterable<EntityModel<RequirementDeltaDto>>> findAllByAnalysisId(UUID analysisId) {
         return RequirementDeltaController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.REQUIREMENTS_DELTA_ID)
-    @PreAuthorize(AuthUtil.BY_WRITER)
+    @PreAuthorize(AuthUtil.BY_READER)
     public ResponseEntity<EntityModel<RequirementDeltaDto>> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.REQUIREMENTS_DELTA)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<RequirementDeltaDto>> create(RequirementDeltaDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.REQUIREMENTS_DELTA)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<EntityModel<RequirementDeltaDto>> update(RequirementDeltaDto dto) {
         return super.update(dto);
     }
 
     @Override
     @DeleteMapping(UriUtil.REQUIREMENTS_DELTA_ID)
-    @PreAuthorize(AuthUtil.BY_READER)
+    @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
     }
