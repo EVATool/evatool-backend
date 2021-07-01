@@ -36,7 +36,6 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 
 
         var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        request.setAttribute("realm", "evatool-realm");
         System.out.println(request.getRequestURI());
         var realm = (String) request.getAttribute("realm");
         System.out.println(realm);
@@ -45,13 +44,10 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 
     @Override
     public KeycloakDeployment resolve(OIDCHttpFacade.Request request) {
-
         var realmName = getCurrentRealm();
-        //realmName = "evatool-realm";
-        System.out.println(realmName);
 
         if (realmName == null) {
-            realmName = "DUMMY-DOES-NOT-EXIST-PLACEHOLDER-REALM";
+            realmName = "DUMMY-DOES-NOT-EXIST-PLACEHOLDER-REALM"; // This is supposed to cause a 404.
         }
 
         var adapterConfig = new AdapterConfig();
