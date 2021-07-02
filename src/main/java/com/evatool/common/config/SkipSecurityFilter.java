@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class SkipSecurityFilter extends OncePerRequestFilter {
 
-    @Value("${evatool.auth.enabled}")
+    @Value("${evatool.auth.enabled:false}")
     private boolean authEnabled;
 
     private String[] allRoles = AuthUtil.ALL_ROLES;

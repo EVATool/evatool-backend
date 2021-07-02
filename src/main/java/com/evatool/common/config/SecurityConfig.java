@@ -5,6 +5,7 @@ import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,9 @@ import org.springframework.security.web.csrf.CsrfFilter;
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+
+    @Value("${evatool.auth.enabled:false}")
+    private boolean authEnabled;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {
@@ -43,11 +47,20 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
-        http.csrf().disable()
-                .cors().and()
-                //.addFilterAfter(new SkipSecurityFilter(), CsrfFilter.class)
-                .authorizeRequests()
-                .anyRequest()
-                .permitAll();
+        if (authEnabled) {
+            http.csrf().disable()
+                    .cors().and()
+                    .authorizeRequests()
+                    .anyRequest()
+                    .permitAll();
+        } else {
+            http.csrf().disable()
+                    .cors().and()
+                    .addFilterAfter(new SkipSecurityFilter(), CsrfFilter.class)
+                    .authorizeRequests()
+                    .anyRequest()
+                    .permitAll();
+        }
+
     }
 }
