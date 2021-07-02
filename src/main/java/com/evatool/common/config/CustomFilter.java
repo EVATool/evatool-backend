@@ -31,11 +31,13 @@ public class CustomFilter extends OncePerRequestFilter {
     @Override
     public void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
                                  FilterChain chain) throws IOException, ServletException {
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
         if (!authEnabled) {
             // Read roles from AuthUtil.
             Set<String> roles = Arrays.stream(allRoles).collect(Collectors.toCollection(HashSet::new));
 
-            System.out.println(roles);
+            System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
 
             // Dummy Keycloak-Account.
             RefreshableKeycloakSecurityContext session = new RefreshableKeycloakSecurityContext(
