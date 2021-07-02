@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class CustomFilter extends OncePerRequestFilter {
+public class SkipSecurityFilter extends OncePerRequestFilter {
 
     @Value("${evatool.auth.enabled}")
     private boolean authEnabled;
@@ -31,13 +31,9 @@ public class CustomFilter extends OncePerRequestFilter {
     @Override
     public void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
                                  FilterChain chain) throws IOException, ServletException {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
         if (!authEnabled) {
             // Read roles from AuthUtil.
             Set<String> roles = Arrays.stream(allRoles).collect(Collectors.toCollection(HashSet::new));
-
-            System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
 
             // Dummy Keycloak-Account.
             RefreshableKeycloakSecurityContext session = new RefreshableKeycloakSecurityContext(
