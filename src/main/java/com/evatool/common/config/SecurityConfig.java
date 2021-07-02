@@ -50,6 +50,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
+    // TODO This should only happen when in non-keycloak mode.
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/**");
