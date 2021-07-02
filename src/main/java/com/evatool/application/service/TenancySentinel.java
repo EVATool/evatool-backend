@@ -54,7 +54,8 @@ public class TenancySentinel {
         AccessToken accessToken = session.getToken();
         var issuer = accessToken.getIssuer();
         var realm = issuer.substring(issuer.lastIndexOf("/") + 1);
-        return realm;
+        //return realm;
+        return "evatool-realm"; // TODO change back
     }
 
     public static <S extends SuperEntity> void handleFind(S entity) {

@@ -46,7 +46,8 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
         //  The method used in TenancySentinel to retrieve the realm does not work here.
         //  Only token retrieval works (get realm from token string?)
         var realm = request.getHeader("Realm");
-        return realm;
+        //return realm;
+        return "evatool-realm"; // TODO change back
     }
 
     @Override
