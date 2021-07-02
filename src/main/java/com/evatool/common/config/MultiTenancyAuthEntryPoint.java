@@ -5,7 +5,6 @@ import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticatio
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-//@ConditionalOnProperty(value = "evatool.auth.enabled", havingValue = "true")
 public class MultiTenancyAuthEntryPoint extends KeycloakAuthenticationEntryPoint {
 
     public MultiTenancyAuthEntryPoint(AdapterDeploymentContext adapterDeploymentContext) {
