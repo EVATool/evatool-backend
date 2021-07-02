@@ -22,7 +22,7 @@ import java.lang.reflect.Array;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-abstract class CrudControllerRestTest<S extends SuperEntity, T extends SuperDto> extends DataTest<S, T> {
+abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> extends DataTest<S, T> {
 
     @Test
     void testFindById() {

@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AnalysisControllerRestTest extends CrudControllerRestTest<Analysis, AnalysisDto> {
+class AnalysisControllerTest extends CrudControllerTest<Analysis, AnalysisDto> {
 
     @Autowired
     private AnalysisControllerImpl controller;

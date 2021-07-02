@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ValueControllerRestTest extends CrudControllerRestTest<Value, ValueDto> implements FindByAnalysisControllerRestTest {
+class ValueControllerTest extends CrudControllerTest<Value, ValueDto> implements FindByAnalysisControllerTest {
 
     @Test
     void testGetValueTypes() {

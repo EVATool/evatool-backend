@@ -6,7 +6,7 @@ import com.evatool.domain.entity.RequirementDelta;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 
-class RequirementDeltaControllerRestTest extends CrudControllerRestTest<RequirementDelta, RequirementDeltaDto> implements FindByAnalysisControllerRestTest {
+class RequirementDeltaControllerTest extends CrudControllerTest<RequirementDelta, RequirementDeltaDto> implements FindByAnalysisControllerTest {
 
     @Test
     void testValidator() { // TODO rework or delete this

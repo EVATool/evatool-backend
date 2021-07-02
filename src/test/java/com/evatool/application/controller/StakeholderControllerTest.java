@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StakeholderControllerRestTest extends CrudControllerRestTest<Stakeholder, StakeholderDto> implements FindByAnalysisControllerRestTest {
+class StakeholderControllerTest extends CrudControllerTest<Stakeholder, StakeholderDto> implements FindByAnalysisControllerTest {
 
     @Test
     void testGetStakeholderLevels() {
