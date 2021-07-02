@@ -11,4 +11,6 @@ public class AuthUtil {
     public static final String BY_READER = "hasRole('" + READER_ROLE + "')";
     public static final String BY_WRITER = "hasRole('" + WRITER_ROLE + "')";
 
+    public static final String[] ALL_ROLES = {READER_ROLE, WRITER_ROLE};
+
 }

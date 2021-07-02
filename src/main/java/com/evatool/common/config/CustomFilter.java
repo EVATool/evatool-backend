@@ -1,10 +1,12 @@
 package com.evatool.common.config;
 
+import com.evatool.common.util.AuthUtil;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.adapters.spi.KeycloakAccount;
 import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -21,18 +23,17 @@ import java.util.stream.Collectors;
 
 public class CustomFilter extends OncePerRequestFilter {
 
-    //@Value("${evatool.auth.enabled}")
-    private boolean securityEnabled = false;
+    @Value("${evatool.auth.enabled}")
+    private boolean authEnabled;
 
-    //@Value("${grantedRoles}")
-    private String[] grantedRoles = {"reader", "writer"};
+    private String[] allRoles = AuthUtil.ALL_ROLES;
 
     @Override
     public void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
                                  FilterChain chain) throws IOException, ServletException {
-        if (!securityEnabled) {
-            // Read roles from application.yml
-            Set<String> roles = Arrays.stream(grantedRoles).collect(Collectors.toCollection(HashSet::new));
+        if (!authEnabled) {
+            // Read roles from AuthUtil.
+            Set<String> roles = Arrays.stream(allRoles).collect(Collectors.toCollection(HashSet::new));
 
             System.out.println(roles);
 
