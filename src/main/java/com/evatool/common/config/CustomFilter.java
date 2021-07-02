@@ -34,17 +34,20 @@ public class CustomFilter extends OncePerRequestFilter {
             // Read roles from application.yml
             Set<String> roles = Arrays.stream(grantedRoles).collect(Collectors.toCollection(HashSet::new));
 
-            // Dummy Keycloak-Account
-            RefreshableKeycloakSecurityContext session = new RefreshableKeycloakSecurityContext(null, null, null, null, null, null, null);
+            System.out.println(roles);
+
+            // Dummy Keycloak-Account.
+            RefreshableKeycloakSecurityContext session = new RefreshableKeycloakSecurityContext(
+                    null, null, null, null, null, null, null);
             final KeycloakPrincipal<RefreshableKeycloakSecurityContext> principal = new KeycloakPrincipal<>("Dummy_Principal", session);
             final KeycloakAccount account = new SimpleKeycloakAccount(principal, roles, principal.getKeycloakSecurityContext());
 
-            // Dummy Security Context
+            // Dummy Security Context.
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             context.setAuthentication(new KeycloakAuthenticationToken(account, false));
             SecurityContextHolder.setContext(context);
 
-            // Skip the rest of the filters
+            // Skip the rest of the filters.
             req.getRequestDispatcher(req.getServletPath()).forward(req, res);
         }
 
