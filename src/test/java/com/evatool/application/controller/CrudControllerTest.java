@@ -97,7 +97,7 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(entityModel.getLink("self")).isPresent().contains(Link.of("http://localhost:8080" + getUri() + "/" + dto.getId(), "self"));
+        assertThat(entityModel.getLink("self")).isPresent().contains(Link.of("http://localhost:8082" + getUri() + "/" + dto.getId(), "self"));
     }
 
     public String getUri() {
