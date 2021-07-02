@@ -6,7 +6,7 @@ Import default realm (evatool-realm)
 
 Create new realm:
 - create new realm
-- select the newly create realm realm
+- select the newly create realm
 - create the client evatool-app
 - select the newly created client
 - set valid redirect and web to "*" (this is just so it works, this is not recommended due to security reasons)
