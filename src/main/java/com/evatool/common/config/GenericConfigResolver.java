@@ -18,8 +18,8 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
     @SuppressWarnings("unused")
     private static AdapterConfig adapterConfig;
 
-    @Value("keycloak.auth-server-url")
-    private String keycloakUrl; // TODO get from env variables
+    @Value("${keycloak.auth-server-url:}")
+    private String keycloakUrl;
 
     public static String getCurrentRealm() {
 //        var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
