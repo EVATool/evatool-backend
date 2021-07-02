@@ -32,12 +32,13 @@ public class CustomFilter extends OncePerRequestFilter {
                                  FilterChain chain) throws IOException, ServletException {
         if (!securityEnabled) {
             // Read roles from application.yml
-            Set<String> roles = Arrays.stream(grantedRoles)
-                    .collect(Collectors.toCollection(HashSet::new));
+            Set<String> roles = Arrays.stream(grantedRoles).collect(Collectors.toCollection(HashSet::new));
+
             // Dummy Keycloak-Account
             RefreshableKeycloakSecurityContext session = new RefreshableKeycloakSecurityContext(null, null, null, null, null, null, null);
             final KeycloakPrincipal<RefreshableKeycloakSecurityContext> principal = new KeycloakPrincipal<>("Dummy_Principal", session);
             final KeycloakAccount account = new SimpleKeycloakAccount(principal, roles, principal.getKeycloakSecurityContext());
+
             // Dummy Security Context
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             context.setAuthentication(new KeycloakAuthenticationToken(account, false));
