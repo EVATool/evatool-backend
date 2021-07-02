@@ -7,6 +7,7 @@ import org.keycloak.adapters.OIDCHttpFacade;
 import org.keycloak.representations.adapters.config.AdapterConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -17,7 +18,8 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
     @SuppressWarnings("unused")
     private static AdapterConfig adapterConfig;
 
-    private String keycloakUrl = "http://localhost:8081/auth/"; // TODO get from env variables
+    @Value("keycloak.auth-server-url")
+    private String keycloakUrl; // TODO get from env variables
 
     public static String getCurrentRealm() {
 //        var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
