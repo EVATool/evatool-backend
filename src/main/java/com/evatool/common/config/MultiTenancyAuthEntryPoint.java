@@ -2,7 +2,6 @@ package com.evatool.common.config;
 
 import org.keycloak.adapters.AdapterDeploymentContext;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationEntryPoint;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 public class MultiTenancyAuthEntryPoint extends KeycloakAuthenticationEntryPoint {
