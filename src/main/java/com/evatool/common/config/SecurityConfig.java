@@ -47,14 +47,16 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
-        if (authEnabled) {
-            http.csrf().disable()
+        if (authEnabled) { // This statement cannot be re-written with an in-between if-statement.
+            http
+                    .csrf().disable()
                     .cors().and()
                     .authorizeRequests()
                     .anyRequest()
                     .permitAll();
         } else {
-            http.csrf().disable()
+            http
+                    .csrf().disable()
                     .cors().and()
                     .addFilterAfter(new SkipSecurityFilter(), CsrfFilter.class)
                     .authorizeRequests()
