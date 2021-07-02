@@ -52,8 +52,8 @@ public class CustomFilter extends OncePerRequestFilter {
 
             // Skip the rest of the filters.
             req.getRequestDispatcher(req.getServletPath()).forward(req, res);
+        } else {
+            chain.doFilter(req, res);
         }
-
-        chain.doFilter(req, res);
     }
 }
