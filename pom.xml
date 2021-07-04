@@ -187,6 +187,11 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>4.0.3</version>
+            </plugin>
         </plugins>
     </build>
 
@@ -204,6 +209,12 @@
             <id>dev</id>
             <properties>
                 <activatedProperties>dev</activatedProperties>
+            </properties>
+        </profile>
+        <profile>
+            <id>flyway</id>
+            <properties>
+                <activatedProperties>flyway</activatedProperties>
             </properties>
         </profile>
         <profile>
