@@ -92,28 +92,28 @@ create table variant_sub_variants (
     primary key (variant_id, sub_variants_id))
 
 -- Alter table commands.
-alter table impact add constraint FKe7apmw7cpv478vo5x3d4q3lbw foreign key (analysis_id) references analysis
+alter table impact add constraint FK__impact__analysis_id foreign key (analysis_id) references analysis
 
-alter table impact add constraint FKdtk3nnqsg6cljg5cjvpv1wlm4 foreign key (stakeholder_id) references stakeholder
+alter table impact add constraint FK__impact__stakeholder_id foreign key (stakeholder_id) references stakeholder
 
-alter table impact add constraint FKcg1spk9s8r6xqajn497s5dwyk foreign key (value_id) references value
+alter table impact add constraint FK__impact__value_id foreign key (value_id) references value
 
-alter table requirement add constraint FKkw46kdgifhvjaaby42u1u3wjt foreign key (analysis_id) references analysis
+alter table requirement add constraint FK__requirement__analysis_id foreign key (analysis_id) references analysis
 
-alter table requirement_delta add constraint FK2mhidj7ipryoo42dfnlclxwxh foreign key (impact_id) references impact
+alter table requirement_delta add constraint FK__requirement_delta__impact_id foreign key (impact_id) references impact
 
-alter table requirement_delta add constraint FKgjjvtl4oayi94xd6u1d6rl5g foreign key (requirement_id) references requirement
+alter table requirement_delta add constraint FK__requirement_delta__requirement_id foreign key (requirement_id) references requirement
 
-alter table requirement_variants add constraint FKq9hordtsc5j8ykv9g0m3k7l9x foreign key (variants_id) references variant
+alter table requirement_variants add constraint FK__requirement_variants__variant_id foreign key (variants_id) references variant
 
-alter table requirement_variants add constraint FK3gfj6pputbpei0n2s58w30w06 foreign key (requirement_id) references requirement
+alter table requirement_variants add constraint FK__requirement_variants__requirement_id foreign key (requirement_id) references requirement
 
-alter table stakeholder add constraint FKeu9u8bsuiw6go5wybsttb22hg foreign key (analysis_id) references analysis
+alter table stakeholder add constraint FK__stakeholder__analysis_id foreign key (analysis_id) references analysis
 
-alter table value add constraint FK7gnbcp977ep1mouuwrluh93eo foreign key (analysis_id) references analysis
+alter table value add constraint FK__value__analysis_id foreign key (analysis_id) references analysis
 
-alter table variant add constraint FKatbux9h5969b92kfltk4n3tvs foreign key (analysis_id) references analysis
+alter table variant add constraint FK__variant__analysis_id foreign key (analysis_id) references analysis
 
-alter table variant_sub_variants add constraint FKdftt8fx522d4is7lkt4cdwd45 foreign key (sub_variants_id) references variant
+alter table variant_sub_variants add constraint FK__variant_sub_variants__sub_variants_id foreign key (sub_variants_id) references variant
 
-alter table variant_sub_variants add constraint FKfho72u9xjv2som739simbbjfu foreign key (variant_id) references variant
+alter table variant_sub_variants add constraint FK__variant_sub_variants__variant_id foreign key (variant_id) references variant
