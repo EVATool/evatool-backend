@@ -3,6 +3,8 @@ package com.evatool.common.util;
 public class UriUtil {
 
     private UriUtil() {
+        // TODO move keycloak folder to resources folder.
+
         // TODO what happens when requirement references impact with a requirementDelta and the merit of that impact changes (overwrite merit is invalid -> reset? do not allow?) [and more complex cases]
         // TODO Java Generic handling is problematic (code duplication)
         // TODO Only allow entities to have the same analysis (delta.impact.analysis == delta.req.analysis)
