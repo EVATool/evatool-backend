@@ -44,7 +44,7 @@ create table requirement_delta (
     requirement_id CHAR(36) not null,
     primary key (id));
 
-create table requirement_variants
+create table requirement_variants (
     requirement_id CHAR(36) not null,
     variants_id CHAR(36) not null,
     primary key (requirement_id, variants_id));
