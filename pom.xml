@@ -194,7 +194,7 @@
                 <configuration>
                     <url>jdbc:h2:mem:testdbflyway</url>
                     <user>sa</user>
-                    <password>s</password>
+                    <password></password>
                 </configuration>
             </plugin>
         </plugins>
