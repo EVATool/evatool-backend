@@ -6,7 +6,7 @@ standalone.bat -Djboss.socket.binding.port-offset=1 -Dkeycloak.migration.action=
 
 http://localhost:8081/auth/
 
-Import default realm (evatool-realm)
+Import default realm (evatool-realm) [in evatool repo]
 
 Create new realm:
 - create new realm
