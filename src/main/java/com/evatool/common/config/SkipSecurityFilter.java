@@ -43,6 +43,5 @@ public class SkipSecurityFilter extends OncePerRequestFilter {
 
         // Skip the rest of the filters.
         req.getRequestDispatcher(req.getServletPath()).forward(req, res);
-        //chain.doFilter(req, res);
     }
 }

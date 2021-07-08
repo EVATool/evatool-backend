@@ -58,7 +58,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
             http
                     .csrf().disable()
                     .cors().and()
-                    .addFilter(new SkipSecurityFilter())
+                    .addFilterAfter(new SkipSecurityFilter(), CsrfFilter.class)
                     .authorizeRequests()
                     .anyRequest()
                     .permitAll();
