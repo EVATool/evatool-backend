@@ -90,28 +90,28 @@ create table variant_sub_variants (
     sub_variants_id CHAR(36) not null,
     primary key (variant_id, sub_variants_id));
 
-alter table impact add constraint FK__impact__analysis_id foreign key (analysis_id) references analysis;
+alter table impact add constraint FK__impact__analysis_id foreign key (analysis_id) references analysis(id);
 
-alter table impact add constraint FK__impact__stakeholder_id foreign key (stakeholder_id) references stakeholder;
+alter table impact add constraint FK__impact__stakeholder_id foreign key (stakeholder_id) references stakeholder(id);
 
-alter table impact add constraint FK__impact__value_id foreign key (value_id) references value;
+alter table impact add constraint FK__impact__value_id foreign key (value_id) references value(id);
 
-alter table requirement add constraint FK__requirement__analysis_id foreign key (analysis_id) references analysis;
+alter table requirement add constraint FK__requirement__analysis_id foreign key (analysis_id) references analysis(id);
 
-alter table requirement_delta add constraint FK__requirement_delta__impact_id foreign key (impact_id) references impact;
+alter table requirement_delta add constraint FK__requirement_delta__impact_id foreign key (impact_id) references impact(id);
 
-alter table requirement_delta add constraint FK__requirement_delta__requirement_id foreign key (requirement_id) references requirement;
+alter table requirement_delta add constraint FK__requirement_delta__requirement_id foreign key (requirement_id) references requirement(id);
 
-alter table requirement_variants add constraint FK__requirement_variants__variant_id foreign key (variants_id) references variant;
+alter table requirement_variants add constraint FK__requirement_variants__variant_id foreign key (variants_id) references variant(id);
 
-alter table requirement_variants add constraint FK__requirement_variants__requirement_id foreign key (requirement_id) references requirement;
+alter table requirement_variants add constraint FK__requirement_variants__requirement_id foreign key (requirement_id) references requirement(id);
 
-alter table stakeholder add constraint FK__stakeholder__analysis_id foreign key (analysis_id) references analysis;
+alter table stakeholder add constraint FK__stakeholder__analysis_id foreign key (analysis_id) references analysis(id);
 
-alter table value add constraint FK__value__analysis_id foreign key (analysis_id) references analysis;
+alter table value add constraint FK__value__analysis_id foreign key (analysis_id) references analysis(id);
 
-alter table variant add constraint FK__variant__analysis_id foreign key (analysis_id) references analysis;
+alter table variant add constraint FK__variant__analysis_id foreign key (analysis_id) references analysis(id);
 
-alter table variant_sub_variants add constraint FK__variant_sub_variants__sub_variants_id foreign key (sub_variants_id) references variant;
+alter table variant_sub_variants add constraint FK__variant_sub_variants__sub_variants_id foreign key (sub_variants_id) references variant(id);
 
-alter table variant_sub_variants add constraint FK__variant_sub_variants__variant_id foreign key (variant_id) references variant;
+alter table variant_sub_variants add constraint FK__variant_sub_variants__variant_id foreign key (variant_id) references variant(id);
