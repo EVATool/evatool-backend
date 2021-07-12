@@ -1,4 +1,6 @@
-
+docker run --name evatool-keycloak -p 8081:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -d quay.io/keycloak/keycloak:13.0.0
+TODO: Test above docker statement
+TODO: How to import default realm in above docker statement?
 
 
 
