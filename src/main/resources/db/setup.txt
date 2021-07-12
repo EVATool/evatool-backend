@@ -1,0 +1,1 @@
+docker run --name evatool-flyway-mysql -e MYSQL_ROOT_PASSWORD=pw -d mysql:8.0.24
