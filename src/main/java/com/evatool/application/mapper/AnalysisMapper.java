@@ -2,8 +2,6 @@ package com.evatool.application.mapper;
 
 import com.evatool.application.dto.AnalysisDto;
 import com.evatool.domain.entity.Analysis;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
