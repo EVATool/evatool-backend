@@ -3,7 +3,7 @@ package com.evatool.common.util;
 public class UriUtil {
 
     private UriUtil() {
-        // TODO inheritance structure in tests is bad...
+
     }
 
     public static final String ANALYSES = "/analyses";
