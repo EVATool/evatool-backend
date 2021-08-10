@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,6 +26,13 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
     public abstract S fromDto(T dto);
 
     public Iterable<T> toDtoList(Iterable<S> entityList) {
+        logger.debug("To Dto List");
+        var dtoList = new ArrayList<T>();
+        entityList.forEach(entity -> dtoList.add(toDto(entity)));
+        return dtoList;
+    }
+
+    public List<T> toDtoArray(Iterable<S> entityList) {
         logger.debug("To Dto List");
         var dtoList = new ArrayList<T>();
         entityList.forEach(entity -> dtoList.add(toDto(entity)));

@@ -101,6 +101,6 @@ class ImportExportServiceTest {
     @SneakyThrows
     private void prettyPrintJson(String json) {
         var jsonObject = new JSONObject(json);
-        System.out.println(jsonObject.toString(2));
+        System.out.println(jsonObject.toString(4));
     }
 }

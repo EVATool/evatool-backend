@@ -1,5 +1,6 @@
 package com.evatool.application.service.impl;
 
+import com.evatool.application.dto.*;
 import com.evatool.application.mapper.*;
 import com.evatool.application.service.api.ImportExportService;
 import com.evatool.domain.entity.Analysis;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ImportExportServiceImpl implements ImportExportService {
@@ -101,14 +103,13 @@ public class ImportExportServiceImpl implements ImportExportService {
         var variants = variantRepository.findAllByAnalysisId(analysisId);
 
         // Convert entities to json strings.
-        var analysisJson = analysisMapper.toJson(analysis);
-        var valuesJson = valueMapper.toJson(values);
-        System.out.println(valuesJson);
-        var stakeholdersJson = stakeholderMapper.toJson(stakeholders);
-        var impactsJson = impactMapper.toJson(impacts);
-        var requirementsJson = requirementMapper.toJson(requirements);
-        var requirementDeltasJson = requirementDeltaMapper.toJson(requirementDeltas);
-        var variantsJson = variantMapper.toJson(variants);
+        var analysisJson = analysisMapper.toDto(analysis);
+        var valuesJson = valueMapper.toDtoArray(values);
+        var stakeholdersJson = stakeholderMapper.toDtoArray(stakeholders);
+        var impactsJson = impactMapper.toDtoArray(impacts);
+        var requirementsJson = requirementMapper.toDtoArray(requirements);
+        var requirementDeltasJson = requirementDeltaMapper.toDtoArray(requirementDeltas);
+        var variantsJson = variantMapper.toDtoArray(variants);
 
         var exportedAnalysis = new ImportExportAnalysisJson(
                 analysisJson,
@@ -129,21 +130,21 @@ public class ImportExportServiceImpl implements ImportExportService {
     private class ImportExportAnalysisJson {
 
         // TODO maybe actually use JSON object?
-        private String analysis;
-        private String values;
-        private String stakeholders;
-        private String impacts;
-        private String requirements;
-        private String requirementDeltas;
-        private String variants;
+        private AnalysisDto analysis;
+        private List<ValueDto> values;
+        private List<StakeholderDto> stakeholders;
+        private List<ImpactDto> impacts;
+        private List<RequirementDto> requirements;
+        private List<RequirementDeltaDto> requirementDeltas;
+        private List<VariantDto> variants;
 
-        public ImportExportAnalysisJson(String analysisJson,
-                                        String valuesJson,
-                                        String stakeholdersJson,
-                                        String impactsJson,
-                                        String requirementsJson,
-                                        String requirementDeltasJson,
-                                        String variantsJson) {
+        public ImportExportAnalysisJson(AnalysisDto analysisJson,
+                                        List<ValueDto> valuesJson,
+                                        List<StakeholderDto> stakeholdersJson,
+                                        List<ImpactDto> impactsJson,
+                                        List<RequirementDto> requirementsJson,
+                                        List<RequirementDeltaDto> requirementDeltasJson,
+                                        List<VariantDto> variantsJson) {
             this.analysis = analysisJson;
             this.values = valuesJson;
             this.stakeholders = stakeholdersJson;
