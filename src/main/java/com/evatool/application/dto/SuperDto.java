@@ -15,6 +15,7 @@ public class SuperDto {
     @ApiModelProperty
     @Getter
     @Setter
+    @ImportExportInclude
     private UUID id;
 
 }

@@ -97,14 +97,19 @@ public class ImportExportServiceImpl implements ImportExportService {
 
             @Override
             public boolean shouldSkipField(FieldAttributes field) {
+                if (SuperDto.class.isAssignableFrom(field.getDeclaringClass())) {
+                    return !isIncluded(field);
+                }
+                return false;
+            }
+
+            private boolean isIncluded(FieldAttributes field) {
                 for (var annotation : field.getAnnotations()) {
-                    System.out.println(annotation.annotationType());
-                    System.out.println(ImportExportInclude.class);
                     if (annotation.annotationType().equals(ImportExportInclude.class)) {
-                        return false;
+                        return true;
                     }
                 }
-                return true;
+                return false;
             }
         };
 
