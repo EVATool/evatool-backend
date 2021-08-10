@@ -3,16 +3,7 @@ package com.evatool.application.controller;
 public class UriUtil {
 
     private UriUtil() {
-        // TODO TestEntities for testing intermediate classes (this must lead to CrudServiceTest only testing exceptions once and not in subsequent inherited classes)
-        // TODO get PreUpdate to fire on repo.save() and re-enable tests (ensure cascade when child entity is changed/persisted)
-        // TODO what happens when requirement references impact with a requirementDelta and the merit of that impact changes (overwrite merit is invalid -> reset? do not allow?) [and more complex cases]
-        // TODO Sample data (repo postman script)
-
-        // Backlog
-        // Remove middle layer tests? (only test rest call?)
-        // Java Generic handling is problematic (code duplication)
-        // Child entities nullable or not?
-        // Remove Rest level 3?
+        // TODO inheritance structure in tests is bad...
     }
 
     public static final String ANALYSES = "/analyses";
@@ -51,5 +42,7 @@ public class UriUtil {
     public static final String VARIANTS_ID = "/variants/{id}";
     public static final String VARIANTS_REL = "variants";
 
-    public static final String EXPORT_ANALYSIS_AS_POSTMAN_ID = "export/analysis/{id}";
+    public static final String IMPORT_ANALYSES = "/import/analyses";
+    public static final String EXPORT_ANALYSES = "/export/analyses";
+    
 }
