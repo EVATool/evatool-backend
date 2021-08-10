@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.RequirementDeltaDto;
-import com.evatool.application.mapper.RequirementDeltaMapper;
+import com.evatool.application.dto.mapper.RequirementDeltaDtoMapper;
 import com.evatool.application.service.api.RequirementDeltaService;
 import com.evatool.domain.entity.RequirementDelta;
 import com.evatool.domain.repository.RequirementDeltaRepository;
@@ -19,9 +19,9 @@ public class RequirementDeltaServiceImpl extends CrudServiceImpl<RequirementDelt
     private final RequirementDeltaRepository repository;
 
     @Getter
-    private final RequirementDeltaMapper mapper;
+    private final RequirementDeltaDtoMapper mapper;
 
-    protected RequirementDeltaServiceImpl(RequirementDeltaRepository repository, RequirementDeltaMapper mapper) {
+    protected RequirementDeltaServiceImpl(RequirementDeltaRepository repository, RequirementDeltaDtoMapper mapper) {
         super(repository, mapper);
         this.repository = repository;
         this.mapper = mapper;

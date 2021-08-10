@@ -1,10 +1,8 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.SuperDto;
 import com.evatool.common.exception.EntityNotFoundException;
 import com.evatool.domain.entity.SuperEntity;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.CrudRepository;
@@ -17,9 +15,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
+public abstract class SuperDtoMapper<S extends SuperEntity, T extends SuperDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(SuperMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(SuperDtoMapper.class);
 
     public abstract T toDto(S entity);
 

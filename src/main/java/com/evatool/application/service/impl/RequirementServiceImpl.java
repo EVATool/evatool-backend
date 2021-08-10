@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.RequirementDto;
-import com.evatool.application.mapper.RequirementMapper;
+import com.evatool.application.dto.mapper.RequirementDtoMapper;
 import com.evatool.application.service.api.RequirementService;
 import com.evatool.domain.entity.Requirement;
 import com.evatool.domain.repository.RequirementRepository;
@@ -19,9 +19,9 @@ public class RequirementServiceImpl extends CrudServiceImpl<Requirement, Require
     private final RequirementRepository repository;
 
     @Getter
-    private final RequirementMapper mapper;
+    private final RequirementDtoMapper mapper;
 
-    public RequirementServiceImpl(RequirementRepository repository, RequirementMapper mapper) {
+    public RequirementServiceImpl(RequirementRepository repository, RequirementDtoMapper mapper) {
         super(repository, mapper);
         this.repository = repository;
         this.mapper = mapper;

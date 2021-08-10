@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.RequirementDto;
 import com.evatool.domain.entity.Requirement;
@@ -9,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class RequirementMapperTest extends SuperMapperTest<Requirement, RequirementDto, RequirementMapper> {
+class RequirementMapperTest extends SuperMapperTest<Requirement, RequirementDto, RequirementDtoMapper> {
 
     @Autowired
-    private RequirementMapper mapper;
+    private RequirementDtoMapper mapper;
 
     @Test
     void testFromDto_VariantIdsPresent_GetMapped() {

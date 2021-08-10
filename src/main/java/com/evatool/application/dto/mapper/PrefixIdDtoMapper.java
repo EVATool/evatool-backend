@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.PrefixIdDto;
 import com.evatool.common.exception.PropertyIsInvalidException;
@@ -6,9 +6,9 @@ import com.evatool.domain.entity.PrefixIdEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class PrefixIdMapper<S extends PrefixIdEntity, T extends PrefixIdDto> extends SuperMapper<S, T> {
+public abstract class PrefixIdDtoMapper<S extends PrefixIdEntity, T extends PrefixIdDto> extends SuperDtoMapper<S, T> {
 
-    private static final Logger logger = LoggerFactory.getLogger(PrefixIdMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(PrefixIdDtoMapper.class);
 
     @Override
     public void amendToDto(S entity, T dto) {

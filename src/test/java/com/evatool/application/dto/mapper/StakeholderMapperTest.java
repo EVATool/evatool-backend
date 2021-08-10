@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.StakeholderDto;
 import com.evatool.domain.entity.Stakeholder;
@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class StakeholderMapperTest extends SuperMapperTest<Stakeholder, StakeholderDto, StakeholderMapper> {
+class StakeholderMapperTest extends SuperMapperTest<Stakeholder, StakeholderDto, StakeholderDtoMapper> {
 
     @Autowired
-    private StakeholderMapper mapper;
+    private StakeholderDtoMapper mapper;
 
 }

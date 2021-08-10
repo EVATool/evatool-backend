@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.RequirementDto;
 import com.evatool.common.util.IterableUtil;
@@ -10,15 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RequirementMapper extends PrefixIdMapper<Requirement, RequirementDto> {
+public class RequirementDtoMapper extends PrefixIdDtoMapper<Requirement, RequirementDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(RequirementMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(RequirementDtoMapper.class);
 
     private final AnalysisRepository analysisRepository;
 
     private final VariantRepository variantRepository;
 
-    public RequirementMapper(AnalysisRepository analysisRepository, VariantRepository variantRepository) {
+    public RequirementDtoMapper(AnalysisRepository analysisRepository, VariantRepository variantRepository) {
         this.analysisRepository = analysisRepository;
         this.variantRepository = variantRepository;
     }

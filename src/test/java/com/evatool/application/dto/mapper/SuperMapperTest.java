@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.SuperDto;
 import com.evatool.domain.entity.SuperEntity;
@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-abstract class SuperMapperTest<S extends SuperEntity, T extends SuperDto, U extends SuperMapper> extends DataTest<S, T> {
+abstract class SuperMapperTest<S extends SuperEntity, T extends SuperDto, U extends SuperDtoMapper> extends DataTest<S, T> {
 
     @Test
     void testToAndFromDto_RecreateFloatingEntity() {

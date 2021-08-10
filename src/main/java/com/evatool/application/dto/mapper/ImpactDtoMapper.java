@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.ImpactDto;
 import com.evatool.domain.entity.Impact;
@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ImpactMapper extends PrefixIdMapper<Impact, ImpactDto> {
+public class ImpactDtoMapper extends PrefixIdDtoMapper<Impact, ImpactDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ImpactMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImpactDtoMapper.class);
 
     private final ValueRepository valueRepository;
 
@@ -20,7 +20,7 @@ public class ImpactMapper extends PrefixIdMapper<Impact, ImpactDto> {
 
     private final AnalysisRepository analysisRepository;
 
-    public ImpactMapper(ValueRepository valueRepository, StakeholderRepository stakeholderRepository, AnalysisRepository analysisRepository) {
+    public ImpactDtoMapper(ValueRepository valueRepository, StakeholderRepository stakeholderRepository, AnalysisRepository analysisRepository) {
         this.valueRepository = valueRepository;
         this.stakeholderRepository = stakeholderRepository;
         this.analysisRepository = analysisRepository;

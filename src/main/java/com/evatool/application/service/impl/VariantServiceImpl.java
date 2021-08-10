@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.VariantDto;
-import com.evatool.application.mapper.VariantMapper;
+import com.evatool.application.dto.mapper.VariantDtoMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.VariantService;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
@@ -28,12 +28,12 @@ public class VariantServiceImpl extends CrudServiceImpl<Variant, VariantDto> imp
     private final VariantRepository repository;
 
     @Getter
-    private final VariantMapper mapper;
+    private final VariantDtoMapper mapper;
 
     @Getter
     private final RequirementRepository requirementRepository;
 
-    public VariantServiceImpl(VariantRepository repository, VariantMapper mapper, RequirementRepository requirementRepository) {
+    public VariantServiceImpl(VariantRepository repository, VariantDtoMapper mapper, RequirementRepository requirementRepository) {
         super(repository, mapper);
         this.repository = repository;
         this.mapper = mapper;

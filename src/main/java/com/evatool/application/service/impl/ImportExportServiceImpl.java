@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.*;
-import com.evatool.application.mapper.*;
+import com.evatool.application.dto.mapper.*;
 import com.evatool.application.service.api.ImportExportService;
 import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.repository.*;
@@ -39,25 +39,25 @@ public class ImportExportServiceImpl implements ImportExportService {
     private VariantRepository variantRepository;
 
     @Autowired
-    private AnalysisMapper analysisMapper;
+    private AnalysisDtoMapper analysisMapper;
 
     @Autowired
-    private ImpactMapper impactMapper;
+    private ImpactDtoMapper impactMapper;
 
     @Autowired
-    private RequirementMapper requirementMapper;
+    private RequirementDtoMapper requirementMapper;
 
     @Autowired
-    private RequirementDeltaMapper requirementDeltaMapper;
+    private RequirementDeltaDtoMapper requirementDeltaMapper;
 
     @Autowired
-    private StakeholderMapper stakeholderMapper;
+    private StakeholderDtoMapper stakeholderMapper;
 
     @Autowired
-    private ValueMapper valueMapper;
+    private ValueDtoMapper valueMapper;
 
     @Autowired
-    private VariantMapper variantMapper;
+    private VariantDtoMapper variantMapper;
 
     // TODO return ImportReport object with information (success or not, file version and current version..., error causes..., default values used...)
     @SneakyThrows // TODO remove...

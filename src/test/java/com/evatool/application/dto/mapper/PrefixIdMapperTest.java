@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.AnalysisDto;
 import com.evatool.common.exception.PropertyIsInvalidException;
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class PrefixIdMapperTest {
 
     @Autowired
-    private AnalysisMapper mapper;
+    private AnalysisDtoMapper mapper;
 
     @Test
     void testAmendFromDto_PrefixIdInvalid_Throw() {

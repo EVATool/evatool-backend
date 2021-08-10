@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.AnalysisDto;
 import com.evatool.domain.entity.Analysis;
@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AnalysisMapper extends PrefixIdMapper<Analysis, AnalysisDto> {
+public class AnalysisDtoMapper extends PrefixIdDtoMapper<Analysis, AnalysisDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(AnalysisMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(AnalysisDtoMapper.class);
 
     @Override
     public AnalysisDto toDto(Analysis entity) {

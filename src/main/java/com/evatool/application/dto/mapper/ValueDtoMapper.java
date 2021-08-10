@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.ValueDto;
 import com.evatool.domain.entity.Value;
@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ValueMapper extends SuperMapper<Value, ValueDto> {
+public class ValueDtoMapper extends SuperDtoMapper<Value, ValueDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ValueMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(ValueDtoMapper.class);
 
     private final AnalysisRepository analysisRepository;
 
-    public ValueMapper(AnalysisRepository analysisRepository) {
+    public ValueDtoMapper(AnalysisRepository analysisRepository) {
         this.analysisRepository = analysisRepository;
     }
 

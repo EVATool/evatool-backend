@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.StakeholderDto;
 import com.evatool.domain.entity.Stakeholder;
@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StakeholderMapper extends PrefixIdMapper<Stakeholder, StakeholderDto> {
+public class StakeholderDtoMapper extends PrefixIdDtoMapper<Stakeholder, StakeholderDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(StakeholderMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(StakeholderDtoMapper.class);
 
     private final AnalysisRepository analysisRepository;
 
-    public StakeholderMapper(AnalysisRepository analysisRepository) {
+    public StakeholderDtoMapper(AnalysisRepository analysisRepository) {
         this.analysisRepository = analysisRepository;
     }
 

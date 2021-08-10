@@ -1,7 +1,7 @@
 package com.evatool.domain.repository;
 
 import com.evatool.application.dto.*;
-import com.evatool.application.mapper.*;
+import com.evatool.application.dto.mapper.*;
 import com.evatool.application.service.impl.*;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
@@ -43,7 +43,7 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
         }
     }
 
-    protected SuperMapper getMapper() {
+    protected SuperDtoMapper getMapper() {
         var type = getDtoClass();
         if (type == AnalysisDto.class) {
             return analysisMapper;
@@ -67,28 +67,28 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
     }
 
     @Autowired
-    protected AnalysisMapper analysisMapper;
+    protected AnalysisDtoMapper analysisMapper;
 
     @Autowired
-    protected ImpactMapper impactMapper;
+    protected ImpactDtoMapper impactMapper;
 
     @Autowired
-    protected RequirementMapper requirementMapper;
+    protected RequirementDtoMapper requirementMapper;
 
     @Autowired
-    protected RequirementDeltaMapper requirementDeltaMapper;
+    protected RequirementDeltaDtoMapper requirementDeltaMapper;
 
     @Autowired
-    protected StakeholderMapper stakeholderMapper;
+    protected StakeholderDtoMapper stakeholderMapper;
 
     @Autowired
-    protected UserMapper userMapper;
+    protected UserDtoMapper userMapper;
 
     @Autowired
-    protected ValueMapper valueMapper;
+    protected ValueDtoMapper valueMapper;
 
     @Autowired
-    protected VariantMapper variantMapper;
+    protected VariantDtoMapper variantMapper;
 
 
     public T getPersistedDto() {

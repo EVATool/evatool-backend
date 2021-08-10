@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.RequirementDeltaDto;
 import com.evatool.domain.entity.RequirementDelta;
@@ -9,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class RequirementDeltaMapperTest extends SuperMapperTest<RequirementDelta, RequirementDeltaDto, RequirementDeltaMapper> {
+class RequirementDeltaMapperTest extends SuperMapperTest<RequirementDelta, RequirementDeltaDto, RequirementDeltaDtoMapper> {
 
     @Autowired
-    private RequirementDeltaMapper mapper;
+    private RequirementDeltaDtoMapper mapper;
 
     @Test
     void testToDto_NegativeImpact_CorrectMinMax() {

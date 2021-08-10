@@ -1,4 +1,4 @@
-package com.evatool.application.mapper;
+package com.evatool.application.dto.mapper;
 
 import com.evatool.application.dto.VariantDto;
 import com.evatool.domain.entity.Variant;
@@ -9,15 +9,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class VariantMapper extends PrefixIdMapper<Variant, VariantDto> {
+public class VariantDtoMapper extends PrefixIdDtoMapper<Variant, VariantDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(VariantMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(VariantDtoMapper.class);
 
     private final AnalysisRepository analysisRepository;
 
     private final VariantRepository variantRepository;
 
-    public VariantMapper(AnalysisRepository analysisRepository, VariantRepository variantRepository) {
+    public VariantDtoMapper(AnalysisRepository analysisRepository, VariantRepository variantRepository) {
         this.analysisRepository = analysisRepository;
         this.variantRepository = variantRepository;
     }
