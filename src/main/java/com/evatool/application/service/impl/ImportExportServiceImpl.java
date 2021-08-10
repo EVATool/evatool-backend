@@ -103,6 +103,7 @@ public class ImportExportServiceImpl implements ImportExportService {
         // Convert entities to json strings.
         var analysisJson = analysisMapper.toJson(analysis);
         var valuesJson = valueMapper.toJson(values);
+        System.out.println(valuesJson);
         var stakeholdersJson = stakeholderMapper.toJson(stakeholders);
         var impactsJson = impactMapper.toJson(impacts);
         var requirementsJson = requirementMapper.toJson(requirements);
