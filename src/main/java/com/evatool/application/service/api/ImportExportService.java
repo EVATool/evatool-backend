@@ -2,8 +2,8 @@ package com.evatool.application.service.api;
 
 public interface ImportExportService {
 
-    void importAnalyses();
+    void importAnalyses(String json);
 
-
+    String exportAnalyses();
 
 }

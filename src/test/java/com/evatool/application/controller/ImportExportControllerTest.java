@@ -21,11 +21,21 @@ class ImportExportControllerTest {
     public TestRestTemplate rest;
 
     @Autowired
-    protected AnalysisRepository analysisRepository;
+    private AnalysisRepository analysisRepository;
 
     @BeforeEach
     protected void clearDatabase() {
         analysisRepository.deleteAll();
+    }
+
+    @Test
+    void testImportAnalyses() {
+        // given
+
+        // when
+
+        // then
+
     }
 
     @Test
@@ -42,6 +52,5 @@ class ImportExportControllerTest {
         System.out.println(jsonContent);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
     }
 }
