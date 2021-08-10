@@ -3,6 +3,8 @@ package com.evatool.application.mapper;
 import com.evatool.application.dto.SuperDto;
 import com.evatool.common.exception.EntityNotFoundException;
 import com.evatool.domain.entity.SuperEntity;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.CrudRepository;
@@ -48,7 +50,27 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
         return optional.get();
     }
 
+    @SneakyThrows // TODO Remove or handle somewhere.
+    public String toJson(T dto) {
+        logger.debug("To Json");
+        var mapper = new ObjectMapper();
+        var json = mapper.writeValueAsString(dto);
+        return json;
+    }
+
+    @SneakyThrows // TODO Remove or handle somewhere.
+    public T fromJson(String json) {
+        logger.debug("From Json");
+        var mapper = new ObjectMapper();
+        var dto = mapper.readValue(json, getDtoClass()); // TODO Make mapper ignore stuff which is not required.
+        return dto;
+    }
+
     protected Class<S> getEntityClass() {
         return (Class<S>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
+
+    protected Class<T> getDtoClass() {
+        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 }

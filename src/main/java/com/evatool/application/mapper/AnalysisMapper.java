@@ -40,22 +40,4 @@ public class AnalysisMapper extends PrefixIdMapper<Analysis, AnalysisDto> {
         super.amendFromDto(entity, dto);
         return entity;
     }
-
-    @SneakyThrows // TODO Remove or handle somewhere.
-    //@Override
-    public String toJson(AnalysisDto dto) {
-        logger.debug("To Json");
-        var mapper = new ObjectMapper();
-        var analysisJson = mapper.writeValueAsString(dto);
-        return analysisJson;
-    }
-
-    @SneakyThrows // TODO Remove or handle somewhere.
-    //@Override
-    public AnalysisDto fromJson(String json) {
-        logger.debug("From Json");
-        var mapper = new ObjectMapper();
-        var analysisDto = mapper.readValue(json, AnalysisDto.class); // TODO Make mapper ignore stuff which is not required.
-        return analysisDto;
-    }
 }
