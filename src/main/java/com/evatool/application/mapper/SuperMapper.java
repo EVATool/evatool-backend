@@ -50,7 +50,7 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
         return optional.get();
     }
 
-    @SneakyThrows // TODO Remove or handle somewhere.
+    @SneakyThrows
     public String toJson(T dto) {
         logger.debug("To Json");
         var mapper = new ObjectMapper();
@@ -58,7 +58,22 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
         return json;
     }
 
-    @SneakyThrows // TODO Remove or handle somewhere.
+    @SneakyThrows
+    public String toJson(S entity) {
+        logger.debug("To Json");
+        var dto = toDto(entity);
+        return toJson(dto);
+    }
+
+    @SneakyThrows
+    public String toJson(Iterable<S> entityList) {
+        logger.debug("To Json");
+        var dtoList = new ArrayList<String>();
+        entityList.forEach(entity -> dtoList.add(toJson(toDto(entity))));
+        return "[" + String.join(",", dtoList) + "]";
+    }
+
+    @SneakyThrows
     public T fromJson(String json) {
         logger.debug("From Json");
         var mapper = new ObjectMapper();

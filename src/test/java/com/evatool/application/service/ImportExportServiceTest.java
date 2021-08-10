@@ -41,7 +41,8 @@ class ImportExportServiceTest {
         var analysisJson = importExportService.exportAnalyses();
 
         // then
-
         System.out.println(analysisJson);
+
+
     }
 }
