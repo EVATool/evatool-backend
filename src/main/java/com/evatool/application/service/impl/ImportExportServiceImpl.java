@@ -12,6 +12,7 @@ public class ImportExportServiceImpl implements ImportExportService {
 
     // TODO repos...
 
+    // TODO return ImportReport object with information (success or not, file version and current version..., error causes..., default values used...)
     @SneakyThrows // TODO remove...
     @Override
     @Transactional

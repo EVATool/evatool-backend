@@ -34,4 +34,21 @@ abstract class SuperMapperTest<S extends SuperEntity, T extends SuperDto, U exte
         // then
         assertThat(entity).isEqualTo(recreatedEntity);
     }
+
+    @Test
+    void testToAndFromJson_RecreatePersistedEntity() {
+        // given
+        var dto = getPersistedDto();
+
+        // when
+        var json = getMapper().toJson(dto);
+        var recreatedDto = getMapper().fromJson(json);
+
+        // then
+        System.out.println(dto);
+        System.out.println(json);
+        System.out.println(recreatedDto);
+
+        assertThat(dto).isEqualTo(recreatedDto);
+    }
 }

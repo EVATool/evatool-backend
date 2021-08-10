@@ -1,5 +1,7 @@
 package com.evatool.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
@@ -36,10 +38,12 @@ public class AnalysisDto extends PrefixIdDto {
     private String imageUrl;
 
     @ApiModelProperty
+    @JsonIgnore
     @EqualsAndHashCode.Exclude
     private Long lastUpdated;
 
     @ApiModelProperty
+    @JsonIgnore
     @EqualsAndHashCode.Exclude
     private String lastUpdatedPreformatted;
 
