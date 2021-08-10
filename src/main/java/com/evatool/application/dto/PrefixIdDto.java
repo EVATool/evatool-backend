@@ -14,6 +14,6 @@ public class PrefixIdDto extends SuperDto {
     @ApiModelProperty
     @Getter
     @Setter
-    @JsonIgnore
+    //@JsonIgnore
     private String prefixSequenceId;
 }

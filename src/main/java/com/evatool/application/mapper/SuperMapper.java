@@ -25,14 +25,7 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
 
     public abstract S fromDto(T dto);
 
-    public Iterable<T> toDtoList(Iterable<S> entityList) {
-        logger.debug("To Dto List");
-        var dtoList = new ArrayList<T>();
-        entityList.forEach(entity -> dtoList.add(toDto(entity)));
-        return dtoList;
-    }
-
-    public List<T> toDtoArray(Iterable<S> entityList) {
+    public List<T> toDtoList(Iterable<S> entityList) {
         logger.debug("To Dto List");
         var dtoList = new ArrayList<T>();
         entityList.forEach(entity -> dtoList.add(toDto(entity)));
@@ -56,37 +49,6 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
             throw new EntityNotFoundException(repository.getClass().getSimpleName().replace("Repository", ""), id);
         }
         return optional.get();
-    }
-
-    @SneakyThrows
-    public String toJson(T dto) {
-        logger.debug("To Json");
-        var mapper = new ObjectMapper();
-        var json = mapper.writeValueAsString(dto);
-        return json;
-    }
-
-    @SneakyThrows
-    public String toJson(S entity) {
-        logger.debug("To Json");
-        var dto = toDto(entity);
-        return toJson(dto);
-    }
-
-    @SneakyThrows
-    public String toJson(Iterable<S> entityList) {
-        logger.debug("To Json");
-        var dtoList = new ArrayList<String>();
-        entityList.forEach(entity -> dtoList.add(toJson(toDto(entity))));
-        return "[" + String.join(",", dtoList) + "]";
-    }
-
-    @SneakyThrows
-    public T fromJson(String json) {
-        logger.debug("From Json");
-        var mapper = new ObjectMapper();
-        var dto = mapper.readValue(json, getDtoClass());
-        return dto;
     }
 
     protected Class<S> getEntityClass() {
