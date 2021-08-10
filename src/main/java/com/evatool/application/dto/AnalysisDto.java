@@ -1,5 +1,7 @@
 package com.evatool.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -15,18 +17,22 @@ import javax.validation.constraints.NotNull;
 public class AnalysisDto extends PrefixIdDto {
 
     @ApiModelProperty(required = true)
+    @JsonProperty(value = "name", required = true)
     @NotNull
     private String name;
 
     @ApiModelProperty(required = true)
+    @JsonProperty(value = "description", required = true)
     @NotNull
     private String description;
 
     @ApiModelProperty(required = true)
+    @JsonProperty(value = "isTemplate", required = true)
     @NotNull
     private Boolean isTemplate;
 
     @ApiModelProperty
+    @JsonProperty(value = "imageUrl")
     private String imageUrl;
 
     @ApiModelProperty
