@@ -3,12 +3,7 @@ package com.evatool.application.mapper;
 import com.evatool.application.dto.SuperDto;
 import com.evatool.domain.entity.SuperEntity;
 import com.evatool.domain.repository.DataTest;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Field;
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

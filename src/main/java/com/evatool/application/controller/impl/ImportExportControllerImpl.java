@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 // TODO how do deal with database migration changes? (Done in Json Mappers?)
-// TODO add @JsonProperty to all DTOs
 @RestController
 public class ImportExportControllerImpl implements ImportExportController {
 
