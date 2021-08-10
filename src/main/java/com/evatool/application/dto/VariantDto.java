@@ -17,14 +17,17 @@ public class VariantDto extends PrefixIdDto implements AnalysisChildDto {
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private String name;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private String description;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private Boolean archived;
 
     @ApiModelProperty(required = true)
