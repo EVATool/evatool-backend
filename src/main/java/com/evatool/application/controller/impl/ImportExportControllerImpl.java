@@ -32,7 +32,7 @@ public class ImportExportControllerImpl implements ImportExportController {
     @Override
     @GetMapping(UriUtil.EXPORT_ANALYSES)
     @PreAuthorize(AuthUtil.BY_READER)
-    public ResponseEntity<byte[]> exportAnalyses() {
+    public ResponseEntity<byte[]> exportAnalyses() { // TODO test if validation of DTOs still work
         var exportJsonString = importExportService.exportAnalyses();
         var exportJsonBytes = exportJsonString.getBytes();
 

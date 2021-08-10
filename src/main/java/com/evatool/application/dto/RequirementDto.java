@@ -17,6 +17,7 @@ public class RequirementDto extends PrefixIdDto implements AnalysisChildDto {
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private String description;
 
     @ApiModelProperty(required = true)
@@ -24,6 +25,7 @@ public class RequirementDto extends PrefixIdDto implements AnalysisChildDto {
     private UUID analysisId;
 
     @ApiModelProperty
+    @ImportExportInclude
     private UUID[] variantIds;
 
     public RequirementDto(String description, UUID analysisId, UUID[] variantIds) {
