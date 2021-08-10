@@ -62,7 +62,7 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
     public T fromJson(String json) {
         logger.debug("From Json");
         var mapper = new ObjectMapper();
-        var dto = mapper.readValue(json, getDtoClass()); // TODO Make mapper ignore stuff which is not required.
+        var dto = mapper.readValue(json, getDtoClass());
         return dto;
     }
 
