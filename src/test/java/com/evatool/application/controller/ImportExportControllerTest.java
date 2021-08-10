@@ -35,7 +35,7 @@ class ImportExportControllerTest {
 
         // when
         var response = rest.getForEntity(UriUtil.EXPORT_ANALYSES, byte[].class);
-        var jsonContent = response.();
+        var jsonContent = response.getBody();
 
         // then
         System.out.println(response);
