@@ -1,4 +1,11 @@
 package com.evatool.application.json;
 
-public class RequirementDeltaJson {
+import lombok.*;
+
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Getter
+@Setter
+@NoArgsConstructor
+public class RequirementDeltaJson extends SuperJson  {
 }
