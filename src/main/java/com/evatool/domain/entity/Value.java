@@ -39,8 +39,8 @@ public class Value extends SuperEntity implements FindByAnalysis {
 
     @Getter
     @Setter
-    @Column(name = "is_archived", nullable = false)
-    private Boolean isArchived;
+    @Column(name = "archived", nullable = false)
+    private Boolean archived;
 
     @Getter
     @Setter
@@ -60,7 +60,7 @@ public class Value extends SuperEntity implements FindByAnalysis {
         setName(name);
         setDescription(description);
         setType(type);
-        setIsArchived(archived);
+        setArchived(archived);
         setAnalysis(analysis);
     }
 

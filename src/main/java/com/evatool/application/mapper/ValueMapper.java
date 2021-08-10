@@ -25,7 +25,7 @@ public class ValueMapper extends SuperMapper<Value, ValueDto> {
                 entity.getName(),
                 entity.getDescription(),
                 entity.getType(),
-                entity.getIsArchived(),
+                entity.getArchived(),
                 entity.getAnalysis().getId()
         );
         super.amendToDto(entity, dto);

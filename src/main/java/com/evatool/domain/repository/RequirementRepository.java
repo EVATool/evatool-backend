@@ -9,4 +9,6 @@ import java.util.UUID;
 @Repository
 public interface RequirementRepository extends CrudRepository<Requirement, UUID>, FindByAnalysisRepository<Requirement> {
 
+    Iterable<Requirement> findAllByVariantsId(UUID variantId); // TODO tests
+
 }

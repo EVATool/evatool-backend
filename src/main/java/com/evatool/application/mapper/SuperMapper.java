@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -47,17 +46,6 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
             throw new EntityNotFoundException(repository.getClass().getSimpleName().replace("Repository", ""), id);
         }
         return optional.get();
-    }
-
-    protected <O extends SuperEntity> UUID[] getSuperEntityIds(Set<O> entitySet) {
-        logger.debug("Get Super Entity Ids");
-        var ids = new UUID[entitySet.size()];
-        var index = 0;
-        for (var o : entitySet) {
-            ids[index] = o.getId();
-            index++;
-        }
-        return ids;
     }
 
     protected Class<S> getEntityClass() {

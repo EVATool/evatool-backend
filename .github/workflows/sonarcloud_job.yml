@@ -2,7 +2,7 @@ name: Code Quality (main, dev, exp)
 
 on:
   push:
-    branches: [ main, dev, exp ]
+    branches: [ main, dev ]
 
 jobs:
   sonarcloud:

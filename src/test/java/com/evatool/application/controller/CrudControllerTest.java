@@ -1,22 +1,27 @@
 package com.evatool.application.controller;
 
-import com.evatool.application.controller.impl.*;
 import com.evatool.application.dto.*;
+import com.evatool.common.util.ProfileUtil;
+import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.SuperEntity;
 import com.evatool.domain.repository.DataTest;
+import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import java.lang.reflect.Array;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> extends DataTest<S, T> {
 
     @Test
@@ -25,8 +30,8 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
         var dto = getPersistedDto();
 
         // when
-        var response = getController().findById(dto.getId());
-        var dtoFound = getDtoFromResponseEntity(response);
+        var response = rest.getForEntity(getUri() + "/" + dto.getId(), getDtoClass());
+        var dtoFound = (T) response.getBody();
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -39,9 +44,10 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
         var dto = getFloatingDto();
 
         // when
-        var response = getController().create(dto);
-        var dtoCreated = getDtoFromResponseEntity(response);
-        var dtoFound = getService().findById(dtoCreated.getId());
+        var httpEntity = new HttpEntity<>(dto);
+        var response = rest.postForEntity(getUri(), httpEntity, getDtoClass());
+        var dtoCreated = (T) response.getBody();
+        var dtoFound = (T) getService().findById(dtoCreated.getId());
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -55,8 +61,9 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
 
         // when
         changeDto(dto);
-        var response = getController().update(dto);
-        var dtoUpdated = getDtoFromResponseEntity(response);
+        var httpEntity = new HttpEntity<>(dto);
+        var response = rest.exchange(getUri(), HttpMethod.PUT, httpEntity, getDtoClass());
+        var dtoUpdated = (T) response.getBody();
         var dtoFound = getService().findById(dto.getId());
 
         // then
@@ -70,7 +77,8 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
         var dto = getPersistedDto();
 
         // when
-        var response = getController().deleteById(dto.getId());
+        var httpEntity = new HttpEntity<>(dto);
+        var response = rest.exchange(getUri() + "/" + dto.getId(), HttpMethod.DELETE, httpEntity, Void.class);
         var dtoListFound = getService().findAll();
 
         // then
@@ -78,64 +86,50 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
         assertThat(dtoListFound).isEmpty();
     }
 
-    public CrudControllerImpl getController() {
-        var type = getDtoClass();
+    @Test
+    void restLevel3() {
+        // given
+        var dto = getPersistedDto();
+
+        // when
+        var response = rest.getForEntity(getUri() + "/" + dto.getId(), EntityModel.class);
+        var entityModel = response.getBody();
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(entityModel.getLink("self")).isPresent().contains(Link.of("http://localhost:8082" + getUri() + "/" + dto.getId(), "self"));
+    }
+
+    public String getUri() {
+        Class<?> type = getDtoClass();
         if (type == AnalysisDto.class) {
-            return analysisController;
+            return UriUtil.ANALYSES;
         } else if (type == ImpactDto.class) {
-            return impactController;
+            return UriUtil.IMPACTS;
         } else if (type == RequirementDto.class) {
-            return requirementController;
+            return UriUtil.REQUIREMENTS;
         } else if (type == RequirementDeltaDto.class) {
-            return requirementDeltaController;
+            return UriUtil.REQUIREMENTS_DELTA;
         } else if (type == StakeholderDto.class) {
-            return stakeholderController;
+            return UriUtil.STAKEHOLDERS;
         } else if (type == UserDto.class) {
-            return userController;
+            return UriUtil.USERS;
         } else if (type == ValueDto.class) {
-            return valueController;
+            return UriUtil.VALUES;
         } else if (type == VariantDto.class) {
-            return variantController;
+            return UriUtil.VARIANTS;
         } else {
             throw new IllegalArgumentException("No controller found for type " + type.getSimpleName());
         }
     }
 
-    @Autowired
-    private AnalysisControllerImpl analysisController;
-
-    @Autowired
-    private ImpactControllerImpl impactController;
-
-    @Autowired
-    private RequirementControllerImpl requirementController;
-
-    @Autowired
-    private RequirementDeltaControllerImpl requirementDeltaController;
-
-    @Autowired
-    private StakeholderControllerImpl stakeholderController;
-
-    @Autowired
-    private UserControllerImpl userController;
-
-    @Autowired
-    private ValueControllerImpl valueController;
-
-    @Autowired
-    private VariantControllerImpl variantController;
-
-    public T getDtoFromResponseEntity(ResponseEntity<EntityModel<T>> response) {
-        return getDtoFromEntityModel(Objects.requireNonNull(response.getBody()));
+    public Class<T[]> getDtoClassArray() {
+        var type = getDtoClass();
+        return (Class<T[]>) Array.newInstance(type, 0).getClass();
     }
 
-    public T getDtoFromEntityModel(EntityModel<T> entityModel) {
-        return entityModel.getContent();
-    }
+    @Autowired
+    @Getter
+    public TestRestTemplate rest;
 
-    public Iterable<T> getDtoFromResponseList(ResponseEntity<Iterable<EntityModel<T>>> response) {
-        var dtoList = new ArrayList<T>();
-        Objects.requireNonNull(response.getBody()).forEach(dto -> dtoList.add(getDtoFromEntityModel(dto)));
-        return dtoList;
-    }
 }

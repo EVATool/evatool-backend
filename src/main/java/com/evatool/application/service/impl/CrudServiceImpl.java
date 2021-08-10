@@ -2,6 +2,7 @@ package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.SuperDto;
 import com.evatool.application.mapper.SuperMapper;
+import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.CrudService;
 import com.evatool.common.exception.EntityNotFoundException;
 import com.evatool.common.exception.PropertyCannotBeNullException;
@@ -42,6 +43,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
             throw new EntityNotFoundException(getClass().getSimpleName(), id);
         }
         var entity = optional.get();
+        TenancySentinel.handleFind(entity);
         return baseMapper.toDto(entity);
     }
 
@@ -49,7 +51,9 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
     public Iterable<T> findAll() {
         logger.debug("Find All");
         List<T> dtoList = new ArrayList<>();
-        for (var entity : crudRepository.findAll()) {
+        var entities = crudRepository.findAll();
+        entities = TenancySentinel.handleFind(entities);
+        for (var entity : entities) {
             dtoList.add(baseMapper.toDto(entity));
         }
         return dtoList;
@@ -62,6 +66,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
             throw new PropertyMustBeNullException(getDtoClass().getSimpleName(), "id");
         }
         var entity = baseMapper.fromDto(dto);
+        TenancySentinel.handleCreate(entity);
         entity = crudRepository.save(entity);
         return baseMapper.toDto(entity);
     }
@@ -77,6 +82,8 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
             throw new EntityNotFoundException(getClass().getSimpleName(), dto.getId());
         }
         var entity = baseMapper.fromDto(dto);
+        entity.setRealm(optional.get().getRealm()); // TODO this should be done in the mapper.
+        TenancySentinel.handleUpdate(entity);
         entity = crudRepository.save(entity);
         return baseMapper.toDto(entity);
     }
@@ -91,12 +98,16 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         if (optional.isEmpty()) {
             throw new EntityNotFoundException(getClass().getSimpleName(), id);
         }
+        var entity = optional.get();
+        TenancySentinel.handleDelete(entity);
         crudRepository.deleteById(id);
     }
 
     public void deleteAll() {
         logger.debug("Delete All");
-        crudRepository.deleteAll();
+        var entities = crudRepository.findAll();
+        entities = TenancySentinel.handleFind(entities);
+        crudRepository.deleteAll(entities);
     }
 
     protected Class<S> getEntityClass() {

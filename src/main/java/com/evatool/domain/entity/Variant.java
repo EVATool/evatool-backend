@@ -30,8 +30,8 @@ public class Variant extends PrefixIdEntity implements FindByAnalysis {
 
     @Getter
     @Setter
-    @Column(name = "is_archived", nullable = false)
-    private Boolean isArchived;
+    @Column(name = "archived", nullable = false)
+    private Boolean archived;
 
     @Getter
     @Setter
@@ -39,7 +39,7 @@ public class Variant extends PrefixIdEntity implements FindByAnalysis {
     private Analysis analysis;
 
     @Getter
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude // Equality on List objects never returns true.
     private Set<Variant> subVariants;
 
@@ -48,7 +48,7 @@ public class Variant extends PrefixIdEntity implements FindByAnalysis {
         logger.debug("Constructor");
         setName(name);
         setDescription(description);
-        setIsArchived(archived);
+        setArchived(archived);
         setAnalysis(analysis);
     }
 

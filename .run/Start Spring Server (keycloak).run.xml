@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Start Spring Server (keycloak)" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.evatool.EvaToolApp" />
+    <module name="evatool" />
+    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=keycloak" />
+    <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -1,19 +1,22 @@
 package com.evatool.application.controller;
 
-import com.evatool.application.controller.api.CrudController;
-import com.evatool.application.controller.api.FindByAnalysisController;
 import com.evatool.application.dto.AnalysisChildDto;
 import com.evatool.application.dto.SuperDto;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public interface FindByAnalysisControllerTest {
+public interface FindByAnalysisControllerTest<T extends AnalysisChildDto> {
 
     SuperDto getPersistedDto();
 
-    CrudController getController();
+    String getUri();
+
+    TestRestTemplate getRest();
+
+    Class<T[]> getDtoClassArray();
 
     @Test
     default void testAllFindAnalysisById() {
@@ -21,8 +24,8 @@ public interface FindByAnalysisControllerTest {
         var dto = (AnalysisChildDto) getPersistedDto();
 
         // when
-        var response = ((FindByAnalysisController) getController()).findAllByAnalysisId(dto.getAnalysisId());
-        var dtoListFound = (Iterable) response.getBody();
+        var response = getRest().getForEntity(getUri() + "?analysisId=" + dto.getAnalysisId(), getDtoClassArray());
+        var dtoListFound = response.getBody();
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

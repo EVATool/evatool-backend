@@ -39,7 +39,7 @@ public class Requirement extends PrefixIdEntity implements FindByAnalysis {
     private final Set<RequirementDelta> requirementDeltas = new HashSet<>();
 
     @Getter
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private final Set<Variant> variants = new HashSet<>();
