@@ -1,6 +1,5 @@
 package com.evatool.application.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,6 +13,5 @@ public class PrefixIdDto extends SuperDto {
     @ApiModelProperty
     @Getter
     @Setter
-    //@JsonIgnore
     private String prefixSequenceId;
 }
