@@ -88,10 +88,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             exportAnalysisDtoList.add(exportAnalysisDto);
         }
 
-        var exportAnalysesDto = new ImportExportAnalysesDto(
-                importExportVersion,
-                exportAnalysisDtoList.toArray(new ImportExportAnalysisDto[0]));
-
+        // Only include fields which are explicitly included.
         var strategy = new ExclusionStrategy() {
             @Override
             public boolean shouldSkipClass(Class<?> clazz) {
@@ -101,6 +98,8 @@ public class ImportExportServiceImpl implements ImportExportService {
             @Override
             public boolean shouldSkipField(FieldAttributes field) {
                 for (var annotation : field.getAnnotations()) {
+                    System.out.println(annotation.annotationType());
+                    System.out.println(ImportExportInclude.class);
                     if (annotation.annotationType().equals(ImportExportInclude.class)) {
                         return false;
                     }
@@ -109,11 +108,15 @@ public class ImportExportServiceImpl implements ImportExportService {
             }
         };
 
+        var exportAnalysesDto = new ImportExportAnalysesDto(
+                importExportVersion,
+                exportAnalysisDtoList.toArray(new ImportExportAnalysisDto[0]));
+
         var gson = new GsonBuilder()
                 .addSerializationExclusionStrategy(strategy)
                 .create();
-        String exportAnalysesJson = gson.toJson(exportAnalysesDto);
-        return exportAnalysesJson;
+
+        return gson.toJson(exportAnalysesDto);
     }
 
     private ImportExportAnalysisDto exportAnalysis(Analysis analysis) {
