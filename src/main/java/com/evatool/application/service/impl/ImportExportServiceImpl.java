@@ -2,6 +2,7 @@ package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.*;
 import com.evatool.application.mapper.*;
+import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ImportExportService;
 import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.repository.*;
@@ -82,6 +83,7 @@ public class ImportExportServiceImpl implements ImportExportService {
 
         // Create entity json.
         var analyses = analysisRepository.findAllById(analysisIds);
+        analyses = TenancySentinel.handleFind(analyses);
         var exportAnalysisDtoList = new ArrayList<ImportExportAnalysisDto>();
         for (var analysis : analyses) {
             var exportAnalysisDto = exportAnalysis(analysis);
