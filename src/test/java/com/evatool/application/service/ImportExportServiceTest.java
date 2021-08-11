@@ -65,7 +65,12 @@ class ImportExportServiceTest {
 
         // then
         var analyses = analysisRepository.findAll();
+
+        // Check number of analyses.
         assertThat(IterableUtil.iterableSize(analyses)).isEqualTo(4);
+
+        // TODO Check if newly created analyses have same number of entities and same attribute values.
+        
     }
 
     @SneakyThrows
