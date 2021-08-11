@@ -5,14 +5,16 @@ import com.evatool.application.dto.mapper.*;
 import com.evatool.application.service.api.ImportExportService;
 import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.repository.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.*;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.GsonBuilder;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ImportExportServiceImpl implements ImportExportService {
@@ -60,39 +62,69 @@ public class ImportExportServiceImpl implements ImportExportService {
     private VariantDtoMapper variantMapper;
 
     // TODO return ImportReport object with information (success or not, file version and current version..., error causes..., default values used...)
-    @SneakyThrows // TODO remove...
+    @SneakyThrows
     @Override
     @Transactional
     public void importAnalyses(String importAnalyses) {
 
     }
 
-    private void importAnalysis(String importExportAnalysisJson) {
+    private void importAnalysis(String importAnalysis) {
 
     }
 
-    @SneakyThrows // TODO remove...
+    @SneakyThrows
     @Override
-    public String exportAnalyses() { // TODO get only relevant analyses...
+    public String exportAnalyses(Iterable<UUID> analysisIdList) { // TODO get only relevant analyses...
 
         // Create meta data.
         var importExportVersion = "0.0.1";
 
         // Create entity json.
-        var analyses = analysisRepository.findAll();
-        var analysisJsonList = new ArrayList<ImportExportAnalysisJson>();
+        var analyses = analysisRepository.findAllById(analysisIdList);
+        var exportAnalysisDtoList = new ArrayList<ImportExportAnalysisDto>();
         for (var analysis : analyses) {
-            var exportAnalysis = exportAnalysis(analysis);
-            analysisJsonList.add(exportAnalysis);
+            var exportAnalysisDto = exportAnalysis(analysis);
+            exportAnalysisDtoList.add(exportAnalysisDto);
         }
 
-        var exportAnalyses = new ImportExportAnalysesJson(
+        // Only include fields which are explicitly included.
+        var strategy = new ExclusionStrategy() {
+            @Override
+            public boolean shouldSkipClass(Class<?> clazz) {
+                return false;
+            }
+
+            @Override
+            public boolean shouldSkipField(FieldAttributes field) {
+                if (SuperDto.class.isAssignableFrom(field.getDeclaringClass())) {
+                    return !isIncluded(field);
+                }
+                return false;
+            }
+
+            private boolean isIncluded(FieldAttributes field) {
+                for (var annotation : field.getAnnotations()) {
+                    if (annotation.annotationType().equals(ImportExportInclude.class)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
+
+        var exportAnalysesDto = new ImportExportAnalysesDto(
                 importExportVersion,
-                analysisJsonList.toArray(new ImportExportAnalysisJson[0]));
-        return new ObjectMapper().writeValueAsString(exportAnalyses);
+                exportAnalysisDtoList.toArray(new ImportExportAnalysisDto[0]));
+
+        var gson = new GsonBuilder()
+                .addSerializationExclusionStrategy(strategy)
+                .create();
+
+        return gson.toJson(exportAnalysesDto);
     }
 
-    private ImportExportAnalysisJson exportAnalysis(Analysis analysis) {
+    private ImportExportAnalysisDto exportAnalysis(Analysis analysis) {
         // Retrieve entities.
         var analysisId = analysis.getId();
         var values = valueRepository.findAllByAnalysisId(analysisId);
@@ -103,72 +135,22 @@ public class ImportExportServiceImpl implements ImportExportService {
         var variants = variantRepository.findAllByAnalysisId(analysisId);
 
         // Convert entities to json strings.
-        var analysisJson = analysisMapper.toDto(analysis);
-        var valuesJson = valueMapper.toDtoList(values);
-        var stakeholdersJson = stakeholderMapper.toDtoList(stakeholders);
-        var impactsJson = impactMapper.toDtoList(impacts);
-        var requirementsJson = requirementMapper.toDtoList(requirements);
-        var requirementDeltasJson = requirementDeltaMapper.toDtoList(requirementDeltas);
-        var variantsJson = variantMapper.toDtoList(variants);
+        var analysisDto = analysisMapper.toDto(analysis);
+        var valuesDtoList = valueMapper.toDtoList(values);
+        var stakeholdersDtoList = stakeholderMapper.toDtoList(stakeholders);
+        var impactsDtoList = impactMapper.toDtoList(impacts);
+        var requirementsDtoList = requirementMapper.toDtoList(requirements);
+        var requirementDeltasDtoList = requirementDeltaMapper.toDtoList(requirementDeltas);
+        var variantsDtoList = variantMapper.toDtoList(variants);
 
-        var exportedAnalysis = new ImportExportAnalysisJson(
-                analysisJson,
-                valuesJson,
-                stakeholdersJson,
-                impactsJson,
-                requirementsJson,
-                requirementDeltasJson,
-                variantsJson);
-        return exportedAnalysis;
-    }
-
-    @EqualsAndHashCode
-    @ToString
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    private class ImportExportAnalysisJson {
-
-        // TODO maybe actually use JSON object?
-        private AnalysisDto analysis;
-        private List<ValueDto> values;
-        private List<StakeholderDto> stakeholders;
-        private List<ImpactDto> impacts;
-        private List<RequirementDto> requirements;
-        private List<RequirementDeltaDto> requirementDeltas;
-        private List<VariantDto> variants;
-
-        public ImportExportAnalysisJson(AnalysisDto analysisJson,
-                                        List<ValueDto> valuesJson,
-                                        List<StakeholderDto> stakeholdersJson,
-                                        List<ImpactDto> impactsJson,
-                                        List<RequirementDto> requirementsJson,
-                                        List<RequirementDeltaDto> requirementDeltasJson,
-                                        List<VariantDto> variantsJson) {
-            this.analysis = analysisJson;
-            this.values = valuesJson;
-            this.stakeholders = stakeholdersJson;
-            this.impacts = impactsJson;
-            this.requirements = requirementsJson;
-            this.requirementDeltas = requirementDeltasJson;
-            this.variants = variantsJson;
-        }
-    }
-
-    @EqualsAndHashCode
-    @ToString
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    private class ImportExportAnalysesJson {
-
-        private String importExportVersion;
-
-        private ImportExportAnalysisJson[] analyses;
-
-        public ImportExportAnalysesJson(String importExportVersion, ImportExportAnalysisJson[] analyses) {
-            this.importExportVersion = importExportVersion;
-            this.analyses = analyses;
-        }
+        var exportAnalysisDto = new ImportExportAnalysisDto(
+                analysisDto,
+                valuesDtoList,
+                stakeholdersDtoList,
+                impactsDtoList,
+                requirementsDtoList,
+                requirementDeltasDtoList,
+                variantsDtoList);
+        return exportAnalysisDto;
     }
 }
