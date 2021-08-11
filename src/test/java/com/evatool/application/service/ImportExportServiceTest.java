@@ -5,6 +5,7 @@ import com.evatool.application.service.impl.ImportExportServiceImpl;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
 import com.evatool.common.enums.ValueType;
+import com.evatool.common.exception.ImportJsonException;
 import com.evatool.common.util.IterableUtil;
 import com.evatool.common.util.PrintUtil;
 import com.evatool.domain.entity.*;
@@ -19,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 class ImportExportServiceTest {
@@ -73,14 +75,24 @@ class ImportExportServiceTest {
 
     }
 
+    @SneakyThrows
     @Test
-    void testImportAnalyses_FieldIsMissing_ThrowsImportJsonException(){
+    void testImportAnalyses_FieldIsMissing_ThrowsImportJsonException() {
         // given
+        var analysis1 = saveDummyAnalysisWithManyChildEntities();
+        var analysis2 = saveDummyAnalysisWithManyChildEntities();
+
+        var exportAnalysesJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
+        PrintUtil.prettyPrintJson(exportAnalysesJson);
 
         // when
+        var exportAnalysesJsonObject = new JSONObject(exportAnalysesJson);
+        exportAnalysesJsonObject.remove("importExportVersion");
+        exportAnalysesJson = exportAnalysesJsonObject.toString();
 
         // then
-
+        final String finalExportAnalysesJson = exportAnalysesJson;
+        assertThatExceptionOfType(ImportJsonException.class).isThrownBy(() -> importExportService.importAnalyses(finalExportAnalysesJson));
     }
 
     @SneakyThrows
