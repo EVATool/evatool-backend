@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.UserDto;
-import com.evatool.application.dto.mapper.UserDtoMapper;
+import com.evatool.application.mapper.UserDtoMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.UserService;
 import com.evatool.common.exception.EntityNotFoundException;

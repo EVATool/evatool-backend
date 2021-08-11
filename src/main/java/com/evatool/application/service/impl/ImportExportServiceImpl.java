@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.*;
-import com.evatool.application.dto.mapper.*;
+import com.evatool.application.mapper.*;
 import com.evatool.application.service.api.ImportExportService;
 import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.repository.*;

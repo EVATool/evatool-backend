@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.RequirementDto;
-import com.evatool.application.dto.mapper.RequirementDtoMapper;
+import com.evatool.application.mapper.RequirementDtoMapper;
 import com.evatool.application.service.api.RequirementService;
 import com.evatool.domain.entity.Requirement;
 import com.evatool.domain.repository.RequirementRepository;

@@ -1,7 +1,7 @@
 package com.evatool.domain.repository;
 
 import com.evatool.application.dto.*;
-import com.evatool.application.dto.mapper.*;
+import com.evatool.application.mapper.*;
 import com.evatool.application.service.impl.*;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;

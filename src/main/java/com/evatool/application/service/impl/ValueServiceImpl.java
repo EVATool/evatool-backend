@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.ValueDto;
-import com.evatool.application.dto.mapper.ValueDtoMapper;
+import com.evatool.application.mapper.ValueDtoMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ValueService;
 import com.evatool.common.enums.ValueType;

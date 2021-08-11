@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.VariantDto;
-import com.evatool.application.dto.mapper.VariantDtoMapper;
+import com.evatool.application.mapper.VariantDtoMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.VariantService;
 import com.evatool.common.exception.functional.EntityStillReferencedException;

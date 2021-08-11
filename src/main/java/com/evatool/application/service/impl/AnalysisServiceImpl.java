@@ -1,8 +1,8 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.AnalysisDto;
-import com.evatool.application.dto.mapper.AnalysisDtoMapper;
-import com.evatool.application.dto.mapper.ValueDtoMapper;
+import com.evatool.application.mapper.AnalysisDtoMapper;
+import com.evatool.application.mapper.ValueDtoMapper;
 import com.evatool.application.service.api.AnalysisService;
 import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.repository.AnalysisRepository;

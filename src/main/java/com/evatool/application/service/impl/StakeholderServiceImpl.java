@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.StakeholderDto;
-import com.evatool.application.dto.mapper.StakeholderDtoMapper;
+import com.evatool.application.mapper.StakeholderDtoMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.StakeholderService;
 import com.evatool.common.enums.StakeholderLevel;

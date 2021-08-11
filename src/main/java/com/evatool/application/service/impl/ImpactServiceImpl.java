@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.ImpactDto;
-import com.evatool.application.dto.mapper.ImpactDtoMapper;
+import com.evatool.application.mapper.ImpactDtoMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ImpactService;
 import com.evatool.common.exception.functional.EntityStillReferencedException;

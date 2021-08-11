@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.RequirementDeltaDto;
-import com.evatool.application.dto.mapper.RequirementDeltaDtoMapper;
+import com.evatool.application.mapper.RequirementDeltaDtoMapper;
 import com.evatool.application.service.api.RequirementDeltaService;
 import com.evatool.domain.entity.RequirementDelta;
 import com.evatool.domain.repository.RequirementDeltaRepository;
