@@ -38,7 +38,6 @@ public class ImportExportControllerImpl implements ImportExportController {
     @Override
     @GetMapping(UriUtil.EXPORT_ANALYSES)
     @PreAuthorize(AuthUtil.BY_READER)
-    // TODO optional parameter: filename
     // TODO test if actual file is being downloaded in browser when called from frontend
     public ResponseEntity<byte[]> exportAnalyses(UUID[] analysisIds, String filename) {
         var exportJsonString = importExportService.exportAnalyses(Arrays.asList(analysisIds));
