@@ -1,6 +1,5 @@
 package com.evatool.application.controller;
 
-import com.evatool.application.dto.AnalysisDto;
 import com.evatool.common.util.IterableUtil;
 import com.evatool.common.util.PrintUtil;
 import com.evatool.common.util.UriUtil;
@@ -64,5 +63,35 @@ class ImportExportControllerTest {
         assertThat(jsonContent).isNotNull();
         assertThat(jsonContent.getClass()).isEqualTo(String.class);
         assertThat(jsonContent).isNotEmpty();
+    }
+
+    @Test
+    void testExportAnalyses_FilenameProvided() {
+        // given
+        var analysis1 = analysisRepository.save(new Analysis("", "", false));
+        var analysis2 = analysisRepository.save(new Analysis("", "", false));
+
+        // when
+        var response = rest.getForEntity(UriUtil.EXPORT_ANALYSES + "?analysisIds=" + analysis1.getId() + "," + analysis2.getId() + "&filename=abc", String.class);
+        var jsonContent = response.getBody();
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getHeaders().getContentDisposition().getFilename()).isEqualTo("abc.json");
+    }
+
+    @Test
+    void testExportAnalyses_FilenameNotProvided() {
+        // given
+        var analysis1 = analysisRepository.save(new Analysis("", "", false));
+        var analysis2 = analysisRepository.save(new Analysis("", "", false));
+
+        // when
+        var response = rest.getForEntity(UriUtil.EXPORT_ANALYSES + "?analysisIds=" + analysis1.getId() + "," + analysis2.getId() + "&filename=abc", String.class);
+        var jsonContent = response.getBody();
+
+        // then
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getHeaders().getContentDisposition().getFilename()).isEqualTo("Analysis-Export.json");
     }
 }

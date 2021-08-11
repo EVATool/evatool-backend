@@ -24,6 +24,6 @@ public interface ImportExportController {
     @ApiOperation(value = "Export analyses by provided argument")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<byte[]> exportAnalyses(@Valid @RequestParam UUID[] analysisIds);
+    ResponseEntity<byte[]> exportAnalyses(@Valid @RequestParam UUID[] analysisIds, @RequestParam(required = false) String filename);
 
 }

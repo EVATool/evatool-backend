@@ -99,7 +99,7 @@ public class ImportExportServiceImpl implements ImportExportService {
         var analysisName = analysisJson.getString("name");
         var analysisDescription = analysisJson.getString("description");
         var analysisIsTemplate = analysisJson.getBoolean("isTemplate");
-        var analysisImageUrl = analysisJson.isNull("imageUrl") ? null : analysisJson.getString("imageUrl"); // TODO null becomes "null".
+        var analysisImageUrl = analysisJson.isNull("imageUrl") ? null : analysisJson.getString("imageUrl");
         var analysis = new Analysis(analysisName, analysisDescription, analysisIsTemplate, analysisImageUrl);
         analysisRepository.save(analysis);
 
