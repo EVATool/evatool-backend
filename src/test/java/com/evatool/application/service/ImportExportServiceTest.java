@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -59,8 +60,8 @@ class ImportExportServiceTest {
     @Test
     void testImportAnalyses() {
         // given
-        var analysis1 = saveDummyAnalysisWithManyChildEntities();
-        var analysis2 = saveDummyAnalysisWithManyChildEntities();
+        var analysis1 = saveDummyAnalysisWithFewChildEntities();
+        var analysis2 = saveDummyAnalysisWithFewChildEntities();
 
         var exportAnalysesJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
         PrintUtil.prettyPrintJson(exportAnalysesJson);
@@ -75,7 +76,7 @@ class ImportExportServiceTest {
 
     @SneakyThrows
     @Test
-    void testImportAnalysis() {
+    void testImportAnalysis() { // TODO equality checks could be more strict and validate that child entities are equal.
         // given
         var analysis = saveDummyAnalysisWithManyChildEntities();
 
@@ -89,24 +90,90 @@ class ImportExportServiceTest {
         var analyses = IterableUtil.iterableToList(analysisRepository.findAll());
         assertThat(analyses).hasSize(2);
 
-        // Retrieve original and imported analysis.
+        // Retrieve original and imported analysis (actual names might be switched due to non-deterministic retrieval?).
         var originalAnalysis = analyses.get(0);
         var importedAnalysis = analyses.get(1);
 
-        // TODO Check if newly created analyses have same number of entities and same attribute values.
         // Check analysis equality.
         assertThat(originalAnalysis.getName()).isEqualTo(importedAnalysis.getName());
         assertThat(originalAnalysis.getDescription()).isEqualTo(importedAnalysis.getDescription());
         assertThat(originalAnalysis.getIsTemplate()).isEqualTo(importedAnalysis.getIsTemplate());
         assertThat(originalAnalysis.getImageUrl()).isEqualTo(importedAnalysis.getImageUrl());
+
+        // Check values equality.
+        var originalValues = new ArrayList<Value>(originalAnalysis.getValues());
+        var importedValues = new ArrayList<Value>(importedAnalysis.getValues());
+        assertThat(originalValues).hasSize(importedValues.size());
+        for (int i = 0; i < originalAnalysis.getValues().size(); i++) {
+            var originalValue = originalValues.get(i);
+            var importedValue = importedValues.get(i);
+
+            assertThat(originalValue.getName()).isEqualTo(importedValue.getName());
+            assertThat(originalValue.getDescription()).isEqualTo(importedValue.getDescription());
+            assertThat(originalValue.getType()).isEqualTo(importedValue.getType());
+            assertThat(originalValue.getArchived()).isEqualTo(importedValue.getArchived());
+        }
+
+        // Check stakeholders equality.
+        var originalStakeholders = new ArrayList<Stakeholder>(originalAnalysis.getStakeholders());
+        var importedStakeholders = new ArrayList<Stakeholder>(importedAnalysis.getStakeholders());
+        assertThat(originalStakeholders).hasSize(importedStakeholders.size());
+        for (int i = 0; i < originalAnalysis.getStakeholders().size(); i++) {
+            var originalStakeholder = originalStakeholders.get(i);
+            var importedStakeholder = importedStakeholders.get(i);
+
+            assertThat(originalStakeholder.getName()).isEqualTo(importedStakeholder.getName());
+            assertThat(originalStakeholder.getPriority()).isEqualTo(importedStakeholder.getPriority());
+            assertThat(originalStakeholder.getLevel()).isEqualTo(importedStakeholder.getLevel());
+        }
+
+        // Check impacts equality.
+        var originalImpacts = new ArrayList<Impact>(originalAnalysis.getImpacts());
+        var importedImpacts = new ArrayList<Impact>(importedAnalysis.getImpacts());
+        assertThat(originalImpacts).hasSize(importedImpacts.size());
+        for (int i = 0; i < originalAnalysis.getImpacts().size(); i++) {
+            var originalImpact = originalImpacts.get(i);
+            var importedImpact = importedImpacts.get(i);
+
+            assertThat(originalImpact.getMerit()).isEqualTo(importedImpact.getMerit());
+            assertThat(originalImpact.getDescription()).isEqualTo(importedImpact.getDescription());
+        }
+
+        // Check variants equality.
+        var originalVariants = new ArrayList<Variant>(originalAnalysis.getVariants());
+        var importedVariants = new ArrayList<Variant>(importedAnalysis.getVariants());
+        assertThat(originalVariants).hasSize(importedVariants.size());
+        for (int i = 0; i < originalAnalysis.getVariants().size(); i++) {
+            var originalVariant = originalVariants.get(i);
+            var importedVariant = importedVariants.get(i);
+
+            assertThat(originalVariant.getName()).isEqualTo(importedVariant.getName());
+            assertThat(originalVariant.getDescription()).isEqualTo(importedVariant.getDescription());
+            assertThat(originalVariant.getArchived()).isEqualTo(importedVariant.getArchived());
+        }
+
+        // Check requirements equality.
+        var originalRequirements = new ArrayList<Requirement>(originalAnalysis.getRequirements());
+        var importedRequirements = new ArrayList<Requirement>(importedAnalysis.getRequirements());
+        assertThat(originalRequirements).hasSize(importedRequirements.size());
+        for (int i = 0; i < originalAnalysis.getRequirements().size(); i++) {
+            var originalRequirement = originalRequirements.get(i);
+            var importedRequirement = importedRequirements.get(i);
+
+            assertThat(originalRequirement.getDescription()).isEqualTo(importedRequirement.getDescription());
+
+            // Check requirement deltas equality.
+            // TODO The order of both RequirementDelta Sets is not deterministic and thus cannot be used to compare.
+            //assertThat(originalRequirement.getRequirementDeltas()).hasSize(importedRequirement.getRequirementDeltas().size());
+        }
     }
 
     @SneakyThrows
     @Test
     void testImportAnalyses_FieldIsMissing_ThrowsImportJsonException() {
         // given
-        var analysis1 = saveDummyAnalysisWithManyChildEntities();
-        var analysis2 = saveDummyAnalysisWithManyChildEntities();
+        var analysis1 = saveDummyAnalysisWithFewChildEntities();
+        var analysis2 = saveDummyAnalysisWithFewChildEntities();
 
         var exportAnalysesJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
         PrintUtil.prettyPrintJson(exportAnalysesJson);
@@ -125,8 +192,8 @@ class ImportExportServiceTest {
     @Test
     void testExportAnalyses() {
         // given
-        var analysis1 = saveDummyAnalysisWithManyChildEntities();
-        var analysis2 = saveDummyAnalysisWithManyChildEntities();
+        var analysis1 = saveDummyAnalysisWithFewChildEntities();
+        var analysis2 = saveDummyAnalysisWithFewChildEntities();
 
         // when
         var exportAnalysesJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
@@ -168,28 +235,28 @@ class ImportExportServiceTest {
         assertThat(requirementDeltasJson.getJSONObject(0).length()).isEqualTo(4);
     }
 
-    private Analysis saveDummyAnalysisWithManyChildEntities() {
-        var analysis1 = new Analysis("", "", false);
-        analysisRepository.save(analysis1);
+    private Analysis saveDummyAnalysisWithFewChildEntities() {
+        var analysis = new Analysis("", "", false);
+        analysisRepository.save(analysis);
 
         // Values.
-        var value1 = new Value("", "", ValueType.SOCIAL, false, analysis1);
+        var value1 = new Value("", "", ValueType.SOCIAL, false, analysis);
         valueRepository.save(value1);
 
         // Stakeholders.
-        var stakeholder1 = new Stakeholder("", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis1);
+        var stakeholder1 = new Stakeholder("", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
         stakeholderRepository.save(stakeholder1);
 
         // Impacts.
-        var impact1 = new Impact(0.2f, "", value1, stakeholder1, analysis1);
+        var impact1 = new Impact(0.2f, "", value1, stakeholder1, analysis);
         impactRepository.save(impact1);
 
         // Variants.
-        var variant1 = new Variant("", "", false, analysis1);
+        var variant1 = new Variant("", "", false, analysis);
         variantRepository.save(variant1);
 
         // Requirements.
-        var requirement1 = new Requirement("", analysis1);
+        var requirement1 = new Requirement("", analysis);
         requirement1.getVariants().add(variant1);
         requirementRepository.save(requirement1);
 
@@ -197,6 +264,71 @@ class ImportExportServiceTest {
         var requirementDelta1 = new RequirementDelta(0.1f, impact1, requirement1);
         requirementDeltaRepository.save(requirementDelta1);
 
-        return analysis1;
+        return analysis;
+    }
+
+    private Analysis saveDummyAnalysisWithManyChildEntities() {
+        var analysis = new Analysis("", "", false);
+        analysisRepository.save(analysis);
+
+        // Values.
+        var value1 = new Value("", "", ValueType.SOCIAL, false, analysis);
+        valueRepository.save(value1);
+        var value2 = new Value("", "", ValueType.SOCIAL, false, analysis);
+        valueRepository.save(value2);
+        var value3 = new Value("", "", ValueType.SOCIAL, false, analysis);
+        valueRepository.save(value3);
+
+        // Stakeholders.
+        var stakeholder1 = new Stakeholder("", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
+        stakeholderRepository.save(stakeholder1);
+        var stakeholder2 = new Stakeholder("", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
+        stakeholderRepository.save(stakeholder2);
+        var stakeholder3 = new Stakeholder("", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
+        stakeholderRepository.save(stakeholder3);
+
+        // Impacts.
+        var impact1 = new Impact(0.2f, "", value1, stakeholder1, analysis);
+        impactRepository.save(impact1);
+        var impact2 = new Impact(0.2f, "", value2, stakeholder3, analysis);
+        impactRepository.save(impact2);
+        var impact3 = new Impact(0.2f, "", value3, stakeholder2, analysis);
+        impactRepository.save(impact3);
+        var impact4 = new Impact(0.2f, "", value1, stakeholder2, analysis);
+        impactRepository.save(impact4);
+
+        // Variants.
+        var variant1 = new Variant("", "", false, analysis);
+        variantRepository.save(variant1);
+        var variant2 = new Variant("", "", false, analysis);
+        variantRepository.save(variant2);
+        var variant3 = new Variant("", "", false, analysis);
+        variantRepository.save(variant3);
+
+        // Requirements.
+        var requirement1 = new Requirement("", analysis);
+        requirement1.getVariants().add(variant1);
+        requirementRepository.save(requirement1);
+        var requirement2 = new Requirement("", analysis);
+        requirement2.getVariants().add(variant1);
+        requirement2.getVariants().add(variant2);
+        requirement2.getVariants().add(variant3);
+        requirementRepository.save(requirement2);
+        var requirement3 = new Requirement("", analysis);
+        requirementRepository.save(requirement3);
+
+        // Requirement Deltas.
+        var requirementDelta1 = new RequirementDelta(0.1f, impact1, requirement2);
+        requirementDeltaRepository.save(requirementDelta1);
+        var requirementDelta2 = new RequirementDelta(0.1f, impact2, requirement2);
+        requirementDeltaRepository.save(requirementDelta2);
+        var requirementDelta3 = new RequirementDelta(0.1f, impact1, requirement3);
+        requirementDeltaRepository.save(requirementDelta3);
+        var requirementDelta4 = new RequirementDelta(0.1f, impact3, requirement1);
+        requirementDeltaRepository.save(requirementDelta4);
+        var requirementDelta5 = new RequirementDelta(0.1f, impact4, requirement2);
+        requirementDeltaRepository.save(requirementDelta5);
+
+        return analysis;
     }
 }

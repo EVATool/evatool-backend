@@ -247,7 +247,6 @@ public class ImportExportServiceImpl implements ImportExportService {
             var deltaId = deltaJson.getString("id");
             deltasMap.put(deltaId, delta);
         }
-
     }
 
     private Consumer<JSONObject> resolveImportAnalysisFunction(String currentImportExportVersion) {
