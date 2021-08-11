@@ -73,6 +73,16 @@ class ImportExportServiceTest {
 
     }
 
+    @Test
+    void testImportAnalyses_FieldIsMissing_ThrowsImportJsonException(){
+        // given
+
+        // when
+
+        // then
+
+    }
+
     @SneakyThrows
     @Test
     void testExportAnalyses() {

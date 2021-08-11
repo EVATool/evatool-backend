@@ -79,21 +79,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             var importJsonObject = new JSONObject(importAnalyses);
             var currentImportExportVersion = importJsonObject.getString("importExportVersion");
             var analysesJsonArray = importJsonObject.getJSONArray("analyses");
-            Consumer<JSONObject> importAnalysisFunction = null;
-
-            if (newestImportExportVersion.equals(currentImportExportVersion)) {
-                importAnalysisFunction = this::importAnalysis;
-            } else {  // Migration.
-                switch (currentImportExportVersion) {
-
-                    case "0.0.1": // Not yet reachable.
-                        //importAnalysisFunction = this::importAnalysis_0_0_1;
-                        break;
-
-                    default:
-                        throw new PropertyIsInvalidException("Unknown \"importExportVersion\" (" + currentImportExportVersion + ")");
-                }
-            }
+            var importAnalysisFunction = resolveImportAnalysisFunction(currentImportExportVersion);
 
             for (int i = 0; i < analysesJsonArray.length(); i++) {
                 var analysisJsonObject = analysesJsonArray.getJSONObject(i);
@@ -139,6 +125,21 @@ public class ImportExportServiceImpl implements ImportExportService {
 
     }
 
+    private Consumer<JSONObject> resolveImportAnalysisFunction(String currentImportExportVersion) {
+        if (newestImportExportVersion.equals(currentImportExportVersion)) {
+            return this::importAnalysis;
+        } else {  // Migration.
+            switch (currentImportExportVersion) {
+
+                case "0.0.1": // Not yet reachable.
+                    return this::importAnalysis; //importAnalysis_0_0_1;
+
+                default:
+                    throw new PropertyIsInvalidException("Unknown \"importExportVersion\" (" + currentImportExportVersion + ")");
+            }
+        }
+    }
+
     @SneakyThrows
     @Override
     public String exportAnalyses(Iterable<UUID> analysisIds) {
@@ -155,7 +156,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             exportAnalysisDtoList.add(exportAnalysisDto);
         }
 
-        // Only include fields which are explicitly included.
+        // Only export fields which are explicitly included.
         var strategy = new ExclusionStrategy() {
             @Override
             public boolean shouldSkipClass(Class<?> clazz) {

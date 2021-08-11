@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
@@ -17,7 +18,7 @@ public interface ImportExportController {
     @ApiOperation(value = "Import analyses from the provided argument")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<Void> importAnalyses(String importAnalyses);
+    ResponseEntity<Void> importAnalyses(@RequestBody String importAnalyses);
 
     @GetMapping(produces = {"application/json"})
     @ApiOperation(value = "Export analyses by provided argument")
