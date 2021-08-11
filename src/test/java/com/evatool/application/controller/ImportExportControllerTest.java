@@ -1,5 +1,6 @@
 package com.evatool.application.controller;
 
+import com.evatool.application.dto.AnalysisDto;
 import com.evatool.common.util.IterableUtil;
 import com.evatool.common.util.PrintUtil;
 import com.evatool.common.util.UriUtil;
@@ -38,7 +39,7 @@ class ImportExportControllerTest {
 
         // when
         var exportResponse = rest.getForEntity(UriUtil.EXPORT_ANALYSES + "?analysisIds=" + analysis1.getId() + "," + analysis2.getId(), String.class);
-        var importResponse = rest.getForEntity(UriUtil.IMPORT_ANALYSES, String.class, exportResponse.getBody());
+        var importResponse = rest.postForEntity(UriUtil.IMPORT_ANALYSES, exportResponse.getBody(), Void.class);
 
         // then
         assertThat(importResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
