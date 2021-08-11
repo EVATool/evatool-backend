@@ -7,6 +7,7 @@ import com.evatool.application.dto.SuperDto;
 import com.evatool.application.mapper.*;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ImportExportService;
+import com.evatool.common.exception.PropertyIsInvalidException;
 import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.repository.*;
 import com.google.gson.ExclusionStrategy;
@@ -73,18 +74,59 @@ public class ImportExportServiceImpl implements ImportExportService {
     @Transactional
     public void importAnalyses(String importAnalyses) {
         var importJsonObject = new JSONObject(importAnalyses);
-        var currentImportExportVersion = importJsonObject.getJSONObject("importExportVersion").toString();
+        var currentImportExportVersion = importJsonObject.getString("importExportVersion");
+        var analysesJsonArray = importJsonObject.getJSONArray("analyses");
 
-        if (newestImportExportVersion.equals(currentImportExportVersion)) { // Migration.
-            // Resolve how migration must be performed based on currentVersion.
+        for (int i = 0; i < analysesJsonArray.length(); i++) {
+            var analysisJsonObject = analysesJsonArray.getJSONObject(i);
 
+            if (newestImportExportVersion.equals(currentImportExportVersion)) {
+                importAnalysis(analysisJsonObject);
+            } else {  // Migration.
+                switch (currentImportExportVersion) {
 
-        } else {
+                    case "0.0.1": // Not yet reachable.
+                        break;
 
+                    default:
+                        throw new PropertyIsInvalidException("Unknown \"importExportVersion\" (" + currentImportExportVersion + ")");
+                }
+            }
         }
     }
 
-    private void importAnalysis(String importAnalysis) {
+    @SneakyThrows
+    private void importAnalysis(JSONObject analysisJsonObject) {
+
+        // Setup.
+
+
+        // Analysis.
+        var analysisJson = analysisJsonObject.getJSONObject("analysis");
+        var analysisName = analysisJson.getString("name");
+        var analysisDescription = analysisJson.getString("description");
+        var analysisIsTemplate = analysisJson.getBoolean("isTemplate");
+        var analysisImageUrl = analysisJson.getString("imageUrl");
+        var analysis = new Analysis(analysisName, analysisDescription, analysisIsTemplate, analysisImageUrl);
+        analysisRepository.save(analysis);
+
+        // Values.
+
+
+        // Stakeholders
+
+
+        // Impacts.
+
+
+        // Variants
+
+
+        // Requirements
+
+
+        // Requirement Deltas.
+
 
     }
 
@@ -134,6 +176,7 @@ public class ImportExportServiceImpl implements ImportExportService {
                 exportAnalysisDtoList.toArray(new ImportExportAnalysisDto[0]));
 
         var gson = new GsonBuilder()
+                .serializeNulls()
                 .addSerializationExclusionStrategy(strategy)
                 .create();
 

@@ -60,6 +60,7 @@ class ImportExportServiceTest {
         var analysis2 = saveDummyAnalysisWithManyChildEntities();
 
         var exportAnalysesJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
+        PrintUtil.prettyPrintJson(exportAnalysesJson);
 
         // when
         importExportService.importAnalyses(exportAnalysesJson);
@@ -92,6 +93,7 @@ class ImportExportServiceTest {
 
         // Check content of one analysis (number of entities and number of attributes of each entity).
         var analysisJson = analysesJson.getJSONArray("analyses").getJSONObject(0);
+        assertThat(analysisJson.getJSONObject("analysis").length()).isEqualTo(5);
 
         var requirementsJson = analysisJson.getJSONArray("requirements");
         assertThat(requirementsJson.length()).isEqualTo(1);
@@ -112,8 +114,6 @@ class ImportExportServiceTest {
         var variantsJson = analysisJson.getJSONArray("variants");
         assertThat(variantsJson.length()).isEqualTo(1);
         assertThat(variantsJson.getJSONObject(0).length()).isEqualTo(4);
-
-        assertThat(analysisJson.getJSONObject("analysis").length()).isEqualTo(4);
 
         var requirementDeltasJson = analysisJson.getJSONArray("requirementDeltas");
         assertThat(requirementDeltasJson.length()).isEqualTo(1);
