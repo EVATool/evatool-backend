@@ -7,6 +7,7 @@ import com.evatool.application.dto.SuperDto;
 import com.evatool.application.mapper.*;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ImportExportService;
+import com.evatool.common.exception.ImportJsonException;
 import com.evatool.common.exception.PropertyIsInvalidException;
 import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.repository.*;
@@ -98,8 +99,8 @@ public class ImportExportServiceImpl implements ImportExportService {
                 var analysisJsonObject = analysesJsonArray.getJSONObject(i);
                 importAnalysisFunction.accept(analysisJsonObject);
             }
-        } catch (JSONException ex) {
-            ex.getMessage();
+        } catch (JSONException jsonException) {
+            throw new ImportJsonException(jsonException);
         }
     }
 
