@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -70,9 +71,34 @@ class ImportExportServiceTest {
         // then
         var analyses = analysisRepository.findAll();
         assertThat(IterableUtil.iterableSize(analyses)).isEqualTo(4);
+    }
+
+    @SneakyThrows
+    @Test
+    void testImportAnalysis() {
+        // given
+        var analysis = saveDummyAnalysisWithManyChildEntities();
+
+        var exportAnalysesJson = importExportService.exportAnalyses(Collections.singletonList(analysis.getId()));
+        PrintUtil.prettyPrintJson(exportAnalysesJson);
+
+        // when
+        importExportService.importAnalyses(exportAnalysesJson);
+
+        // then
+        var analysesIds = IterableUtil.entityIterableToIdArray(analysisRepository.findAll());
+        assertThat(analysesIds).hasSize(2);
+
+        // Retrieve original and imported analysis.
+        var originalAnalysisOptional = analysisRepository.findById(analysis.getId());
+        var importedAnalysisOptional = analysisRepository.findById(analysesIds[0] == analysis.getId() ? analysesIds[1] : analysesIds[0]);
+        assertThat(originalAnalysisOptional).isPresent();
+        assertThat(importedAnalysisOptional).isPresent();
+        var originalAnalysis = originalAnalysisOptional.get();
+        var importedAnalysis = importedAnalysisOptional.get();
 
         // TODO Check if newly created analyses have same number of entities and same attribute values.
-
+        
     }
 
     @SneakyThrows
@@ -158,17 +184,18 @@ class ImportExportServiceTest {
         var impact1 = new Impact(0.2f, "", value1, stakeholder1, analysis1);
         impactRepository.save(impact1);
 
+        // Variants.
+        var variant1 = new Variant("", "", false, analysis1);
+        variantRepository.save(variant1);
+
         // Requirements.
         var requirement1 = new Requirement("", analysis1);
+        requirement1.getVariants().add(variant1);
         requirementRepository.save(requirement1);
 
         // Requirement Deltas.
         var requirementDelta1 = new RequirementDelta(0.1f, impact1, requirement1);
         requirementDeltaRepository.save(requirementDelta1);
-
-        // Variants.
-        var variant1 = new Variant("", "", false, analysis1);
-        variantRepository.save(variant1);
 
         return analysis1;
     }

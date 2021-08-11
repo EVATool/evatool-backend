@@ -74,8 +74,6 @@ public class ImportExportServiceImpl implements ImportExportService {
     @Autowired
     private VariantDtoMapper variantMapper;
 
-    // TODO return ImportReport object with information (success or not, file version and current version..., error causes..., default values used...)
-    // TODO how do deal with database migration changes? (Done in Json Mappers?)
     @Override
     @Transactional
     public void importAnalyses(String importAnalyses) {
@@ -226,7 +224,7 @@ public class ImportExportServiceImpl implements ImportExportService {
         }
 
         // Requirement Deltas.
-        var deltasJson = analysisJsonObject.getJSONArray("deltas");
+        var deltasJson = analysisJsonObject.getJSONArray("requirementDeltas");
         var deltasMap = new HashMap<String, RequirementDelta>();
         for (int i = 0; i < deltasJson.length(); i++) {
             var deltaJson = deltasJson.getJSONObject(i);
