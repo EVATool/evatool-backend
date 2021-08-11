@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -41,10 +43,10 @@ class ImportExportControllerTest {
     @Test
     void testExportAnalyses() {
         // given
-        analysisRepository.save(new Analysis("test Name", "test desc", false));
+        var analysis1 = analysisRepository.save(new Analysis("test Name", "test desc", false));
 
         // when
-        var response = rest.getForEntity(UriUtil.EXPORT_ANALYSES, String.class);
+        var response = rest.getForEntity(UriUtil.EXPORT_ANALYSES + "?analysisIds=" + analysis1.getId(), String.class);
         var jsonContent = response.getBody();
 
         // then

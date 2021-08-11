@@ -75,13 +75,13 @@ public class ImportExportServiceImpl implements ImportExportService {
 
     @SneakyThrows
     @Override
-    public String exportAnalyses(Iterable<UUID> analysisIdList) { // TODO get only relevant analyses...
+    public String exportAnalyses(Iterable<UUID> analysisIds) { // TODO get only relevant analyses...
 
         // Create meta data.
         var importExportVersion = "0.0.1";
 
         // Create entity json.
-        var analyses = analysisRepository.findAllById(analysisIdList);
+        var analyses = analysisRepository.findAllById(analysisIds);
         var exportAnalysisDtoList = new ArrayList<ImportExportAnalysisDto>();
         for (var analysis : analyses) {
             var exportAnalysisDto = exportAnalysis(analysis);

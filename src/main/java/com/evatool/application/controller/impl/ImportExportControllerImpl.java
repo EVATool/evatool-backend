@@ -4,20 +4,25 @@ import com.evatool.application.controller.api.ImportExportController;
 import com.evatool.application.service.impl.ImportExportServiceImpl;
 import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UriUtil;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 // TODO how do deal with database migration changes? (Done in Json Mappers?)
+@Api(tags = "Import-Export API-Endpoint")
 @RestController
+@CrossOrigin
 public class ImportExportControllerImpl implements ImportExportController {
 
     @Autowired
@@ -35,8 +40,8 @@ public class ImportExportControllerImpl implements ImportExportController {
     @GetMapping(UriUtil.EXPORT_ANALYSES)
     @PreAuthorize(AuthUtil.BY_READER)
     // TODO optional parameter: filename
-    public ResponseEntity<byte[]> exportAnalyses(Iterable<UUID> analysisIdList) { // TODO test if validation of DTOs still work
-        var exportJsonString = importExportService.exportAnalyses(analysisIdList);
+    public ResponseEntity<byte[]> exportAnalyses(UUID[] analysisIds) { // TODO test if validation of DTOs still work
+        var exportJsonString = importExportService.exportAnalyses(Arrays.asList(analysisIds));
         var exportJsonBytes = exportJsonString.getBytes();
         var filename = "Analysis_export.json";
 
