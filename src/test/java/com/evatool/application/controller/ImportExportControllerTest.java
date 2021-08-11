@@ -1,5 +1,6 @@
 package com.evatool.application.controller;
 
+import com.evatool.common.util.PrintUtil;
 import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.repository.AnalysisRepository;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
-
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,14 +43,15 @@ class ImportExportControllerTest {
     void testExportAnalyses() {
         // given
         var analysis1 = analysisRepository.save(new Analysis("test Name", "test desc", false));
+        var analysis2 = analysisRepository.save(new Analysis("test Name", "test desc", false));
 
         // when
-        var response = rest.getForEntity(UriUtil.EXPORT_ANALYSES + "?analysisIds=" + analysis1.getId(), String.class);
+        var response = rest.getForEntity(UriUtil.EXPORT_ANALYSES + "?analysisIds=" + analysis1.getId() + "," + analysis2.getId(), String.class);
         var jsonContent = response.getBody();
 
         // then
         System.out.println(response);
-        System.out.println(jsonContent);
+        PrintUtil.prettyPrintJson(jsonContent);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }

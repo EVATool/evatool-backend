@@ -4,6 +4,7 @@ import com.evatool.application.service.impl.ImportExportServiceImpl;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
 import com.evatool.common.enums.ValueType;
+import com.evatool.common.util.PrintUtil;
 import com.evatool.domain.entity.*;
 import com.evatool.domain.repository.*;
 import lombok.SneakyThrows;
@@ -69,7 +70,7 @@ class ImportExportServiceTest {
 
         // then
         System.out.println(analysisJson);
-        prettyPrintJson(analysisJson);
+        PrintUtil.prettyPrintJson(analysisJson);
     }
 
     private Analysis saveDummyAnalysisWithManyChildEntities() {
@@ -101,11 +102,5 @@ class ImportExportServiceTest {
         variantRepository.save(variant1);
 
         return analysis1;
-    }
-
-    @SneakyThrows
-    private void prettyPrintJson(String json) {
-        var jsonObject = new JSONObject(json);
-        System.out.println(jsonObject.toString(4));
     }
 }
