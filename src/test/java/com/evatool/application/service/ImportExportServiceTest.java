@@ -61,10 +61,11 @@ class ImportExportServiceTest {
     @Test
     void testExportAnalyses() {
         // given
-        var analysis = saveDummyAnalysisWithManyChildEntities();
+        var analysis1 = saveDummyAnalysisWithManyChildEntities();
+        var analysis2 = saveDummyAnalysisWithManyChildEntities();
 
         // when
-        var analysisJson = importExportService.exportAnalyses(Arrays.asList(analysis.getId()));
+        var analysisJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
 
         // then
         System.out.println(analysisJson);
