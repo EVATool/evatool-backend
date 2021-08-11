@@ -1,5 +1,6 @@
 package com.evatool.application.service;
 
+import com.evatool.application.service.api.ImportExportService;
 import com.evatool.application.service.impl.ImportExportServiceImpl;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
@@ -86,7 +87,7 @@ class ImportExportServiceTest {
         PrintUtil.prettyPrintJson(exportAnalysesJson);
 
         // Check meta data and number of analyses.
-        assertThat(analysesJson.get("importExportVersion")).isEqualTo("0.0.1");
+        assertThat(analysesJson.get("importExportVersion")).isEqualTo(ImportExportService.newestImportExportVersion);
         assertThat(analysesJson.getJSONArray("analyses").length()).isEqualTo(2);
 
         // Check content of one analysis (number of entities and number of attributes of each entity).

@@ -13,6 +13,7 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.GsonBuilder;
 import lombok.SneakyThrows;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,7 +72,16 @@ public class ImportExportServiceImpl implements ImportExportService {
     @Override
     @Transactional
     public void importAnalyses(String importAnalyses) {
+        var importJsonObject = new JSONObject(importAnalyses);
+        var currentImportExportVersion = importJsonObject.getJSONObject("importExportVersion").toString();
 
+        if (newestImportExportVersion.equals(currentImportExportVersion)) { // Migration.
+            // Resolve how migration must be performed based on currentVersion.
+
+
+        } else {
+
+        }
     }
 
     private void importAnalysis(String importAnalysis) {
@@ -83,7 +93,7 @@ public class ImportExportServiceImpl implements ImportExportService {
     public String exportAnalyses(Iterable<UUID> analysisIds) {
 
         // Create meta data.
-        var importExportVersion = "0.0.1";
+        var importExportVersion = newestImportExportVersion;
 
         // Create entity json.
         var analyses = analysisRepository.findAllById(analysisIds);
