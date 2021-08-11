@@ -99,7 +99,7 @@ public class ImportExportServiceImpl implements ImportExportService {
         var analysisName = analysisJson.getString("name");
         var analysisDescription = analysisJson.getString("description");
         var analysisIsTemplate = analysisJson.getBoolean("isTemplate");
-        var analysisImageUrl = analysisJson.getString("imageUrl");
+        var analysisImageUrl = analysisJson.isNull("imageUrl") ? null : analysisJson.getString("imageUrl"); // TODO null becomes "null".
         var analysis = new Analysis(analysisName, analysisDescription, analysisIsTemplate, analysisImageUrl);
         analysisRepository.save(analysis);
 
@@ -182,7 +182,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             impactsMap.put(impactId, impact);
         }
 
-        // Variants
+        // Variants.
         var variantsJson = analysisJsonObject.getJSONArray("variants");
         var variantsMap = new HashMap<String, Variant>();
         for (int i = 0; i < variantsJson.length(); i++) {
@@ -199,7 +199,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             variantsMap.put(variantId, variant);
         }
 
-        // Requirements
+        // Requirements.
         var requirementsJson = analysisJsonObject.getJSONArray("requirements");
         var requirementsMap = new HashMap<String, Requirement>();
         for (int i = 0; i < requirementsJson.length(); i++) {

@@ -86,19 +86,19 @@ class ImportExportServiceTest {
         importExportService.importAnalyses(exportAnalysesJson);
 
         // then
-        var analysesIds = IterableUtil.entityIterableToIdArray(analysisRepository.findAll());
-        assertThat(analysesIds).hasSize(2);
+        var analyses = IterableUtil.iterableToList(analysisRepository.findAll());
+        assertThat(analyses).hasSize(2);
 
         // Retrieve original and imported analysis.
-        var originalAnalysisOptional = analysisRepository.findById(analysis.getId());
-        var importedAnalysisOptional = analysisRepository.findById(analysesIds[0] == analysis.getId() ? analysesIds[1] : analysesIds[0]);
-        assertThat(originalAnalysisOptional).isPresent();
-        assertThat(importedAnalysisOptional).isPresent();
-        var originalAnalysis = originalAnalysisOptional.get();
-        var importedAnalysis = importedAnalysisOptional.get();
+        var originalAnalysis = analyses.get(0);
+        var importedAnalysis = analyses.get(1);
 
         // TODO Check if newly created analyses have same number of entities and same attribute values.
-        
+        // Check analysis equality.
+        assertThat(originalAnalysis.getName()).isEqualTo(importedAnalysis.getName());
+        assertThat(originalAnalysis.getDescription()).isEqualTo(importedAnalysis.getDescription());
+        assertThat(originalAnalysis.getIsTemplate()).isEqualTo(importedAnalysis.getIsTemplate());
+        assertThat(originalAnalysis.getImageUrl()).isEqualTo(importedAnalysis.getImageUrl());
     }
 
     @SneakyThrows
@@ -169,7 +169,7 @@ class ImportExportServiceTest {
     }
 
     private Analysis saveDummyAnalysisWithManyChildEntities() {
-        var analysis1 = new Analysis("ANA1 NAME", "ANA1 DESC", false);
+        var analysis1 = new Analysis("", "", false);
         analysisRepository.save(analysis1);
 
         // Values.
