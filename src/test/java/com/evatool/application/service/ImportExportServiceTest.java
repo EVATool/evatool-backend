@@ -4,6 +4,7 @@ import com.evatool.application.service.impl.ImportExportServiceImpl;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
 import com.evatool.common.enums.ValueType;
+import com.evatool.common.util.IterableUtil;
 import com.evatool.common.util.PrintUtil;
 import com.evatool.domain.entity.*;
 import com.evatool.domain.repository.*;
@@ -50,14 +51,21 @@ class ImportExportServiceTest {
         analysisRepository.deleteAll();
     }
 
+    @SneakyThrows
     @Test
     void testImportAnalyses() {
         // given
+        var analysis1 = saveDummyAnalysisWithManyChildEntities();
+        var analysis2 = saveDummyAnalysisWithManyChildEntities();
+
+        var exportAnalysesJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
 
         // when
+        importExportService.importAnalyses(exportAnalysesJson);
 
         // then
-
+        var analyses = analysisRepository.findAll();
+        assertThat(IterableUtil.iterableSize(analyses)).isEqualTo(4);
     }
 
     @SneakyThrows
@@ -69,7 +77,6 @@ class ImportExportServiceTest {
 
         // when
         var exportAnalysesJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
-
         var analysesJson = new JSONObject(exportAnalysesJson);
 
         // then
