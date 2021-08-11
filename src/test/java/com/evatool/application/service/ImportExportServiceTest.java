@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 class ImportExportServiceTest {
 
@@ -66,11 +68,45 @@ class ImportExportServiceTest {
         var analysis2 = saveDummyAnalysisWithManyChildEntities();
 
         // when
-        var analysisJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
+        var exportAnalysesJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
+
+        var analysesJson = new JSONObject(exportAnalysesJson);
 
         // then
-        System.out.println(analysisJson);
-        PrintUtil.prettyPrintJson(analysisJson);
+        PrintUtil.prettyPrintJson(exportAnalysesJson);
+
+        // Check meta data and number of analyses.
+        assertThat(analysesJson.get("importExportVersion")).isEqualTo("0.0.1");
+        assertThat(analysesJson.getJSONArray("analyses").length()).isEqualTo(2);
+
+        // Check content of one analysis (number of entities and number of attributes of each entity).
+        var analysisJson = analysesJson.getJSONArray("analyses").getJSONObject(0);
+
+        var requirementsJson = analysisJson.getJSONArray("requirements");
+        assertThat(requirementsJson.length()).isEqualTo(1);
+        assertThat(requirementsJson.getJSONObject(0).length()).isEqualTo(3);
+
+        var valuesJson = analysisJson.getJSONArray("values");
+        assertThat(valuesJson.length()).isEqualTo(1);
+        assertThat(valuesJson.getJSONObject(0).length()).isEqualTo(5);
+
+        var stakeholdersJson = analysisJson.getJSONArray("stakeholders");
+        assertThat(stakeholdersJson.length()).isEqualTo(1);
+        assertThat(stakeholdersJson.getJSONObject(0).length()).isEqualTo(4);
+
+        var impactsJson = analysisJson.getJSONArray("impacts");
+        assertThat(impactsJson.length()).isEqualTo(1);
+        assertThat(impactsJson.getJSONObject(0).length()).isEqualTo(5);
+
+        var variantsJson = analysisJson.getJSONArray("variants");
+        assertThat(variantsJson.length()).isEqualTo(1);
+        assertThat(variantsJson.getJSONObject(0).length()).isEqualTo(4);
+
+        assertThat(analysisJson.getJSONObject("analysis").length()).isEqualTo(4);
+
+        var requirementDeltasJson = analysisJson.getJSONArray("requirementDeltas");
+        assertThat(requirementDeltasJson.length()).isEqualTo(1);
+        assertThat(requirementDeltasJson.getJSONObject(0).length()).isEqualTo(4);
     }
 
     private Analysis saveDummyAnalysisWithManyChildEntities() {
