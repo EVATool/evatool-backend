@@ -226,7 +226,29 @@ public class ImportExportServiceImpl implements ImportExportService {
         }
 
         // Requirement Deltas.
+        var deltasJson = analysisJsonObject.getJSONArray("deltas");
+        var deltasMap = new HashMap<String, RequirementDelta>();
+        for (int i = 0; i < deltasJson.length(); i++) {
+            var deltaJson = deltasJson.getJSONObject(i);
 
+            var deltaOverwriteMerit = (float) deltaJson.getDouble("overwriteMerit");
+            var impactId = deltaJson.getString("impactId");
+            var impact = impactsMap.get(impactId);
+            if (impact == null) {
+                throw new ImportJsonException("The Impact with id " + impactId + " is referenced by this RequirementDelta but is not present.");
+            }
+            var requirementId = deltaJson.getString("requirementId");
+            var requirement = requirementsMap.get(requirementId);
+            if (requirement == null) {
+                throw new ImportJsonException("The Requirement with id " + requirementId + " is referenced by this RequirementDelta but is not present.");
+            }
+
+            var delta = new RequirementDelta(deltaOverwriteMerit, impact, requirement);
+            requirementDeltaRepository.save(delta);
+
+            var deltaId = deltaJson.getString("id");
+            deltasMap.put(deltaId, delta);
+        }
 
     }
 
