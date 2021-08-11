@@ -87,7 +87,7 @@ class ImportExportControllerTest {
         var analysis2 = analysisRepository.save(new Analysis("", "", false));
 
         // when
-        var response = rest.getForEntity(UriUtil.EXPORT_ANALYSES + "?analysisIds=" + analysis1.getId() + "," + analysis2.getId() + "&filename=abc", String.class);
+        var response = rest.getForEntity(UriUtil.EXPORT_ANALYSES + "?analysisIds=" + analysis1.getId() + "," + analysis2.getId(), String.class);
         var jsonContent = response.getBody();
 
         // then
