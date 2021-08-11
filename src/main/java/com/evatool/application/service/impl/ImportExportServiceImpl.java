@@ -7,9 +7,11 @@ import com.evatool.application.dto.SuperDto;
 import com.evatool.application.mapper.*;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ImportExportService;
+import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.ImportJsonException;
 import com.evatool.common.exception.PropertyIsInvalidException;
 import com.evatool.domain.entity.Analysis;
+import com.evatool.domain.entity.Value;
 import com.evatool.domain.repository.*;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -90,9 +93,8 @@ public class ImportExportServiceImpl implements ImportExportService {
         }
     }
 
-    @SneakyThrows
+    @SneakyThrows(value = {JSONException.class, ImportJsonException.class})
     private void importAnalysis(JSONObject analysisJsonObject) {
-
         // Setup.
 
 
@@ -106,7 +108,28 @@ public class ImportExportServiceImpl implements ImportExportService {
         analysisRepository.save(analysis);
 
         // Values.
+        var valuesJson = analysisJsonObject.getJSONArray("values");
+        var valueMap = new HashMap<String, Value>();
+        for (int i = 0; i < valuesJson.length(); i++) {
+            var valueJson = valuesJson.getJSONObject(i);
+            var valueName = valueJson.getString("name");
+            var valueDescription = valueJson.getString("description");
+            ValueType valueType = null;
+            String valueTypeJson = null;
+            try {
+                valueTypeJson = valueJson.getString("type");
+                valueType = ValueType.valueOf(valueTypeJson);
+            } catch (IllegalArgumentException exception) {
+                throw new ImportJsonException("Unknown ValueType (" + valueTypeJson + ")");
+            }
+            var valueArchived = valueJson.getBoolean("archived");
 
+            var value = new Value(valueName, valueDescription, valueType, valueArchived, analysis);
+            valueRepository.save(value);
+
+            var valueId = valueJson.getString("id");
+            valueMap.put(valueId, value);
+        }
 
         // Stakeholders
 
