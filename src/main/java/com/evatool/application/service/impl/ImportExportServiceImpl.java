@@ -1,6 +1,9 @@
 package com.evatool.application.service.impl;
 
-import com.evatool.application.dto.*;
+import com.evatool.application.dto.ImportExportAnalysesDto;
+import com.evatool.application.dto.ImportExportAnalysisDto;
+import com.evatool.application.dto.ImportExportInclude;
+import com.evatool.application.dto.SuperDto;
 import com.evatool.application.mapper.*;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ImportExportService;
@@ -77,7 +80,7 @@ public class ImportExportServiceImpl implements ImportExportService {
 
     @SneakyThrows
     @Override
-    public String exportAnalyses(Iterable<UUID> analysisIds) { // TODO get only relevant analyses...
+    public String exportAnalyses(Iterable<UUID> analysisIds) {
 
         // Create meta data.
         var importExportVersion = "0.0.1";
@@ -146,7 +149,7 @@ public class ImportExportServiceImpl implements ImportExportService {
         var requirementDeltasDtoList = requirementDeltaMapper.toDtoList(requirementDeltas);
         var variantsDtoList = variantMapper.toDtoList(variants);
 
-        var exportAnalysisDto = new ImportExportAnalysisDto(
+        return new ImportExportAnalysisDto(
                 analysisDto,
                 valuesDtoList,
                 stakeholdersDtoList,
@@ -154,6 +157,5 @@ public class ImportExportServiceImpl implements ImportExportService {
                 requirementsDtoList,
                 requirementDeltasDtoList,
                 variantsDtoList);
-        return exportAnalysisDto;
     }
 }
