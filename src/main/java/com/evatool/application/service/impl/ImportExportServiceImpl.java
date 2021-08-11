@@ -7,10 +7,14 @@ import com.evatool.application.dto.SuperDto;
 import com.evatool.application.mapper.*;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ImportExportService;
+import com.evatool.common.enums.StakeholderLevel;
+import com.evatool.common.enums.StakeholderPriority;
 import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.ImportJsonException;
 import com.evatool.common.exception.PropertyIsInvalidException;
 import com.evatool.domain.entity.Analysis;
+import com.evatool.domain.entity.Impact;
+import com.evatool.domain.entity.Stakeholder;
 import com.evatool.domain.entity.Value;
 import com.evatool.domain.repository.*;
 import com.google.gson.ExclusionStrategy;
@@ -95,9 +99,6 @@ public class ImportExportServiceImpl implements ImportExportService {
 
     @SneakyThrows(value = {JSONException.class, ImportJsonException.class})
     private void importAnalysis(JSONObject analysisJsonObject) {
-        // Setup.
-
-
         // Analysis.
         var analysisJson = analysisJsonObject.getJSONObject("analysis");
         var analysisName = analysisJson.getString("name");
@@ -109,18 +110,18 @@ public class ImportExportServiceImpl implements ImportExportService {
 
         // Values.
         var valuesJson = analysisJsonObject.getJSONArray("values");
-        var valueMap = new HashMap<String, Value>();
+        var valuesMap = new HashMap<String, Value>();
         for (int i = 0; i < valuesJson.length(); i++) {
             var valueJson = valuesJson.getJSONObject(i);
+
             var valueName = valueJson.getString("name");
             var valueDescription = valueJson.getString("description");
+            var valueTypeString = valueJson.getString("type");
             ValueType valueType = null;
-            String valueTypeJson = null;
             try {
-                valueTypeJson = valueJson.getString("type");
-                valueType = ValueType.valueOf(valueTypeJson);
+                valueType = ValueType.valueOf(valueTypeString);
             } catch (IllegalArgumentException exception) {
-                throw new ImportJsonException("Unknown ValueType (" + valueTypeJson + ")");
+                throw new ImportJsonException("Unknown ValueType (" + valueTypeString + ")");
             }
             var valueArchived = valueJson.getBoolean("archived");
 
@@ -128,13 +129,62 @@ public class ImportExportServiceImpl implements ImportExportService {
             valueRepository.save(value);
 
             var valueId = valueJson.getString("id");
-            valueMap.put(valueId, value);
+            valuesMap.put(valueId, value);
         }
 
         // Stakeholders
+        var stakeholdersJson = analysisJsonObject.getJSONArray("stakeholders");
+        var stakeholdersMap = new HashMap<String, Stakeholder>();
+        for (int i = 0; i < stakeholdersJson.length(); i++) {
+            var stakeholderJson = stakeholdersJson.getJSONObject(i);
 
+            var stakeholderName = stakeholderJson.getString("name");
+            var StakeholderPriorityString = stakeholderJson.getString("priority");
+            StakeholderPriority stakeholderPriority = null;
+            try {
+                stakeholderPriority = StakeholderPriority.valueOf(StakeholderPriorityString);
+            } catch (IllegalArgumentException exception) {
+                throw new ImportJsonException("Unknown StakeholderPriority (" + StakeholderPriorityString + ")");
+            }
+            var StakeholderLevelString = stakeholderJson.getString("level");
+            StakeholderLevel stakeholderLevel = null;
+            try {
+                stakeholderLevel = StakeholderLevel.valueOf(StakeholderLevelString);
+            } catch (IllegalArgumentException exception) {
+                throw new ImportJsonException("Unknown StakeholderLevel (" + StakeholderLevelString + ")");
+            }
+
+            var stakeholder = new Stakeholder(stakeholderName, stakeholderPriority, stakeholderLevel, analysis);
+            stakeholderRepository.save(stakeholder);
+
+            var stakeholderId = stakeholderJson.getString("id");
+            stakeholdersMap.put(stakeholderId, stakeholder);
+        }
 
         // Impacts.
+        var impactsJson = analysisJsonObject.getJSONArray("impacts");
+        var impactsMap = new HashMap<String, Impact>();
+        for (int i = 0; i < impactsJson.length(); i++) {
+            var impactJson = impactsJson.getJSONObject(i);
+
+            var impactMerit = (float) impactJson.getDouble("merit");
+            var impactDescription = impactJson.getString("description");
+            var valueId = impactJson.getString("valueId");
+            var value = valuesMap.get(valueId);
+            if (value == null) {
+                throw new ImportJsonException("The Value with id " + valueId + " is referenced by this impact but not present.");
+            }
+            var stakeholderId = impactJson.getString("stakeholderId");
+            var stakeholder = stakeholdersMap.get(stakeholderId);
+            if (stakeholder == null) {
+                throw new ImportJsonException("The Stakeholder with id " + stakeholderId + " is referenced by this impact but not present.");
+            }
+            var impact = new Impact(impactMerit, impactDescription, value, stakeholder, analysis);
+            impactRepository.save(impact);
+
+            var impactId = impactJson.getString("id");
+            impactsMap.put(impactId, impact);
+        }
 
 
         // Variants
