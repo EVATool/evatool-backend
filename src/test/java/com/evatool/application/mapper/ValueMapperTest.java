@@ -1,4 +1,4 @@
-package com.evatool.application.dto.mapper;
+package com.evatool.application.mapper;
 
 import com.evatool.application.dto.ValueDto;
 import com.evatool.domain.entity.Value;

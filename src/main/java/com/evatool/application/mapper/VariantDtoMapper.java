@@ -1,30 +1,33 @@
-package com.evatool.application.dto.mapper;
+package com.evatool.application.mapper;
 
-import com.evatool.application.dto.ValueDto;
-import com.evatool.domain.entity.Value;
+import com.evatool.application.dto.VariantDto;
+import com.evatool.domain.entity.Variant;
 import com.evatool.domain.repository.AnalysisRepository;
+import com.evatool.domain.repository.VariantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ValueDtoMapper extends SuperDtoMapper<Value, ValueDto> {
+public class VariantDtoMapper extends PrefixIdDtoMapper<Variant, VariantDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ValueDtoMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(VariantDtoMapper.class);
 
     private final AnalysisRepository analysisRepository;
 
-    public ValueDtoMapper(AnalysisRepository analysisRepository) {
+    private final VariantRepository variantRepository;
+
+    public VariantDtoMapper(AnalysisRepository analysisRepository, VariantRepository variantRepository) {
         this.analysisRepository = analysisRepository;
+        this.variantRepository = variantRepository;
     }
 
     @Override
-    public ValueDto toDto(Value entity) {
+    public VariantDto toDto(Variant entity) {
         logger.debug("To Dto");
-        var dto = new ValueDto(
+        var dto = new VariantDto(
                 entity.getName(),
                 entity.getDescription(),
-                entity.getType(),
                 entity.getArchived(),
                 entity.getAnalysis().getId()
         );
@@ -33,12 +36,11 @@ public class ValueDtoMapper extends SuperDtoMapper<Value, ValueDto> {
     }
 
     @Override
-    public Value fromDto(ValueDto dto) {
+    public Variant fromDto(VariantDto dto) {
         logger.debug("From Dto");
-        var entity = new Value(
+        var entity = new Variant(
                 dto.getName(),
                 dto.getDescription(),
-                dto.getType(),
                 dto.getArchived(),
                 findByIdOrThrowIfEmpty(analysisRepository, dto.getAnalysisId())
         );

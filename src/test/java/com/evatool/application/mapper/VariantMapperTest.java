@@ -1,4 +1,4 @@
-package com.evatool.application.dto.mapper;
+package com.evatool.application.mapper;
 
 import com.evatool.application.dto.VariantDto;
 import com.evatool.domain.entity.Variant;
