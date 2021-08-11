@@ -42,17 +42,18 @@ class ImportExportControllerTest {
     @Test
     void testExportAnalyses() {
         // given
-        var analysis1 = analysisRepository.save(new Analysis("test Name", "test desc", false));
-        var analysis2 = analysisRepository.save(new Analysis("test Name", "test desc", false));
+        var analysis1 = analysisRepository.save(new Analysis("", "", false));
+        var analysis2 = analysisRepository.save(new Analysis("", "", false));
 
         // when
         var response = rest.getForEntity(UriUtil.EXPORT_ANALYSES + "?analysisIds=" + analysis1.getId() + "," + analysis2.getId(), String.class);
         var jsonContent = response.getBody();
 
         // then
-        System.out.println(response);
         PrintUtil.prettyPrintJson(jsonContent);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(jsonContent).isNotNull();
+        assertThat(jsonContent.getClass()).isEqualTo(String.class);
     }
 }
