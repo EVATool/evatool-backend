@@ -14,6 +14,7 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.GsonBuilder;
 import lombok.SneakyThrows;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 @Service
 public class ImportExportServiceImpl implements ImportExportService {
@@ -69,29 +71,35 @@ public class ImportExportServiceImpl implements ImportExportService {
 
     // TODO return ImportReport object with information (success or not, file version and current version..., error causes..., default values used...)
     // TODO how do deal with database migration changes? (Done in Json Mappers?)
-    @SneakyThrows
     @Override
     @Transactional
     public void importAnalyses(String importAnalyses) {
-        var importJsonObject = new JSONObject(importAnalyses);
-        var currentImportExportVersion = importJsonObject.getString("importExportVersion");
-        var analysesJsonArray = importJsonObject.getJSONArray("analyses");
-
-        for (int i = 0; i < analysesJsonArray.length(); i++) {
-            var analysisJsonObject = analysesJsonArray.getJSONObject(i);
+        try {
+            var importJsonObject = new JSONObject(importAnalyses);
+            var currentImportExportVersion = importJsonObject.getString("importExportVersion");
+            var analysesJsonArray = importJsonObject.getJSONArray("analyses");
+            Consumer<JSONObject> importAnalysisFunction = null;
 
             if (newestImportExportVersion.equals(currentImportExportVersion)) {
-                importAnalysis(analysisJsonObject);
+                importAnalysisFunction = this::importAnalysis;
             } else {  // Migration.
                 switch (currentImportExportVersion) {
 
                     case "0.0.1": // Not yet reachable.
+                        //importAnalysisFunction = this::importAnalysis_0_0_1;
                         break;
 
                     default:
                         throw new PropertyIsInvalidException("Unknown \"importExportVersion\" (" + currentImportExportVersion + ")");
                 }
             }
+
+            for (int i = 0; i < analysesJsonArray.length(); i++) {
+                var analysisJsonObject = analysesJsonArray.getJSONObject(i);
+                importAnalysisFunction.accept(analysisJsonObject);
+            }
+        } catch (JSONException ex) {
+            ex.getMessage();
         }
     }
 
