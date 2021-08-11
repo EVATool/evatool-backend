@@ -12,10 +12,7 @@ import com.evatool.common.enums.StakeholderPriority;
 import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.ImportJsonException;
 import com.evatool.common.exception.PropertyIsInvalidException;
-import com.evatool.domain.entity.Analysis;
-import com.evatool.domain.entity.Impact;
-import com.evatool.domain.entity.Stakeholder;
-import com.evatool.domain.entity.Value;
+import com.evatool.domain.entity.*;
 import com.evatool.domain.repository.*;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -172,13 +169,14 @@ public class ImportExportServiceImpl implements ImportExportService {
             var valueId = impactJson.getString("valueId");
             var value = valuesMap.get(valueId);
             if (value == null) {
-                throw new ImportJsonException("The Value with id " + valueId + " is referenced by this impact but not present.");
+                throw new ImportJsonException("The Value with id " + valueId + " is referenced by this Impact but is not present.");
             }
             var stakeholderId = impactJson.getString("stakeholderId");
             var stakeholder = stakeholdersMap.get(stakeholderId);
             if (stakeholder == null) {
-                throw new ImportJsonException("The Stakeholder with id " + stakeholderId + " is referenced by this impact but not present.");
+                throw new ImportJsonException("The Stakeholder with id " + stakeholderId + " is referenced by this Impact but is not present.");
             }
+
             var impact = new Impact(impactMerit, impactDescription, value, stakeholder, analysis);
             impactRepository.save(impact);
 
@@ -186,12 +184,46 @@ public class ImportExportServiceImpl implements ImportExportService {
             impactsMap.put(impactId, impact);
         }
 
-
         // Variants
+        var variantsJson = analysisJsonObject.getJSONArray("variants");
+        var variantsMap = new HashMap<String, Variant>();
+        for (int i = 0; i < variantsJson.length(); i++) {
+            var variantJson = variantsJson.getJSONObject(i);
 
+            var variantName = variantJson.getString("name");
+            var variantDescription = variantJson.getString("description");
+            var variantArchived = variantJson.getBoolean("archived");
+
+            var variant = new Variant(variantName, variantDescription, variantArchived, analysis);
+            variantRepository.save(variant);
+
+            var variantId = variantJson.getString("id");
+            variantsMap.put(variantId, variant);
+        }
 
         // Requirements
+        var requirementsJson = analysisJsonObject.getJSONArray("requirements");
+        var requirementsMap = new HashMap<String, Requirement>();
+        for (int i = 0; i < requirementsJson.length(); i++) {
+            var requirementJson = requirementsJson.getJSONObject(i);
 
+            var requirementDescription = requirementJson.getString("description");
+            var requirementVariantIds = requirementJson.getJSONArray("variantIds");
+
+            var requirement = new Requirement(requirementDescription, analysis);
+            for (int j = 0; j < requirementVariantIds.length(); j++) {
+                var variantId = requirementVariantIds.getString(j);
+                var variant = variantsMap.get(variantId);
+                if (variant == null) {
+                    throw new ImportJsonException("The Variant with id " + variantId + " is referenced by this Requirement but is not present.");
+                }
+                requirement.getVariants().add(variant);
+            }
+            requirementRepository.save(requirement);
+
+            var requirementId = requirementJson.getString("id");
+            requirementsMap.put(requirementId, requirement);
+        }
 
         // Requirement Deltas.
 
