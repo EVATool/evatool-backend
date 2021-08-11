@@ -1,6 +1,9 @@
 package com.evatool.application.service.impl;
 
-import com.evatool.application.dto.*;
+import com.evatool.application.dto.ImportExportAnalysesDto;
+import com.evatool.application.dto.ImportExportAnalysisDto;
+import com.evatool.application.dto.ImportExportInclude;
+import com.evatool.application.dto.SuperDto;
 import com.evatool.application.mapper.*;
 import com.evatool.application.service.api.ImportExportService;
 import com.evatool.domain.entity.Analysis;
@@ -8,13 +11,13 @@ import com.evatool.domain.repository.*;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.GsonBuilder;
-import lombok.*;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ImportExportServiceImpl implements ImportExportService {
@@ -62,7 +65,7 @@ public class ImportExportServiceImpl implements ImportExportService {
     private VariantMapper variantMapper;
 
     // TODO return ImportReport object with information (success or not, file version and current version..., error causes..., default values used...)
-    @SneakyThrows // TODO remove...
+    @SneakyThrows
     @Override
     @Transactional
     public void importAnalyses(String importAnalyses) {
@@ -73,15 +76,15 @@ public class ImportExportServiceImpl implements ImportExportService {
 
     }
 
-    @SneakyThrows // TODO remove...
+    @SneakyThrows
     @Override
-    public String exportAnalyses() { // TODO get only relevant analyses...
+    public String exportAnalyses(Iterable<UUID> analysisIdList) { // TODO get only relevant analyses...
 
         // Create meta data.
         var importExportVersion = "0.0.1";
 
         // Create entity json.
-        var analyses = analysisRepository.findAll();
+        var analyses = analysisRepository.findAllById(analysisIdList);
         var exportAnalysisDtoList = new ArrayList<ImportExportAnalysisDto>();
         for (var analysis : analyses) {
             var exportAnalysisDto = exportAnalysis(analysis);
@@ -152,52 +155,5 @@ public class ImportExportServiceImpl implements ImportExportService {
                 requirementDeltasDtoList,
                 variantsDtoList);
         return exportAnalysisDto;
-    }
-
-    @ToString
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    private class ImportExportAnalysisDto { // TODO move to dto package...
-
-        private AnalysisDto analysis;
-        private List<ValueDto> values;
-        private List<StakeholderDto> stakeholders;
-        private List<ImpactDto> impacts;
-        private List<RequirementDto> requirements;
-        private List<RequirementDeltaDto> requirementDeltas;
-        private List<VariantDto> variants;
-
-        public ImportExportAnalysisDto(AnalysisDto analysisDtoList,
-                                       List<ValueDto> valuesDtoList,
-                                       List<StakeholderDto> stakeholdersDtoList,
-                                       List<ImpactDto> impactsDtoList,
-                                       List<RequirementDto> requirementsDtoList,
-                                       List<RequirementDeltaDto> requirementDeltasDtoList,
-                                       List<VariantDto> variantsDtoList) {
-            this.analysis = analysisDtoList;
-            this.values = valuesDtoList;
-            this.stakeholders = stakeholdersDtoList;
-            this.impacts = impactsDtoList;
-            this.requirements = requirementsDtoList;
-            this.requirementDeltas = requirementDeltasDtoList;
-            this.variants = variantsDtoList;
-        }
-    }
-
-    @ToString
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    private class ImportExportAnalysesDto {
-
-        private String importExportVersion;
-
-        private ImportExportAnalysisDto[] analyses;
-
-        public ImportExportAnalysesDto(String importExportVersion, ImportExportAnalysisDto[] importExportAnalysisJson) {
-            this.importExportVersion = importExportVersion;
-            this.analyses = importExportAnalysisJson;
-        }
     }
 }

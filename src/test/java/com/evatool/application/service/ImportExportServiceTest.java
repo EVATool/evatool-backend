@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+
 @SpringBootTest
 class ImportExportServiceTest {
 
@@ -59,17 +61,17 @@ class ImportExportServiceTest {
     @Test
     void testExportAnalyses() {
         // given
-        saveDummyAnalysisWithManyChildEntities();
+        var analysis = saveDummyAnalysisWithManyChildEntities();
 
         // when
-        var analysisJson = importExportService.exportAnalyses();
+        var analysisJson = importExportService.exportAnalyses(Arrays.asList(analysis.getId()));
 
         // then
         System.out.println(analysisJson);
         prettyPrintJson(analysisJson);
     }
 
-    private void saveDummyAnalysisWithManyChildEntities() {
+    private Analysis saveDummyAnalysisWithManyChildEntities() {
         var analysis1 = new Analysis("ANA1 NAME", "ANA1 DESC", false);
         analysisRepository.save(analysis1);
 
@@ -96,6 +98,8 @@ class ImportExportServiceTest {
         // Variants.
         var variant1 = new Variant("", "", false, analysis1);
         variantRepository.save(variant1);
+
+        return analysis1;
     }
 
     @SneakyThrows
