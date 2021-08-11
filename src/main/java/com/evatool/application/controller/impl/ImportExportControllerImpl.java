@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 import java.util.UUID;
 
-// TODO how do deal with database migration changes? (Done in Json Mappers?)
 @Api(tags = "Import-Export API-Endpoint")
 @RestController
 @CrossOrigin
@@ -31,7 +30,7 @@ public class ImportExportControllerImpl implements ImportExportController {
     @Override
     @PostMapping(UriUtil.IMPORT_ANALYSES)
     @PreAuthorize(AuthUtil.BY_WRITER)
-    public ResponseEntity<Void> importAnalyses(String importAnalyses) {
+    public ResponseEntity<Void> importAnalyses(String importAnalyses) { // TODO how to take in file?
         importExportService.importAnalyses(importAnalyses);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -40,6 +39,7 @@ public class ImportExportControllerImpl implements ImportExportController {
     @GetMapping(UriUtil.EXPORT_ANALYSES)
     @PreAuthorize(AuthUtil.BY_READER)
     // TODO optional parameter: filename
+    // TODO test if actual file is being downloaded in browser when called from frontend
     public ResponseEntity<byte[]> exportAnalyses(UUID[] analysisIds) { // TODO test if validation of DTOs still work
         var exportJsonString = importExportService.exportAnalyses(Arrays.asList(analysisIds));
         var exportJsonBytes = exportJsonString.getBytes();

@@ -55,5 +55,6 @@ class ImportExportControllerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(jsonContent).isNotNull();
         assertThat(jsonContent.getClass()).isEqualTo(String.class);
+        assertThat(jsonContent).isNotEmpty();
     }
 }

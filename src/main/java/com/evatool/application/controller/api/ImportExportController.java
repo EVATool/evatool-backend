@@ -17,7 +17,7 @@ public interface ImportExportController {
     @ApiOperation(value = "Import analyses from the provided argument")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<Void> importAnalyses(String importAnalyses); // TODO Take in file?
+    ResponseEntity<Void> importAnalyses(String importAnalyses);
 
     @GetMapping(produces = {"application/json"})
     @ApiOperation(value = "Export analyses by provided argument")

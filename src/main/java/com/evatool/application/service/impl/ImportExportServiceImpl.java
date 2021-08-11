@@ -63,6 +63,7 @@ public class ImportExportServiceImpl implements ImportExportService {
     private VariantDtoMapper variantMapper;
 
     // TODO return ImportReport object with information (success or not, file version and current version..., error causes..., default values used...)
+    // TODO how do deal with database migration changes? (Done in Json Mappers?)
     @SneakyThrows
     @Override
     @Transactional
