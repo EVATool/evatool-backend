@@ -32,7 +32,7 @@ public class ImportExportControllerImpl implements ImportExportController {
     @Override
     @PostMapping(UriUtil.IMPORT_ANALYSES)
     @PreAuthorize(AuthUtil.BY_WRITER)
-    public ResponseEntity<Void> importAnalyses(String importAnalyses) { // TODO how to take in file?
+    public ResponseEntity<Void> importAnalyses(String importAnalyses) {
         importExportService.importAnalyses(importAnalyses);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -40,7 +40,6 @@ public class ImportExportControllerImpl implements ImportExportController {
     @Override
     @GetMapping(UriUtil.EXPORT_ANALYSES)
     @PreAuthorize(AuthUtil.BY_READER)
-    // TODO test if actual file is being downloaded in browser when called from frontend
     public ResponseEntity<InputStreamResource> exportAnalyses(UUID[] analysisIds, String filename) {
         var exportJsonString = importExportService.exportAnalyses(Arrays.asList(analysisIds));
         var exportJsonBytes = exportJsonString.getBytes();
