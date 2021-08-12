@@ -314,7 +314,8 @@ public class ImportExportServiceImpl implements ImportExportService {
                 .addSerializationExclusionStrategy(strategy)
                 .create();
 
-        return gson.toJson(exportAnalysesDto);
+        var exportAnalysesJson = gson.toJson(exportAnalysesDto);
+        return new JSONObject(exportAnalysesJson).toString(4); // Prettify JSON.
     }
 
     private ImportExportAnalysisDto exportAnalysis(Analysis analysis) {
