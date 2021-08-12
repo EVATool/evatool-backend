@@ -3,6 +3,7 @@ package com.evatool.application.controller.api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,6 @@ public interface ImportExportController {
     @ApiOperation(value = "Export analyses by provided argument")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<byte[]> exportAnalyses(@Valid @RequestParam UUID[] analysisIds, @RequestParam(required = false) String filename);
+    ResponseEntity<InputStreamResource> exportAnalyses(@Valid @RequestParam UUID[] analysisIds, @RequestParam(required = false) String filename);
 
 }
