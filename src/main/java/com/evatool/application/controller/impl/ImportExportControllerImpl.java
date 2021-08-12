@@ -42,7 +42,7 @@ public class ImportExportControllerImpl implements ImportExportController {
     @PreAuthorize(AuthUtil.BY_READER)
     // TODO test if actual file is being downloaded in browser when called from frontend
     public ResponseEntity<InputStreamResource> exportAnalyses(UUID[] analysisIds, String filename) {
-        var exportJsonString = importExportService.exportAnalyses(Arrays.asList(analysisIds));
+        var exportJsonString = importExportService.exportAnalyses(Arrays.asList(analysisIds)); // TODO prettyfy json
         var exportJsonBytes = exportJsonString.getBytes();
         var resource = new InputStreamResource(new ByteArrayInputStream(exportJsonBytes));
 
