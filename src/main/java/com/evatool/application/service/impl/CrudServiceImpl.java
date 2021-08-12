@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.SuperDto;
-import com.evatool.application.mapper.SuperDtoMapper;
+import com.evatool.application.mapper.SuperMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.CrudService;
 import com.evatool.common.exception.EntityNotFoundException;
@@ -25,9 +25,9 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
 
     protected final CrudRepository<S, UUID> crudRepository;
 
-    protected final SuperDtoMapper<S, T> baseMapper;
+    protected final SuperMapper<S, T> baseMapper;
 
-    protected CrudServiceImpl(CrudRepository<S, UUID> crudRepository, SuperDtoMapper<S, T> baseMapper) {
+    protected CrudServiceImpl(CrudRepository<S, UUID> crudRepository, SuperMapper<S, T> baseMapper) {
         this.crudRepository = crudRepository;
         this.baseMapper = baseMapper;
     }

@@ -43,7 +43,7 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
         }
     }
 
-    protected SuperDtoMapper getMapper() {
+    protected SuperMapper getMapper() {
         var type = getDtoClass();
         if (type == AnalysisDto.class) {
             return analysisMapper;
@@ -67,28 +67,28 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
     }
 
     @Autowired
-    protected AnalysisDtoMapper analysisMapper;
+    protected AnalysisMapper analysisMapper;
 
     @Autowired
-    protected ImpactDtoMapper impactMapper;
+    protected ImpactMapper impactMapper;
 
     @Autowired
-    protected RequirementDtoMapper requirementMapper;
+    protected RequirementMapper requirementMapper;
 
     @Autowired
-    protected RequirementDeltaDtoMapper requirementDeltaMapper;
+    protected RequirementDeltaMapper requirementDeltaMapper;
 
     @Autowired
-    protected StakeholderDtoMapper stakeholderMapper;
+    protected StakeholderMapper stakeholderMapper;
 
     @Autowired
-    protected UserDtoMapper userMapper;
+    protected UserMapper userMapper;
 
     @Autowired
-    protected ValueDtoMapper valueMapper;
+    protected ValueMapper valueMapper;
 
     @Autowired
-    protected VariantDtoMapper variantMapper;
+    protected VariantMapper variantMapper;
 
 
     public T getPersistedDto() {

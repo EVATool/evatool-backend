@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 import java.awt.*;
 
 @Service
-public class RequirementDeltaDtoMapper extends SuperDtoMapper<RequirementDelta, RequirementDeltaDto> {
+public class RequirementDeltaMapper extends SuperMapper<RequirementDelta, RequirementDeltaDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(RequirementDeltaDtoMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(RequirementDeltaMapper.class);
 
     private final ImpactRepository impactRepository;
 
     private final RequirementRepository requirementRepository;
 
-    public RequirementDeltaDtoMapper(ImpactRepository impactRepository, RequirementRepository requirementRepository) {
+    public RequirementDeltaMapper(ImpactRepository impactRepository, RequirementRepository requirementRepository) {
         this.impactRepository = impactRepository;
         this.requirementRepository = requirementRepository;
     }

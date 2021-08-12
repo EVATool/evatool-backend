@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.UserDto;
-import com.evatool.application.mapper.UserDtoMapper;
+import com.evatool.application.mapper.UserMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.UserService;
 import com.evatool.common.exception.EntityNotFoundException;
@@ -18,7 +18,7 @@ public class UserServiceImpl extends CrudServiceImpl<User, UserDto> implements U
 
     private final UserRepository repository;
 
-    public UserServiceImpl(UserRepository repository, UserDtoMapper mapper) {
+    public UserServiceImpl(UserRepository repository, UserMapper mapper) {
         super(repository, mapper);
         this.repository = repository;
     }

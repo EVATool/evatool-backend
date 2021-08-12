@@ -1,5 +1,6 @@
 package com.evatool.application.service;
 
+import com.evatool.application.mapper.AnalysisMapper;
 import com.evatool.application.service.api.ImportExportService;
 import com.evatool.application.service.impl.ImportExportServiceImpl;
 import com.evatool.common.enums.StakeholderLevel;
@@ -29,6 +30,9 @@ class ImportExportServiceTest {
 
     @Autowired
     private ImportExportServiceImpl importExportService;
+
+    @Autowired
+    private AnalysisMapper analysisMapper;
 
     @Autowired
     private AnalysisRepository analysisRepository;
@@ -78,21 +82,22 @@ class ImportExportServiceTest {
     @Test
     void testImportAnalysis() { // TODO equality checks could be more strict and validate that child entities are equal.
         // given
-        var analysis = saveDummyAnalysisWithManyChildEntities();
+        var originalAnalysis = saveDummyAnalysisWithManyChildEntities();
 
-        var exportAnalysesJson = importExportService.exportAnalyses(Collections.singletonList(analysis.getId()));
+        var exportAnalysesJson = importExportService.exportAnalyses(Collections.singletonList(originalAnalysis.getId()));
         PrintUtil.prettyPrintJson(exportAnalysesJson);
 
         // when
-        importExportService.importAnalyses(exportAnalysesJson);
+        var importedAnalyses = importExportService.importAnalyses(exportAnalysesJson);
+        var importedAnalysis = analysisMapper.fromDto(IterableUtil.iterableToList(importedAnalyses).get(0));
+        var importedAnalysisOptional = analysisRepository.findById(importedAnalysis.getId());
+        assertThat(importedAnalysisOptional).isPresent();
+        importedAnalysis = importedAnalysisOptional.get();
 
         // then
+        assertThat(IterableUtil.iterableSize(importedAnalyses)).isEqualTo(1);
         var analyses = IterableUtil.iterableToList(analysisRepository.findAll());
         assertThat(analyses).hasSize(2);
-
-        // Retrieve original and imported analysis (actual names might be switched due to non-deterministic retrieval?).
-        var originalAnalysis = analyses.get(0);
-        var importedAnalysis = analyses.get(1);
 
         // Check analysis equality.
         assertThat(originalAnalysis.getName()).isEqualTo(importedAnalysis.getName());

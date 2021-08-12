@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-abstract class SuperMapperTest<S extends SuperEntity, T extends SuperDto, U extends SuperDtoMapper> extends DataTest<S, T> {
+abstract class SuperMapperTest<S extends SuperEntity, T extends SuperDto, U extends SuperMapper> extends DataTest<S, T> {
 
     @Test
     void testToAndFromDto_RecreateFloatingEntity() {

@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.ValueDto;
-import com.evatool.application.mapper.ValueDtoMapper;
+import com.evatool.application.mapper.ValueMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ValueService;
 import com.evatool.common.enums.ValueType;
@@ -30,12 +30,12 @@ public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implement
     private final ValueRepository repository;
 
     @Getter
-    private final ValueDtoMapper mapper;
+    private final ValueMapper mapper;
 
     @Getter
     private final ImpactRepository impactRepository;
 
-    public ValueServiceImpl(ValueRepository repository, ValueDtoMapper mapper, ImpactRepository impactRepository) {
+    public ValueServiceImpl(ValueRepository repository, ValueMapper mapper, ImpactRepository impactRepository) {
         super(repository, mapper);
         this.repository = repository;
         this.mapper = mapper;

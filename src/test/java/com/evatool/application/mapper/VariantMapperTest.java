@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class VariantMapperTest extends SuperMapperTest<Variant, VariantDto, VariantDtoMapper> {
+class VariantMapperTest extends SuperMapperTest<Variant, VariantDto, VariantMapper> {
 
     @Autowired
-    private VariantDtoMapper mapper;
+    private VariantMapper mapper;
 
 }

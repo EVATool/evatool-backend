@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ValueMapperTest extends SuperMapperTest<Value, ValueDto, ValueDtoMapper> {
+class ValueMapperTest extends SuperMapperTest<Value, ValueDto, ValueMapper> {
 
     @Autowired
-    private ValueDtoMapper mapper;
+    private ValueMapper mapper;
 
 }

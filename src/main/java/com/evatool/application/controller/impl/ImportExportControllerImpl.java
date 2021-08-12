@@ -1,6 +1,7 @@
 package com.evatool.application.controller.impl;
 
 import com.evatool.application.controller.api.ImportExportController;
+import com.evatool.application.dto.AnalysisDto;
 import com.evatool.application.service.impl.ImportExportServiceImpl;
 import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UriUtil;
@@ -32,9 +33,9 @@ public class ImportExportControllerImpl implements ImportExportController {
     @Override
     @PostMapping(UriUtil.IMPORT_ANALYSES)
     @PreAuthorize(AuthUtil.BY_WRITER)
-    public ResponseEntity<Void> importAnalyses(String importAnalyses) {
-        importExportService.importAnalyses(importAnalyses);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Iterable<AnalysisDto>> importAnalyses(String importAnalyses) {
+        var importedAnalyses = importExportService.importAnalyses(importAnalyses);
+        return new ResponseEntity<>(importedAnalyses, HttpStatus.CREATED);
     }
 
     @Override

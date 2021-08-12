@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StakeholderDtoMapper extends PrefixIdDtoMapper<Stakeholder, StakeholderDto> {
+public class StakeholderMapper extends PrefixIdMapper<Stakeholder, StakeholderDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(StakeholderDtoMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(StakeholderMapper.class);
 
     private final AnalysisRepository analysisRepository;
 
-    public StakeholderDtoMapper(AnalysisRepository analysisRepository) {
+    public StakeholderMapper(AnalysisRepository analysisRepository) {
         this.analysisRepository = analysisRepository;
     }
 

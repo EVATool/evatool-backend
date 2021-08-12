@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AnalysisDtoMapper extends PrefixIdDtoMapper<Analysis, AnalysisDto> {
+public class AnalysisMapper extends PrefixIdMapper<Analysis, AnalysisDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(AnalysisDtoMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(AnalysisMapper.class);
 
     @Override
     public AnalysisDto toDto(Analysis entity) {

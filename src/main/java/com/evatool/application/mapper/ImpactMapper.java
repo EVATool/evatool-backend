@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ImpactDtoMapper extends PrefixIdDtoMapper<Impact, ImpactDto> {
+public class ImpactMapper extends PrefixIdMapper<Impact, ImpactDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ImpactDtoMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImpactMapper.class);
 
     private final ValueRepository valueRepository;
 
@@ -20,7 +20,7 @@ public class ImpactDtoMapper extends PrefixIdDtoMapper<Impact, ImpactDto> {
 
     private final AnalysisRepository analysisRepository;
 
-    public ImpactDtoMapper(ValueRepository valueRepository, StakeholderRepository stakeholderRepository, AnalysisRepository analysisRepository) {
+    public ImpactMapper(ValueRepository valueRepository, StakeholderRepository stakeholderRepository, AnalysisRepository analysisRepository) {
         this.valueRepository = valueRepository;
         this.stakeholderRepository = stakeholderRepository;
         this.analysisRepository = analysisRepository;

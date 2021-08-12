@@ -9,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class RequirementDeltaMapperTest extends SuperMapperTest<RequirementDelta, RequirementDeltaDto, RequirementDeltaDtoMapper> {
+class RequirementDeltaMapperTest extends SuperMapperTest<RequirementDelta, RequirementDeltaDto, RequirementDeltaMapper> {
 
     @Autowired
-    private RequirementDeltaDtoMapper mapper;
+    private RequirementDeltaMapper mapper;
 
     @Test
     void testToDto_NegativeImpact_CorrectMinMax() {

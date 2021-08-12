@@ -15,9 +15,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public abstract class SuperDtoMapper<S extends SuperEntity, T extends SuperDto> {
+public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(SuperDtoMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(SuperMapper.class);
 
     public abstract T toDto(S entity);
 

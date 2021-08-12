@@ -6,9 +6,9 @@ import com.evatool.domain.entity.PrefixIdEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class PrefixIdDtoMapper<S extends PrefixIdEntity, T extends PrefixIdDto> extends SuperDtoMapper<S, T> {
+public abstract class PrefixIdMapper<S extends PrefixIdEntity, T extends PrefixIdDto> extends SuperMapper<S, T> {
 
-    private static final Logger logger = LoggerFactory.getLogger(PrefixIdDtoMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(PrefixIdMapper.class);
 
     @Override
     public void amendToDto(S entity, T dto) {

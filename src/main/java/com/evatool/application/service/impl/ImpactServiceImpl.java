@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.ImpactDto;
-import com.evatool.application.mapper.ImpactDtoMapper;
+import com.evatool.application.mapper.ImpactMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ImpactService;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
@@ -30,12 +30,12 @@ public class ImpactServiceImpl extends CrudServiceImpl<Impact, ImpactDto> implem
     private final ImpactRepository repository;
 
     @Getter
-    private final ImpactDtoMapper mapper;
+    private final ImpactMapper mapper;
 
     @Getter
     private final RequirementDeltaRepository requirementDeltaRepository;
 
-    public ImpactServiceImpl(ImpactRepository repository, ImpactDtoMapper mapper, RequirementDeltaRepository requirementDeltaRepository) {
+    public ImpactServiceImpl(ImpactRepository repository, ImpactMapper mapper, RequirementDeltaRepository requirementDeltaRepository) {
         super(repository, mapper);
         this.repository = repository;
         this.mapper = mapper;

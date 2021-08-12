@@ -9,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class RequirementMapperTest extends SuperMapperTest<Requirement, RequirementDto, RequirementDtoMapper> {
+class RequirementMapperTest extends SuperMapperTest<Requirement, RequirementDto, RequirementMapper> {
 
     @Autowired
-    private RequirementDtoMapper mapper;
+    private RequirementMapper mapper;
 
     @Test
     void testFromDto_VariantIdsPresent_GetMapped() {

@@ -1,5 +1,6 @@
 package com.evatool.application.controller.api;
 
+import com.evatool.application.dto.AnalysisDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -19,7 +20,7 @@ public interface ImportExportController {
     @ApiOperation(value = "Import analyses from the provided argument")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<Void> importAnalyses(@RequestBody String importAnalyses);
+    ResponseEntity<Iterable<AnalysisDto>> importAnalyses(@RequestBody String importAnalyses);
 
     @GetMapping(produces = {"application/json"})
     @ApiOperation(value = "Export analyses by provided argument")

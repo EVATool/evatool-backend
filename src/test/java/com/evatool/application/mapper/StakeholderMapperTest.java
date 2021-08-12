@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class StakeholderMapperTest extends SuperMapperTest<Stakeholder, StakeholderDto, StakeholderDtoMapper> {
+class StakeholderMapperTest extends SuperMapperTest<Stakeholder, StakeholderDto, StakeholderMapper> {
 
     @Autowired
-    private StakeholderDtoMapper mapper;
+    private StakeholderMapper mapper;
 
 }

@@ -1,9 +1,6 @@
 package com.evatool.application.service.impl;
 
-import com.evatool.application.dto.ImportExportAnalysesDto;
-import com.evatool.application.dto.ImportExportAnalysisDto;
-import com.evatool.application.dto.ImportExportInclude;
-import com.evatool.application.dto.SuperDto;
+import com.evatool.application.dto.*;
 import com.evatool.application.mapper.*;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ImportExportService;
@@ -27,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Service
 public class ImportExportServiceImpl implements ImportExportService {
@@ -54,29 +51,30 @@ public class ImportExportServiceImpl implements ImportExportService {
     private VariantRepository variantRepository;
 
     @Autowired
-    private AnalysisDtoMapper analysisMapper;
+    private AnalysisMapper analysisMapper;
 
     @Autowired
-    private ImpactDtoMapper impactMapper;
+    private ImpactMapper impactMapper;
 
     @Autowired
-    private RequirementDtoMapper requirementMapper;
+    private RequirementMapper requirementMapper;
 
     @Autowired
-    private RequirementDeltaDtoMapper requirementDeltaMapper;
+    private RequirementDeltaMapper requirementDeltaMapper;
 
     @Autowired
-    private StakeholderDtoMapper stakeholderMapper;
+    private StakeholderMapper stakeholderMapper;
 
     @Autowired
-    private ValueDtoMapper valueMapper;
+    private ValueMapper valueMapper;
 
     @Autowired
-    private VariantDtoMapper variantMapper;
+    private VariantMapper variantMapper;
 
     @Override
     @Transactional
-    public void importAnalyses(String importAnalyses) {
+    public Iterable<AnalysisDto> importAnalyses(String importAnalyses) {
+        var importedAnalysisDtoList = new ArrayList<AnalysisDto>();
         try {
             var importJsonObject = new JSONObject(importAnalyses);
             var currentImportExportVersion = importJsonObject.getString("importExportVersion");
@@ -85,15 +83,18 @@ public class ImportExportServiceImpl implements ImportExportService {
 
             for (int i = 0; i < analysesJsonArray.length(); i++) {
                 var analysisJsonObject = analysesJsonArray.getJSONObject(i);
-                importAnalysisFunction.accept(analysisJsonObject);
+                var importedAnalysis = importAnalysisFunction.apply(analysisJsonObject);
+                var importedAnalysisDto = analysisMapper.toDto(importedAnalysis);
+                importedAnalysisDtoList.add(importedAnalysisDto);
             }
         } catch (JSONException jsonException) {
             throw new ImportJsonException(jsonException);
         }
+        return importedAnalysisDtoList;
     }
 
     @SneakyThrows(value = {JSONException.class, ImportJsonException.class})
-    private void importAnalysis(JSONObject analysisJsonObject) {
+    private Analysis importAnalysis(JSONObject analysisJsonObject) {
         // Analysis.
         var analysisJson = analysisJsonObject.getJSONObject("analysis");
         var analysisName = analysisJson.getString("name");
@@ -247,9 +248,11 @@ public class ImportExportServiceImpl implements ImportExportService {
             var deltaId = deltaJson.getString("id");
             deltasMap.put(deltaId, delta);
         }
+
+        return analysis;
     }
 
-    private Consumer<JSONObject> resolveImportAnalysisFunction(String currentImportExportVersion) {
+    private Function<JSONObject, Analysis> resolveImportAnalysisFunction(String currentImportExportVersion) {
         if (newestImportExportVersion.equals(currentImportExportVersion)) {
             return this::importAnalysis;
         } else {  // Migration.

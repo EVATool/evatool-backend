@@ -10,15 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RequirementDtoMapper extends PrefixIdDtoMapper<Requirement, RequirementDto> {
+public class RequirementMapper extends PrefixIdMapper<Requirement, RequirementDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(RequirementDtoMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(RequirementMapper.class);
 
     private final AnalysisRepository analysisRepository;
 
     private final VariantRepository variantRepository;
 
-    public RequirementDtoMapper(AnalysisRepository analysisRepository, VariantRepository variantRepository) {
+    public RequirementMapper(AnalysisRepository analysisRepository, VariantRepository variantRepository) {
         this.analysisRepository = analysisRepository;
         this.variantRepository = variantRepository;
     }

@@ -1,7 +1,7 @@
 package com.evatool.application.service.impl;
 
 import com.evatool.application.dto.StakeholderDto;
-import com.evatool.application.mapper.StakeholderDtoMapper;
+import com.evatool.application.mapper.StakeholderMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.StakeholderService;
 import com.evatool.common.enums.StakeholderLevel;
@@ -31,12 +31,12 @@ public class StakeholderServiceImpl extends CrudServiceImpl<Stakeholder, Stakeho
     private final StakeholderRepository repository;
 
     @Getter
-    private final StakeholderDtoMapper mapper;
+    private final StakeholderMapper mapper;
 
     @Getter
     private final ImpactRepository impactRepository;
 
-    public StakeholderServiceImpl(StakeholderRepository repository, StakeholderDtoMapper mapper, ImpactRepository impactRepository) {
+    public StakeholderServiceImpl(StakeholderRepository repository, StakeholderMapper mapper, ImpactRepository impactRepository) {
         super(repository, mapper);
         this.repository = repository;
         this.mapper = mapper;

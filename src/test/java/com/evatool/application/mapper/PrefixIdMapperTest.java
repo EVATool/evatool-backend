@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class PrefixIdMapperTest {
 
     @Autowired
-    private AnalysisDtoMapper mapper;
+    private AnalysisMapper mapper;
 
     @Test
     void testAmendFromDto_PrefixIdInvalid_Throw() {
