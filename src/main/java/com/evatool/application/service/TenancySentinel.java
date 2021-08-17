@@ -53,6 +53,7 @@ public class TenancySentinel {
         KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
         AccessToken accessToken = session.getToken();
         var issuer = accessToken.getIssuer();
+        // TODO depending on registrationEnabled, use user as realm.
         var realm = issuer.substring(issuer.lastIndexOf("/") + 1);
         return realm;
     }

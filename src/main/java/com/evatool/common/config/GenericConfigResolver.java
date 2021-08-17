@@ -45,7 +45,10 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
         //  How to get realm from keycloak Token or request?
         //  The method used in TenancySentinel to retrieve the realm does not work here.
         //  Only token retrieval works (get realm from token string?)
+
+        // TODO depending on registrationEnabled, use user as realm.
         var realm = request.getHeader("Realm");
+
         return realm;
     }
 
