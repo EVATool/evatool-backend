@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
         var rest = new RestTemplate();
         var request = getLoginRequest(username, password);
         var httpEntity = getHttpEntityWithKeycloakHeaders(request);
-        var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
+        var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class); // TODO 401 from keycloak becomes 500. How to get status code from keycloak?
         var httpStatus = response.getStatusCode();
 
         // TODO
