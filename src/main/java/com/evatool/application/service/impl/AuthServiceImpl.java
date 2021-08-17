@@ -4,6 +4,7 @@ import com.evatool.application.dto.AuthRegisterRealmDto;
 import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.api.AuthService;
+import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.NotFoundException;
 import com.evatool.common.exception.UnauthorizedException;
 import com.evatool.common.exception.handle.RestTemplateResponseErrorHandlerIgnore;
@@ -34,19 +35,17 @@ public class AuthServiceImpl implements AuthService {
         var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class); // TODO 401 from keycloak becomes 500. How to get status code from keycloak?
         var httpStatus = response.getStatusCode();
 
-        // TODO
         // Error handling.
         if (httpStatus == HttpStatus.NOT_FOUND) {
             throw new NotFoundException("Realm \"" + realm + "\" not found");
         } else if (httpStatus == HttpStatus.UNAUTHORIZED) {
             throw new UnauthorizedException("Invalid credentials");
         } else if (httpStatus != HttpStatus.OK) {
-            // Unhandled error.
-            throw new RuntimeException("Unhandled Exception from login rest call to keycloak");
+            // Unhandled error, should cause 500.
+            throw new InternalServerErrorException("Unhandled Exception from login rest call to keycloak");
         }
 
-        var authTokenDto = getAuthTokenDtoFromKeycloakResponse(response.getBody());
-        return authTokenDto;
+        return getAuthTokenDtoFromKeycloakResponse(response.getBody());
     }
 
     @Override

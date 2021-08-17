@@ -61,6 +61,11 @@ public class GlobalExceptionHandler {
         return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(InternalServerErrorException.class)
+    public ResponseEntity<ErrorMessage> handle(InternalServerErrorException exception, WebRequest webRequest) {
+        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     // TODO All exceptions that are thrown by spring for validation (e.g. MethodArgumentNotValidException, MethodArgumentTypeMismatchException)
     //  should be caught here in order to return with ErrorMessage and 400. If thats the case, then 500 can also return
     //  return ErrorMessage, because it wont catch exception that are used for spring validation.
