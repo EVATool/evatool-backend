@@ -106,7 +106,7 @@ public class AuthServiceImpl implements AuthService {
         var rest = getRestTemplate();
         var request = getKeycloakRealmImportJson(realm);
         var headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED); // TODO causes 415... :c
+        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(adminToken);
         var httpEntity = new HttpEntity<>(request, headers);
         var response = rest.postForEntity(getKeycloakRegisterRealmUrl(), httpEntity, String.class);
