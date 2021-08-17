@@ -51,6 +51,16 @@ public class GlobalExceptionHandler {
         return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorMessage> handle(NotFoundException exception, WebRequest webRequest) {
+        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorMessage> handle(UnauthorizedException exception, WebRequest webRequest) {
+        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNAUTHORIZED);
+    }
+
     // TODO All exceptions that are thrown by spring for validation (e.g. MethodArgumentNotValidException, MethodArgumentTypeMismatchException)
     //  should be caught here in order to return with ErrorMessage and 400. If thats the case, then 500 can also return
     //  return ErrorMessage, because it wont catch exception that are used for spring validation.

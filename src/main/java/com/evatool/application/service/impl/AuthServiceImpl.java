@@ -4,11 +4,15 @@ import com.evatool.application.dto.AuthRegisterRealmDto;
 import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.api.AuthService;
+import com.evatool.common.exception.NotFoundException;
+import com.evatool.common.exception.UnauthorizedException;
+import com.evatool.common.exception.handle.RestTemplateResponseErrorHandlerIgnore;
 import lombok.SneakyThrows;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
     @SneakyThrows
     @Override
     public AuthTokenDto login(String username, String password, String realm) {
-        var rest = new RestTemplate();
+        var rest = getRestTemplate();
         var request = getLoginRequest(username, password);
         var httpEntity = getHttpEntityWithKeycloakHeaders(request);
         var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class); // TODO 401 from keycloak becomes 500. How to get status code from keycloak?
@@ -33,12 +37,12 @@ public class AuthServiceImpl implements AuthService {
         // TODO
         // Error handling.
         if (httpStatus == HttpStatus.NOT_FOUND) {
-
-        } else if (httpStatus == HttpStatus.BAD_REQUEST) {
-
-        } else {
+            throw new NotFoundException("Realm \"" + realm + "\" not found");
+        } else if (httpStatus == HttpStatus.UNAUTHORIZED) {
+            throw new UnauthorizedException("Invalid credentials");
+        } else if (httpStatus != HttpStatus.OK) {
             // Unhandled error.
-
+            throw new RuntimeException("Unhandled Exception from login rest call to keycloak");
         }
 
         var authTokenDto = getAuthTokenDtoFromKeycloakResponse(response.getBody());
@@ -76,6 +80,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthRegisterRealmDto registerRealm(String authAdminUsername, String authAdminPassword, String realm) {
         return null;
+    }
+
+    private RestTemplate getRestTemplate() {
+        return new RestTemplateBuilder()
+                .errorHandler(new RestTemplateResponseErrorHandlerIgnore())
+                .build();
     }
 
     private String getLoginRequest(String username, String password, String clientId) {
