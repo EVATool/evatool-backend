@@ -28,13 +28,13 @@ public class AuthServiceImpl implements AuthService {
 
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-        var request = getLoginRequest(username, password, "evatool-app"); // TODO application/x-www-form-urlencoded
+        var request = getLoginRequest(username, password, "evatool-app");
         var entity = new HttpEntity<>(request, headers);
 
         var response = rest.postForEntity(getKeycloakLoginUrl(realm), entity, String.class);
         var httpStatus = response.getStatusCode();
 
+        // TODO
         // Error handling.
         if (httpStatus == HttpStatus.NOT_FOUND) {
 
