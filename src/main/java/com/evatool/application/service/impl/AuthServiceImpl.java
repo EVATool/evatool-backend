@@ -8,6 +8,8 @@ import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.NotFoundException;
 import com.evatool.common.exception.UnauthorizedException;
 import com.evatool.common.exception.handle.RestTemplateResponseErrorHandlerIgnore;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -26,11 +28,9 @@ public class AuthServiceImpl implements AuthService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
-    @SneakyThrows
-    @Override
-    public AuthTokenDto login(String username, String password, String realm) {
+    public AuthTokenDto login(String username, String password, String realm, String clientId) {
         var rest = getRestTemplate();
-        var request = getLoginRequest(username, password, "evatool-app");
+        var request = getLoginRequest(username, password, clientId);
         var httpEntity = getHttpEntityWithKeycloakUrlEncodedHeaders(request);
         var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
@@ -41,10 +41,15 @@ public class AuthServiceImpl implements AuthService {
         } else if (httpStatus == HttpStatus.UNAUTHORIZED) {
             throw new UnauthorizedException("Invalid credentials");
         } else if (httpStatus != HttpStatus.OK) {
-            throw new InternalServerErrorException("Unhandled Exception from login rest call to keycloak");
+            throw new InternalServerErrorException("Unhandled Exception from login rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
         return getAuthTokenDtoFromKeycloakResponse(response.getBody());
+    }
+
+    @Override
+    public AuthTokenDto login(String username, String password, String realm) {
+        return login(username, password, realm, "evatool-app");
     }
 
     private String getLoginRequest(String username, String password, String clientId) {
@@ -65,7 +70,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus != HttpStatus.OK) {
-            throw new InternalServerErrorException("Unhandled Exception from refresh login rest call to keycloak");
+            throw new InternalServerErrorException("Unhandled Exception from refresh login rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
         return getAuthTokenDtoFromKeycloakResponse(response.getBody());
@@ -88,7 +93,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthRegisterRealmDto registerRealm(String authAdminUsername, String authAdminPassword, String realm) {
-        var adminToken = login(authAdminUsername, authAdminPassword, "master").getToken();
+        var adminToken = login(authAdminUsername, authAdminPassword, "master", "admin-cli").getToken();
         var rest = getRestTemplate();
         var request = getKeycloakRealmImportJson(realm);
         var httpEntity = getHttpEntityWithKeycloakAuthorizationHeaders(request, adminToken);
@@ -97,7 +102,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus != HttpStatus.OK) {
-            throw new InternalServerErrorException("Unhandled Exception from create realm rest call to keycloak");
+            throw new InternalServerErrorException("Unhandled Exception from create realm rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
         return new AuthRegisterRealmDto(realm);
@@ -105,7 +110,19 @@ public class AuthServiceImpl implements AuthService {
 
     private String getKeycloakRealmImportJson(String realm) {
         // TODO do all the json reassign ids etc...
-        return null;
+        var realmImportJson = "";
+
+        try (var in = Thread.currentThread().getContextClassLoader().getResourceAsStream("YourJsonFile")) {
+            var mapper = new ObjectMapper();
+            var jsonNode = mapper.readValue(in, JsonNode.class);
+            realmImportJson = mapper.writeValueAsString(jsonNode);
+        } catch (Exception e) {
+            throw new InternalServerErrorException(e);
+        }
+
+        System.out.println(realmImportJson);
+
+        return realmImportJson;
     }
 
     private RestTemplate getRestTemplate() {
@@ -137,8 +154,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
 
-    // Dynamic keycloak urls. Move this to service impl?
-    @Value("${keycloak.auth-server-url:LOL}")
+    // Dynamic keycloak URLs.
+    @Value("${keycloak.auth-server-url}")
     private String keycloakBaseUrl;
 
     private String getKeycloakAdminLoginUrl() {
