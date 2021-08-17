@@ -49,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthTokenDto refreshLogin(String refreshToken, String realm) {
-        var rest = new RestTemplate();
+        var rest = getRestTemplate();
         var request = getRefreshLoginRequest(refreshToken);
         var httpEntity = getHttpEntityWithKeycloakHeaders(request);
         var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
@@ -65,11 +65,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthRegisterUserDto registerUser(String username, String email, String password) {
+        var rest = getRestTemplate();
         return null;
     }
 
     @Override
     public AuthRegisterRealmDto registerRealm(String authAdminUsername, String authAdminPassword, String realm) {
+        var rest = getRestTemplate();
         return null;
     }
 

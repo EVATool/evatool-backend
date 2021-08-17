@@ -1,7 +1,5 @@
 package com.evatool.common.util;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class UriUtil {
 
     private UriUtil() {
