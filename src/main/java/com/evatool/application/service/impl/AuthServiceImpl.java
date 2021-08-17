@@ -25,13 +25,9 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthTokenDto login(String username, String password, String realm) {
         var rest = new RestTemplate();
-
-        var headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        var request = getLoginRequest(username, password, "evatool-app");
-        var entity = new HttpEntity<>(request, headers);
-
-        var response = rest.postForEntity(getKeycloakLoginUrl(realm), entity, String.class);
+        var request = getLoginRequest(username, password);
+        var httpEntity = getHttpEntityWithKeycloakHeaders(request);
+        var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
         // TODO
@@ -51,7 +47,25 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthTokenDto refreshLogin(String refreshToken, String realm) {
-        return null;
+        var rest = new RestTemplate();
+        var request = getRefreshLoginRequest(refreshToken);
+        var httpEntity = getHttpEntityWithKeycloakHeaders(request);
+        var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
+        var httpStatus = response.getStatusCode();
+
+        // TODO
+        // Error handling.
+        if (httpStatus == HttpStatus.NOT_FOUND) {
+
+        } else if (httpStatus == HttpStatus.BAD_REQUEST) {
+
+        } else {
+            // Unhandled error.
+
+        }
+
+        var authTokenDto = getAuthTokenDtoFromKeycloakResponse(response.getBody());
+        return authTokenDto;
     }
 
     @Override
@@ -72,24 +86,36 @@ public class AuthServiceImpl implements AuthService {
                 "&password=" + password;
     }
 
-    private String getRefreshLoginRequest(String refreshToken) {
+    private String getLoginRequest(String username, String password) {
+        return getLoginRequest(username, password, "evatool-app");
+    }
+
+    private String getRefreshLoginRequest(String refreshToken, String clientId) {
         return "grant_type=refresh_token" +
                 "&scope=openid" +
-                "&client_id=evatool-app" +
+                "&client_id=" + clientId +
                 "&refresh_token=" + refreshToken;
+    }
+
+    private String getRefreshLoginRequest(String refreshToken) {
+        return getRefreshLoginRequest(refreshToken, "evatool-app");
     }
 
     @SneakyThrows
     private AuthTokenDto getAuthTokenDtoFromKeycloakResponse(String keycloakResponse) {
         var responseJson = new JSONObject(keycloakResponse);
-        var authTokenDto = new AuthTokenDto(
+        return new AuthTokenDto(
                 responseJson.getString("access_token"),
                 responseJson.getInt("expires_in"),
                 responseJson.getString("refresh_token"),
                 responseJson.getInt("refresh_expires_in"));
-        return authTokenDto;
     }
 
+    private <T> HttpEntity<T> getHttpEntityWithKeycloakHeaders(T request) {
+        var headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        return new HttpEntity<T>(request, headers);
+    }
 
     // Dynamic keycloak urls. Move this to service impl?
     @Value("${keycloak.auth-server-url:LOL}")
