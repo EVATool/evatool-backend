@@ -23,6 +23,7 @@ public class RequirementDeltaDto extends SuperDto implements AnalysisChildDto {
     @DecimalMin("-1.0")
     @DecimalMax("1.0")
     @NotNull
+    @ImportExportInclude
     private Float overwriteMerit;
 
     @ApiModelProperty
@@ -39,10 +40,12 @@ public class RequirementDeltaDto extends SuperDto implements AnalysisChildDto {
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private UUID impactId;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private UUID requirementId;
 
     @ApiModelProperty(required = true)

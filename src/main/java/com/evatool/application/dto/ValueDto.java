@@ -18,18 +18,22 @@ public class ValueDto extends SuperDto implements AnalysisChildDto {
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private String name;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private String description;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private ValueType type;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private Boolean archived;
 
     @ApiModelProperty(required = true)

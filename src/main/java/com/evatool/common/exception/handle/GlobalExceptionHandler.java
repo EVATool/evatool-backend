@@ -14,71 +14,84 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+  private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler(EntityStillReferencedException.class)
-    public ResponseEntity<ErrorMessage> handle(EntityStillReferencedException exception, WebRequest webRequest) {
-        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
-    }
+  @ExceptionHandler(EntityStillReferencedException.class)
+  public ResponseEntity<ErrorMessage> handle(EntityStillReferencedException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
+  }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handle(EntityNotFoundException exception, WebRequest webRequest) {
-        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
-    }
+  @ExceptionHandler(EntityNotFoundException.class)
+  public ResponseEntity<ErrorMessage> handle(EntityNotFoundException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
+  }
 
-    @ExceptionHandler(PropertyCannotBeNullException.class)
-    public ResponseEntity<ErrorMessage> handle(PropertyCannotBeNullException exception, WebRequest webRequest) {
-        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
-    }
+  @ExceptionHandler(PropertyCannotBeNullException.class)
+  public ResponseEntity<ErrorMessage> handle(PropertyCannotBeNullException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+  }
 
-    @ExceptionHandler(PropertyCannotBeUpdatedException.class)
-    public ResponseEntity<ErrorMessage> handle(PropertyCannotBeUpdatedException exception, WebRequest webRequest) {
-        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
-    }
+  @ExceptionHandler(PropertyCannotBeUpdatedException.class)
+  public ResponseEntity<ErrorMessage> handle(PropertyCannotBeUpdatedException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+  }
 
-    @ExceptionHandler(PropertyIsInvalidException.class)
-    public ResponseEntity<ErrorMessage> handle(PropertyIsInvalidException exception, WebRequest webRequest) {
-        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
-    }
+  @ExceptionHandler(PropertyIsInvalidException.class)
+  public ResponseEntity<ErrorMessage> handle(PropertyIsInvalidException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+  }
 
-    @ExceptionHandler(PropertyMustBeNullException.class)
-    public ResponseEntity<ErrorMessage> handle(PropertyMustBeNullException exception, WebRequest webRequest) {
-        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
-    }
+  @ExceptionHandler(PropertyMustBeNullException.class)
+  public ResponseEntity<ErrorMessage> handle(PropertyMustBeNullException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+  }
 
-    @ExceptionHandler(CrossRealmAccessException.class)
-    public ResponseEntity<ErrorMessage> handle(CrossRealmAccessException exception, WebRequest webRequest) {
-        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.FORBIDDEN);
-    }
+  @ExceptionHandler(CrossRealmAccessException.class)
+  public ResponseEntity<ErrorMessage> handle(CrossRealmAccessException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.FORBIDDEN);
+  }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorMessage> handle(NotFoundException exception, WebRequest webRequest) {
-        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
-    }
+  @ExceptionHandler(NotFoundException.class)
+  public ResponseEntity<ErrorMessage> handle(NotFoundException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
+  }
 
-    @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ErrorMessage> handle(UnauthorizedException exception, WebRequest webRequest) {
-        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNAUTHORIZED);
-    }
+  @ExceptionHandler(UnauthorizedException.class)
+  public ResponseEntity<ErrorMessage> handle(UnauthorizedException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNAUTHORIZED);
+  }
 
-    @ExceptionHandler(InternalServerErrorException.class)
-    public ResponseEntity<ErrorMessage> handle(InternalServerErrorException exception, WebRequest webRequest) {
-        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  @ExceptionHandler(InternalServerErrorException.class)
+  public ResponseEntity<ErrorMessage> handle(InternalServerErrorException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 
-    // TODO All exceptions that are thrown by spring for validation (e.g. MethodArgumentNotValidException, MethodArgumentTypeMismatchException)
-    //  should be caught here in order to return with ErrorMessage and 400. If thats the case, then 500 can also return
-    //  return ErrorMessage, because it wont catch exception that are used for spring validation.
-    //  https://stackoverflow.com/questions/33663801/how-do-i-customize-default-error-message-from-spring-valid-validation/33665121
+  @ExceptionHandler(ImportJsonException.class)
+  public ResponseEntity<ErrorMessage> handle(ImportJsonException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
+  }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorMessage> handle(Exception exception, WebRequest webRequest) {
-//        return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+  // TODO All exceptions that are thrown by spring for validation (e.g.
+  // MethodArgumentNotValidException, MethodArgumentTypeMismatchException)
+  // should be caught here in order to return with ErrorMessage and 400. If thats
+  // the case, then 500 can also return
+  // return ErrorMessage, because it wont catch exception that are used for spring
+  // validation.
+  // https://stackoverflow.com/questions/33663801/how-do-i-customize-default-error-message-from-spring-valid-validation/33665121
 
-    private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception, WebRequest webRequest, HttpStatus httpStatus) {
-        logger.warn("{} handled. Returning HttpStatus {}. Message: {}", exception.getClass().getSimpleName(), httpStatus, exception.getMessage());
-        var errorMessage = new ErrorMessage(exception, ((ServletWebRequest) webRequest).getRequest().getRequestURI(), httpStatus);
-        return new ResponseEntity<>(errorMessage, httpStatus);
-    }
+  // @ExceptionHandler(Exception.class)
+  // public ResponseEntity<ErrorMessage> handle(Exception exception, WebRequest
+  // webRequest) {
+  // return getErrorMessageResponseEntity(exception, webRequest,
+  // HttpStatus.INTERNAL_SERVER_ERROR);
+  // }
+
+  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception, WebRequest webRequest,
+      HttpStatus httpStatus) {
+    logger.warn("{} handled. Returning HttpStatus {}. Message: {}", exception.getClass().getSimpleName(), httpStatus,
+        exception.getMessage());
+    var errorMessage = new ErrorMessage(exception, ((ServletWebRequest) webRequest).getRequest().getRequestURI(),
+        httpStatus);
+    return new ResponseEntity<>(errorMessage, httpStatus);
+  }
 }

@@ -39,7 +39,7 @@ public class Variant extends PrefixIdEntity implements FindByAnalysis {
     private Analysis analysis;
 
     @Getter
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude // Equality on List objects never returns true.
     private Set<Variant> subVariants;
 

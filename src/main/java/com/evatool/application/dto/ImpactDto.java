@@ -21,10 +21,12 @@ public class ImpactDto extends PrefixIdDto implements AnalysisChildDto {
     @DecimalMin("-1.0")
     @DecimalMax("1.0")
     @NotNull
+    @ImportExportInclude
     private Float merit;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private String description;
 
     @ApiModelProperty
@@ -32,10 +34,12 @@ public class ImpactDto extends PrefixIdDto implements AnalysisChildDto {
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private UUID valueId;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private UUID stakeholderId;
 
     @ApiModelProperty(required = true)

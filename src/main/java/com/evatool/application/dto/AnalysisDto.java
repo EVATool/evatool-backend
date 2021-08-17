@@ -16,17 +16,21 @@ public class AnalysisDto extends PrefixIdDto {
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private String name;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private String description;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private Boolean isTemplate;
 
     @ApiModelProperty
+    @ImportExportInclude
     private String imageUrl;
 
     @ApiModelProperty
