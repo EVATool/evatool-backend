@@ -4,12 +4,15 @@ import com.evatool.application.dto.AuthRegisterRealmDto;
 import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.api.AuthService;
-import com.evatool.common.util.UriUtil;
 import lombok.SneakyThrows;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,13 +26,13 @@ public class AuthServiceImpl implements AuthService {
     public AuthTokenDto login(String username, String password, String realm) {
         var rest = new RestTemplate();
 
-        //var headers = new HttpHeaders();
-        //headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        var headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         var request = getLoginRequest(username, password, "evatool-app"); // TODO application/x-www-form-urlencoded
-        //var entity = new RequestEntity<String>(request, headers);
+        var entity = new HttpEntity<>(request, headers);
 
-        var response = rest.postForEntity(UriUtil.getKeycloakLoginUrl(realm), request, String.class);
+        var response = rest.postForEntity(getKeycloakLoginUrl(realm), entity, String.class);
         var httpStatus = response.getStatusCode();
 
         // Error handling.
@@ -85,5 +88,30 @@ public class AuthServiceImpl implements AuthService {
                 responseJson.getString("refresh_token"),
                 responseJson.getInt("refresh_expires_in"));
         return authTokenDto;
+    }
+
+
+    // Dynamic keycloak urls. Move this to service impl?
+    @Value("${keycloak.auth-server-url:LOL}")
+    private String keycloakBaseUrl;
+
+    private String getKeycloakAdminLoginUrl() {
+        return getKeycloakLoginUrl("master");
+    }
+
+    public String getKeycloakLoginUrl(String realm) {
+        return keycloakBaseUrl + "realms/" + realm + "/protocol/openid-connect/token";
+    }
+
+    private String getKeycloakRefreshUrl(String realm) {
+        return getKeycloakLoginUrl(realm);
+    }
+
+    private String getKeycloakRegisterUserUrl() {
+        return keycloakBaseUrl + ""; // TODO
+    }
+
+    private String getKeycloakRegisterRealmUrl() {
+        return keycloakBaseUrl + "admin/realms";
     }
 }

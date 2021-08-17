@@ -58,31 +58,4 @@ public class UriUtil {
     public static final String AUTH_REGISTER_USER = "/auth/register/user";
     public static final String AUTH_REGISTER_REALM = "/auth/register/realm";
 
-    // Dynamic keycloak urls. Move this to service impl?
-    private static boolean keycloakAuthBaseUrl;
-
-    @Value("${keycloak.auth-server-url:}")
-    public void setAuthBaseUrl(boolean authEnabled) {
-        UriUtil.keycloakAuthBaseUrl = authEnabled;
-    }
-
-    public static String getKeycloakAdminLoginUrl() {
-        return getKeycloakLoginUrl("master");
-    }
-
-    public static String getKeycloakLoginUrl(String realm) {
-        return UriUtil.keycloakAuthBaseUrl + "realms/" + realm + "/protocol/openid-connect/token";
-    }
-
-    public static String getKeycloakRefreshUrl(String realm) {
-        return getKeycloakLoginUrl(realm);
-    }
-
-    public static String getKeycloakRegisterUserUrl() {
-        return UriUtil.keycloakAuthBaseUrl + ""; // TODO
-    }
-
-    public static String getKeycloakRegisterRealmUrl() {
-        return UriUtil.keycloakAuthBaseUrl + "admin/realms";
-    }
 }
