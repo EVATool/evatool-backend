@@ -8,6 +8,7 @@ import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.NotFoundException;
 import com.evatool.common.exception.UnauthorizedException;
 import com.evatool.common.exception.handle.RestTemplateResponseErrorHandlerIgnore;
+import com.evatool.common.util.UUIDUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -22,6 +23,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.UUID;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -110,13 +113,36 @@ public class AuthServiceImpl implements AuthService {
 
     @SneakyThrows
     private String getKeycloakRealmImportJson(String realm) {
+        // Retrieve template keycloak realm from application resources.
         var in = Thread.currentThread().getContextClassLoader().getResourceAsStream("auth/evatool-realm.json");
         var mapper = new ObjectMapper();
         var jsonNode = mapper.readValue(in, JsonNode.class);
         var realmImportJson = mapper.writeValueAsString(jsonNode);
 
-        System.out.println(realmImportJson);
+        // Replace realm name.
+        realmImportJson = realmImportJson.replace("evatool-realm", realm);
 
+        // Re-assign ids.
+        var lines = realmImportJson.split("\n");
+        for (var line : lines) {
+
+            // Check if id is in line.
+            if (line.toLowerCase().contains("id\" : ")) {
+
+                // Retrieve id from line.
+                var oldId = line.split(":")[1].trim().replace("\"", "").replace(",", "");
+
+                // Check if id is UUID
+                if (UUIDUtil.isValidUUID(oldId)) {
+
+                    // Change oldId to newId in whole json.
+                    var newId = UUID.randomUUID().toString();
+                    realmImportJson = realmImportJson.replace(oldId, newId);
+                }
+            }
+        }
+
+        System.out.println(realmImportJson);
         return realmImportJson;
     }
 
