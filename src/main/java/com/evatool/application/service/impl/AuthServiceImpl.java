@@ -108,17 +108,12 @@ public class AuthServiceImpl implements AuthService {
         return new AuthRegisterRealmDto(realm);
     }
 
+    @SneakyThrows
     private String getKeycloakRealmImportJson(String realm) {
-        // TODO do all the json reassign ids etc...
-        var realmImportJson = "";
-
-        try (var in = Thread.currentThread().getContextClassLoader().getResourceAsStream("YourJsonFile")) {
-            var mapper = new ObjectMapper();
-            var jsonNode = mapper.readValue(in, JsonNode.class);
-            realmImportJson = mapper.writeValueAsString(jsonNode);
-        } catch (Exception e) {
-            throw new InternalServerErrorException(e);
-        }
+        var in = Thread.currentThread().getContextClassLoader().getResourceAsStream("auth/evatool-realm.json");
+        var mapper = new ObjectMapper();
+        var jsonNode = mapper.readValue(in, JsonNode.class);
+        var realmImportJson = mapper.writeValueAsString(jsonNode);
 
         System.out.println(realmImportJson);
 
@@ -152,7 +147,6 @@ public class AuthServiceImpl implements AuthService {
                 responseJson.getString("refresh_token"),
                 responseJson.getInt("refresh_expires_in"));
     }
-
 
     // Dynamic keycloak URLs.
     @Value("${keycloak.auth-server-url}")
