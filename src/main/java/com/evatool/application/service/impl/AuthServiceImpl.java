@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
         var rest = getRestTemplate();
         var request = getLoginRequest(username, password);
         var httpEntity = getHttpEntityWithKeycloakHeaders(request);
-        var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class); // TODO 401 from keycloak becomes 500. How to get status code from keycloak?
+        var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
         // Error handling.
@@ -41,7 +41,6 @@ public class AuthServiceImpl implements AuthService {
         } else if (httpStatus == HttpStatus.UNAUTHORIZED) {
             throw new UnauthorizedException("Invalid credentials");
         } else if (httpStatus != HttpStatus.OK) {
-            // Unhandled error, should cause 500.
             throw new InternalServerErrorException("Unhandled Exception from login rest call to keycloak");
         }
 
