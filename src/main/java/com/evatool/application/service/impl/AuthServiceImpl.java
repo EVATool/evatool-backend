@@ -34,7 +34,9 @@ public class AuthServiceImpl implements AuthService {
     public AuthTokenDto login(String username, String password, String realm, String clientId) {
         var rest = getRestTemplate();
         var request = getLoginRequest(username, password, clientId);
-        var httpEntity = getHttpEntityWithKeycloakUrlEncodedHeaders(request);
+        var headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        var httpEntity = new HttpEntity<>(request, headers);
         var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
@@ -67,7 +69,9 @@ public class AuthServiceImpl implements AuthService {
     public AuthTokenDto refreshLogin(String refreshToken, String realm) {
         var rest = getRestTemplate();
         var request = getRefreshLoginRequest(refreshToken, "evatool-app");
-        var httpEntity = getHttpEntityWithKeycloakUrlEncodedHeaders(request);
+        var headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        var httpEntity = new HttpEntity<>(request, headers);
         var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
@@ -99,12 +103,16 @@ public class AuthServiceImpl implements AuthService {
         var adminToken = login(authAdminUsername, authAdminPassword, "master", "admin-cli").getToken();
         var rest = getRestTemplate();
         var request = getKeycloakRealmImportJson(realm);
-        var httpEntity = getHttpEntityWithKeycloakAuthorizationHeaders(request, adminToken);
+        var headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setBearerAuth(adminToken);
+        var httpEntity = new HttpEntity<>(request, headers);
+        System.out.println(httpEntity);
         var response = rest.postForEntity(getKeycloakRegisterRealmUrl(), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
         // Error handling.
-        if (httpStatus != HttpStatus.OK) {
+        if (httpStatus != HttpStatus.CREATED) {
             throw new InternalServerErrorException("Unhandled Exception from create realm rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
@@ -142,7 +150,6 @@ public class AuthServiceImpl implements AuthService {
             }
         }
 
-        System.out.println(realmImportJson);
         return realmImportJson;
     }
 
@@ -150,18 +157,6 @@ public class AuthServiceImpl implements AuthService {
         return new RestTemplateBuilder()
                 .errorHandler(new RestTemplateResponseErrorHandlerIgnore())
                 .build();
-    }
-
-    private <T> HttpEntity<T> getHttpEntityWithKeycloakUrlEncodedHeaders(T request) {
-        var headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        return new HttpEntity<T>(request, headers);
-    }
-
-    private <T> HttpEntity<T> getHttpEntityWithKeycloakAuthorizationHeaders(T request, String token) {
-        var headers = new HttpHeaders();
-        headers.setBearerAuth(token);
-        return new HttpEntity<T>(request, headers);
     }
 
     @SneakyThrows
