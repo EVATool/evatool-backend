@@ -3,7 +3,7 @@ package com.evatool.application.dto;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
-@ApiModel(value = "AuthLoginDto")
+@ApiModel(value = "AuthTokenDto")
 @EqualsAndHashCode
 @ToString
 @Getter
@@ -11,11 +11,11 @@ import lombok.*;
 @NoArgsConstructor
 public class AuthTokenDto {
 
-    String token;
-    Integer tokenExpiresIn;
+    private String token;
+    private Integer tokenExpiresIn;
 
-    String refreshToken;
-    Integer refreshTokenExpiresIn;
+    private String refreshToken;
+    private Integer refreshTokenExpiresIn;
 
     public AuthTokenDto(String token, Integer tokenExpiresIn, String refreshToken, Integer refreshTokenExpiresIn) {
         this.token = token;
