@@ -61,6 +61,11 @@ public class GlobalExceptionHandler {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNAUTHORIZED);
   }
 
+  @ExceptionHandler(ConflictException.class)
+  public ResponseEntity<ErrorMessage> handle(ConflictException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
+  }
+
   @ExceptionHandler(InternalServerErrorException.class)
   public ResponseEntity<ErrorMessage> handle(InternalServerErrorException exception, WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR);

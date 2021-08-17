@@ -4,6 +4,7 @@ import com.evatool.application.dto.AuthRegisterRealmDto;
 import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.api.AuthService;
+import com.evatool.common.exception.ConflictException;
 import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.NotFoundException;
 import com.evatool.common.exception.UnauthorizedException;
@@ -107,12 +108,13 @@ public class AuthServiceImpl implements AuthService {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setBearerAuth(adminToken);
         var httpEntity = new HttpEntity<>(request, headers);
-        System.out.println(httpEntity);
         var response = rest.postForEntity(getKeycloakRegisterRealmUrl(), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
         // Error handling.
-        if (httpStatus != HttpStatus.CREATED) {
+        if (httpStatus == HttpStatus.CONFLICT) {
+            throw new ConflictException("Realm \"" + realm + "\" does already exist");
+        } else if (httpStatus != HttpStatus.CREATED) {
             throw new InternalServerErrorException("Unhandled Exception from create realm rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
