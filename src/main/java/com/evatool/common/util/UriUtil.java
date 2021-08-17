@@ -1,5 +1,7 @@
 package com.evatool.common.util;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class UriUtil {
 
     private UriUtil() {
@@ -13,6 +15,7 @@ public class UriUtil {
         // TODO verify domain logic (cascade, orphanRemoval, etc) in tests [is done correctly in life version but does not happen in tests]
     }
 
+    // CRUD.
     public static final String ANALYSES = "/analyses";
     public static final String ANALYSES_ID = "/analyses/{id}";
     public static final String ANALYSES_DEEP_COPY = "/analyses/deep-copy/{templateAnalysisId}";
@@ -49,4 +52,37 @@ public class UriUtil {
     public static final String VARIANTS_ID = "/variants/{id}";
     public static final String VARIANTS_REL = "variants";
 
+    // Auth.
+    public static final String LOGIN = "/auth/login";
+    public static final String REFRESH = "/auth/refresh";
+    public static final String REGISTER_USER = "/auth/register/user";
+    public static final String REGISTER_REALM = "/auth/register/realm";
+
+    // Dynamic keycloak urls. Move this to service impl?
+    private static boolean keycloakAuthBaseUrl;
+
+    @Value("${keycloak.auth-server-url:}")
+    public void setAuthBaseUrl(boolean authEnabled) {
+        UriUtil.keycloakAuthBaseUrl = authEnabled;
+    }
+
+    public static String getKeycloakAdminLoginUrl() {
+        return getKeycloakLoginUrl("master");
+    }
+
+    public static String getKeycloakLoginUrl(String realm) {
+        return UriUtil.keycloakAuthBaseUrl + "realms/" + realm + "/protocol/openid-connect/token";
+    }
+
+    public static String getKeycloakRefreshUrl(String realm) {
+        return getKeycloakLoginUrl(realm);
+    }
+
+    public static String getKeycloakRegisterUserUrl() {
+        return UriUtil.keycloakAuthBaseUrl + ""; // TODO
+    }
+
+    public static String getKeycloakRegisterRealmUrl() {
+        return UriUtil.keycloakAuthBaseUrl + "admin/realms";
+    }
 }
