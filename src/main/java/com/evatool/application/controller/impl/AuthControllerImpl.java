@@ -9,9 +9,10 @@ import com.evatool.common.util.UriUtil;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "Auth API-Endpoint")
@@ -28,26 +29,30 @@ public class AuthControllerImpl implements AuthController {
     }
 
     @Override
-    @GetMapping(UriUtil.AUTH_LOGIN)
+    @PostMapping(UriUtil.AUTH_LOGIN)
     public ResponseEntity<AuthTokenDto> login(String username, String password, String realm) {
-        return null;
+        var authTokenDto = authService.login(username, password, realm);
+        return new ResponseEntity<>(authTokenDto, HttpStatus.OK);
     }
 
     @Override
-    @GetMapping(UriUtil.AUTH_REFRESH_LOGIN)
+    @PostMapping(UriUtil.AUTH_REFRESH_LOGIN)
     public ResponseEntity<AuthTokenDto> refreshLogin(String refreshToken, String realm) {
-        return null;
+        var authTokenDto = authService.refreshLogin(refreshToken, realm);
+        return new ResponseEntity<>(authTokenDto, HttpStatus.OK);
     }
 
     @Override
-    @GetMapping(UriUtil.AUTH_REGISTER_USER)
+    @PostMapping(UriUtil.AUTH_REGISTER_USER)
     public ResponseEntity<AuthRegisterUserDto> registerUser(String username, String email, String password) {
-        return null;
+        var authRegisterUserDto = authService.registerUser(username, email, password);
+        return new ResponseEntity<>(authRegisterUserDto, HttpStatus.OK);
     }
 
     @Override
-    @GetMapping(UriUtil.AUTH_REGISTER_REALM)
+    @PostMapping(UriUtil.AUTH_REGISTER_REALM)
     public ResponseEntity<AuthRegisterRealmDto> registerRealm(String authAdminUsername, String authAdminPassword, String realm) {
-        return null;
+        var authRegisterRealmDto = authService.registerRealm(authAdminUsername, authAdminPassword, realm);
+        return new ResponseEntity<>(authRegisterRealmDto, HttpStatus.OK);
     }
 }

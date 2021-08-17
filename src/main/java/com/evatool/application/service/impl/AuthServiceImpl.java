@@ -4,18 +4,46 @@ import com.evatool.application.dto.AuthRegisterRealmDto;
 import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.api.AuthService;
+import com.evatool.common.util.UriUtil;
+import lombok.SneakyThrows;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class AuthServiceImpl implements AuthService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
+    @SneakyThrows
     @Override
     public AuthTokenDto login(String username, String password, String realm) {
         var rest = new RestTemplate();
-        return null;
+
+        //var headers = new HttpHeaders();
+        //headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        var request = getLoginRequest(username, password, "evatool-app"); // TODO application/x-www-form-urlencoded
+        //var entity = new RequestEntity<String>(request, headers);
+
+        var response = rest.postForEntity(UriUtil.getKeycloakLoginUrl(realm), request, String.class);
+        var httpStatus = response.getStatusCode();
+
+        // Error handling.
+        if (httpStatus == HttpStatus.NOT_FOUND) {
+
+        } else if (httpStatus == HttpStatus.BAD_REQUEST) {
+
+        } else {
+            // Unhandled error.
+
+        }
+
+        var authTokenDto = getAuthTokenDtoFromKeycloakResponse(response.getBody());
+        return authTokenDto;
     }
 
     @Override
@@ -31,5 +59,31 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthRegisterRealmDto registerRealm(String authAdminUsername, String authAdminPassword, String realm) {
         return null;
+    }
+
+    private String getLoginRequest(String username, String password, String clientId) {
+        return "grant_type=password" +
+                "&scope=openid" +
+                "&client_id=" + clientId +
+                "&username=" + username +
+                "&password=" + password;
+    }
+
+    private String getRefreshLoginRequest(String refreshToken) {
+        return "grant_type=refresh_token" +
+                "&scope=openid" +
+                "&client_id=evatool-app" +
+                "&refresh_token=" + refreshToken;
+    }
+
+    @SneakyThrows
+    private AuthTokenDto getAuthTokenDtoFromKeycloakResponse(String keycloakResponse) {
+        var responseJson = new JSONObject(keycloakResponse);
+        var authTokenDto = new AuthTokenDto(
+                responseJson.getString("access_token"),
+                responseJson.getInt("expires_in"),
+                responseJson.getString("refresh_token"),
+                responseJson.getInt("refresh_expires_in"));
+        return authTokenDto;
     }
 }

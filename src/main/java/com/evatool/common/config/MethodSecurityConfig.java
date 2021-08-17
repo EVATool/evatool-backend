@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
-    @Override
-    protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
-        return new MethodSecurityConfigMetadataSource();
-    }
+//    @Override
+//    protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
+//        return new MethodSecurityConfigMetadataSource();
+//    }
 }

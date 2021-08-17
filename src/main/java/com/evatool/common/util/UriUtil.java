@@ -53,8 +53,8 @@ public class UriUtil {
     public static final String VARIANTS_REL = "variants";
 
     // Auth.
-    public static final String AUTH_LOGIN = "/auth/login";
-    public static final String AUTH_REFRESH_LOGIN = "/auth/refresh";
+    public static final String AUTH_LOGIN = "/auth/login/token";
+    public static final String AUTH_REFRESH_LOGIN = "/auth/login/refresh-token";
     public static final String AUTH_REGISTER_USER = "/auth/register/user";
     public static final String AUTH_REGISTER_REALM = "/auth/register/realm";
 
