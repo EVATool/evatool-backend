@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
 
     public abstract S fromDto(T dto);
 
-    public Iterable<T> toDtoList(Iterable<S> entityList) {
+    public List<T> toDtoList(Iterable<S> entityList) {
         logger.debug("To Dto List");
         var dtoList = new ArrayList<T>();
         entityList.forEach(entity -> dtoList.add(toDto(entity)));
@@ -50,5 +51,9 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
 
     protected Class<S> getEntityClass() {
         return (Class<S>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
+
+    protected Class<T> getDtoClass() {
+        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 }

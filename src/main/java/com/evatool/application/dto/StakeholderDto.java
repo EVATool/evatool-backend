@@ -19,14 +19,17 @@ public class StakeholderDto extends PrefixIdDto implements AnalysisChildDto {
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private String name;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private StakeholderPriority priority;
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private StakeholderLevel level;
 
     @ApiModelProperty(required = true)

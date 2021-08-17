@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "user")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class User extends SuperEntity {
+public class User extends SuperEntity { // TODO Remove completely!
 
     private static final Logger logger = LoggerFactory.getLogger(User.class);
 
