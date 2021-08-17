@@ -55,19 +55,12 @@ public class AuthServiceImpl implements AuthService {
         var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
-        // TODO
         // Error handling.
-        if (httpStatus == HttpStatus.NOT_FOUND) {
-
-        } else if (httpStatus == HttpStatus.BAD_REQUEST) {
-
-        } else {
-            // Unhandled error.
-
+        if (httpStatus != HttpStatus.OK) {
+            throw new InternalServerErrorException("Unhandled Exception from refresh login rest call to keycloak");
         }
 
-        var authTokenDto = getAuthTokenDtoFromKeycloakResponse(response.getBody());
-        return authTokenDto;
+        return getAuthTokenDtoFromKeycloakResponse(response.getBody());
     }
 
     @Override
