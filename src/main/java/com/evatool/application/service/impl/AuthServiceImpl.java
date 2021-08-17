@@ -94,6 +94,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthRegisterUserDto registerUser(String username, String email, String password) {
         var rest = getRestTemplate();
+        // TODO The standalone version of EvaTool MUST use users in evatool-realm as proxy for realms (keycloak cannot handle multiple hundred realms!).
 
 
         return new AuthRegisterUserDto(username, email);
@@ -105,7 +106,7 @@ public class AuthServiceImpl implements AuthService {
         var rest = getRestTemplate();
         var request = getKeycloakRealmImportJson(realm);
         var headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED); // TODO causes 415... :c
         headers.setBearerAuth(adminToken);
         var httpEntity = new HttpEntity<>(request, headers);
         var response = rest.postForEntity(getKeycloakRegisterRealmUrl(), httpEntity, String.class);
