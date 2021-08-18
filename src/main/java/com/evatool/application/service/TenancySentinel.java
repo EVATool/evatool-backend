@@ -53,8 +53,15 @@ public class TenancySentinel {
             var principal = (KeycloakPrincipal) token.getPrincipal();
             var session = principal.getKeycloakSecurityContext();
             var accessToken = session.getToken();
-            var issuer = accessToken.getIssuer();
-            return issuer.substring(issuer.lastIndexOf("/") + 1);
+
+            if (registrationEnabled) {
+                // Use username as realm.
+                return accessToken.getPreferredUsername();
+            } else {
+                // Use actual keycloak realm as realm.
+                var issuer = accessToken.getIssuer();
+                return issuer.substring(issuer.lastIndexOf("/") + 1);
+            }
         }
         throw new IllegalStateException("Cannot get realm if not in request context");
     }
