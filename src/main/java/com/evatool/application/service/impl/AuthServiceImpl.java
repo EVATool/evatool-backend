@@ -122,9 +122,7 @@ public class AuthServiceImpl implements AuthService {
         httpEntity = new HttpEntity<>(null, headers);
         response = rest.exchange(getKeycloakGetRealmRolesUrl(), HttpMethod.GET, httpEntity, String.class);
         httpStatus = response.getStatusCode();
-        
-
-        System.out.println();
+        var realmRolesJson = response.getBody();
 
         // Error handling.
         if (httpStatus != HttpStatus.NO_CONTENT) {
@@ -135,7 +133,7 @@ public class AuthServiceImpl implements AuthService {
         // Assign realm roles.
         var location = response.getHeaders().getLocation().toString();
         var userId = location.substring(location.lastIndexOf("/") + 1);
-        request = getKeycloakUpdateUserRealmRolesJson();
+        request = getKeycloakUpdateUserRealmRolesJson(realmRolesJson);
         httpEntity = new HttpEntity<>(request, headers);
         response = rest.postForEntity(getKeycloakSetUserRolesUrl(userId), httpEntity, String.class);
         httpStatus = response.getStatusCode();
@@ -160,17 +158,16 @@ public class AuthServiceImpl implements AuthService {
                 "}";
     }
 
-    private String getKeycloakUpdateUserRealmRolesJson() {
-        return getRealmRolesJsonArray();
-    }
-
-    private String getRealmRolesJsonArray() {
+    private String getKeycloakUpdateUserRealmRolesJson(String realmRolesJson) {
         var roleList = new ArrayList<String>();
         for (var role : AuthUtil.ALL_ROLES) {
             roleList.add("{\"id\": \"3ae7d057-8323-4354-b614-42843bfa1cb8\" ,\"name\": \"" + role + "\"}");
         }
-        return "[{\"id\": \"3ae7d057-8323-4354-b614-42843bfa1cb8\", \"name\": \"reader\"}]";
+        //return "[{\"id\": \"3ae7d057-8323-4354-b614-42843bfa1cb8\", \"name\": \"reader\"}]";
         //return "[" + String.join(", ", roleList) + "]";
+
+
+        return null;
     }
 
     @Override
