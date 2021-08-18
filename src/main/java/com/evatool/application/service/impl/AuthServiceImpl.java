@@ -110,8 +110,6 @@ public class AuthServiceImpl implements AuthService {
         var httpEntity = new HttpEntity<>(request, headers);
         var response = rest.postForEntity(getKeycloakCreateUserUrl(), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
-        var location = response.getHeaders().getLocation().toString();
-        var userId = location.substring(location.lastIndexOf("/") + 1);
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
@@ -119,6 +117,9 @@ public class AuthServiceImpl implements AuthService {
         } else if (httpStatus != HttpStatus.CREATED) {
             throw new InternalServerErrorException("Unhandled Exception from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
+
+        var location = response.getHeaders().getLocation().toString();
+        var userId = location.substring(location.lastIndexOf("/") + 1);
 
 
         // Get available realm roles.
