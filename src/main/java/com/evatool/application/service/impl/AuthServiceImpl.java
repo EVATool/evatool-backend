@@ -35,6 +35,12 @@ public class AuthServiceImpl implements AuthService {
     @Value("${evatool.auth.registration.enabled:false}")
     private boolean registrationEnabled;
 
+    @Value("${evatool.auth.admin-user:}")
+    private String authAdminUser;
+
+    @Value("${evatool.auth.admin-password:}")
+    private String authAdminPassword;
+
     public AuthTokenDto login(String username, String password, String realm) {
         var rest = getRestTemplate();
         var clientId = getClientId(realm);
@@ -93,18 +99,35 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthRegisterUserDto registerUser(String username, String email, String password) {
-        var adminToken = login(authAdminUsername, authAdminPassword, "master").getToken();
+        var adminToken = login(authAdminUser, authAdminPassword, "master").getToken();
         var rest = getRestTemplate();
+        var request = getKeycloakCreateUserJson(username, email, password);
+        var headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(adminToken);
+        var httpEntity = new HttpEntity<>(request, headers);
+        var response = rest.postForEntity(getKeycloakRegisterUserUrl(), httpEntity, String.class);
+        var httpStatus = response.getStatusCode();
 
-
-        var realm = "evatool-realm";
-
+        // Error handling.
+        if (httpStatus == HttpStatus.CONFLICT) {
+            throw new ConflictException(response.getBody());
+        } else if (httpStatus != HttpStatus.CREATED) {
+            throw new InternalServerErrorException("Unhandled Exception from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
+        }
 
         return new AuthRegisterUserDto(username, email);
     }
 
     private String getKeycloakCreateUserJson(String username, String email, String password) {
-        return null;
+        return "{" +
+                //"\"firstName\":\"xyz\", " +
+                //"\"lastName\":\"xyz\", " +
+                "\"email\":\"" + email + "\", " +
+                "\"enabled\":\"true\", " +
+                "\"username\":\"" + username + "\", " +
+                "\"credentials\": [{\"type\":\"password\", \"value\":\"" + password + "\", \"temporary\":false}]" +
+                "}";
     }
 
     @Override
@@ -204,7 +227,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private String getKeycloakRegisterUserUrl() {
-        return keycloakBaseUrl + "";
+        return keycloakBaseUrl + "admin/realms/evatool-realm/users";
     }
 
     private String getKeycloakRegisterRealmUrl() {
