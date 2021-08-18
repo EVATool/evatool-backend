@@ -34,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthTokenDto login(String username, String password, String realm) {
         var rest = getRestTemplate();
-        var clientId = realm.equals("master") ? "admin-cli" : "evatool-app";
+        var clientId = getClientId(realm);
         var request = getLoginRequest(username, password, clientId);
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -65,7 +65,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthTokenDto refreshLogin(String refreshToken, String realm) {
         var rest = getRestTemplate();
-        var request = getRefreshLoginRequest(refreshToken, "evatool-app");
+        var clientId = getClientId(realm);
+        var request = getRefreshLoginRequest(refreshToken, clientId);
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         var httpEntity = new HttpEntity<>(request, headers);
@@ -169,6 +170,10 @@ public class AuthServiceImpl implements AuthService {
                 responseJson.getInt("expires_in"),
                 responseJson.getString("refresh_token"),
                 responseJson.getInt("refresh_expires_in"));
+    }
+
+    private String getClientId(String realm) {
+        return realm.equals("master") ? "admin-cli" : "evatool-app";
     }
 
     // Dynamic keycloak URLs.
