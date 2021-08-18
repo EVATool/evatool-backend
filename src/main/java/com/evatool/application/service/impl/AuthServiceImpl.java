@@ -32,8 +32,9 @@ public class AuthServiceImpl implements AuthService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
-    public AuthTokenDto login(String username, String password, String realm, String clientId) {
+    public AuthTokenDto login(String username, String password, String realm) {
         var rest = getRestTemplate();
+        var clientId = realm.equals("master") ? "admin-cli" : "evatool-app";
         var request = getLoginRequest(username, password, clientId);
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -51,11 +52,6 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return getAuthTokenDtoFromKeycloakResponse(response.getBody());
-    }
-
-    @Override
-    public AuthTokenDto login(String username, String password, String realm) {
-        return login(username, password, realm, "evatool-app");
     }
 
     private String getLoginRequest(String username, String password, String clientId) {
@@ -101,7 +97,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthRegisterRealmDto registerRealm(String authAdminUsername, String authAdminPassword, String realm) {
-        var adminToken = login(authAdminUsername, authAdminPassword, "master", "admin-cli").getToken();
+        var adminToken = login(authAdminUsername, authAdminPassword, "master").getToken();
         var rest = getRestTemplate();
         var request = getKeycloakRealmImportJson(realm);
         var headers = new HttpHeaders();

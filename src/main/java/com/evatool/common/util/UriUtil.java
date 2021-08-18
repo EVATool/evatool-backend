@@ -6,8 +6,7 @@ public class UriUtil {
     /*
 
     Realm registration:
-    must have admin username and pw fields
-    should have warnings that only admin can use it
+    Special admin login and then special buttons to admin pages in user menu in header (top right) [remove adminUser and pw from rest call and use token directly]
 
     User register:
     creates user in default keycloak realm
