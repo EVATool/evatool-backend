@@ -5,13 +5,6 @@ public class UriUtil {
   private UriUtil() {
     /*
 
-    User register:
-    creates user in default keycloak realm
-    backend must use username as realm
-
-    Auth:
-    add spring validation to request params (allow letters [big and small], dash and numbers)
-
     Import Export:
     DemPa-App
 
