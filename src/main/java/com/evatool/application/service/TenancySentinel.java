@@ -2,6 +2,8 @@ package com.evatool.application.service;
 
 import com.evatool.common.exception.CrossRealmAccessException;
 import com.evatool.domain.entity.SuperEntity;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +34,22 @@ public class TenancySentinel {
         TenancySentinel.multiTenancyEnabled = multiTenancyEnabled;
     }
 
-    public static String getCurrentRealm() {
+    public static String getCurrentRealmFromRequestToken() {
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (requestAttributes instanceof ServletRequestAttributes) {
+            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+
+            var token = (KeycloakAuthenticationToken) request.getUserPrincipal();
+            var principal = (KeycloakPrincipal) token.getPrincipal();
+            var session = principal.getKeycloakSecurityContext();
+            var accessToken = session.getToken();
+            var issuer = accessToken.getIssuer();
+            return issuer.substring(issuer.lastIndexOf("/") + 1);
+        }
+        throw new IllegalStateException("Cannot get realm if not in request context");
+    }
+
+    public static String getCurrentRealmFromRequestHeader() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes instanceof ServletRequestAttributes) {
             HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
@@ -46,7 +63,7 @@ public class TenancySentinel {
             return;
         }
 
-        var realm = getCurrentRealm();
+        var realm = getCurrentRealmFromRequestToken();
         if (!entity.getRealm().equals(realm)) {
             throw new CrossRealmAccessException();
         }
@@ -57,7 +74,7 @@ public class TenancySentinel {
             return entities;
         }
 
-        var realm = getCurrentRealm();
+        var realm = getCurrentRealmFromRequestToken();
         var realmEntities = new ArrayList<S>();
 
         for (var entity : entities) {
@@ -74,7 +91,7 @@ public class TenancySentinel {
             return;
         }
 
-        var realm = getCurrentRealm();
+        var realm = getCurrentRealmFromRequestToken();
         entity.setRealm(realm);
     }
 
@@ -83,7 +100,7 @@ public class TenancySentinel {
             return;
         }
 
-        var realm = getCurrentRealm();
+        var realm = getCurrentRealmFromRequestToken();
         if (!entity.getRealm().equals(realm)) {
             throw new CrossRealmAccessException();
         }
@@ -94,7 +111,7 @@ public class TenancySentinel {
             return;
         }
 
-        var realm = getCurrentRealm();
+        var realm = getCurrentRealmFromRequestToken();
         if (!entity.getRealm().equals(realm)) {
             throw new CrossRealmAccessException();
         }

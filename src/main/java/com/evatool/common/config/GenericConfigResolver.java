@@ -9,8 +9,6 @@ import org.keycloak.representations.adapters.config.AdapterConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class GenericConfigResolver implements KeycloakConfigResolver {
 
@@ -24,7 +22,7 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 
     @Override
     public KeycloakDeployment resolve(OIDCHttpFacade.Request request) {
-        var realm = TenancySentinel.getCurrentRealm();
+        var realm = TenancySentinel.getCurrentRealmFromRequestHeader();
         logger.info("Request to URI {} to realm {}", request.getURI(), realm);
 
         if (realm == null || realm.equals("")) { // TODO Exceptions that are thrown here are ignored by GlobalExceptionHandler (How to return 403 or 404 here?)
