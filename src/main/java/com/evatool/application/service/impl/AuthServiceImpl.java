@@ -14,6 +14,7 @@ import com.evatool.common.util.UUIDUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,6 +110,8 @@ public class AuthServiceImpl implements AuthService {
         var httpEntity = new HttpEntity<>(request, headers);
         var response = rest.postForEntity(getKeycloakCreateUserUrl(), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
+        var location = response.getHeaders().getLocation().toString();
+        var userId = location.substring(location.lastIndexOf("/") + 1);
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
@@ -125,14 +128,12 @@ public class AuthServiceImpl implements AuthService {
         var realmRolesJson = response.getBody();
 
         // Error handling.
-        if (httpStatus != HttpStatus.NO_CONTENT) {
+        if (httpStatus != HttpStatus.OK) {
             throw new InternalServerErrorException("Unhandled Exception from get realm roles rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
 
         // Assign realm roles.
-        var location = response.getHeaders().getLocation().toString();
-        var userId = location.substring(location.lastIndexOf("/") + 1);
         request = getKeycloakUpdateUserRealmRolesJson(realmRolesJson);
         httpEntity = new HttpEntity<>(request, headers);
         response = rest.postForEntity(getKeycloakSetUserRolesUrl(userId), httpEntity, String.class);
@@ -158,16 +159,24 @@ public class AuthServiceImpl implements AuthService {
                 "}";
     }
 
+    @SneakyThrows
     private String getKeycloakUpdateUserRealmRolesJson(String realmRolesJson) {
         var roleList = new ArrayList<String>();
-        for (var role : AuthUtil.ALL_ROLES) {
-            roleList.add("{\"id\": \"3ae7d057-8323-4354-b614-42843bfa1cb8\" ,\"name\": \"" + role + "\"}");
+
+        var realmRoles = new JSONArray(realmRolesJson);
+        for (int i = 0; i < realmRoles.length(); i++) {
+            var realmRole = realmRoles.getJSONObject(i);
+            var roleId = realmRole.getString("id");
+            var roleName = realmRole.getString("name");
+
+            for (var role : AuthUtil.ALL_ROLES) {
+                if(role.equals(roleName)){
+                roleList.add("{\"id\": \""+roleId+"\" ,\"name\": \"" + roleName + "\"}");
+                }
+            }
         }
-        //return "[{\"id\": \"3ae7d057-8323-4354-b614-42843bfa1cb8\", \"name\": \"reader\"}]";
-        //return "[" + String.join(", ", roleList) + "]";
 
-
-        return null;
+        return "[" + String.join(", ", roleList) + "]";
     }
 
     @Override
