@@ -106,18 +106,31 @@ public class AuthServiceImpl implements AuthService {
 
         // Create user.
         var request = getKeycloakCreateUserJson(username, email, password);
-        System.out.println(request);
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(adminToken);
         var httpEntity = new HttpEntity<>(request, headers);
-        var response = rest.postForEntity(getKeycloakRegisterUserUrl(), httpEntity, String.class);
+        var response = rest.postForEntity(getKeycloakCreateUserUrl(), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
             throw new ConflictException(response.getBody());
         } else if (httpStatus != HttpStatus.CREATED) {
+            throw new InternalServerErrorException("Unhandled Exception from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
+        }
+
+        // Assign realm roles (this must be done in a separate rest call due to keycloak ignoring the "realmRoles"
+        // field when creating a user).
+        var location = response.getHeaders().getLocation().toString();
+        var userId = location.substring(location.lastIndexOf("/") + 1);
+        request = getKeycloakUpdateUserRealmRolesJson();
+        httpEntity = new HttpEntity<>(request, headers);
+        response = rest.postForEntity(getKeycloakUpdateUserUrl(userId), httpEntity, String.class);
+        httpStatus = response.getStatusCode();
+
+        // Error handling.
+        if (httpStatus != HttpStatus.NO_CONTENT) {
             throw new InternalServerErrorException("Unhandled Exception from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
@@ -131,15 +144,19 @@ public class AuthServiceImpl implements AuthService {
                 "\"email\":\"" + email + "\", " +
                 "\"enabled\":\"true\", " +
                 "\"username\":\"" + username + "\", " +
-                "\"realmRoles\": " + getRealmRolesJsonArray() + ", " +
+                //"\"realmRoles\": " + getRealmRolesJsonArray() + ", " +
                 "\"credentials\": [{\"type\":\"password\", \"value\":\"" + password + "\", \"temporary\":false}]" +
                 "}";
+    }
+
+    private String getKeycloakUpdateUserRealmRolesJson() {
+        return getRealmRolesJsonArray();
     }
 
     private String getRealmRolesJsonArray() {
         var roleList = new ArrayList<String>();
         for (var role : AuthUtil.ALL_ROLES) {
-            roleList.add("\"ROLE_" + role + "\"");
+            roleList.add("{\"name\": \"" + role + "\"}");
         }
         return "[" + String.join(", ", roleList) + "]";
     }
@@ -240,8 +257,12 @@ public class AuthServiceImpl implements AuthService {
         return getKeycloakLoginUrl(realm);
     }
 
-    private String getKeycloakRegisterUserUrl() {
+    private String getKeycloakCreateUserUrl() {
         return keycloakBaseUrl + "admin/realms/evatool-realm/users";
+    }
+
+    private String getKeycloakUpdateUserUrl(String userId) {
+        return keycloakBaseUrl + "admin/realms/evatool-realm/users/" + userId + "/role-mappings/realm";
     }
 
     private String getKeycloakRegisterRealmUrl() {
