@@ -142,15 +142,13 @@ public class AuthServiceImpl implements AuthService {
 
             // Check if an id is in the line.
             if (line.toLowerCase().contains("id\": ")) {
-                System.out.println(line);
 
                 // Retrieve id from line.
                 var oldId = line.split(":")[1].trim().replace("\"", "").replace(",", "");
 
                 // Check if id is UUID.
-                System.out.println(oldId);
                 if (UUIDUtil.isValidUUID(oldId)) {
-                    System.out.println("WAS UUID");
+
                     // Change oldId to newId in whole json.
                     var newId = UUID.randomUUID().toString();
                     realmImportJson = realmImportJson.replace(oldId, newId);
