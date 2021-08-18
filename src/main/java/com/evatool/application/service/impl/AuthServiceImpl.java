@@ -121,7 +121,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
 
-        // Get realm roles.
+        // Get available realm roles.
         httpEntity = new HttpEntity<>(null, headers);
         response = rest.exchange(getKeycloakGetRealmRolesUrl(), HttpMethod.GET, httpEntity, String.class);
         httpStatus = response.getStatusCode();
@@ -133,7 +133,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
 
-        // Assign realm roles.
+        // Assign realm roles to user.
         request = getKeycloakUpdateUserRealmRolesJson(realmRolesJson);
         httpEntity = new HttpEntity<>(request, headers);
         response = rest.postForEntity(getKeycloakSetUserRolesUrl(userId), httpEntity, String.class);
