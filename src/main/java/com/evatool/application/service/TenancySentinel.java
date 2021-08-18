@@ -20,6 +20,7 @@ public class TenancySentinel {
 
     private static final Logger logger = LoggerFactory.getLogger(TenancySentinel.class);
 
+
     private static boolean authEnabled;
 
     @Value("${evatool.auth.enabled:false}")
@@ -27,11 +28,20 @@ public class TenancySentinel {
         TenancySentinel.authEnabled = authEnabled;
     }
 
+
     private static boolean multiTenancyEnabled;
 
     @Value("${evatool.auth.multi-tenancy.enabled:false}")
     public void setMultiTenancyActive(boolean multiTenancyEnabled) {
         TenancySentinel.multiTenancyEnabled = multiTenancyEnabled;
+    }
+
+
+    private static boolean registrationEnabled;
+
+    @Value("${evatool.auth.registration.enabled:false}")
+    public void setRegistrationEnabled(boolean registrationEnabled) {
+        TenancySentinel.registrationEnabled = registrationEnabled;
     }
 
     public static String getCurrentRealmFromRequestToken() {
