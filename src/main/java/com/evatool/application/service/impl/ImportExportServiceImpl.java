@@ -95,6 +95,9 @@ public class ImportExportServiceImpl implements ImportExportService {
 
     @SneakyThrows(value = {JSONException.class, ImportJsonException.class})
     private Analysis importAnalysis(JSONObject analysisJsonObject) {
+        // Auth realm.
+        var realm = TenancySentinel.getCurrentRealmFromRequestToken();
+
         // Analysis.
         var analysisJson = analysisJsonObject.getJSONObject("analysis");
         var analysisName = analysisJson.getString("name");
@@ -102,6 +105,7 @@ public class ImportExportServiceImpl implements ImportExportService {
         var analysisIsTemplate = analysisJson.getBoolean("isTemplate");
         var analysisImageUrl = analysisJson.isNull("imageUrl") ? null : analysisJson.getString("imageUrl");
         var analysis = new Analysis(analysisName, analysisDescription, analysisIsTemplate, analysisImageUrl);
+        analysis.setRealm(realm);
         analysisRepository.save(analysis);
 
         // Values.
@@ -122,6 +126,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             var valueArchived = valueJson.getBoolean("archived");
 
             var value = new Value(valueName, valueDescription, valueType, valueArchived, analysis);
+            value.setRealm(realm);
             valueRepository.save(value);
 
             var valueId = valueJson.getString("id");
@@ -151,6 +156,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             }
 
             var stakeholder = new Stakeholder(stakeholderName, stakeholderPriority, stakeholderLevel, analysis);
+            stakeholder.setRealm(realm);
             stakeholderRepository.save(stakeholder);
 
             var stakeholderId = stakeholderJson.getString("id");
@@ -177,6 +183,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             }
 
             var impact = new Impact(impactMerit, impactDescription, value, stakeholder, analysis);
+            impact.setRealm(realm);
             impactRepository.save(impact);
 
             var impactId = impactJson.getString("id");
@@ -194,6 +201,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             var variantArchived = variantJson.getBoolean("archived");
 
             var variant = new Variant(variantName, variantDescription, variantArchived, analysis);
+            variant.setRealm(realm);
             variantRepository.save(variant);
 
             var variantId = variantJson.getString("id");
@@ -218,6 +226,7 @@ public class ImportExportServiceImpl implements ImportExportService {
                 }
                 requirement.getVariants().add(variant);
             }
+            requirement.setRealm(realm);
             requirementRepository.save(requirement);
 
             var requirementId = requirementJson.getString("id");
@@ -243,6 +252,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             }
 
             var delta = new RequirementDelta(deltaOverwriteMerit, impact, requirement);
+            delta.setRealm(realm);
             requirementDeltaRepository.save(delta);
 
             var deltaId = deltaJson.getString("id");
