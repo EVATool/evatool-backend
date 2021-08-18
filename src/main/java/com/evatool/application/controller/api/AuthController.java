@@ -16,7 +16,7 @@ public interface AuthController {
     @ApiOperation(value = "Login as user with password on realm")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<AuthTokenDto> login(@RequestParam String username, @RequestParam String password, @RequestParam String realm); // TODO Add spring validation to request params
+    ResponseEntity<AuthTokenDto> login(@RequestParam String username, @RequestParam String password, @RequestParam String realm);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     @ApiOperation(value = "Deep copy an analysis")

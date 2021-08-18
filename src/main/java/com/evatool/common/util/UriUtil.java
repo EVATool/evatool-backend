@@ -3,7 +3,20 @@ package com.evatool.common.util;
 public class UriUtil {
 
   private UriUtil() {
+    /*
 
+    Realm registration:
+    must have admin username and pw fields
+    should have warnings that only admin can use it
+
+    User register:
+    creates user in default keycloak realm
+    backend must use username as realm
+
+    Auth:
+    add spring validation to request params
+
+    */
   }
 
   // CRUD.

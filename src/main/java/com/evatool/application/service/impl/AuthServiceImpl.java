@@ -94,7 +94,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthRegisterUserDto registerUser(String username, String email, String password) {
         var rest = getRestTemplate();
-        // TODO The standalone version of EvaTool MUST use users in evatool-realm as proxy for realms (keycloak cannot handle multiple hundred realms!).
 
 
         return new AuthRegisterUserDto(username, email);
@@ -114,7 +113,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
-            throw new ConflictException("Realm \"" + realm + "\" does already exist");
+            throw new ConflictException("Realm \"" + realm + "\" does already exist" + response.getBody());
         } else if (httpStatus != HttpStatus.CREATED) {
             throw new InternalServerErrorException("Unhandled Exception from create realm rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
@@ -130,22 +129,28 @@ public class AuthServiceImpl implements AuthService {
         var jsonNode = mapper.readValue(in, JsonNode.class);
         var realmImportJson = mapper.writeValueAsString(jsonNode);
 
+        // Convert json to JSONObject to definitely get a json with new lines per attribute.
+        var jsonObject = new JSONObject(realmImportJson);
+        realmImportJson = jsonObject.toString(4);
+
         // Replace realm name.
         realmImportJson = realmImportJson.replace("evatool-realm", realm);
 
         // Re-assign ids.
-        var lines = realmImportJson.split("\n");
+        var lines = realmImportJson.split("\\r?\\n");
         for (var line : lines) {
 
-            // Check if id is in line.
-            if (line.toLowerCase().contains("id\" : ")) {
+            // Check if an id is in the line.
+            if (line.toLowerCase().contains("id\": ")) {
+                System.out.println(line);
 
                 // Retrieve id from line.
                 var oldId = line.split(":")[1].trim().replace("\"", "").replace(",", "");
 
-                // Check if id is UUID
+                // Check if id is UUID.
+                System.out.println(oldId);
                 if (UUIDUtil.isValidUUID(oldId)) {
-
+                    System.out.println("WAS UUID");
                     // Change oldId to newId in whole json.
                     var newId = UUID.randomUUID().toString();
                     realmImportJson = realmImportJson.replace(oldId, newId);
@@ -189,7 +194,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private String getKeycloakRegisterUserUrl() {
-        return keycloakBaseUrl + ""; // TODO
+        return keycloakBaseUrl + "";
     }
 
     private String getKeycloakRegisterRealmUrl() {
