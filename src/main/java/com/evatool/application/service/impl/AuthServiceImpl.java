@@ -26,6 +26,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Service
@@ -105,6 +106,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Create user.
         var request = getKeycloakCreateUserJson(username, email, password);
+        System.out.println(request);
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(adminToken);
@@ -129,9 +131,17 @@ public class AuthServiceImpl implements AuthService {
                 "\"email\":\"" + email + "\", " +
                 "\"enabled\":\"true\", " +
                 "\"username\":\"" + username + "\", " +
-                "\"realmRoles\": [\"" + String.join("\", \"", AuthUtil.ALL_ROLES) + "\"], " +
+                "\"realmRoles\": " + getRealmRolesJsonArray() + ", " +
                 "\"credentials\": [{\"type\":\"password\", \"value\":\"" + password + "\", \"temporary\":false}]" +
                 "}";
+    }
+
+    private String getRealmRolesJsonArray() {
+        var roleList = new ArrayList<String>();
+        for (var role : AuthUtil.ALL_ROLES) {
+            roleList.add("\"ROLE_" + role + "\"");
+        }
+        return "[" + String.join(", ", roleList) + "]";
     }
 
     @Override
