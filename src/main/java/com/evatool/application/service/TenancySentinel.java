@@ -2,10 +2,6 @@ package com.evatool.application.service;
 
 import com.evatool.common.exception.CrossRealmAccessException;
 import com.evatool.domain.entity.SuperEntity;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.AccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,26 +32,13 @@ public class TenancySentinel {
         TenancySentinel.multiTenancyEnabled = multiTenancyEnabled;
     }
 
-    public static HttpServletRequest getCurrentHttpRequest() {
+    public static String getCurrentRealm() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes instanceof ServletRequestAttributes) {
             HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-            return request;
+            return request.getHeader("Realm");
         }
-        logger.debug("Not called in the context of an HTTP request"); // TODO throw exception?
-        return null;
-    }
-
-    public static String getCurrentRealm() {
-        var request = getCurrentHttpRequest();
-        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) request.getUserPrincipal();
-        KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-        KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
-        AccessToken accessToken = session.getToken();
-        var issuer = accessToken.getIssuer();
-        // TODO depending on registrationEnabled, use user as realm.
-        var realm = issuer.substring(issuer.lastIndexOf("/") + 1);
-        return realm;
+        throw new IllegalStateException("Cannot get realm if not in request context");
     }
 
     public static <S extends SuperEntity> void handleFind(S entity) {

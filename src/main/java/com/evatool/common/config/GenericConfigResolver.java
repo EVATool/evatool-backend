@@ -1,5 +1,6 @@
 package com.evatool.common.config;
 
+import com.evatool.application.service.TenancySentinel;
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.KeycloakDeployment;
 import org.keycloak.adapters.KeycloakDeploymentBuilder;
@@ -21,40 +22,9 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
     @Value("${keycloak.auth-server-url:}")
     private String keycloakUrl;
 
-    public static String getCurrentRealm() {
-//        var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-//        System.out.println(request.getRequestURI());
-//        System.out.println(request.getHeader("Authorization"));
-//        if (request.getUserPrincipal() == null) {
-//            return null;
-//        }
-//        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) request.getUserPrincipal();
-//        System.out.println(token);
-//        if (token == null) { // Request not authenticated.
-//            return null;
-//        }
-//        KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-//        KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
-//        AccessToken accessToken = session.getToken();
-//        var issuer = accessToken.getIssuer();
-//        var realm = issuer.substring(issuer.lastIndexOf("/") + 1);
-//        return realm;
-
-        var request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        // TODO This requires the realm to be send from frontend.
-        //  How to get realm from keycloak Token or request?
-        //  The method used in TenancySentinel to retrieve the realm does not work here.
-        //  Only token retrieval works (get realm from token string?)
-
-        // TODO depending on registrationEnabled, use user as realm.
-        var realm = request.getHeader("Realm");
-
-        return realm;
-    }
-
     @Override
     public KeycloakDeployment resolve(OIDCHttpFacade.Request request) {
-        var realm = getCurrentRealm();
+        var realm = TenancySentinel.getCurrentRealm();
         logger.info("Request to URI {} to realm {}", request.getURI(), realm);
 
         if (realm == null || realm.equals("")) { // TODO Exceptions that are thrown here are ignored by GlobalExceptionHandler (How to return 403 or 404 here?)
