@@ -9,6 +9,7 @@ import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.NotFoundException;
 import com.evatool.common.exception.UnauthorizedException;
 import com.evatool.common.exception.handle.RestTemplateResponseErrorHandlerIgnore;
+import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UUIDUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -101,6 +102,8 @@ public class AuthServiceImpl implements AuthService {
     public AuthRegisterUserDto registerUser(String username, String email, String password) {
         var adminToken = login(authAdminUser, authAdminPassword, "master").getToken();
         var rest = getRestTemplate();
+
+        // Create user.
         var request = getKeycloakCreateUserJson(username, email, password);
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -126,6 +129,7 @@ public class AuthServiceImpl implements AuthService {
                 "\"email\":\"" + email + "\", " +
                 "\"enabled\":\"true\", " +
                 "\"username\":\"" + username + "\", " +
+                "\"realmRoles\": [\"" + String.join("\", \"", AuthUtil.ALL_ROLES) + "\"], " +
                 "\"credentials\": [{\"type\":\"password\", \"value\":\"" + password + "\", \"temporary\":false}]" +
                 "}";
     }
