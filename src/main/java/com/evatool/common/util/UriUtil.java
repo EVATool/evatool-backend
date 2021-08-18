@@ -3,12 +3,6 @@ package com.evatool.common.util;
 public class UriUtil {
 
   private UriUtil() {
-    /*
-
-    Import Export:
-    DemPa-App
-
-    */
   }
 
   // CRUD.

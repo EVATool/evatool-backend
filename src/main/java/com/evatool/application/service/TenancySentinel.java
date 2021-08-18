@@ -44,6 +44,7 @@ public class TenancySentinel {
         TenancySentinel.registrationEnabled = registrationEnabled;
     }
 
+
     public static String getCurrentRealmFromRequestToken() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes instanceof ServletRequestAttributes) {
