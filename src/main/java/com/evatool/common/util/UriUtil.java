@@ -5,9 +5,6 @@ public class UriUtil {
   private UriUtil() {
     /*
 
-    Realm registration:
-    Special admin login and then special buttons to admin pages in user menu in header (top right) [remove adminUser and pw from rest call and use token directly]
-
     User register:
     creates user in default keycloak realm
     backend must use username as realm
