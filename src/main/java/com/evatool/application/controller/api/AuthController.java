@@ -19,7 +19,7 @@ public interface AuthController {
     ResponseEntity<AuthTokenDto> login(@RequestParam String username, @RequestParam String password, @RequestParam String realm);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
-    @ApiOperation(value = "Deep copy an analysis")
+    @ApiOperation(value = "Refresh login with an existing token")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
     ResponseEntity<AuthTokenDto> refreshLogin(@RequestParam String refreshToken, @RequestParam String realm);

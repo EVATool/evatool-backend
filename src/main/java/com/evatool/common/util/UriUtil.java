@@ -10,7 +10,7 @@ public class UriUtil {
     backend must use username as realm
 
     Auth:
-    add spring validation to request params
+    add spring validation to request params (allow letters [big and small], dash and numbers)
 
     Import Export:
     DemPa-App

@@ -32,6 +32,9 @@ public class AuthServiceImpl implements AuthService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
+    @Value("${evatool.auth.registration.enabled:false}")
+    private boolean registrationEnabled;
+
     public AuthTokenDto login(String username, String password, String realm) {
         var rest = getRestTemplate();
         var clientId = getClientId(realm);
