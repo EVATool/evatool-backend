@@ -19,10 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -120,18 +117,32 @@ public class AuthServiceImpl implements AuthService {
             throw new InternalServerErrorException("Unhandled Exception from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
-        // Assign realm roles (this must be done in a separate rest call due to keycloak ignoring the "realmRoles"
-        // field when creating a user).
+
+        // Get realm roles.
+        httpEntity = new HttpEntity<>(null, headers);
+        response = rest.exchange(getKeycloakGetRealmRolesUrl(), HttpMethod.GET, httpEntity, String.class);
+        httpStatus = response.getStatusCode();
+        
+
+        System.out.println();
+
+        // Error handling.
+        if (httpStatus != HttpStatus.NO_CONTENT) {
+            throw new InternalServerErrorException("Unhandled Exception from get realm roles rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
+        }
+
+
+        // Assign realm roles.
         var location = response.getHeaders().getLocation().toString();
         var userId = location.substring(location.lastIndexOf("/") + 1);
         request = getKeycloakUpdateUserRealmRolesJson();
         httpEntity = new HttpEntity<>(request, headers);
-        response = rest.postForEntity(getKeycloakUpdateUserUrl(userId), httpEntity, String.class);
+        response = rest.postForEntity(getKeycloakSetUserRolesUrl(userId), httpEntity, String.class);
         httpStatus = response.getStatusCode();
 
         // Error handling.
         if (httpStatus != HttpStatus.NO_CONTENT) {
-            throw new InternalServerErrorException("Unhandled Exception from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
+            throw new InternalServerErrorException("Unhandled Exception from set user roles rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
         return new AuthRegisterUserDto(username, email);
@@ -262,7 +273,11 @@ public class AuthServiceImpl implements AuthService {
         return keycloakBaseUrl + "admin/realms/evatool-realm/users";
     }
 
-    private String getKeycloakUpdateUserUrl(String userId) {
+    private String getKeycloakGetRealmRolesUrl() {
+        return keycloakBaseUrl + "admin/realms/evatool-realm/roles";
+    }
+
+    private String getKeycloakSetUserRolesUrl(String userId) {
         return keycloakBaseUrl + "admin/realms/evatool-realm/users/" + userId + "/role-mappings/realm";
     }
 
