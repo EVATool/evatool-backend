@@ -156,9 +156,10 @@ public class AuthServiceImpl implements AuthService {
     private String getRealmRolesJsonArray() {
         var roleList = new ArrayList<String>();
         for (var role : AuthUtil.ALL_ROLES) {
-            roleList.add("{\"name\": \"" + role + "\"}");
+            roleList.add("{\"id\": \"3ae7d057-8323-4354-b614-42843bfa1cb8\" ,\"name\": \"" + role + "\"}");
         }
-        return "[" + String.join(", ", roleList) + "]";
+        return "[{\"id\": \"3ae7d057-8323-4354-b614-42843bfa1cb8\", \"name\": \"reader\"}]";
+        //return "[" + String.join(", ", roleList) + "]";
     }
 
     @Override
