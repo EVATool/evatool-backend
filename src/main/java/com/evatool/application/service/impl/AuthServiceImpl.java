@@ -118,6 +118,7 @@ public class AuthServiceImpl implements AuthService {
             throw new InternalServerErrorException("Unhandled Exception from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
+        // Save user id for later.
         var location = response.getHeaders().getLocation().toString();
         var userId = location.substring(location.lastIndexOf("/") + 1);
 
