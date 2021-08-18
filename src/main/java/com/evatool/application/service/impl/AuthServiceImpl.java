@@ -93,10 +93,18 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthRegisterUserDto registerUser(String username, String email, String password) {
+        var adminToken = login(authAdminUsername, authAdminPassword, "master").getToken();
         var rest = getRestTemplate();
 
 
+        var realm = "evatool-realm";
+
+
         return new AuthRegisterUserDto(username, email);
+    }
+
+    private String getKeycloakCreateUserJson(String username, String email, String password) {
+        return null;
     }
 
     @Override
