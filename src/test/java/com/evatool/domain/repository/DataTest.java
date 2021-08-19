@@ -32,8 +32,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             return requirementDeltaRepository;
         } else if (type == Stakeholder.class) {
             return stakeholderRepository;
-        } else if (type == User.class) {
-            return userRepository;
         } else if (type == Value.class) {
             return valueRepository;
         } else if (type == Variant.class) {
@@ -55,8 +53,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             return requirementDeltaMapper;
         } else if (type == StakeholderDto.class) {
             return stakeholderMapper;
-        } else if (type == UserDto.class) {
-            return userMapper;
         } else if (type == ValueDto.class) {
             return valueMapper;
         } else if (type == VariantDto.class) {
@@ -82,9 +78,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
     protected StakeholderMapper stakeholderMapper;
 
     @Autowired
-    protected UserMapper userMapper;
-
-    @Autowired
     protected ValueMapper valueMapper;
 
     @Autowired
@@ -103,8 +96,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             return (T) getPersistedRequirementDeltaDto();
         } else if (type == StakeholderDto.class) {
             return (T) getPersistedStakeholderDto();
-        } else if (type == UserDto.class) {
-            return (T) getPersistedUserDto();
         } else if (type == ValueDto.class) {
             return (T) getPersistedValueDto();
         } else if (type == VariantDto.class) {
@@ -126,8 +117,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             return (T) getFloatingRequirementDeltaDto();
         } else if (type == StakeholderDto.class) {
             return (T) getFloatingStakeholderDto();
-        } else if (type == UserDto.class) {
-            return (T) getFloatingUserDto();
         } else if (type == ValueDto.class) {
             return (T) getFloatingValueDto();
         } else if (type == VariantDto.class) {
@@ -160,9 +149,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             dto.setName("updated");
             dto.setPriority(StakeholderPriority.TWO);
             dto.setLevel(StakeholderLevel.ORGANIZATION);
-        } else if (type == User.class) {
-            var dto = (User) _entity;
-            dto.setExternalUserId("updated");
         } else if (type == Value.class) {
             var dto = (Value) _entity;
             dto.setName("updated");
@@ -202,9 +188,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             dto.setName("updated");
             dto.setPriority(StakeholderPriority.TWO);
             dto.setLevel(StakeholderLevel.ORGANIZATION);
-        } else if (type == UserDto.class) {
-            var dto = (UserDto) _dto;
-            dto.setExternalUserId("updated");
         } else if (type == ValueDto.class) {
             var dto = (ValueDto) _dto;
             dto.setName("updated");
@@ -233,8 +216,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             return requirementDeltaService;
         } else if (type == StakeholderDto.class) {
             return stakeholderService;
-        } else if (type == UserDto.class) {
-            return userService;
         } else if (type == ValueDto.class) {
             return valueService;
         } else if (type == VariantDto.class) {
@@ -258,9 +239,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
 
     @Autowired
     private StakeholderServiceImpl stakeholderService;
-
-    @Autowired
-    private UserServiceImpl userService;
 
     @Autowired
     private ValueServiceImpl valueService;
@@ -306,14 +284,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
 
     protected StakeholderDto getPersistedStakeholderDto() {
         return stakeholderMapper.toDto(getPersistedStakeholder());
-    }
-
-    protected UserDto getFloatingUserDto() {
-        return userMapper.toDto(getFloatingUser());
-    }
-
-    protected UserDto getPersistedUserDto() {
-        return userMapper.toDto(getPersistedUser());
     }
 
     protected ValueDto getFloatingValueDto() {

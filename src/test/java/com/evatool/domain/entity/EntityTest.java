@@ -27,9 +27,6 @@ public abstract class EntityTest<S extends SuperEntity> {
     protected StakeholderRepository stakeholderRepository;
 
     @Autowired
-    protected UserRepository userRepository;
-
-    @Autowired
     protected ValueRepository valueRepository;
 
     @Autowired
@@ -44,7 +41,6 @@ public abstract class EntityTest<S extends SuperEntity> {
         stakeholderRepository.deleteAll();
         variantRepository.deleteAll();
         analysisRepository.deleteAll();
-        userRepository.deleteAll();
     }
 
     protected Class<S> getEntityClass() {
@@ -63,8 +59,6 @@ public abstract class EntityTest<S extends SuperEntity> {
             return getFloatingRequirementDelta();
         } else if (type == Stakeholder.class) {
             return getFloatingStakeholder();
-        } else if (type == User.class) {
-            return getFloatingUser();
         } else if (type == Value.class) {
             return getFloatingValue();
         } else if (type == Variant.class) {
@@ -86,8 +80,6 @@ public abstract class EntityTest<S extends SuperEntity> {
             return getPersistedRequirementDelta();
         } else if (type == Stakeholder.class) {
             return getPersistedStakeholder();
-        } else if (type == User.class) {
-            return getPersistedUser();
         } else if (type == Value.class) {
             return getPersistedValue();
         } else if (type == Variant.class) {
@@ -180,14 +172,6 @@ public abstract class EntityTest<S extends SuperEntity> {
 
     protected Stakeholder getPersistedStakeholder(Analysis analysis) {
         return stakeholderRepository.save(getFloatingStakeholder(analysis));
-    }
-
-    protected User getFloatingUser() {
-        return new User("external user id");
-    }
-
-    protected User getPersistedUser() {
-        return userRepository.save(getFloatingUser());
     }
 
     protected Value getFloatingValue() {

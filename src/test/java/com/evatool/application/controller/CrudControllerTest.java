@@ -112,8 +112,6 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
             return UriUtil.REQUIREMENTS_DELTA;
         } else if (type == StakeholderDto.class) {
             return UriUtil.STAKEHOLDERS;
-        } else if (type == UserDto.class) {
-            return UriUtil.USERS;
         } else if (type == ValueDto.class) {
             return UriUtil.VALUES;
         } else if (type == VariantDto.class) {

@@ -59,12 +59,6 @@ create table stakeholder (
     analysis_id CHAR(36) not null,
     primary key (id));
 
-create table user (
-    id CHAR(36) not null,
-    realm varchar(255) not null,
-    external_user_id varchar(255) not null,
-    primary key (id));
-
 create table value (
     id CHAR(36) not null,
     realm varchar(255) not null,
