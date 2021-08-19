@@ -119,6 +119,9 @@ public class AuthServiceImpl implements AuthService {
         }
 
         // Save user id for later.
+        if (response.getHeaders().getLocation() == null) {
+            throw new InternalServerErrorException("Keycloak must return ");
+        }
         var location = response.getHeaders().getLocation().toString();
         var userId = location.substring(location.lastIndexOf("/") + 1);
 
@@ -265,16 +268,8 @@ public class AuthServiceImpl implements AuthService {
     @Value("${keycloak.auth-server-url:}")
     private String keycloakBaseUrl;
 
-    private String getKeycloakAdminLoginUrl() {
-        return getKeycloakLoginUrl("master");
-    }
-
     public String getKeycloakLoginUrl(String realm) {
         return keycloakBaseUrl + "realms/" + realm + "/protocol/openid-connect/token";
-    }
-
-    private String getKeycloakRefreshUrl(String realm) {
-        return getKeycloakLoginUrl(realm);
     }
 
     private String getKeycloakCreateUserUrl() {

@@ -4,6 +4,8 @@ import com.evatool.domain.entity.SuperEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -15,9 +17,11 @@ abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest {
         var entity = getPersistedEntity();
 
         // when
-        var entityFound = getRepository().findById(entity.getId()).get();
+        var entityOptional = (Optional<T>) getRepository().findById(entity.getId());
 
         // then
+        assertThat(entityOptional).isPresent();
+        var entityFound = entityOptional.get();
         assertThat(entityFound).isEqualTo(entity);
     }
 
@@ -28,9 +32,11 @@ abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest {
 
         // when
         var entityCreated = (T) getRepository().save(entity);
-        var entityFound = getRepository().findById(entityCreated.getId()).get();
+        var entityOptional = (Optional<T>) getRepository().findById(entityCreated.getId());
 
         // then
+        assertThat(entityOptional).isPresent();
+        var entityFound = entityOptional.get();
         assertThat(entityFound).isEqualTo(entityCreated);
     }
 
@@ -40,11 +46,13 @@ abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest {
         var entity = getPersistedEntity();
 
         // when
-        //changeEntity(entity);
+        //changeEntity(entity); // TODO
         var entityUpdated = (T) getRepository().save(entity);
-        var entityFound = getRepository().findById(entity.getId()).get();
+        var entityOptional = (Optional<T>) getRepository().findById(entity.getId());
 
         // then
+        assertThat(entityOptional).isPresent();
+        var entityFound = entityOptional.get();
         assertThat(entityFound).isEqualTo(entityUpdated);
     }
 

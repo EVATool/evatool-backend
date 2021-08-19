@@ -47,9 +47,10 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
         var httpEntity = new HttpEntity<>(dto);
         var response = rest.postForEntity(getUri(), httpEntity, getDtoClass());
         var dtoCreated = (T) response.getBody();
-        var dtoFound = (T) getService().findById(dtoCreated.getId());
 
         // then
+        assertThat(dtoCreated).isNotNull();
+        var dtoFound = (T) getService().findById(dtoCreated.getId());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(dtoFound).isEqualTo(dtoCreated);
     }
@@ -97,6 +98,7 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(entityModel).isNotNull();
         assertThat(entityModel.getLink("self")).isPresent().contains(Link.of("http://localhost:8082" + getUri() + "/" + dto.getId(), "self"));
     }
 

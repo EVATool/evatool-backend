@@ -114,7 +114,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             var valueName = valueJson.getString("name");
             var valueDescription = valueJson.getString("description");
             var valueTypeString = valueJson.getString("type");
-            ValueType valueType = null;
+            ValueType valueType;
             try {
                 valueType = ValueType.valueOf(valueTypeString);
             } catch (IllegalArgumentException exception) {
@@ -138,14 +138,14 @@ public class ImportExportServiceImpl implements ImportExportService {
 
             var stakeholderName = stakeholderJson.getString("name");
             var StakeholderPriorityString = stakeholderJson.getString("priority");
-            StakeholderPriority stakeholderPriority = null;
+            StakeholderPriority stakeholderPriority;
             try {
                 stakeholderPriority = StakeholderPriority.valueOf(StakeholderPriorityString);
             } catch (IllegalArgumentException exception) {
                 throw new ImportJsonException("Unknown StakeholderPriority (" + StakeholderPriorityString + ")");
             }
             var StakeholderLevelString = stakeholderJson.getString("level");
-            StakeholderLevel stakeholderLevel = null;
+            StakeholderLevel stakeholderLevel;
             try {
                 stakeholderLevel = StakeholderLevel.valueOf(StakeholderLevelString);
             } catch (IllegalArgumentException exception) {
@@ -278,9 +278,6 @@ public class ImportExportServiceImpl implements ImportExportService {
     @Override
     public String exportAnalyses(Iterable<UUID> analysisIds) {
 
-        // Create meta data.
-        var importExportVersion = NEWEST_IMPORT_EXPORT_VERSION;
-
         // Create entity json.
         var analyses = analysisRepository.findAllById(analysisIds);
         analyses = TenancySentinel.handleFind(analyses);
@@ -316,7 +313,7 @@ public class ImportExportServiceImpl implements ImportExportService {
         };
 
         var exportAnalysesDto = new ImportExportAnalysesDto(
-                importExportVersion,
+                NEWEST_IMPORT_EXPORT_VERSION,
                 exportAnalysisDtoList.toArray(new ImportExportAnalysisDto[0]));
 
         var gson = new GsonBuilder()

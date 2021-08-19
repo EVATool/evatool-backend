@@ -30,16 +30,14 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
             realm = "evatool-realm"; // This is supposed to cause a 404.
         }
 
-        var adapterConfig = new AdapterConfig();
+        var adapterConfig = new AdapterConfig(); // TODO Must this variable have the same name as variable in class scope?
         adapterConfig.setRealm(realm);
         adapterConfig.setResource("evatool-app");
         adapterConfig.setPublicClient(true);
         adapterConfig.setAuthServerUrl(keycloakUrl);
         adapterConfig.setSslRequired("external");
 
-        var keycloakDeployment = KeycloakDeploymentBuilder.build(adapterConfig);
-
-        return keycloakDeployment;
+        return KeycloakDeploymentBuilder.build(adapterConfig);
     }
 
     static void setAdapterConfig(AdapterConfig adapterConfig) {

@@ -10,6 +10,7 @@ import java.util.UUID;
 @Repository
 public interface RequirementDeltaRepository extends CrudRepository<RequirementDelta, UUID>, FindByAnalysisRepository<RequirementDelta> {
 
+    @Override
     @Query(value = "select rd "
             + "from requirement_delta rd "
             + "inner join requirement r on rd.requirement.id=r.id "

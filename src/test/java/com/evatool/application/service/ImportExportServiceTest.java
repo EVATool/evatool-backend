@@ -106,8 +106,8 @@ class ImportExportServiceTest {
         assertThat(originalAnalysis.getImageUrl()).isEqualTo(importedAnalysis.getImageUrl());
 
         // Check values equality.
-        var originalValues = new ArrayList<Value>(originalAnalysis.getValues());
-        var importedValues = new ArrayList<Value>(importedAnalysis.getValues());
+        var originalValues = new ArrayList<>(originalAnalysis.getValues());
+        var importedValues = new ArrayList<>(importedAnalysis.getValues());
         assertThat(originalValues).hasSize(importedValues.size());
         for (int i = 0; i < originalAnalysis.getValues().size(); i++) {
             var originalValue = originalValues.get(i);
@@ -120,8 +120,8 @@ class ImportExportServiceTest {
         }
 
         // Check stakeholders equality.
-        var originalStakeholders = new ArrayList<Stakeholder>(originalAnalysis.getStakeholders());
-        var importedStakeholders = new ArrayList<Stakeholder>(importedAnalysis.getStakeholders());
+        var originalStakeholders = new ArrayList<>(originalAnalysis.getStakeholders());
+        var importedStakeholders = new ArrayList<>(importedAnalysis.getStakeholders());
         assertThat(originalStakeholders).hasSize(importedStakeholders.size());
         for (int i = 0; i < originalAnalysis.getStakeholders().size(); i++) {
             var originalStakeholder = originalStakeholders.get(i);
@@ -133,8 +133,8 @@ class ImportExportServiceTest {
         }
 
         // Check impacts equality.
-        var originalImpacts = new ArrayList<Impact>(originalAnalysis.getImpacts());
-        var importedImpacts = new ArrayList<Impact>(importedAnalysis.getImpacts());
+        var originalImpacts = new ArrayList<>(originalAnalysis.getImpacts());
+        var importedImpacts = new ArrayList<>(importedAnalysis.getImpacts());
         assertThat(originalImpacts).hasSize(importedImpacts.size());
         for (int i = 0; i < originalAnalysis.getImpacts().size(); i++) {
             var originalImpact = originalImpacts.get(i);
@@ -145,8 +145,8 @@ class ImportExportServiceTest {
         }
 
         // Check variants equality.
-        var originalVariants = new ArrayList<Variant>(originalAnalysis.getVariants());
-        var importedVariants = new ArrayList<Variant>(importedAnalysis.getVariants());
+        var originalVariants = new ArrayList<>(originalAnalysis.getVariants());
+        var importedVariants = new ArrayList<>(importedAnalysis.getVariants());
         assertThat(originalVariants).hasSize(importedVariants.size());
         for (int i = 0; i < originalAnalysis.getVariants().size(); i++) {
             var originalVariant = originalVariants.get(i);
@@ -158,8 +158,8 @@ class ImportExportServiceTest {
         }
 
         // Check requirements equality.
-        var originalRequirements = new ArrayList<Requirement>(originalAnalysis.getRequirements());
-        var importedRequirements = new ArrayList<Requirement>(importedAnalysis.getRequirements());
+        var originalRequirements = new ArrayList<>(originalAnalysis.getRequirements());
+        var importedRequirements = new ArrayList<>(importedAnalysis.getRequirements());
         assertThat(originalRequirements).hasSize(importedRequirements.size());
         for (int i = 0; i < originalAnalysis.getRequirements().size(); i++) {
             var originalRequirement = originalRequirements.get(i);
