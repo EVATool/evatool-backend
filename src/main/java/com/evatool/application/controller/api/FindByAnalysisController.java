@@ -5,7 +5,6 @@ import com.evatool.application.service.api.FindByAnalysisService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +21,8 @@ public interface FindByAnalysisController<T extends AnalysisChildDto> {
     @ApiOperation(value = "Find entity by analysis id")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    default ResponseEntity<Iterable<EntityModel<T>>> findAllByAnalysisId(@Valid @RequestParam UUID analysisId) {
+    default ResponseEntity<Iterable<T>> findAllByAnalysisId(@Valid @RequestParam UUID analysisId) {
         var dtoListFound = getService().findAllByAnalysisId(analysisId);
-        return new ResponseEntity(withLinks(dtoListFound), HttpStatus.OK);
+        return new ResponseEntity(dtoListFound, HttpStatus.OK);
     }
-
-    Iterable<EntityModel<T>> withLinks(Iterable<T> dtoList);
-
 }

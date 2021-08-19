@@ -11,16 +11,12 @@ import io.swagger.annotations.Api;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Api(tags = "Value API-Endpoint")
 @RestController
@@ -47,28 +43,28 @@ public class ValueControllerImpl extends CrudControllerImpl<Value, ValueDto> imp
     @Override
     @GetMapping(UriUtil.VALUES)
     @PreAuthorize(AuthUtil.BY_READER)
-    public ResponseEntity<Iterable<EntityModel<ValueDto>>> findAllByAnalysisId(UUID analysisId) {
+    public ResponseEntity<Iterable<ValueDto>> findAllByAnalysisId(UUID analysisId) {
         return ValueController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.VALUES_ID)
     @PreAuthorize(AuthUtil.BY_READER)
-    public ResponseEntity<EntityModel<ValueDto>> findById(UUID id) {
+    public ResponseEntity<ValueDto> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.VALUES)
     @PreAuthorize(AuthUtil.BY_WRITER)
-    public ResponseEntity<EntityModel<ValueDto>> create(ValueDto dto) {
+    public ResponseEntity<ValueDto> create(ValueDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.VALUES)
     @PreAuthorize(AuthUtil.BY_WRITER)
-    public ResponseEntity<EntityModel<ValueDto>> update(ValueDto dto) {
+    public ResponseEntity<ValueDto> update(ValueDto dto) {
         return super.update(dto);
     }
 
@@ -77,12 +73,5 @@ public class ValueControllerImpl extends CrudControllerImpl<Value, ValueDto> imp
     @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
-    }
-
-    @Override
-    public EntityModel<ValueDto> withLinks(ValueDto dto) {
-        var entityModel = super.withLinks(dto);
-        entityModel.add(linkTo(methodOn(AnalysisControllerImpl.class).findById(dto.getAnalysisId())).withRel(UriUtil.ANALYSIS_REL));
-        return entityModel;
     }
 }

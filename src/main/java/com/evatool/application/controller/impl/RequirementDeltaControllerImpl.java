@@ -10,15 +10,11 @@ import io.swagger.annotations.Api;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Api(tags = "Requirement-Delta API-Endpoint")
 @RestController
@@ -38,28 +34,28 @@ public class RequirementDeltaControllerImpl extends CrudControllerImpl<Requireme
     @Override
     @GetMapping(value = UriUtil.REQUIREMENTS_DELTA, params = {"!impactId", "!requirementId"})
     @PreAuthorize(AuthUtil.BY_READER)
-    public ResponseEntity<Iterable<EntityModel<RequirementDeltaDto>>> findAllByAnalysisId(UUID analysisId) {
+    public ResponseEntity<Iterable<RequirementDeltaDto>> findAllByAnalysisId(UUID analysisId) {
         return RequirementDeltaController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.REQUIREMENTS_DELTA_ID)
     @PreAuthorize(AuthUtil.BY_READER)
-    public ResponseEntity<EntityModel<RequirementDeltaDto>> findById(UUID id) {
+    public ResponseEntity<RequirementDeltaDto> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.REQUIREMENTS_DELTA)
     @PreAuthorize(AuthUtil.BY_WRITER)
-    public ResponseEntity<EntityModel<RequirementDeltaDto>> create(RequirementDeltaDto dto) {
+    public ResponseEntity<RequirementDeltaDto> create(RequirementDeltaDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.REQUIREMENTS_DELTA)
     @PreAuthorize(AuthUtil.BY_WRITER)
-    public ResponseEntity<EntityModel<RequirementDeltaDto>> update(RequirementDeltaDto dto) {
+    public ResponseEntity<RequirementDeltaDto> update(RequirementDeltaDto dto) {
         return super.update(dto);
     }
 
@@ -68,13 +64,5 @@ public class RequirementDeltaControllerImpl extends CrudControllerImpl<Requireme
     @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
-    }
-
-    @Override
-    public EntityModel<RequirementDeltaDto> withLinks(RequirementDeltaDto dto) {
-        var entityModel = super.withLinks(dto);
-        entityModel.add(linkTo(methodOn(ImpactControllerImpl.class).findById(dto.getImpactId())).withRel(UriUtil.IMPACTS_REL));
-        entityModel.add(linkTo(methodOn(RequirementControllerImpl.class).findById(dto.getRequirementId())).withRel(UriUtil.REQUIREMENTS_REL));
-        return entityModel;
     }
 }

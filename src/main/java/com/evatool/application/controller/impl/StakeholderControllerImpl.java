@@ -12,16 +12,12 @@ import io.swagger.annotations.Api;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Api(tags = "Stakeholder API-Endpoint")
 @RestController
@@ -55,28 +51,28 @@ public class StakeholderControllerImpl extends CrudControllerImpl<Stakeholder, S
     @Override
     @GetMapping(UriUtil.STAKEHOLDERS)
     @PreAuthorize(AuthUtil.BY_READER)
-    public ResponseEntity<Iterable<EntityModel<StakeholderDto>>> findAllByAnalysisId(UUID analysisId) {
+    public ResponseEntity<Iterable<StakeholderDto>> findAllByAnalysisId(UUID analysisId) {
         return StakeholderController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.STAKEHOLDERS_ID)
     @PreAuthorize(AuthUtil.BY_READER)
-    public ResponseEntity<EntityModel<StakeholderDto>> findById(UUID id) {
+    public ResponseEntity<StakeholderDto> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.STAKEHOLDERS)
     @PreAuthorize(AuthUtil.BY_WRITER)
-    public ResponseEntity<EntityModel<StakeholderDto>> create(StakeholderDto dto) {
+    public ResponseEntity<StakeholderDto> create(StakeholderDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.STAKEHOLDERS)
     @PreAuthorize(AuthUtil.BY_WRITER)
-    public ResponseEntity<EntityModel<StakeholderDto>> update(StakeholderDto dto) {
+    public ResponseEntity<StakeholderDto> update(StakeholderDto dto) {
         return super.update(dto);
     }
 
@@ -85,12 +81,5 @@ public class StakeholderControllerImpl extends CrudControllerImpl<Stakeholder, S
     @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
-    }
-
-    @Override
-    public EntityModel<StakeholderDto> withLinks(StakeholderDto dto) {
-        var entityModel = super.withLinks(dto);
-        entityModel.add(linkTo(methodOn(AnalysisControllerImpl.class).findById(dto.getAnalysisId())).withRel(UriUtil.ANALYSIS_REL));
-        return entityModel;
     }
 }

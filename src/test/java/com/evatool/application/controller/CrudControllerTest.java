@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -83,21 +81,6 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(dtoListFound).isEmpty();
-    }
-
-    @Test
-    void restLevel3() {
-        // given
-        var dto = getPersistedDto();
-
-        // when
-        var response = rest.getForEntity(getUri() + "/" + dto.getId(), EntityModel.class);
-        var entityModel = response.getBody();
-
-        // then
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(entityModel).isNotNull();
-        assertThat(entityModel.getLink("self")).isPresent().contains(Link.of("http://localhost:8082" + getUri() + "/" + dto.getId(), "self"));
     }
 
     public String getUri() {

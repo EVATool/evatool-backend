@@ -10,16 +10,11 @@ import io.swagger.annotations.Api;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Api(tags = "Requirement API-Endpoint")
 @RestController
@@ -39,28 +34,28 @@ public class RequirementControllerImpl extends CrudControllerImpl<Requirement, R
     @Override
     @GetMapping(UriUtil.REQUIREMENTS)
     @PreAuthorize(AuthUtil.BY_READER)
-    public ResponseEntity<Iterable<EntityModel<RequirementDto>>> findAllByAnalysisId(UUID analysisId) {
+    public ResponseEntity<Iterable<RequirementDto>> findAllByAnalysisId(UUID analysisId) {
         return RequirementController.super.findAllByAnalysisId(analysisId);
     }
 
     @Override
     @GetMapping(UriUtil.REQUIREMENTS_ID)
     @PreAuthorize(AuthUtil.BY_READER)
-    public ResponseEntity<EntityModel<RequirementDto>> findById(UUID id) {
+    public ResponseEntity<RequirementDto> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
     @PostMapping(UriUtil.REQUIREMENTS)
     @PreAuthorize(AuthUtil.BY_WRITER)
-    public ResponseEntity<EntityModel<RequirementDto>> create(RequirementDto dto) {
+    public ResponseEntity<RequirementDto> create(RequirementDto dto) {
         return super.create(dto);
     }
 
     @Override
     @PutMapping(UriUtil.REQUIREMENTS)
     @PreAuthorize(AuthUtil.BY_WRITER)
-    public ResponseEntity<EntityModel<RequirementDto>> update(RequirementDto dto) {
+    public ResponseEntity<RequirementDto> update(RequirementDto dto) {
         return super.update(dto);
     }
 
@@ -69,13 +64,5 @@ public class RequirementControllerImpl extends CrudControllerImpl<Requirement, R
     @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<Void> deleteById(UUID id) {
         return super.deleteById(id);
-    }
-
-    @Override
-    public EntityModel<RequirementDto> withLinks(RequirementDto dto) {
-        var entityModel = super.withLinks(dto);
-        entityModel.add(linkTo(methodOn(AnalysisControllerImpl.class).findById(dto.getAnalysisId())).withRel(UriUtil.ANALYSIS_REL));
-        entityModel.add(Link.of(UriUtil.VARIANTS_ID).withRel(UriUtil.VARIANTS_REL));
-        return entityModel;
     }
 }
