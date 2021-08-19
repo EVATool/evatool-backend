@@ -4,7 +4,7 @@ import com.evatool.application.service.TenancySentinel;
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.KeycloakDeployment;
 import org.keycloak.adapters.KeycloakDeploymentBuilder;
-import org.keycloak.adapters.OIDCHttpFacade;
+import org.keycloak.adapters.spi.HttpFacade.Request;
 import org.keycloak.representations.adapters.config.AdapterConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,13 +21,12 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
     private String keycloakUrl;
 
     @Override
-    public KeycloakDeployment resolve(OIDCHttpFacade.Request request) {
+    public KeycloakDeployment resolve(Request request) {
         var realm = TenancySentinel.getCurrentRealmFromRequestHeader();
         logger.info("Request to URI {} to realm {}", request.getURI(), realm);
 
         if (realm == null || realm.equals("")) { // TODO Exceptions that are thrown here are ignored by GlobalExceptionHandler (How to return 403 or 404 here?)
-            //throw new IllegalStateException("...");
-            realm = "evatool-realm"; // This is supposed to cause a 404.
+            realm = "evatool-realm"; // TODO This is supposed to cause a 404.
         }
 
         var adapterConfig = new AdapterConfig(); // TODO Must this variable have the same name as variable in class scope?

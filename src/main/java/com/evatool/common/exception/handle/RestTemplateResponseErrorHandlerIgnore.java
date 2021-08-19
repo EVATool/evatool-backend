@@ -14,6 +14,6 @@ public class RestTemplateResponseErrorHandlerIgnore implements ResponseErrorHand
 
     @Override
     public void handleError(ClientHttpResponse response) {
-
+        // All errors are ignored. No handling required.
     }
 }

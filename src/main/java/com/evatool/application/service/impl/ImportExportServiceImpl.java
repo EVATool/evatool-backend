@@ -137,19 +137,19 @@ public class ImportExportServiceImpl implements ImportExportService {
             var stakeholderJson = stakeholdersJson.getJSONObject(i);
 
             var stakeholderName = stakeholderJson.getString("name");
-            var StakeholderPriorityString = stakeholderJson.getString("priority");
+            var stakeholderPriorityString = stakeholderJson.getString("priority");
             StakeholderPriority stakeholderPriority;
             try {
-                stakeholderPriority = StakeholderPriority.valueOf(StakeholderPriorityString);
+                stakeholderPriority = StakeholderPriority.valueOf(stakeholderPriorityString);
             } catch (IllegalArgumentException exception) {
-                throw new ImportJsonException("Unknown StakeholderPriority (" + StakeholderPriorityString + ")");
+                throw new ImportJsonException("Unknown StakeholderPriority (" + stakeholderPriorityString + ")");
             }
-            var StakeholderLevelString = stakeholderJson.getString("level");
+            var stakeholderLevelString = stakeholderJson.getString("level");
             StakeholderLevel stakeholderLevel;
             try {
-                stakeholderLevel = StakeholderLevel.valueOf(StakeholderLevelString);
+                stakeholderLevel = StakeholderLevel.valueOf(stakeholderLevelString);
             } catch (IllegalArgumentException exception) {
-                throw new ImportJsonException("Unknown StakeholderLevel (" + StakeholderLevelString + ")");
+                throw new ImportJsonException("Unknown StakeholderLevel (" + stakeholderLevelString + ")");
             }
 
             var stakeholder = new Stakeholder(stakeholderName, stakeholderPriority, stakeholderLevel, analysis);
@@ -266,7 +266,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             switch (currentImportExportVersion) {
 
                 case "0.0.1": // Not yet reachable.
-                    return this::importAnalysis; //importAnalysis_0_0_1;
+                    return this::importAnalysis; // importAnalysis_0_0_1;
 
                 default:
                     throw new PropertyIsInvalidException("Unknown \"importExportVersion\" (" + currentImportExportVersion + ")");

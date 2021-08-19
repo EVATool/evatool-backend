@@ -119,11 +119,12 @@ public class AuthServiceImpl implements AuthService {
         }
 
         // Save user id for later.
-        if (response.getHeaders().getLocation() == null) {
+        var location = response.getHeaders().getLocation();
+        if (location == null) {
             throw new InternalServerErrorException("Keycloak must return ");
         }
-        var location = response.getHeaders().getLocation().toString();
-        var userId = location.substring(location.lastIndexOf("/") + 1);
+        var locationStr = location.toString();
+        var userId = locationStr.substring(locationStr.lastIndexOf("/") + 1);
 
 
         // Get available realm roles.
