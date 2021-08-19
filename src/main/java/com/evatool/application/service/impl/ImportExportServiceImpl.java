@@ -95,9 +95,6 @@ public class ImportExportServiceImpl implements ImportExportService {
 
     @SneakyThrows(value = {JSONException.class, ImportJsonException.class})
     private Analysis importAnalysis(JSONObject analysisJsonObject) {
-        // Auth realm.
-        var realm = TenancySentinel.getCurrentRealmFromRequestToken();
-
         // Analysis.
         var analysisJson = analysisJsonObject.getJSONObject("analysis");
         var analysisName = analysisJson.getString("name");
@@ -105,7 +102,7 @@ public class ImportExportServiceImpl implements ImportExportService {
         var analysisIsTemplate = analysisJson.getBoolean("isTemplate");
         var analysisImageUrl = analysisJson.isNull("imageUrl") ? null : analysisJson.getString("imageUrl");
         var analysis = new Analysis(analysisName, analysisDescription, analysisIsTemplate, analysisImageUrl);
-        analysis.setRealm(realm);
+        TenancySentinel.handleCreate(analysis);
         analysisRepository.save(analysis);
 
         // Values.
@@ -126,7 +123,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             var valueArchived = valueJson.getBoolean("archived");
 
             var value = new Value(valueName, valueDescription, valueType, valueArchived, analysis);
-            value.setRealm(realm);
+            TenancySentinel.handleCreate(value);
             valueRepository.save(value);
 
             var valueId = valueJson.getString("id");
@@ -156,7 +153,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             }
 
             var stakeholder = new Stakeholder(stakeholderName, stakeholderPriority, stakeholderLevel, analysis);
-            stakeholder.setRealm(realm);
+            TenancySentinel.handleCreate(stakeholder);
             stakeholderRepository.save(stakeholder);
 
             var stakeholderId = stakeholderJson.getString("id");
@@ -183,7 +180,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             }
 
             var impact = new Impact(impactMerit, impactDescription, value, stakeholder, analysis);
-            impact.setRealm(realm);
+            TenancySentinel.handleCreate(impact);
             impactRepository.save(impact);
 
             var impactId = impactJson.getString("id");
@@ -201,7 +198,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             var variantArchived = variantJson.getBoolean("archived");
 
             var variant = new Variant(variantName, variantDescription, variantArchived, analysis);
-            variant.setRealm(realm);
+            TenancySentinel.handleCreate(variant);
             variantRepository.save(variant);
 
             var variantId = variantJson.getString("id");
@@ -226,7 +223,7 @@ public class ImportExportServiceImpl implements ImportExportService {
                 }
                 requirement.getVariants().add(variant);
             }
-            requirement.setRealm(realm);
+            TenancySentinel.handleCreate(requirement);
             requirementRepository.save(requirement);
 
             var requirementId = requirementJson.getString("id");
@@ -252,7 +249,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             }
 
             var delta = new RequirementDelta(deltaOverwriteMerit, impact, requirement);
-            delta.setRealm(realm);
+            TenancySentinel.handleCreate(delta);
             requirementDeltaRepository.save(delta);
 
             var deltaId = deltaJson.getString("id");

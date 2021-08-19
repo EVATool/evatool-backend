@@ -262,7 +262,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     // Dynamic keycloak URLs.
-    @Value("${keycloak.auth-server-url}")
+    @Value("${keycloak.auth-server-url:}")
     private String keycloakBaseUrl;
 
     private String getKeycloakAdminLoginUrl() {
