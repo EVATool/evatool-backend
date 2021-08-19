@@ -117,7 +117,7 @@ public class Analysis extends PrefixIdEntity {
         return Date.from(Instant.ofEpochMilli(lastUpdated));
     }
 
-    public String getLastUpdatedPreformatted() { // TODO tests
+    public String getLastUpdatedPreformatted() {
         return getLastUpdatedDate().toString();
     }
 

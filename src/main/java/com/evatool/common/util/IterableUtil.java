@@ -27,7 +27,7 @@ public class IterableUtil {
         return list;
     }
 
-    public static <O extends SuperEntity> UUID[] entityIterableToIdArray(Iterable<O> entitySet) { // TODO Tests
+    public static <O extends SuperEntity> UUID[] entityIterableToIdArray(Iterable<O> entitySet) {
         var ids = new ArrayList<UUID>();
         var index = 0;
         for (var o : entitySet) {

@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthInterceptor implements HandlerInterceptor {
     // TODO The preHandle method get executed AFTER many auth requests have been processed.
     //  It should fire BEFORE they are processed in order to inject the realm name into the headers.
-    //  This is currently not used but might be if the Realm header is removed and the realm is figured out automatically.
-    //  Can an interceptor be used to solve the keycloak realm retrieval ind GenericConfig?
+    //  This is currently not used but might be if the Realm header is removed from the header (as it should be!) and the realm is figured out automatically.
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {

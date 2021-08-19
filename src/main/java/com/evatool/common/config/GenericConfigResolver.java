@@ -17,6 +17,9 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
     @SuppressWarnings("unused")
     private static AdapterConfig adapterConfig;
 
+    @Value("${evatool.auth.multi-tenancy.enabled:false}")
+    private boolean multiTenancyEnabled;
+
     @Value("${keycloak.auth-server-url:}")
     private String keycloakUrl;
 
@@ -25,18 +28,19 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
         var realm = TenancySentinel.getCurrentRealmFromRequestHeader();
         logger.info("Request to URI {} to realm {}", request.getURI(), realm);
 
-        if (realm == null || realm.equals("")) { // TODO Exceptions that are thrown here are ignored by GlobalExceptionHandler (How to return 403 or 404 here?)
-            realm = "evatool-realm"; // TODO This is supposed to cause a 404.
+        // Use the default realm if no realm was provided.
+        if (realm == null || realm.equals("")) {
+            realm = "evatool-realm";
         }
 
-        var adapterConfig = new AdapterConfig(); // TODO Must this variable have the same name as variable in class scope?
-        adapterConfig.setRealm(realm);
-        adapterConfig.setResource("evatool-app");
-        adapterConfig.setPublicClient(true);
-        adapterConfig.setAuthServerUrl(keycloakUrl);
-        adapterConfig.setSslRequired("external");
+        var requestAdapterConfig = new AdapterConfig();
+        requestAdapterConfig.setRealm(realm);
+        requestAdapterConfig.setResource("evatool-app");
+        requestAdapterConfig.setPublicClient(true);
+        requestAdapterConfig.setAuthServerUrl(keycloakUrl);
+        requestAdapterConfig.setSslRequired("external");
 
-        return KeycloakDeploymentBuilder.build(adapterConfig);
+        return KeycloakDeploymentBuilder.build(requestAdapterConfig);
     }
 
     static void setAdapterConfig(AdapterConfig adapterConfig) {

@@ -9,7 +9,7 @@ import java.util.List;
 @ToString
 @Getter
 @NoArgsConstructor
-public class ImportExportAnalysisDto { // TODO move to dto package...
+public class ImportExportAnalysisDto {
 
     private AnalysisDto analysis;
     private List<ValueDto> values;

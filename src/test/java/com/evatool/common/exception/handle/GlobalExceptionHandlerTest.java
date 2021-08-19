@@ -10,7 +10,7 @@ class GlobalExceptionHandlerTest {
 //            .build();
 //
 //    @Test
-//    void testHandleException() { // TODO
+//    void testHandleException() {
 //        // given
 //
 //

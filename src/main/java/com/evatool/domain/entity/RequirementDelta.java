@@ -87,7 +87,7 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
         return impact.getMerit();
     }
 
-    public Color getMeritColor() { // TODO colors should be -1 red to +1 green
+    public Color getMeritColor() { // <TODO A colors should be -1 red to +1 green
         if (impact.getMerit() == 0) {
             return new Color(0.4f, 0.4f, 0.4f);
         } else if (Boolean.TRUE.equals(impact.getIsGoal())) {
@@ -96,7 +96,7 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
             } else if (overwriteMerit == 0) {
                 return new Color(1f, 1f, 0f); // yellow.
             } else {
-                return new Color(1f - this.overwriteMerit, 1f, 0f); // line. TODO only use this?
+                return new Color(1f - this.overwriteMerit, 1f, 0f);
             }
         } else if (!Boolean.TRUE.equals(impact.getIsGoal())) {
             if (impact.getMerit().equals(overwriteMerit)) {
@@ -104,7 +104,7 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
             } else if (overwriteMerit == 0) {
                 return new Color(1f, 1f, 0f); // yellow.
             } else {
-                return new Color(1f, 1f + this.overwriteMerit, 0); // orange. TODO only use this?
+                return new Color(1f, 1f + this.overwriteMerit, 0);
             }
         } else {
             throw new IllegalStateException("The current combination of merit (" + impact.getMerit() + ") " +
@@ -112,11 +112,11 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
         }
     }
 
-    public Float getMinOverwriteMerit() { // TODO tests
+    public Float getMinOverwriteMerit() {
         return getOriginalMerit() > 0 ? 0 : getOriginalMerit();
     }
 
-    public Float getMaxOverwriteMerit() { // TODO tests
+    public Float getMaxOverwriteMerit() {
         return getOriginalMerit() < 0 ? 0 : getOriginalMerit();
     }
 
