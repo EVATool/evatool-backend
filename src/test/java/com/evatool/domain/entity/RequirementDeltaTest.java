@@ -27,9 +27,8 @@ class RequirementDeltaTest extends SuperEntityTest {
 
     @ParameterizedTest
     @CsvSource({ // merit, overwriteMerit, red, green, blue
-            //"0, 0, 120, 120, 120",
-            //"1, 0, 170, 170, 170",
-            //"1, 1, 220, 220, 220",
+            "0, 0, 102, 102, 102",
+            "-1, 0, 255, 255, 0",
             "-1, -1, 255, 0, 0",
             "1, 1, 0, 255, 0",
     })
