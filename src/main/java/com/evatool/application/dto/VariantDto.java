@@ -34,10 +34,6 @@ public class VariantDto extends PrefixIdDto implements AnalysisChildDto {
     @NotNull
     private UUID analysisId;
 
-    // TODO what is the purpose of having subVariants? Can this be removed?
-    //@ApiModelProperty(required = false)
-    //private UUID[] subVariantIds;
-
     public VariantDto(String name, String description, Boolean archived, UUID analysisId) {
         this.name = name;
         this.description = description;

@@ -14,7 +14,7 @@ public class MultiTenancyAuthEntryPoint extends KeycloakAuthenticationEntryPoint
         super(adapterDeploymentContext, apiRequestMatcher);
     }
 
-    // TODO Fix redirection of backend when using keycloak (is tenency the problem? There is commented out coded in the AuthEntryPoint)
+    // TODO Fix redirection of backend when using keycloak (is tenancy the problem? There is commented out coded in the AuthEntryPoint)
     //  https://stackoverflow.com/questions/64202799/keycloak-is-it-possible-to-let-the-users-to-choose-a-realm-in-login-page/64225384
     //  https://www.baeldung.com/keycloak-custom-login-page
 //    @Override

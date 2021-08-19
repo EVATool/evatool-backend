@@ -22,13 +22,11 @@ import java.util.stream.Collectors;
 
 public class SkipSecurityFilter extends OncePerRequestFilter {
 
-    private String[] allRoles = AuthUtil.ALL_ROLES;
-
     @Override
     public void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
                                  FilterChain chain) throws IOException, ServletException {
         // Read roles from AuthUtil.
-        Set<String> roles = Arrays.stream(allRoles).collect(Collectors.toCollection(HashSet::new));
+        Set<String> roles = Arrays.stream(AuthUtil.ALL_ROLES).collect(Collectors.toCollection(HashSet::new));
 
         // Dummy Keycloak-Account.
         RefreshableKeycloakSecurityContext session = new RefreshableKeycloakSecurityContext(

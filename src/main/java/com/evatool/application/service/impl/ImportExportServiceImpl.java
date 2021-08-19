@@ -260,7 +260,7 @@ public class ImportExportServiceImpl implements ImportExportService {
     }
 
     private Function<JSONObject, Analysis> resolveImportAnalysisFunction(String currentImportExportVersion) {
-        if (newestImportExportVersion.equals(currentImportExportVersion)) {
+        if (NEWEST_IMPORT_EXPORT_VERSION.equals(currentImportExportVersion)) {
             return this::importAnalysis;
         } else {  // Migration.
             switch (currentImportExportVersion) {
@@ -279,7 +279,7 @@ public class ImportExportServiceImpl implements ImportExportService {
     public String exportAnalyses(Iterable<UUID> analysisIds) {
 
         // Create meta data.
-        var importExportVersion = newestImportExportVersion;
+        var importExportVersion = NEWEST_IMPORT_EXPORT_VERSION;
 
         // Create entity json.
         var analyses = analysisRepository.findAllById(analysisIds);

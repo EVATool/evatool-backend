@@ -208,7 +208,7 @@ class ImportExportServiceTest {
         PrintUtil.prettyPrintJson(exportAnalysesJson);
 
         // Check meta data and number of analyses.
-        assertThat(analysesJson.get("importExportVersion")).isEqualTo(ImportExportService.newestImportExportVersion);
+        assertThat(analysesJson.get("importExportVersion")).isEqualTo(ImportExportService.NEWEST_IMPORT_EXPORT_VERSION);
         assertThat(analysesJson.getJSONArray("analyses").length()).isEqualTo(2);
 
         // Check content of one analysis (number of entities and number of attributes of each entity).

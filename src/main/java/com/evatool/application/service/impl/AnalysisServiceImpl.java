@@ -7,6 +7,7 @@ import com.evatool.application.service.api.AnalysisService;
 import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.repository.AnalysisRepository;
 import com.evatool.domain.repository.ValueRepository;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,13 @@ public class AnalysisServiceImpl extends CrudServiceImpl<Analysis, AnalysisDto> 
 
     private static final Logger logger = LoggerFactory.getLogger(AnalysisServiceImpl.class);
 
+    @Getter
     private final AnalysisRepository repository;
 
-    private final ValueRepository valueRepository;
-
+    @Getter
     private final AnalysisMapper mapper;
+
+    private final ValueRepository valueRepository;
 
     private final ValueMapper valueMapper;
 

@@ -15,11 +15,8 @@ public class VariantMapper extends PrefixIdMapper<Variant, VariantDto> {
 
     private final AnalysisRepository analysisRepository;
 
-    private final VariantRepository variantRepository;
-
-    public VariantMapper(AnalysisRepository analysisRepository, VariantRepository variantRepository) {
+    public VariantMapper(AnalysisRepository analysisRepository) {
         this.analysisRepository = analysisRepository;
-        this.variantRepository = variantRepository;
     }
 
     @Override
