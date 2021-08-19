@@ -137,6 +137,48 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
         }
     }
 
+    public void changeEntity(S _entity) {
+        var type = getEntityClass();
+        if (type == Analysis.class) {
+            var dto = (Analysis) _entity;
+            dto.setName("updated");
+            dto.setDescription("updated");
+            dto.setImageUrl("updated");
+            dto.setIsTemplate(true);
+        } else if (type == Impact.class) {
+            var dto = (Impact) _entity;
+            dto.setMerit(0.6f);
+            dto.setDescription("updated description");
+        } else if (type == Requirement.class) {
+            var dto = (Requirement) _entity;
+            dto.setDescription("updated");
+        } else if (type == RequirementDelta.class) {
+            var dto = (RequirementDelta) _entity;
+            dto.setOverwriteMerit(0.3f);
+        } else if (type == Stakeholder.class) {
+            var dto = (Stakeholder) _entity;
+            dto.setName("updated");
+            dto.setPriority(StakeholderPriority.TWO);
+            dto.setLevel(StakeholderLevel.ORGANIZATION);
+        } else if (type == User.class) {
+            var dto = (User) _entity;
+            dto.setExternalUserId("updated");
+        } else if (type == Value.class) {
+            var dto = (Value) _entity;
+            dto.setName("updated");
+            dto.setDescription("updated");
+            dto.setType(ValueType.ECONOMIC);
+            dto.setArchived(true);
+        } else if (type == Variant.class) {
+            var dto = (Variant) _entity;
+            dto.setName("updated");
+            dto.setDescription("updated");
+            dto.setArchived(true);
+        } else {
+            throw new IllegalArgumentException("No method found for type " + type.getSimpleName());
+        }
+    }
+
     public void changeDto(T _dto) {
         var type = getDtoClass();
         if (type == AnalysisDto.class) {

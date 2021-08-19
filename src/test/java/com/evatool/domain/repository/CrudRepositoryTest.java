@@ -46,7 +46,7 @@ abstract class CrudRepositoryTest<T extends SuperEntity> extends DataTest {
         var entity = getPersistedEntity();
 
         // when
-        //changeEntity(entity); // TODO
+        changeEntity(entity);
         var entityUpdated = (T) getRepository().save(entity);
         var entityOptional = (Optional<T>) getRepository().findById(entity.getId());
 
