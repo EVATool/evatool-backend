@@ -3,7 +3,6 @@ package com.evatool.application.mapper;
 import com.evatool.application.dto.VariantDto;
 import com.evatool.domain.entity.Variant;
 import com.evatool.domain.repository.AnalysisRepository;
-import com.evatool.domain.repository.VariantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
