@@ -1,4 +1,4 @@
--- Create entity tables-
+-- Create entity tables.
 create table analysis (
     id CHAR(36) not null,
     realm varchar(255) not null,
