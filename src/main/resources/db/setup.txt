@@ -1,0 +1,2 @@
+Start MySQL (docker):
+docker run --name evatool-test-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=admin -d mysql:8.0.24
