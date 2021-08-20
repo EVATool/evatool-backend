@@ -1,3 +1,4 @@
+-- Create entity tables-
 create table analysis (
     id CHAR(36) not null,
     realm varchar(255) not null,
@@ -79,26 +80,58 @@ create table variant (
     analysis_id CHAR(36) not null,
     primary key (id)) engine=MyISAM;
 
+-- Add foreign key constraints.
+alter table impact
+    add constraint FK_impact__analysis_id__analysis__id
+    foreign key (analysis_id)
+    references analysis (id);
 
+alter table impact
+    add constraint FK_impact__stakeholder_id__stakeholder__id
+    foreign key (stakeholder_id)
+    references stakeholder (id);
 
-alter table impact add constraint FK__impact__analysis_id___analysis__id foreign key (analysis_id) references analysis (id);
+alter table impact
+    add constraint FK_impact__value_id__stakeholder__id
+    foreign key (value_id)
+    references value (id);
 
-alter table impact add constraint FK__impact__stakeholder_id___stakeholder__id foreign key (stakeholder_id) references stakeholder (id);
+alter table requirement
+    add constraint FK_requirement__analysis_id__analysis__id
+    foreign key (analysis_id)
+    references analysis (id);
 
-alter table impact add constraint FK__impact__value_id___stakeholder__id foreign key (value_id) references value (id);
+alter table requirement_delta
+    add constraint FK_requirement_delta__impact_id__impact__id
+    foreign key (impact_id)
+    references impact (id);
 
-alter table requirement add constraint FK__requirement__analysis_id___analysis__id foreign key (analysis_id) references analysis (id);
+alter table requirement_delta
+    add constraint FK_requirement_delta__requirement_id__requirement__id
+    foreign key (requirement_id)
+    references requirement (id);
 
-alter table requirement_delta add constraint FK__requirement_delta__impact_id___impact__id foreign key (impact_id) references impact (id);
+alter table requirement_variants
+    add constraint FK_requirement_variants__variants_id__variant__id
+    foreign key (variants_id)
+    references variant (id);
 
-alter table requirement_delta add constraint FK__requirement_delta__requirement_id___requirement__id foreign key (requirement_id) references requirement (id);
+alter table requirement_variants
+    add constraint FK_requirement_variants__requirement_id__requirement__id
+    foreign key (requirement_id)
+    references requirement (id);
 
-alter table requirement_variants add constraint FK__requirement_variants__variants_id___variant__id foreign key (variants_id) references variant (id);
+alter table stakeholder
+    add constraint FK_stakeholder__analysis_id__analysis__id
+    foreign key (analysis_id)
+    references analysis (id);
 
-alter table requirement_variants add constraint FK__requirement_variants__requirement_id___requirement__id foreign key (requirement_id) references requirement (id);
+alter table value
+    add constraint FK_value__analysis_id__analysis__id
+    foreign key (analysis_id)
+    references analysis (id);
 
-alter table stakeholder add constraint FK__stakeholder__analysis_id___analysis__id foreign key (analysis_id) references analysis (id);
-
-alter table value add constraint FK__value__analysis_id___analysis__id foreign key (analysis_id) references analysis (id);
-
-alter table variant add constraint FK__variant__analysis_id___analysis__id foreign key (analysis_id) references analysis (id);
+alter table variant
+    add constraint FK_variant__analysis_id__analysis__id
+    foreign key (analysis_id)
+    references analysis (id);
