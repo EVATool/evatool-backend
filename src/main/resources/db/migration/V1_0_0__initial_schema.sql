@@ -79,11 +79,6 @@ create table variant (
     analysis_id CHAR(36) not null,
     primary key (id));
 
-create table variant_sub_variants (
-    variant_id CHAR(36) not null,
-    sub_variants_id CHAR(36) not null,
-    primary key (variant_id, sub_variants_id));
-
 alter table impact add constraint FK__impact__analysis_id foreign key (analysis_id) references analysis;
 
 alter table impact add constraint FK__impact__stakeholder_id foreign key (stakeholder_id) references stakeholder;
@@ -105,7 +100,3 @@ alter table stakeholder add constraint FK__stakeholder__analysis_id foreign key 
 alter table value add constraint FK__value__analysis_id foreign key (analysis_id) references analysis;
 
 alter table variant add constraint FK__variant__analysis_id foreign key (analysis_id) references analysis;
-
-alter table variant_sub_variants add constraint FK__variant_sub_variants__sub_variants_id foreign key (sub_variants_id) references variant;
-
-alter table variant_sub_variants add constraint FK__variant_sub_variants__variant_id foreign key (variant_id) references variant;

@@ -38,11 +38,6 @@ public class Variant extends PrefixIdEntity implements FindByAnalysis {
     @ManyToOne(optional = false)
     private Analysis analysis;
 
-    @Getter
-    @ManyToMany(fetch = FetchType.EAGER)
-    @EqualsAndHashCode.Exclude // Equality on List objects never returns true.
-    private Set<Variant> subVariants;
-
     public Variant(String name, String description, Boolean archived, Analysis analysis) {
         super();
         logger.debug("Constructor");
