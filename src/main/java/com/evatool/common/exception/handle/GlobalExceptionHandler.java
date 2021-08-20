@@ -76,14 +76,6 @@ public class GlobalExceptionHandler {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
   }
 
-  // TODO All exceptions that are thrown by spring for validation (e.g.
-  //  MethodArgumentNotValidException, MethodArgumentTypeMismatchException)
-  //  should be caught here in order to return with ErrorMessage and 400. If that's
-  //  the case, then 500 can also return
-  //  return ErrorMessage, because it wont catch exception that are used for spring
-  //  validation.
-  //  https://stackoverflow.com/questions/33663801/how-do-i-customize-default-error-message-from-spring-valid-validation/33665121
-
   private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception, WebRequest webRequest,
       HttpStatus httpStatus) {
     logger.warn("{} handled. Returning HttpStatus {}. Message: {}", exception.getClass().getSimpleName(), httpStatus,

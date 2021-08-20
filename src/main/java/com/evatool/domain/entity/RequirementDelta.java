@@ -87,7 +87,7 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
         return impact.getMerit();
     }
 
-    public Color getMeritColor() { // TODO colors should be -1 red to +1 green
+    public Color getMeritColor() {
         if (impact.getMerit() == 0) {
             return new Color(0.4f, 0.4f, 0.4f);
         } else if (this.overwriteMerit > 0) {

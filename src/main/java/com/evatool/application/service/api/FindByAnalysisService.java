@@ -15,7 +15,6 @@ public interface FindByAnalysisService<T extends SuperDto> {
 
     default Iterable<T> findAllByAnalysisId(UUID analysisId) {
         var entities = getRepository().findAllByAnalysisId(analysisId);
-        // TODO CrossRealmAccessException should be thrown here if analysisId is from different realm (add getAnalysisRepository to interface definition).
         entities = TenancySentinel.handleFind(entities);
         return getMapper().toDtoList(entities);
     }
