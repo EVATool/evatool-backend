@@ -1,6 +1,9 @@
 Start keycloak (docker):
 docker run --name evatool-test-auth -p 8081:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin quay.io/keycloak/keycloak:13.0.0
 
+Auto import realm (not working yet):
+docker run --name evatool-test-auth -p 8081:8080 -v ./evatool-realm.json:/opt/jboss/keycloak/imports/evatool-realm.json -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json quay.io/keycloak/keycloak:13.0.0
+
 
 
 Start keycloak:
@@ -14,5 +17,5 @@ standalone.bat -Djboss.socket.binding.port-offset=1 -Dkeycloak.migration.action=
 Master Realm:
 Enable Web Origins (Cors) admin-cli: * // TODO Automate this
 
-Then go to (both methods):
+Then go to:
 http://localhost:8081/auth/
