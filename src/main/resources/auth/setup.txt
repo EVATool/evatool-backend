@@ -9,6 +9,9 @@ docker run --name evatool-test-auth -p 8081:8080 -v ./evatool-realm.json:/opt/jb
 Start keycloak:
 standalone.bat -Djboss.socket.binding.port-offset=1
 
+Import realm:
+Click on add realm and then select the file as import
+
 Start keycloak to export realm with users:
 standalone.bat -Djboss.socket.binding.port-offset=1 -Dkeycloak.migration.action=export -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=evatool-realm.json -Dkeycloak.migration.realmName=evatool-realm -Dkeycloak.migration.usersExportStrategy=REALM_FILE
 
