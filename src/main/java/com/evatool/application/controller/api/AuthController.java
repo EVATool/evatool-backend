@@ -10,6 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public interface AuthController {
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
@@ -28,7 +33,7 @@ public interface AuthController {
     @ApiOperation(value = "Register a new user")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<AuthRegisterUserDto> registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password);
+    ResponseEntity<AuthRegisterUserDto> registerUser(@RequestParam String username, @Valid @RequestParam @NotNull @NotBlank @Email String email, @RequestParam String password);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     @ApiOperation(value = "Register a new realm")
