@@ -3,7 +3,6 @@ package com.evatool.common.validation;
 public class OverwriteMeritValidation {
 
     private OverwriteMeritValidation() {
-
     }
 
     public static String validateOverwriteMerit(Float overwriteMerit, Float originalMerit) {
