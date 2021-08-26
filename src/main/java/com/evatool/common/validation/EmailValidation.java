@@ -12,7 +12,7 @@ public class EmailValidation {
 
     public static String validateEmail(String email) {
         if (email == null || email.equals("")) {
-            return null; // Do not generally disallow a null or empty email.
+            return "Email cannot be empty";
         } else if (!EMAIL_REGEX_PATTERN.matcher(email).matches()) {
             return "Email \"" + email + "\" is invalid";
         }

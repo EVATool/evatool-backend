@@ -1,11 +1,18 @@
 package com.evatool.application.validator;
 
+import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
+import java.lang.annotation.*;
+
 import static com.evatool.common.validation.EmailValidation.validateEmail;
 
+@Documented
+@Constraint(validatedBy = EmailConstraint.EmailValidator.class)
+@Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface EmailConstraint {
     String message() default "Invalid Email";
 
