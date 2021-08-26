@@ -22,24 +22,24 @@ public interface AuthController {
     @ApiOperation(value = "Login as user with password on realm")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<AuthTokenDto> login(@RequestParam @NotBlank @UsernameRealmConstraint String username,
+    ResponseEntity<AuthTokenDto> login(@RequestParam @UsernameRealmConstraint String username,
                                        @RequestParam @NotBlank String password,
-                                       @RequestParam @NotBlank @UsernameRealmConstraint String realm);
+                                       @RequestParam @UsernameRealmConstraint String realm);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     @ApiOperation(value = "Refresh login with an existing token")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
     ResponseEntity<AuthTokenDto> refreshLogin(@RequestParam String refreshToken,
-                                              @RequestParam @NotBlank @UsernameRealmConstraint String realm);
+                                              @RequestParam @UsernameRealmConstraint String realm);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     @ApiOperation(value = "Register a new user")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<AuthRegisterUserDto> registerUser(@RequestParam @NotBlank @UsernameRealmConstraint String username,
-                                                     @RequestParam @NotBlank @EmailConstraint String email,
-                                                     @RequestParam @NotBlank String password);
+    ResponseEntity<AuthRegisterUserDto> registerUser(@RequestParam @UsernameRealmConstraint String username,
+                                                     @RequestParam @EmailConstraint String email,
+                                                     @RequestParam String password);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     @ApiOperation(value = "Register a new realm")

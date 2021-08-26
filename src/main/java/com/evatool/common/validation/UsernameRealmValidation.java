@@ -11,7 +11,9 @@ public class UsernameRealmValidation {
             Pattern.compile("^[A-Za-z0-9_.-]+$");
 
     public static String validateUsernameOrRealm(String value) {
-        if (value == null || !USERNAME_REALM_REGEX_PATTERN.matcher(value).matches()) {
+        if (value == null) {
+            return "The value cannot be null";
+        } else if (!USERNAME_REALM_REGEX_PATTERN.matcher(value).matches()) {
             return "The value \"" + value + "\" is not allowed";
         }
         return null;
