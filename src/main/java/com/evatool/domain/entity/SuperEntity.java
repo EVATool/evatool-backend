@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.*;
 import java.util.UUID;
 
+import static com.evatool.common.validation.UsernameRealmValidation.validateUsernameOrRealm;
+
 @MappedSuperclass
 @EqualsAndHashCode
 @ToString
@@ -50,6 +52,11 @@ public abstract class SuperEntity {
         logger.debug("Set Realm");
         if (this.realm != null) {
             throw new IllegalArgumentException("Existing realm cannot be set");
+        }
+
+        var error = validateUsernameOrRealm(realm);
+        if (error != null) {
+            throw new IllegalArgumentException(error);
         }
         this.realm = realm;
     }
