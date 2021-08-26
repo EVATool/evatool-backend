@@ -8,7 +8,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OverwriteMeritValidationTest {
 
     @Test
-    void testValidateOverwriteMerit_FulFillPositiveImpact_OK() {
+    void testValidateOverwriteMerit_OriginalEqualsOverwriteMerit_OK() {
+        // given
+        var originalMerit = 0.5f;
+        var overwriteMerit = 0.5f;
+
+        // when
+        var error = validateOverwriteMerit(overwriteMerit, originalMerit);
+
+        // then
+        assertThat(error).isNull();
+    }
+
+    @Test
+    void testValidateOverwriteMerit_FulfillPositiveImpact_OK() {
         // given
         var originalMerit = 0.5f;
         var overwriteMerit = 0.3f;
@@ -34,7 +47,7 @@ class OverwriteMeritValidationTest {
     }
 
     @Test
-    void testValidateOverwriteMerit_DecreaseNegativeImpact_Throw() {
+    void testValidateOverwriteMerit_DecreaseNegativeImpact_Error() {
         // given
         var originalMerit = -0.5f;
         var overwriteMerit = -0.6f;
@@ -47,7 +60,7 @@ class OverwriteMeritValidationTest {
     }
 
     @Test
-    void testValidateOverwriteMerit_IncreaseNegativeImpactAboveZero_Throw() {
+    void testValidateOverwriteMerit_IncreaseNegativeImpactAboveZero_Error() {
         // given
         var originalMerit = -0.5f;
         var overwriteMerit = 0.7f;
@@ -60,7 +73,7 @@ class OverwriteMeritValidationTest {
     }
 
     @Test
-    void testValidateOverwriteMerit_IncreasePositiveImpactAboveOriginal_Throw() {
+    void testValidateOverwriteMerit_IncreasePositiveImpactAboveOriginal_Error() {
         // given
         var originalMerit = 0.5f;
         var overwriteMerit = 0.6f;
@@ -73,7 +86,7 @@ class OverwriteMeritValidationTest {
     }
 
     @Test
-    void testValidateOverwriteMerit_DecreasePositiveImpactBelowZero_Throw() {
+    void testValidateOverwriteMerit_DecreasePositiveImpactBelowZero_Error() {
         // given
         var originalMerit = 0.5f;
         var overwriteMerit = -0.6f;
