@@ -21,7 +21,7 @@ standalone.bat -Djboss.socket.binding.port-offset=1 -Dkeycloak.migration.action=
 
 
 Master Realm:
-Enable Web Origins (Cors) admin-cli: * // TODO Automate this
+Enable Web Origins (Cors) Clients -> admin-cli -> Web Origins: * // TODO Automate this
 
 Then go to:
 http://localhost:8081/auth/
