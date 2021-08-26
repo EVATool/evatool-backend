@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -76,12 +79,22 @@ public class GlobalExceptionHandler {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(ValidationException.class)
+  public ResponseEntity<ErrorMessage> handle(ValidationException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<ErrorMessage> handle(ConstraintViolationException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
+  }
+
   private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception, WebRequest webRequest,
-      HttpStatus httpStatus) {
+                                                                     HttpStatus httpStatus) {
     logger.warn("{} handled. Returning HttpStatus {}. Message: {}", exception.getClass().getSimpleName(), httpStatus,
-        exception.getMessage());
+            exception.getMessage());
     var errorMessage = new ErrorMessage(exception, ((ServletWebRequest) webRequest).getRequest().getRequestURI(),
-        httpStatus);
+            httpStatus);
     return new ResponseEntity<>(errorMessage, httpStatus);
   }
 }
