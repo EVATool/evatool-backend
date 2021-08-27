@@ -40,7 +40,7 @@ public interface AuthController {
             @ApiResponse(code = 400, message = "Bad Request")})
     ResponseEntity<AuthRegisterUserDto> registerUser(@RequestParam @Username String username,
                                                      @RequestParam @Email String email,
-                                                     @RequestParam String password);
+                                                     @RequestParam @NotBlank String password);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     @ApiOperation(value = "Register a new realm")
