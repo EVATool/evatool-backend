@@ -8,6 +8,7 @@ import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.functional.http401.UnauthorizedException;
 import com.evatool.common.exception.functional.http404.RealmNotFoundException;
 import com.evatool.common.exception.functional.http404.UsernameNotFoundException;
+import com.evatool.common.exception.functional.http409.EmailAlreadyTakenException;
 import com.evatool.common.exception.functional.http409.RealmAlreadyTakenException;
 import com.evatool.common.exception.functional.http409.UsernameAlreadyTakenException;
 import com.evatool.common.exception.handle.RestTemplateResponseErrorHandlerIgnore;
@@ -121,7 +122,11 @@ public class AuthServiceImpl implements AuthService {
         if (httpStatus == HttpStatus.CONFLICT) {
             logger.warn("Auth responded with status {}: {}", response.getStatusCode(), response.getBody());
             // TODO Check if username or email already is taken.
-            throw new UsernameAlreadyTakenException(username);
+            if (response.getBody().startsWith("Email")) {
+                throw new EmailAlreadyTakenException(email);
+            } else {
+                throw new UsernameAlreadyTakenException(username);
+            }
         } else if (httpStatus != HttpStatus.CREATED) {
             throw new InternalServerErrorException("Unhandled response from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
