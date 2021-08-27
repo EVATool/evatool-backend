@@ -6,7 +6,7 @@ import com.evatool.application.service.impl.ImportExportServiceImpl;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
 import com.evatool.common.enums.ValueType;
-import com.evatool.common.exception.ImportJsonException;
+import com.evatool.common.exception.functional.http400.ImportJsonException;
 import com.evatool.common.util.IterableUtil;
 import com.evatool.common.util.PrintUtil;
 import com.evatool.domain.entity.*;

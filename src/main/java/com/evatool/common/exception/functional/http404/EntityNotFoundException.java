@@ -1,4 +1,4 @@
-package com.evatool.common.exception;
+package com.evatool.common.exception.functional.http404;
 
 import java.util.UUID;
 

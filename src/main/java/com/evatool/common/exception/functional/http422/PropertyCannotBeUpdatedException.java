@@ -1,4 +1,4 @@
-package com.evatool.common.exception;
+package com.evatool.common.exception.functional.http422;
 
 public class PropertyCannotBeUpdatedException extends RuntimeException {
     public PropertyCannotBeUpdatedException(String entityClass, String property) {

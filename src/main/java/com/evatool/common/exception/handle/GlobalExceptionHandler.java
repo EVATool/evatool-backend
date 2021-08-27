@@ -2,6 +2,14 @@ package com.evatool.common.exception.handle;
 
 import com.evatool.common.exception.*;
 import com.evatool.common.exception.functional.FunctionalException;
+import com.evatool.common.exception.functional.http400.ImportJsonException;
+import com.evatool.common.exception.functional.http401.UnauthorizedException;
+import com.evatool.common.exception.functional.http403.CrossRealmAccessException;
+import com.evatool.common.exception.functional.http404.EntityNotFoundException;
+import com.evatool.common.exception.functional.http422.PropertyCannotBeNullException;
+import com.evatool.common.exception.functional.http422.PropertyCannotBeUpdatedException;
+import com.evatool.common.exception.functional.http422.PropertyIsInvalidException;
+import com.evatool.common.exception.functional.http422.PropertyMustBeNullException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

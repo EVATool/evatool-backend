@@ -1,4 +1,4 @@
-package com.evatool.common.exception;
+package com.evatool.common.exception.functional.http403;
 
 public class CrossRealmAccessException extends RuntimeException {
     public CrossRealmAccessException() {
