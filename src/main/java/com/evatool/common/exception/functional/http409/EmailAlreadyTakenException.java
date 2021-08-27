@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 public class EmailAlreadyTakenException extends ConflictException {
     public EmailAlreadyTakenException(String email) {
-        super(email, FunctionalErrorCodesUtil.REGISTER_USERNAME_ALREADY_EXISTS, new EmailAlreadyTaken(email));
+        super(email, FunctionalErrorCodesUtil.REGISTER_EMAIL_ALREADY_EXISTS, new EmailAlreadyTaken(email));
     }
 
     @Getter
