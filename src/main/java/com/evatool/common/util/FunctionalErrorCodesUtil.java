@@ -7,6 +7,10 @@ public class FunctionalErrorCodesUtil {
 
     // 400 Not found codes.
     public static final int IMPORT_EXPORT_JSON_INVALID = 1;
+    public static final int USERNAME_INVALID = 2;
+    public static final int REALM_INVALID = 3;
+    public static final int EMAIL_INVALID = 4;
+    public static final int PASSWORD_NOT_SECURE_ENOUGH = 5;
 
     // 401 Unauthorized codes.
     public static final int INVALID_CREDENTIALS = 1001;

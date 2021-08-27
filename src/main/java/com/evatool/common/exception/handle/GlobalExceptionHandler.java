@@ -112,13 +112,13 @@ public class GlobalExceptionHandler {
   // Non-Functional Exceptions.
   // ##############################
 
-  @ExceptionHandler(ValidationException.class)
-  public ResponseEntity<ErrorMessage> handle(ValidationException exception, WebRequest webRequest) {
-    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(ConstraintViolationException.class)
-  public ResponseEntity<ErrorMessage> handle(ConstraintViolationException exception, WebRequest webRequest) {
-    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
-  }
+//  @ExceptionHandler(ValidationException.class)
+//  public ResponseEntity<ErrorMessage> handle(ValidationException exception, WebRequest webRequest) {
+//    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
+//  }
+//
+//  @ExceptionHandler(ConstraintViolationException.class)
+//  public ResponseEntity<ErrorMessage> handle(ConstraintViolationException exception, WebRequest webRequest) {
+//    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
+//  }
 }
