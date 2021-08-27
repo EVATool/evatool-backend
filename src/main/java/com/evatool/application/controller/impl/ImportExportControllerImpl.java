@@ -45,12 +45,7 @@ public class ImportExportControllerImpl implements ImportExportController {
         var exportJsonString = importExportService.exportAnalyses(Arrays.asList(analysisIds));
         var exportJsonBytes = exportJsonString.getBytes();
         var resource = new InputStreamResource(new ByteArrayInputStream(exportJsonBytes));
-
-        if (filename == null) {
-            filename = "Analysis-Export.json";
-        } else {
-            filename += ".json";
-        }
+        filename += ".json";
 
         return ResponseEntity
                 .ok()
