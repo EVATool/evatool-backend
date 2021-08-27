@@ -1,7 +1,7 @@
 package com.evatool.common.exception.handle;
 
 import com.evatool.common.exception.*;
-import com.evatool.common.exception.functional.EntityStillReferencedException;
+import com.evatool.common.exception.functional.http409.EntityStillReferencedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

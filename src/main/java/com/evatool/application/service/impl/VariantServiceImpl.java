@@ -4,8 +4,7 @@ import com.evatool.application.dto.VariantDto;
 import com.evatool.application.mapper.VariantMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.VariantService;
-import com.evatool.common.exception.functional.EntityStillReferencedException;
-import com.evatool.common.exception.functional.tag.VariantReferencedByRequirementsTag;
+import com.evatool.common.exception.functional.http409.EntityStillReferencedException;
 import com.evatool.common.util.IterableUtil;
 import com.evatool.domain.entity.Variant;
 import com.evatool.domain.repository.RequirementRepository;
@@ -48,7 +47,7 @@ public class VariantServiceImpl extends CrudServiceImpl<Variant, VariantDto> imp
         if (IterableUtil.iterableSize(referencedRequirements) > 0) {
             var requirementIds = IterableUtil.entityIterableToIdArray(referencedRequirements);
 
-            var tag = new VariantReferencedByRequirementsTag(id, requirementIds);
+            var tag = new EntityStillReferencedException.VariantReferencedByRequirementsTag(id, requirementIds);
 
             throw new EntityStillReferencedException("This variant is still referenced by a requirement",
                     VARIANT_REFERENCED_BY_REQUIREMENT,

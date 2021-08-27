@@ -6,8 +6,7 @@ import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.StakeholderService;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
-import com.evatool.common.exception.functional.EntityStillReferencedException;
-import com.evatool.common.exception.functional.tag.StakeholderReferencedByImpactsTag;
+import com.evatool.common.exception.functional.http409.EntityStillReferencedException;
 import com.evatool.common.util.IterableUtil;
 import com.evatool.domain.entity.Stakeholder;
 import com.evatool.domain.repository.ImpactRepository;
@@ -51,7 +50,7 @@ public class StakeholderServiceImpl extends CrudServiceImpl<Stakeholder, Stakeho
         if (IterableUtil.iterableSize(referencedImpacts) > 0) {
             var impactIds = IterableUtil.entityIterableToIdArray(referencedImpacts);
 
-            var tag = new StakeholderReferencedByImpactsTag(id, impactIds);
+            var tag = new EntityStillReferencedException.StakeholderReferencedByImpactsTag(id, impactIds);
 
             throw new EntityStillReferencedException("This stakeholder is still referenced by an impact",
                     STAKEHOLDER_REFERENCED_BY_IMPACT,
