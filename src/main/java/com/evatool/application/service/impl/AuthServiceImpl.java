@@ -5,7 +5,7 @@ import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.api.AuthService;
 import com.evatool.common.exception.InternalServerErrorException;
-import com.evatool.common.exception.functional.http401.UnauthorizedException;
+import com.evatool.common.exception.functional.http401.InvalidCredentialsException;
 import com.evatool.common.exception.functional.http404.RealmNotFoundException;
 import com.evatool.common.exception.functional.http404.UsernameNotFoundException;
 import com.evatool.common.exception.functional.http409.EmailAlreadyTakenException;
@@ -62,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
                 throw new RealmNotFoundException(realm);
             }
         } else if (httpStatus == HttpStatus.UNAUTHORIZED) {
-            throw new UnauthorizedException("Invalid credentials");
+            throw new InvalidCredentialsException();
         } else if (httpStatus != HttpStatus.OK) {
             throw new InternalServerErrorException("Unhandled response from login rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
