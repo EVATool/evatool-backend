@@ -20,7 +20,7 @@ public class PasswordValidation {
     }
 
     public static String validatePasswordSecurity(String password) {
-        // TODO add not secure enough?
+        // TODO enable security check
         return null;
     }
 }

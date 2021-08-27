@@ -14,5 +14,6 @@ public class PasswordNotSecureEnoughException extends BadRequestException {
     @RequiredArgsConstructor
     public static class PasswordNotSecureEnoughTag extends Tag {
         private final String password;
+        // TODO add information on what is required.
     }
 }
