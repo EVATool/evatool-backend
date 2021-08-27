@@ -19,6 +19,27 @@ public class GlobalExceptionHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception,
+                                                                     WebRequest webRequest,
+                                                                     HttpStatus httpStatus) {
+    logger.warn(
+            "{} handled. Returning HttpStatus {}. Message: {}",
+            exception.getClass().getSimpleName(),
+            httpStatus,
+            exception.getMessage());
+
+    var errorMessage = new ErrorMessage(
+            exception,
+            ((ServletWebRequest) webRequest).getRequest().getRequestURI(),
+            httpStatus);
+
+    return new ResponseEntity<>(errorMessage, httpStatus);
+  }
+
+  // ##############################
+  // Functional Exceptions.
+  // ##############################
+
   @ExceptionHandler(EntityStillReferencedException.class)
   public ResponseEntity<ErrorMessage> handle(EntityStillReferencedException exception, WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
@@ -79,6 +100,10 @@ public class GlobalExceptionHandler {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
   }
 
+  // ##############################
+  // Non-Functional Exceptions.
+  // ##############################
+
   @ExceptionHandler(ValidationException.class)
   public ResponseEntity<ErrorMessage> handle(ValidationException exception, WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
@@ -87,20 +112,5 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity<ErrorMessage> handle(ConstraintViolationException exception, WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
-  }
-
-  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception,
-                                                                     WebRequest webRequest,
-                                                                     HttpStatus httpStatus) {
-    logger.warn("{} handled. Returning HttpStatus {}. Message: {}",
-            exception.getClass().getSimpleName(),
-            httpStatus,
-            exception.getMessage());
-
-    var errorMessage = new ErrorMessage(exception,
-            ((ServletWebRequest) webRequest).getRequest().getRequestURI(),
-            httpStatus);
-
-    return new ResponseEntity<>(errorMessage, httpStatus);
   }
 }
