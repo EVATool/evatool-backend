@@ -17,6 +17,6 @@ public class EntityNotFoundException extends NotFoundException {
     public static class EntityNotFoundTag extends Tag {
         private final String entityClass;
         private final UUID id;
-        private final int entityCode = 0; // TODO
+        private final int entityCode = 0; // TODO entity code for translation of entity name.
     }
 }
