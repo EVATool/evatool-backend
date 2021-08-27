@@ -25,14 +25,14 @@ public interface AuthController {
             @ApiResponse(code = 400, message = "Bad Request")})
     ResponseEntity<AuthTokenDto> login(@RequestParam @Username String username,
                                        @RequestParam @NotBlank String password,
-                                       @RequestParam @Realm String realm);
+                                       @RequestParam(required = false, defaultValue = "evatool-realm") @Realm String realm);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     @ApiOperation(value = "Refresh login with an existing token")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
     ResponseEntity<AuthTokenDto> refreshLogin(@RequestParam @NotBlank String refreshToken,
-                                              @RequestParam @Realm String realm);
+                                              @RequestParam(required = false, defaultValue = "evatool-realm") @Realm String realm);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     @ApiOperation(value = "Register a new user")
