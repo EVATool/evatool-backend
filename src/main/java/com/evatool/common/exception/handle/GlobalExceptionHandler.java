@@ -1,7 +1,7 @@
 package com.evatool.common.exception.handle;
 
 import com.evatool.common.exception.*;
-import com.evatool.common.exception.functional.http409.EntityStillReferencedException;
+import com.evatool.common.exception.functional.FunctionalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -36,14 +36,24 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(errorMessage, httpStatus);
   }
 
+  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(FunctionalException exception,
+                                                                     WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, exception.getHttpStatus());
+  }
+
   // ##############################
   // Functional Exceptions.
   // ##############################
 
-  @ExceptionHandler(EntityStillReferencedException.class)
-  public ResponseEntity<ErrorMessage> handle(EntityStillReferencedException exception, WebRequest webRequest) {
-    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
+  @ExceptionHandler(FunctionalException.class)
+  public ResponseEntity<ErrorMessage> handle(FunctionalException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest);
   }
+
+  //@ExceptionHandler(EntityStillReferencedException.class)
+  //public ResponseEntity<ErrorMessage> handle(EntityStillReferencedException exception, WebRequest webRequest) {
+  //  return getErrorMessageResponseEntity(exception, webRequest);
+  //}
 
   @ExceptionHandler(EntityNotFoundException.class)
   public ResponseEntity<ErrorMessage> handle(EntityNotFoundException exception, WebRequest webRequest) {
