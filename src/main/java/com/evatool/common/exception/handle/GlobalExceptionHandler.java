@@ -95,8 +95,8 @@ public class GlobalExceptionHandler {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNAUTHORIZED);
   }
 
-  @ExceptionHandler(ConflictException.class)
-  public ResponseEntity<ErrorMessage> handle(ConflictException exception, WebRequest webRequest) {
+  @ExceptionHandler(TempConflictException.class)
+  public ResponseEntity<ErrorMessage> handle(TempConflictException exception, WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
   }
 

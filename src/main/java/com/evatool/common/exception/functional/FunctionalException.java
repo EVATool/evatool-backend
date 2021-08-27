@@ -12,9 +12,9 @@ public abstract class FunctionalException extends RuntimeException {
     private final int functionalErrorCode;
 
     @Getter
-    private final Object tag;
+    private final Tag tag;
 
-    protected FunctionalException(String message, HttpStatus httpStatus, int functionalErrorCode, Object tag) {
+    protected FunctionalException(String message, HttpStatus httpStatus, int functionalErrorCode, Tag tag) {
         super(message);
         this.httpStatus = httpStatus;
         this.functionalErrorCode = functionalErrorCode;

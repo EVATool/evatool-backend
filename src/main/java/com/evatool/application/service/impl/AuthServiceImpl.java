@@ -4,7 +4,7 @@ import com.evatool.application.dto.AuthRegisterRealmDto;
 import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.api.AuthService;
-import com.evatool.common.exception.ConflictException;
+import com.evatool.common.exception.TempConflictException;
 import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.NotFoundException;
 import com.evatool.common.exception.UnauthorizedException;
@@ -113,7 +113,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
-            throw new ConflictException(response.getBody());
+            throw new TempConflictException(response.getBody());
         } else if (httpStatus != HttpStatus.CREATED) {
             throw new InternalServerErrorException("Unhandled Exception from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
@@ -199,7 +199,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
-            throw new ConflictException("Realm \"" + realm + "\" does already exist" + response.getBody());
+            throw new TempConflictException("Realm \"" + realm + "\" does already exist" + response.getBody());
         } else if (httpStatus != HttpStatus.CREATED) {
             throw new InternalServerErrorException("Unhandled Exception from create realm rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }

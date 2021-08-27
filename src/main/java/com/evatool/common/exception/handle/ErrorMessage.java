@@ -1,6 +1,7 @@
 package com.evatool.common.exception.handle;
 
 import com.evatool.common.exception.functional.FunctionalException;
+import com.evatool.common.exception.functional.Tag;
 import lombok.Getter;
 import lombok.ToString;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class ErrorMessage {
     private final Integer functionalErrorCode;
 
     @Getter
-    private final Object tag;
+    private final Tag tag;
 
     public ErrorMessage(Exception exception, String path, HttpStatus httpStatusCode) {
         logger.debug("Constructor");
