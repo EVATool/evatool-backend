@@ -43,11 +43,13 @@ public @interface Password {
                 throw new PasswordInvalidException(error, password);
             }
 
-            error = validatePasswordSecurity(password);
-            if (skipSecurity && error != null) {
-                constraintValidatorContext.disableDefaultConstraintViolation();
-                constraintValidatorContext.buildConstraintViolationWithTemplate(error).addConstraintViolation();
-                throw new PasswordNotSecureEnoughException(error, password);
+            if (!skipSecurity) {
+                error = validatePasswordSecurity(password);
+                if (error != null) {
+                    constraintValidatorContext.disableDefaultConstraintViolation();
+                    constraintValidatorContext.buildConstraintViolationWithTemplate(error).addConstraintViolation();
+                    throw new PasswordNotSecureEnoughException(error, password);
+                }
             }
 
             return true;
