@@ -1,6 +1,5 @@
 package com.evatool.application.validator;
 
-import com.evatool.common.exception.functional.http400.RealmInvalidException;
 import com.evatool.common.exception.functional.http400.UsernameInvalidException;
 
 import javax.validation.Constraint;
@@ -12,25 +11,25 @@ import java.lang.annotation.*;
 import static com.evatool.common.validation.UsernameRealmValidation.validateUsernameOrRealm;
 
 @Documented
-@Constraint(validatedBy = RealmConstraint.RealmValidator.class)
+@Constraint(validatedBy = Username.UsernameValidator.class)
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RealmConstraint {
-    String message() default "Invalid Realm";
+public @interface Username {
+    String message() default "Invalid Username";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    class RealmValidator implements ConstraintValidator<RealmConstraint, String> {
+    class UsernameValidator implements ConstraintValidator<Username, String> {
 
         @Override
-        public boolean isValid(String realm, ConstraintValidatorContext constraintValidatorContext) {
-            var error = validateUsernameOrRealm(realm);
+        public boolean isValid(String username, ConstraintValidatorContext constraintValidatorContext) {
+            var error = validateUsernameOrRealm(username);
             if (error != null) {
                 constraintValidatorContext.disableDefaultConstraintViolation();
                 constraintValidatorContext.buildConstraintViolationWithTemplate(error).addConstraintViolation();
-                throw new RealmInvalidException(error, realm);
+                throw new UsernameInvalidException(error, username);
             }
 
             return true;

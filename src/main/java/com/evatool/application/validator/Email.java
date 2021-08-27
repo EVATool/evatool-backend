@@ -1,35 +1,36 @@
 package com.evatool.application.validator;
 
-import com.evatool.common.exception.functional.http400.UsernameInvalidException;
+import com.evatool.common.exception.functional.http400.EmailInvalidException;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
+
 import java.lang.annotation.*;
 
-import static com.evatool.common.validation.UsernameRealmValidation.validateUsernameOrRealm;
+import static com.evatool.common.validation.EmailValidation.validateEmail;
 
 @Documented
-@Constraint(validatedBy = UsernameConstraint.UsernameValidator.class)
+@Constraint(validatedBy = Email.EmailValidator.class)
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UsernameConstraint {
-    String message() default "Invalid Username";
+public @interface Email {
+    String message() default "Invalid Email";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    class UsernameValidator implements ConstraintValidator<UsernameConstraint, String> {
+    class EmailValidator implements ConstraintValidator<Email, String> {
 
         @Override
-        public boolean isValid(String username, ConstraintValidatorContext constraintValidatorContext) {
-            var error = validateUsernameOrRealm(username);
+        public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
+            var error = validateEmail(email);
             if (error != null) {
                 constraintValidatorContext.disableDefaultConstraintViolation();
                 constraintValidatorContext.buildConstraintViolationWithTemplate(error).addConstraintViolation();
-                throw new UsernameInvalidException(error, username);
+               throw new EmailInvalidException(error, email);
             }
 
             return true;
