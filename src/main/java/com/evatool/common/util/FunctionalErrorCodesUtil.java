@@ -6,10 +6,7 @@ public class FunctionalErrorCodesUtil {
     }
 
     // 400 Not found codes.
-    public static final int ENTITY_NOT_FOUND = 1;
-    public static final int USERNAME_NOT_FOUND = 2;
-    public static final int REALM_NOT_FOUND = 3;
-    public static final int IMPORT_EXPORT_JSON_INVALID = 4;
+    public static final int IMPORT_EXPORT_JSON_INVALID = 1;
 
     // 401 Unauthorized codes.
     public static final int INVALID_CREDENTIALS = 1001;
@@ -18,8 +15,11 @@ public class FunctionalErrorCodesUtil {
     public static final int CROSS_REALM_ACCESS = 3001;
 
     // 404 Not found codes.
-    public static final int LOGIN_REALM_NOT_FOUND = 4001;
-    public static final int LOGIN_USERNAME_NOT_FOUND = 4002;
+    public static final int ENTITY_NOT_FOUND = 4001;
+    public static final int USERNAME_NOT_FOUND = 4002;
+    public static final int REALM_NOT_FOUND = 4003;
+    public static final int LOGIN_REALM_NOT_FOUND = 4004;
+    public static final int LOGIN_USERNAME_NOT_FOUND = 4005;
 
     // 409 Conflict codes.
     public static final int VALUE_REFERENCED_BY_IMPACT = 9001;
