@@ -32,11 +32,5 @@ public class FunctionalErrorCodesUtil {
     public static final int REGISTER_USERNAME_ALREADY_EXISTS = 9005;
     public static final int REGISTER_EMAIL_ALREADY_EXISTS = 9006;
     public static final int REGISTER_REALM_ALREADY_EXISTS = 9007;
-
-    // 422 Unprocessable entity codes.
-    public static final int PROPERTY_CANNOT_BE_NULL = 22001;
-    public static final int PROPERTY_CANNOT_BE_UPDATED = 22002;
-    public static final int PROPERTY_CANNOT_IS_INVALID = 22003;
-    public static final int PROPERTY_CANNOT_MUST_BE_NULL = 22004;
-
+    
 }
