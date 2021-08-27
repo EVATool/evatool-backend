@@ -81,8 +81,9 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         if (optional.isEmpty()) {
             throw new EntityNotFoundException(getClass().getSimpleName(), dto.getId());
         }
+        var foundEntity = optional.get();
         var entity = baseMapper.fromDto(dto);
-        entity.setRealm(optional.get().getRealm());
+        entity.setRealm(foundEntity.getRealm());
         TenancySentinel.handleUpdate(entity);
         entity = crudRepository.save(entity);
         return baseMapper.toDto(entity);
