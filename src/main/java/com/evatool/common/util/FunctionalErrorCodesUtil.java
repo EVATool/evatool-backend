@@ -9,6 +9,7 @@ public class FunctionalErrorCodesUtil {
     public static final int ENTITY_NOT_FOUND = 1;
     public static final int USERNAME_NOT_FOUND = 2;
     public static final int REALM_NOT_FOUND = 3;
+    public static final int IMPORT_EXPORT_JSON_INVALID = 4;
 
     // 401 Unauthorized codes.
     public static final int INVALID_CREDENTIALS = 1001;
