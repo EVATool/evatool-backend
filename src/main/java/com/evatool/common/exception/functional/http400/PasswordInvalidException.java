@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 public class PasswordInvalidException extends BadRequestException {
     public PasswordInvalidException(String message, String password) {
-        super(message, FunctionalErrorCodesUtil.PASSWORD_NOT_SECURE_ENOUGH, new PasswordInvalidTag(password));
+        super(message, FunctionalErrorCodesUtil.PASSWORD_EMPTY_OR_NULL, new PasswordInvalidTag(password));
     }
 
     @Getter

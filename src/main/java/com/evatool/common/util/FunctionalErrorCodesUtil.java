@@ -10,8 +10,8 @@ public class FunctionalErrorCodesUtil {
     public static final int USERNAME_INVALID = 2;
     public static final int REALM_INVALID = 3;
     public static final int EMAIL_INVALID = 4;
-    public static final int PASSWORD_NULL_OR_EMPTY = 5;
-    public static final int PASSWORD_NOT_SECURE_ENOUGH = 6; // TODO
+    public static final int PASSWORD_EMPTY_OR_NULL = 5;
+    public static final int PASSWORD_NOT_SECURE_ENOUGH = 6;
 
     // 401 Unauthorized codes.
     public static final int INVALID_CREDENTIALS = 1001;

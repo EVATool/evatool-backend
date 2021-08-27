@@ -1,6 +1,7 @@
 package com.evatool.application.validator;
 
 import com.evatool.common.exception.functional.http400.PasswordInvalidException;
+import com.evatool.common.exception.functional.http400.PasswordNotSecureEnoughException;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -9,6 +10,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 import static com.evatool.common.validation.PasswordValidation.validatePassword;
+import static com.evatool.common.validation.PasswordValidation.validatePasswordSecurity;
 
 @Documented
 @Constraint(validatedBy = Password.PasswordValidator.class)
@@ -30,6 +32,13 @@ public @interface Password {
                 constraintValidatorContext.disableDefaultConstraintViolation();
                 constraintValidatorContext.buildConstraintViolationWithTemplate(error).addConstraintViolation();
                 throw new PasswordInvalidException(error, password);
+            }
+
+            error = validatePasswordSecurity(password);
+            if(error != null){
+                constraintValidatorContext.disableDefaultConstraintViolation();
+                constraintValidatorContext.buildConstraintViolationWithTemplate(error).addConstraintViolation();
+                throw new PasswordNotSecureEnoughException(error, password);
             }
 
             return true;
