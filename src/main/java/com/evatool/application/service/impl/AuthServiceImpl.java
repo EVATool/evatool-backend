@@ -63,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
         } else if (httpStatus == HttpStatus.UNAUTHORIZED) {
             throw new UnauthorizedException("Invalid credentials");
         } else if (httpStatus != HttpStatus.OK) {
-            throw new InternalServerErrorException("Unhandled Exception from login rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
+            throw new InternalServerErrorException("Unhandled response from login rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
         return getAuthTokenDtoFromKeycloakResponse(response.getBody());
@@ -90,7 +90,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus != HttpStatus.OK) {
-            throw new InternalServerErrorException("Unhandled Exception from refresh login rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
+            throw new InternalServerErrorException("Unhandled response from refresh login rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
         return getAuthTokenDtoFromKeycloakResponse(response.getBody());
@@ -123,7 +123,7 @@ public class AuthServiceImpl implements AuthService {
             // TODO Check if username or email already is taken.
             throw new UsernameAlreadyTakenException(username);
         } else if (httpStatus != HttpStatus.CREATED) {
-            throw new InternalServerErrorException("Unhandled Exception from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
+            throw new InternalServerErrorException("Unhandled response from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
         // Save user id for later.
@@ -143,7 +143,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus != HttpStatus.OK) {
-            throw new InternalServerErrorException("Unhandled Exception from get realm roles rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
+            throw new InternalServerErrorException("Unhandled response from get realm roles rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
 
@@ -155,7 +155,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus != HttpStatus.NO_CONTENT) {
-            throw new InternalServerErrorException("Unhandled Exception from set user roles rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
+            throw new InternalServerErrorException("Unhandled response from set user roles rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
         return new AuthRegisterUserDto(username, email);
@@ -210,7 +210,7 @@ public class AuthServiceImpl implements AuthService {
             logger.warn("Auth responded with status {}: {}", response.getStatusCode(), response.getBody());
             throw new RealmAlreadyTakenException(realm);
         } else if (httpStatus != HttpStatus.CREATED) {
-            throw new InternalServerErrorException("Unhandled Exception from create realm rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
+            throw new InternalServerErrorException("Unhandled response from create realm rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
         return new AuthRegisterRealmDto(realm);
