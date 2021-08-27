@@ -5,11 +5,13 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
+
 @Getter
 @RequiredArgsConstructor
-public class VariantReferencedByRequirements {
+public class ImpactReferencedByRequirementsTag {
 
-    public final UUID variantId;
+    public final UUID impactId;
     public final UUID[] requirementIds;
+    public final UUID[] requirementDeltaIds;
 
 }

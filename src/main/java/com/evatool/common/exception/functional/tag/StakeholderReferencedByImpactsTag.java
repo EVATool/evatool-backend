@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Getter
 @RequiredArgsConstructor
-public class StakeholderReferencedByImpacts {
+public class StakeholderReferencedByImpactsTag {
 
     public final UUID stakeholderId;
     public final UUID[] impactIds;

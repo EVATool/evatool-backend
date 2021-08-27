@@ -6,7 +6,7 @@ import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ValueService;
 import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.functional.EntityStillReferencedException;
-import com.evatool.common.exception.functional.tag.ValueReferencedByImpacts;
+import com.evatool.common.exception.functional.tag.ValueReferencedByImpactsTag;
 import com.evatool.common.util.IterableUtil;
 import com.evatool.domain.entity.Value;
 import com.evatool.domain.repository.ImpactRepository;
@@ -50,7 +50,7 @@ public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implement
         if (IterableUtil.iterableSize(referencedImpacts) > 0) {
             var impactIds = IterableUtil.entityIterableToIdArray(referencedImpacts);
 
-            var tag = new ValueReferencedByImpacts(id, impactIds);
+            var tag = new ValueReferencedByImpactsTag(id, impactIds);
 
             throw new EntityStillReferencedException("This value is still referenced by an impact",
                     VALUE_REFERENCED_BY_IMPACT,

@@ -7,9 +7,9 @@ import java.util.UUID;
 
 @Getter
 @RequiredArgsConstructor
-public class ValueReferencedByImpacts {
+public class VariantReferencedByRequirementsTag {
 
-    public final UUID valueId;
-    public final UUID[] impactIds;
+    public final UUID variantId;
+    public final UUID[] requirementIds;
 
 }
