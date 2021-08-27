@@ -89,12 +89,18 @@ public class GlobalExceptionHandler {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.BAD_REQUEST);
   }
 
-  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception, WebRequest webRequest,
+  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception,
+                                                                     WebRequest webRequest,
                                                                      HttpStatus httpStatus) {
-    logger.warn("{} handled. Returning HttpStatus {}. Message: {}", exception.getClass().getSimpleName(), httpStatus,
+    logger.warn("{} handled. Returning HttpStatus {}. Message: {}",
+            exception.getClass().getSimpleName(),
+            httpStatus,
             exception.getMessage());
-    var errorMessage = new ErrorMessage(exception, ((ServletWebRequest) webRequest).getRequest().getRequestURI(),
+
+    var errorMessage = new ErrorMessage(exception,
+            ((ServletWebRequest) webRequest).getRequest().getRequestURI(),
             httpStatus);
+
     return new ResponseEntity<>(errorMessage, httpStatus);
   }
 }
