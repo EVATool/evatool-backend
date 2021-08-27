@@ -23,7 +23,7 @@ public interface AuthController {
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
     ResponseEntity<AuthTokenDto> login(@RequestParam @Username String username,
-                                       @RequestParam @Password String password,
+                                       @RequestParam @Password(skipSecurity = true) String password,
                                        @RequestParam(required = false, defaultValue = "evatool-realm") @Realm String realm);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
@@ -39,7 +39,7 @@ public interface AuthController {
             @ApiResponse(code = 400, message = "Bad Request")})
     ResponseEntity<AuthRegisterUserDto> registerUser(@RequestParam @Username String username,
                                                      @RequestParam @Email String email,
-                                                     @RequestParam @Password(registering = true) String password);
+                                                     @RequestParam @Password String password);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     @ApiOperation(value = "Register a new realm")

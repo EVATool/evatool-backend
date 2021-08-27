@@ -23,7 +23,16 @@ public @interface Password {
 
     Class<? extends Payload>[] payload() default {};
 
+    boolean skipSecurity() default false;
+
     class PasswordValidator implements ConstraintValidator<Password, String> {
+
+        private boolean skipSecurity;
+
+        @Override
+        public void initialize(Password constraintAnnotation) {
+            this.skipSecurity = constraintAnnotation.skipSecurity();
+        }
 
         @Override
         public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
@@ -35,7 +44,7 @@ public @interface Password {
             }
 
             error = validatePasswordSecurity(password);
-            if(error != null){
+            if (skipSecurity && error != null) {
                 constraintValidatorContext.disableDefaultConstraintViolation();
                 constraintValidatorContext.buildConstraintViolationWithTemplate(error).addConstraintViolation();
                 throw new PasswordNotSecureEnoughException(error, password);
