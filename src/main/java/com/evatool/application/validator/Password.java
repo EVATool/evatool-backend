@@ -1,0 +1,38 @@
+package com.evatool.application.validator;
+
+import com.evatool.common.exception.functional.http400.PasswordInvalidException;
+
+import javax.validation.Constraint;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import javax.validation.Payload;
+import java.lang.annotation.*;
+
+import static com.evatool.common.validation.PasswordValidation.validatePassword;
+
+@Documented
+@Constraint(validatedBy = Password.PasswordValidator.class)
+@Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Password {
+    String message() default "Invalid Password";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
+
+    class PasswordValidator implements ConstraintValidator<Password, String> {
+
+        @Override
+        public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
+            var error = validatePassword(password);
+            if (error != null) {
+                constraintValidatorContext.disableDefaultConstraintViolation();
+                constraintValidatorContext.buildConstraintViolationWithTemplate(error).addConstraintViolation();
+                throw new PasswordInvalidException(error, password);
+            }
+
+            return true;
+        }
+    }
+}

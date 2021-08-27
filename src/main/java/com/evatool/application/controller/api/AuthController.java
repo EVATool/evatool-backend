@@ -4,6 +4,7 @@ import com.evatool.application.dto.AuthRegisterRealmDto;
 import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.validator.Email;
+import com.evatool.application.validator.Password;
 import com.evatool.application.validator.Realm;
 import com.evatool.application.validator.Username;
 import io.swagger.annotations.ApiOperation;
@@ -24,14 +25,14 @@ public interface AuthController {
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
     ResponseEntity<AuthTokenDto> login(@RequestParam @Username String username,
-                                       @RequestParam @NotBlank String password,
+                                       @RequestParam @Password String password,
                                        @RequestParam(required = false, defaultValue = "evatool-realm") @Realm String realm);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     @ApiOperation(value = "Refresh login with an existing token")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<AuthTokenDto> refreshLogin(@RequestParam @NotBlank String refreshToken,
+    ResponseEntity<AuthTokenDto> refreshLogin(@RequestParam String refreshToken,
                                               @RequestParam(required = false, defaultValue = "evatool-realm") @Realm String realm);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
