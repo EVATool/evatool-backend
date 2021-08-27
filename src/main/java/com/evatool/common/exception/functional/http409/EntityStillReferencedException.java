@@ -1,6 +1,5 @@
 package com.evatool.common.exception.functional.http409;
 
-import com.evatool.common.exception.functional.ConflictException;
 import com.evatool.common.exception.functional.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

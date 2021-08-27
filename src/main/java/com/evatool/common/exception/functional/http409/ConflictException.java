@@ -1,5 +1,7 @@
-package com.evatool.common.exception.functional;
+package com.evatool.common.exception.functional.http409;
 
+import com.evatool.common.exception.functional.FunctionalException;
+import com.evatool.common.exception.functional.Tag;
 import org.springframework.http.HttpStatus;
 
 public class ConflictException extends FunctionalException {
