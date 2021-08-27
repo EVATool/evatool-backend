@@ -3,6 +3,7 @@ package com.evatool.common.exception.functional;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+// A FunctionalException should be used to create meaningful error messages for the end-user.
 public abstract class FunctionalException extends RuntimeException {
 
     @Getter

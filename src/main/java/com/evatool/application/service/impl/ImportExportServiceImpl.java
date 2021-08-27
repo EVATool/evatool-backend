@@ -8,7 +8,7 @@ import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
 import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.functional.http400.ImportJsonException;
-import com.evatool.common.exception.PropertyIsInvalidException;
+import com.evatool.common.exception.prevent.http422.PropertyIsInvalidException;
 import com.evatool.domain.entity.*;
 import com.evatool.domain.repository.*;
 import com.google.gson.ExclusionStrategy;
