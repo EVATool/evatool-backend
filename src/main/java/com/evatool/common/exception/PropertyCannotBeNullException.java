@@ -1,4 +1,4 @@
-package com.evatool.common.exception.functional.http422;
+package com.evatool.common.exception;
 
 public class PropertyCannotBeNullException extends RuntimeException {
     public PropertyCannotBeNullException(String entityClass, String propertyName) {

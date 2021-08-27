@@ -1,6 +1,6 @@
 package com.evatool.common.exception.handle;
 
-import com.evatool.common.exception.InternalServerErrorException;
+import com.evatool.common.exception.*;
 import com.evatool.common.exception.functional.FunctionalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,21 +38,35 @@ public class GlobalExceptionHandler {
     return getErrorMessageResponseEntity(exception, webRequest, exception.getHttpStatus());
   }
 
-  // ##############################
   // Functional Exceptions.
-  // ##############################
-
   @ExceptionHandler(FunctionalException.class)
   public ResponseEntity<ErrorMessage> handle(FunctionalException exception, WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest);
   }
 
-  // ##############################
   // Non-Functional Exceptions.
-  // ##############################
-
   @ExceptionHandler(InternalServerErrorException.class)
   public ResponseEntity<ErrorMessage> handle(InternalServerErrorException exception, WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @ExceptionHandler(PropertyCannotBeNullException.class)
+  public ResponseEntity<ErrorMessage> handle(PropertyCannotBeNullException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+  }
+
+  @ExceptionHandler(PropertyCannotBeUpdatedException.class)
+  public ResponseEntity<ErrorMessage> handle(PropertyCannotBeUpdatedException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+  }
+
+  @ExceptionHandler(PropertyIsInvalidException.class)
+  public ResponseEntity<ErrorMessage> handle(PropertyIsInvalidException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+  }
+
+  @ExceptionHandler(PropertyMustBeNullException.class)
+  public ResponseEntity<ErrorMessage> handle(PropertyMustBeNullException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
   }
 }
