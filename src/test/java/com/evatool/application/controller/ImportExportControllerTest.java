@@ -20,8 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ImportExportControllerTest {
 
     @Autowired
-    @Getter
-    public TestRestTemplate rest;
+    private TestRestTemplate rest;
 
     @Autowired
     private AnalysisRepository analysisRepository;
