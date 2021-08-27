@@ -16,9 +16,11 @@ public class GlobalExceptionHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception,
-                                                                     WebRequest webRequest,
-                                                                     HttpStatus httpStatus) {
+  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(
+          Exception exception,
+          WebRequest webRequest,
+          HttpStatus httpStatus) {
+
     logger.warn(
             "{} handled. Returning HttpStatus {}. Message: {}",
             exception.getClass().getSimpleName(),
@@ -33,8 +35,9 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(errorMessage, httpStatus);
   }
 
-  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(FunctionalException exception,
-                                                                     WebRequest webRequest) {
+  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(
+          FunctionalException exception,
+          WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest, exception.getHttpStatus());
   }
 
