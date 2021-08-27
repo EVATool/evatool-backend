@@ -5,10 +5,11 @@ import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.api.AuthService;
 import com.evatool.common.exception.InternalServerErrorException;
-import com.evatool.common.exception.TempConflictException;
 import com.evatool.common.exception.functional.http401.UnauthorizedException;
 import com.evatool.common.exception.functional.http404.RealmNotFoundException;
 import com.evatool.common.exception.functional.http404.UsernameNotFoundException;
+import com.evatool.common.exception.functional.http409.RealmAlreadyTakenException;
+import com.evatool.common.exception.functional.http409.UsernameAlreadyTakenException;
 import com.evatool.common.exception.handle.RestTemplateResponseErrorHandlerIgnore;
 import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UUIDUtil;
@@ -118,8 +119,9 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
+            logger.warn("Auth responded with status {}: {}", response.getStatusCode(), response.getBody());
             // TODO Check if username or email already is taken.
-            throw new TempConflictException(response.getBody());
+            throw new UsernameAlreadyTakenException(username);
         } else if (httpStatus != HttpStatus.CREATED) {
             throw new InternalServerErrorException("Unhandled Exception from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
@@ -205,7 +207,8 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
-            throw new TempConflictException("Realm \"" + realm + "\" does already exist" + response.getBody());
+            logger.warn("Auth responded with status {}: {}", response.getStatusCode(), response.getBody());
+            throw new RealmAlreadyTakenException(realm);
         } else if (httpStatus != HttpStatus.CREATED) {
             throw new InternalServerErrorException("Unhandled Exception from create realm rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }

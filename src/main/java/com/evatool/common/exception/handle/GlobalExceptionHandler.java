@@ -93,19 +93,9 @@ public class GlobalExceptionHandler {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.FORBIDDEN);
   }
 
-  @ExceptionHandler(TempNotFoundException.class)
-  public ResponseEntity<ErrorMessage> handle(TempNotFoundException exception, WebRequest webRequest) {
-    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
-  }
-
   @ExceptionHandler(UnauthorizedException.class)
   public ResponseEntity<ErrorMessage> handle(UnauthorizedException exception, WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNAUTHORIZED);
-  }
-
-  @ExceptionHandler(TempConflictException.class)
-  public ResponseEntity<ErrorMessage> handle(TempConflictException exception, WebRequest webRequest) {
-    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
   }
 
   @ExceptionHandler(InternalServerErrorException.class)
