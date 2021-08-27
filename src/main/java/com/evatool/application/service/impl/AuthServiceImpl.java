@@ -4,10 +4,11 @@ import com.evatool.application.dto.AuthRegisterRealmDto;
 import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.api.AuthService;
-import com.evatool.common.exception.TempConflictException;
 import com.evatool.common.exception.InternalServerErrorException;
-import com.evatool.common.exception.NotFoundException;
+import com.evatool.common.exception.TempConflictException;
 import com.evatool.common.exception.UnauthorizedException;
+import com.evatool.common.exception.functional.http404.RealmNotFoundException;
+import com.evatool.common.exception.functional.http404.UsernameNotFoundException;
 import com.evatool.common.exception.handle.RestTemplateResponseErrorHandlerIgnore;
 import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UUIDUtil;
@@ -53,7 +54,11 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus == HttpStatus.NOT_FOUND) {
-            throw new NotFoundException("Realm \"" + realm + "\" not found");
+            if (username.equals(realm)) {
+                throw new UsernameNotFoundException(username);
+            } else {
+                throw new RealmNotFoundException(realm);
+            }
         } else if (httpStatus == HttpStatus.UNAUTHORIZED) {
             throw new UnauthorizedException("Invalid credentials");
         } else if (httpStatus != HttpStatus.OK) {

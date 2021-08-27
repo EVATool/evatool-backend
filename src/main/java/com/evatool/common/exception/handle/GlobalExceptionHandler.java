@@ -85,8 +85,8 @@ public class GlobalExceptionHandler {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.FORBIDDEN);
   }
 
-  @ExceptionHandler(NotFoundException.class)
-  public ResponseEntity<ErrorMessage> handle(NotFoundException exception, WebRequest webRequest) {
+  @ExceptionHandler(TempNotFoundException.class)
+  public ResponseEntity<ErrorMessage> handle(TempNotFoundException exception, WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
   }
 
