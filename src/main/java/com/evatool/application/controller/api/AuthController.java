@@ -15,8 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.constraints.NotBlank;
-
 @Validated
 public interface AuthController {
 
@@ -41,13 +39,13 @@ public interface AuthController {
             @ApiResponse(code = 400, message = "Bad Request")})
     ResponseEntity<AuthRegisterUserDto> registerUser(@RequestParam @Username String username,
                                                      @RequestParam @Email String email,
-                                                     @RequestParam @NotBlank String password);
+                                                     @RequestParam @Password(registering = true) String password);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     @ApiOperation(value = "Register a new realm")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad Request")})
-    ResponseEntity<AuthRegisterRealmDto> registerRealm(@RequestParam @NotBlank String authAdminUsername,
-                                                       @RequestParam @NotBlank String authAdminPassword,
+    ResponseEntity<AuthRegisterRealmDto> registerRealm(@RequestParam String authAdminUsername,
+                                                       @RequestParam String authAdminPassword,
                                                        @RequestParam @Realm String realm);
 }
