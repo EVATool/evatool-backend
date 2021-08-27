@@ -32,5 +32,5 @@ public class FunctionalErrorCodesUtil {
     public static final int REGISTER_USERNAME_ALREADY_EXISTS = 9005;
     public static final int REGISTER_EMAIL_ALREADY_EXISTS = 9006;
     public static final int REGISTER_REALM_ALREADY_EXISTS = 9007;
-    
+
 }
