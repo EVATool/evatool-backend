@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static com.evatool.application.service.FunctionalErrorCodes.VALUE_REFERENCED_BY_IMPACT;
+import static com.evatool.common.util.FunctionalErrorCodesUtil.VALUE_REFERENCED_BY_IMPACT;
 
 @Service
 public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implements ValueService {

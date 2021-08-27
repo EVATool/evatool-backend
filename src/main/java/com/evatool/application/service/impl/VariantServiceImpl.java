@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static com.evatool.application.service.FunctionalErrorCodes.VARIANT_REFERENCED_BY_REQUIREMENT;
+import static com.evatool.common.util.FunctionalErrorCodesUtil.VARIANT_REFERENCED_BY_REQUIREMENT;
 
 @Service
 public class VariantServiceImpl extends CrudServiceImpl<Variant, VariantDto> implements VariantService {

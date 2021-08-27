@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static com.evatool.application.service.FunctionalErrorCodes.STAKEHOLDER_REFERENCED_BY_IMPACT;
+import static com.evatool.common.util.FunctionalErrorCodesUtil.STAKEHOLDER_REFERENCED_BY_IMPACT;
 
 @Service
 public class StakeholderServiceImpl extends CrudServiceImpl<Stakeholder, StakeholderDto> implements StakeholderService {

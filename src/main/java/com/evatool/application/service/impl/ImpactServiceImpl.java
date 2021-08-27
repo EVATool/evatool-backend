@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import static com.evatool.application.service.FunctionalErrorCodes.IMPACT_REFERENCED_BY_REQUIREMENT_DELTA;
+import static com.evatool.common.util.FunctionalErrorCodesUtil.IMPACT_REFERENCED_BY_REQUIREMENT_DELTA;
 
 @Service
 public class ImpactServiceImpl extends CrudServiceImpl<Impact, ImpactDto> implements ImpactService {

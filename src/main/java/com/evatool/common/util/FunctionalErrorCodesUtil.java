@@ -1,8 +1,8 @@
-package com.evatool.application.service;
+package com.evatool.common.util;
 
-public class FunctionalErrorCodes {
+public class FunctionalErrorCodesUtil {
 
-    private FunctionalErrorCodes() {
+    private FunctionalErrorCodesUtil() {
     }
 
     public static final int VALUE_REFERENCED_BY_IMPACT = 1001;
