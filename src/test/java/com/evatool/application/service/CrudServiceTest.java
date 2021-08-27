@@ -1,9 +1,9 @@
 package com.evatool.application.service;
 
 import com.evatool.application.dto.SuperDto;
-import com.evatool.common.exception.EntityNotFoundException;
-import com.evatool.common.exception.PropertyCannotBeNullException;
-import com.evatool.common.exception.PropertyMustBeNullException;
+import com.evatool.common.exception.functional.http404.EntityNotFoundException;
+import com.evatool.common.exception.functional.http422.PropertyCannotBeNullException;
+import com.evatool.common.exception.functional.http422.PropertyMustBeNullException;
 import com.evatool.domain.entity.SuperEntity;
 import com.evatool.domain.repository.DataTest;
 import org.junit.jupiter.api.Test;

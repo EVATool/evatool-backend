@@ -1,6 +1,6 @@
 package com.evatool.application.service;
 
-import com.evatool.common.exception.CrossRealmAccessException;
+import com.evatool.common.exception.functional.http403.CrossRealmAccessException;
 import com.evatool.domain.entity.SuperEntity;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;

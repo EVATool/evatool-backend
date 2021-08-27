@@ -6,7 +6,7 @@ import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.api.AuthService;
 import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.TempConflictException;
-import com.evatool.common.exception.UnauthorizedException;
+import com.evatool.common.exception.functional.http401.UnauthorizedException;
 import com.evatool.common.exception.functional.http404.RealmNotFoundException;
 import com.evatool.common.exception.functional.http404.UsernameNotFoundException;
 import com.evatool.common.exception.handle.RestTemplateResponseErrorHandlerIgnore;
@@ -118,6 +118,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
+            // TODO Check if username or email already is taken.
             throw new TempConflictException(response.getBody());
         } else if (httpStatus != HttpStatus.CREATED) {
             throw new InternalServerErrorException("Unhandled Exception from create user rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");

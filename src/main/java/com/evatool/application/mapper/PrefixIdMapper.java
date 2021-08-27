@@ -1,7 +1,7 @@
 package com.evatool.application.mapper;
 
 import com.evatool.application.dto.PrefixIdDto;
-import com.evatool.common.exception.PropertyIsInvalidException;
+import com.evatool.common.exception.functional.http422.PropertyIsInvalidException;
 import com.evatool.domain.entity.PrefixIdEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

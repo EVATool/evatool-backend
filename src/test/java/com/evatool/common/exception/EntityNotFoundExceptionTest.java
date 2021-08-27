@@ -1,5 +1,6 @@
 package com.evatool.common.exception;
 
+import com.evatool.common.exception.functional.http404.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

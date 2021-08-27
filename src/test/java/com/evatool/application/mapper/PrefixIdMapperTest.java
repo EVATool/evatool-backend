@@ -1,7 +1,7 @@
 package com.evatool.application.mapper;
 
 import com.evatool.application.dto.AnalysisDto;
-import com.evatool.common.exception.PropertyIsInvalidException;
+import com.evatool.common.exception.functional.http422.PropertyIsInvalidException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
