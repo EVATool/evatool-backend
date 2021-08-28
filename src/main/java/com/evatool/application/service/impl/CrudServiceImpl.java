@@ -4,9 +4,11 @@ import com.evatool.application.dto.SuperDto;
 import com.evatool.application.mapper.SuperMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.CrudService;
+import com.evatool.common.exception.functional.http404.AnalysisNotFoundException;
 import com.evatool.common.exception.prevent.http404.EntityNotFoundException;
 import com.evatool.common.exception.prevent.http422.PropertyCannotBeNullException;
 import com.evatool.common.exception.prevent.http422.PropertyMustBeNullException;
+import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.entity.SuperEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +42,11 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         }
         var optional = crudRepository.findById(id);
         if (optional.isEmpty()) {
-            throw new EntityNotFoundException(getClass().getSimpleName(), id);
+            if (this.getEntityClass() == Analysis.class) { // Special functional error case.
+                throw new AnalysisNotFoundException(id);
+            } else {
+                throw new EntityNotFoundException(getClass().getSimpleName(), id);
+            }
         }
         var entity = optional.get();
         TenancySentinel.handleFind(entity);

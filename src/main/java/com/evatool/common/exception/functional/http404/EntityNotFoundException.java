@@ -7,9 +7,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.UUID;
 
 public abstract class EntityNotFoundException extends NotFoundException {
-
-    protected EntityNotFoundException(String message, int functionalErrorCode, Tag tag) {
-        super(message, functionalErrorCode, tag);
+    protected EntityNotFoundException(String entityClass, UUID id, int functionalErrorCode, Tag tag) {
+        super(String.format("Entity '%s' with id '%s' not found", entityClass, id), functionalErrorCode, tag);
     }
 
     @Getter
