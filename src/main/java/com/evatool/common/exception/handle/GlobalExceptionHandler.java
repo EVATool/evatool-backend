@@ -1,11 +1,9 @@
 package com.evatool.common.exception.handle;
 
+import com.evatool.common.exception.HttpStatusException;
 import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.functional.FunctionalException;
-import com.evatool.common.exception.prevent.http422.PropertyCannotBeNullException;
-import com.evatool.common.exception.prevent.http422.PropertyCannotBeUpdatedException;
-import com.evatool.common.exception.prevent.http422.PropertyIsInvalidException;
-import com.evatool.common.exception.prevent.http422.PropertyMustBeNullException;
+import com.evatool.common.exception.prevent.PreventException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,28 +18,18 @@ public class GlobalExceptionHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(
-          Exception exception,
-          WebRequest webRequest,
-          HttpStatus httpStatus) {
-
+  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception, WebRequest webRequest, HttpStatus httpStatus) {
     logger.warn(
             "{} handled. Returning HttpStatus {}. Message: {}",
             exception.getClass().getSimpleName(),
             httpStatus,
             exception.getMessage());
 
-    var errorMessage = new ErrorMessage(
-            exception,
-            ((ServletWebRequest) webRequest).getRequest().getRequestURI(),
-            httpStatus);
-
+    var errorMessage = new ErrorMessage(exception, ((ServletWebRequest) webRequest).getRequest().getRequestURI(), httpStatus);
     return new ResponseEntity<>(errorMessage, httpStatus);
   }
 
-  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(
-          FunctionalException exception,
-          WebRequest webRequest) {
+  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(HttpStatusException exception, WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest, exception.getHttpStatus());
   }
 
@@ -51,10 +39,10 @@ public class GlobalExceptionHandler {
     return getErrorMessageResponseEntity(exception, webRequest);
   }
 
-  // Non-Functional Exceptions.
-  @ExceptionHandler(PropertyCannotBeNullException.class)
-  public ResponseEntity<ErrorMessage> handle(PropertyCannotBeNullException exception, WebRequest webRequest) {
-    return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+  // Prevent Exceptions.
+  @ExceptionHandler(PreventException.class)
+  public ResponseEntity<ErrorMessage> handle(PreventException exception, WebRequest webRequest) {
+    return getErrorMessageResponseEntity(exception, webRequest);
   }
 
   // Internal Server Error.
@@ -62,5 +50,4 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ErrorMessage> handle(InternalServerErrorException exception, WebRequest webRequest) {
     return getErrorMessageResponseEntity(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR);
   }
-
 }
