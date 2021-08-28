@@ -57,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
         // Error handling.
         if (httpStatus == HttpStatus.NOT_FOUND) {
             if (username.equals(realm)) {
-                throw new UsernameNotFoundException(username);
+                throw new UsernameNotFoundException(username); // TODO can this even happen?
             } else {
                 throw new RealmNotFoundException(realm);
             }
@@ -121,8 +121,7 @@ public class AuthServiceImpl implements AuthService {
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
             logger.warn("Auth responded with status {}: {}", response.getStatusCode(), response.getBody());
-            // TODO Check if username or email already is taken.
-            if (response.getBody().startsWith("Email")) {
+            if (response.getBody().contains("\"errorMessage\":\"User exists with same email\"")) {
                 throw new EmailAlreadyTakenException(email);
             } else {
                 throw new UsernameAlreadyTakenException(username);
