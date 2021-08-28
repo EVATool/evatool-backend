@@ -4,7 +4,7 @@ import com.evatool.application.dto.SuperDto;
 import com.evatool.application.mapper.SuperMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.CrudService;
-import com.evatool.common.exception.functional.http404.EntityNotFoundException;
+import com.evatool.common.exception.prevent.http404.EntityNotFoundException;
 import com.evatool.common.exception.prevent.http422.PropertyCannotBeNullException;
 import com.evatool.common.exception.prevent.http422.PropertyMustBeNullException;
 import com.evatool.domain.entity.SuperEntity;

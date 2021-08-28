@@ -1,7 +1,7 @@
 package com.evatool.application.mapper;
 
 import com.evatool.application.dto.SuperDto;
-import com.evatool.common.exception.functional.http404.EntityNotFoundException;
+import com.evatool.common.exception.prevent.http404.EntityNotFoundException;
 import com.evatool.domain.entity.SuperEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -3,6 +3,9 @@ package com.evatool.common.util;
 public class FunctionalErrorCodesUtil {
 
     private FunctionalErrorCodesUtil() {
+        // TODO Update failed cuz not found (for all entities)
+        // TODO Deletion failed cuz not found (for all entities)
+        // TODO Entity not found (for all entities)
     }
 
     // 400 Not found codes.
@@ -20,9 +23,9 @@ public class FunctionalErrorCodesUtil {
     public static final int CROSS_REALM_ACCESS = 3001;
 
     // 404 Not found codes.
-    public static final int ENTITY_NOT_FOUND = 4001;
     public static final int LOGIN_REALM_NOT_FOUND = 4002;
     public static final int LOGIN_USERNAME_NOT_FOUND = 4003;
+    public static final int ANALYSIS_NOT_FOUND = 4004;
 
     // 409 Conflict codes.
     public static final int VALUE_REFERENCED_BY_IMPACT = 9001;
@@ -32,5 +35,8 @@ public class FunctionalErrorCodesUtil {
     public static final int REGISTER_USERNAME_ALREADY_EXISTS = 9005;
     public static final int REGISTER_EMAIL_ALREADY_EXISTS = 9006;
     public static final int REGISTER_REALM_ALREADY_EXISTS = 9007;
+
+    public static final int UPDATE_FAILED_ENTITY_NOT_FOUND = 9008;
+    public static final int DELETION_FAILED_ENTITY_NOT_FOUND = 9009;
 
 }
