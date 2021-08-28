@@ -1,7 +1,7 @@
 package com.evatool.application.validator;
 
+import com.evatool.common.exception.functional.http400.PasswordInvalidException;
 import com.evatool.common.exception.functional.http400.PasswordNotSecureEnoughException;
-import com.evatool.common.exception.prevent.http400.PasswordEmptyOrNullException;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -40,7 +40,7 @@ public @interface Password {
             if (error != null) {
                 constraintValidatorContext.disableDefaultConstraintViolation();
                 constraintValidatorContext.buildConstraintViolationWithTemplate(error).addConstraintViolation();
-                throw new PasswordEmptyOrNullException(error, password);
+                throw new PasswordInvalidException(error, password);
             }
 
             if (!skipSecurity) {
