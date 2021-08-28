@@ -41,7 +41,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         }
         var optional = crudRepository.findById(id);
         if (optional.isEmpty()) {
-            var functionalErrorCode = getNotFoundErrorCode(getEntityClass());
+            var functionalErrorCode = getNotFoundInFindErrorCode(getEntityClass());
             throw new EntityNotFoundException(getClass().getSimpleName(), id, functionalErrorCode);
         }
         var entity = optional.get();
@@ -81,7 +81,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         }
         var optional = crudRepository.findById(dto.getId());
         if (optional.isEmpty()) {
-            var functionalErrorCode = getNotFoundErrorCode(getEntityClass()) + 100;
+            var functionalErrorCode = getNotFoundInUpdateErrorCode(getEntityClass());
             throw new EntityNotFoundException(getClass().getSimpleName(), dto.getId(), functionalErrorCode);
         }
         var foundEntity = optional.get();
@@ -100,7 +100,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         }
         var optional = crudRepository.findById(id);
         if (optional.isEmpty()) {
-            var functionalErrorCode = getNotFoundErrorCode(getEntityClass()) + 200;
+            var functionalErrorCode = getNotFoundInDeleteErrorCode(getEntityClass());
             throw new EntityNotFoundException(getClass().getSimpleName(), id, functionalErrorCode);
         }
         var entity = optional.get();
@@ -123,7 +123,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
-    private int getNotFoundErrorCode(Class type) {
+    private int getNotFoundInFindErrorCode(Class type) {
         if (type == Analysis.class) {
             return FunctionalErrorCodesUtil.ANALYSIS_NOT_FOUND;
         } else if (type == Impact.class) {
@@ -138,6 +138,46 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
             return FunctionalErrorCodesUtil.VALUE_NOT_FOUND;
         } else if (type == Variant.class) {
             return FunctionalErrorCodesUtil.VARIANT_NOT_FOUND;
+        } else {
+            throw new IllegalArgumentException("No functional error code found for type " + type.getSimpleName());
+        }
+    }
+
+    private int getNotFoundInUpdateErrorCode(Class type) {
+        if (type == Analysis.class) {
+            return FunctionalErrorCodesUtil.ANALYSIS_UPDATE_FAILED_NOT_FOUND;
+        } else if (type == Impact.class) {
+            return FunctionalErrorCodesUtil.IMPACT_UPDATE_FAILED_NOT_FOUND;
+        } else if (type == Requirement.class) {
+            return FunctionalErrorCodesUtil.REQUIREMENT_UPDATE_FAILED_NOT_FOUND;
+        } else if (type == RequirementDelta.class) {
+            return FunctionalErrorCodesUtil.REQUIREMENT_DELTA_UPDATE_FAILED_NOT_FOUND;
+        } else if (type == Stakeholder.class) {
+            return FunctionalErrorCodesUtil.STAKEHOLDER_UPDATE_FAILED_NOT_FOUND;
+        } else if (type == Value.class) {
+            return FunctionalErrorCodesUtil.VALUE_UPDATE_FAILED_NOT_FOUND;
+        } else if (type == Variant.class) {
+            return FunctionalErrorCodesUtil.VARIANT_UPDATE_FAILED_NOT_FOUND;
+        } else {
+            throw new IllegalArgumentException("No functional error code found for type " + type.getSimpleName());
+        }
+    }
+
+    private int getNotFoundInDeleteErrorCode(Class type) {
+        if (type == Analysis.class) {
+            return FunctionalErrorCodesUtil.ANALYSIS_DELETION_FAILED_NOT_FOUND;
+        } else if (type == Impact.class) {
+            return FunctionalErrorCodesUtil.IMPACT_DELETION_FAILED_NOT_FOUND;
+        } else if (type == Requirement.class) {
+            return FunctionalErrorCodesUtil.REQUIREMENT_DELETION_FAILED_NOT_FOUND;
+        } else if (type == RequirementDelta.class) {
+            return FunctionalErrorCodesUtil.REQUIREMENT_DELTA_DELETION_FAILED_NOT_FOUND;
+        } else if (type == Stakeholder.class) {
+            return FunctionalErrorCodesUtil.STAKEHOLDER_DELETION_FAILED_NOT_FOUND;
+        } else if (type == Value.class) {
+            return FunctionalErrorCodesUtil.VALUE_DELETION_FAILED_NOT_FOUND;
+        } else if (type == Variant.class) {
+            return FunctionalErrorCodesUtil.VARIANT_DELETION_FAILED_NOT_FOUND;
         } else {
             throw new IllegalArgumentException("No functional error code found for type " + type.getSimpleName());
         }
