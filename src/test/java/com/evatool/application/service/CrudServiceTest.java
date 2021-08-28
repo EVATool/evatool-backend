@@ -1,11 +1,9 @@
 package com.evatool.application.service;
 
 import com.evatool.application.dto.SuperDto;
-import com.evatool.common.exception.functional.http404.AnalysisNotFoundException;
-import com.evatool.common.exception.prevent.http404.EntityNotFoundException;
+import com.evatool.common.exception.functional.http404.EntityNotFoundException;
 import com.evatool.common.exception.prevent.http422.PropertyCannotBeNullException;
 import com.evatool.common.exception.prevent.http422.PropertyMustBeNullException;
-import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.entity.SuperEntity;
 import com.evatool.domain.repository.DataTest;
 import org.junit.jupiter.api.Test;
@@ -119,11 +117,7 @@ abstract class CrudServiceTest<S extends SuperEntity, T extends SuperDto> extend
         var service = getService();
 
         // then
-        if (getEntityClass() == Analysis.class) {
-            assertThatExceptionOfType(AnalysisNotFoundException.class).isThrownBy(() -> service.findById(id));
-        } else {
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> service.findById(id));
-        }
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> service.findById(id));
     }
 
     @Test

@@ -4,12 +4,11 @@ import com.evatool.application.dto.SuperDto;
 import com.evatool.application.mapper.SuperMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.CrudService;
-import com.evatool.common.exception.functional.http404.AnalysisNotFoundException;
-import com.evatool.common.exception.prevent.http404.EntityNotFoundException;
+import com.evatool.common.exception.functional.http404.EntityNotFoundException;
 import com.evatool.common.exception.prevent.http422.PropertyCannotBeNullException;
 import com.evatool.common.exception.prevent.http422.PropertyMustBeNullException;
-import com.evatool.domain.entity.Analysis;
-import com.evatool.domain.entity.SuperEntity;
+import com.evatool.common.util.FunctionalErrorCodesUtil;
+import com.evatool.domain.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.CrudRepository;
@@ -42,11 +41,8 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         }
         var optional = crudRepository.findById(id);
         if (optional.isEmpty()) {
-            if (this.getEntityClass() == Analysis.class) { // Special functional error case.
-                throw new AnalysisNotFoundException(id);
-            } else {
-                throw new EntityNotFoundException(getClass().getSimpleName(), id);
-            }
+            var functionalErrorCode = getNotFoundErrorCode(getEntityClass());
+            throw new EntityNotFoundException(getClass().getSimpleName(), id, functionalErrorCode);
         }
         var entity = optional.get();
         TenancySentinel.handleFind(entity);
@@ -85,7 +81,8 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         }
         var optional = crudRepository.findById(dto.getId());
         if (optional.isEmpty()) {
-            throw new EntityNotFoundException(getClass().getSimpleName(), dto.getId());
+            var functionalErrorCode = getNotFoundErrorCode(getEntityClass()) + 100;
+            throw new EntityNotFoundException(getClass().getSimpleName(), dto.getId(), functionalErrorCode);
         }
         var foundEntity = optional.get();
         var entity = baseMapper.fromDto(dto);
@@ -103,7 +100,8 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         }
         var optional = crudRepository.findById(id);
         if (optional.isEmpty()) {
-            throw new EntityNotFoundException(getClass().getSimpleName(), id);
+            var functionalErrorCode = getNotFoundErrorCode(getEntityClass()) + 200;
+            throw new EntityNotFoundException(getClass().getSimpleName(), id, functionalErrorCode);
         }
         var entity = optional.get();
         TenancySentinel.handleDelete(entity);
@@ -123,5 +121,25 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
 
     public Class<T> getDtoClass() {
         return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+    }
+
+    private int getNotFoundErrorCode(Class type) {
+        if (type == Analysis.class) {
+            return FunctionalErrorCodesUtil.ANALYSIS_NOT_FOUND;
+        } else if (type == Impact.class) {
+            return FunctionalErrorCodesUtil.IMPACT_NOT_FOUND;
+        } else if (type == Requirement.class) {
+            return FunctionalErrorCodesUtil.REQUIREMENT_NOT_FOUND;
+        } else if (type == RequirementDelta.class) {
+            return FunctionalErrorCodesUtil.REQUIREMENT_DELTA_NOT_FOUND;
+        } else if (type == Stakeholder.class) {
+            return FunctionalErrorCodesUtil.STAKEHOLDER_NOT_FOUND;
+        } else if (type == Value.class) {
+            return FunctionalErrorCodesUtil.VALUE_NOT_FOUND;
+        } else if (type == Variant.class) {
+            return FunctionalErrorCodesUtil.VARIANT_NOT_FOUND;
+        } else {
+            throw new IllegalArgumentException("No functional error code found for type " + type.getSimpleName());
+        }
     }
 }

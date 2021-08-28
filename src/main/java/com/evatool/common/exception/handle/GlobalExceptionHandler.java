@@ -19,8 +19,7 @@ public class GlobalExceptionHandler {
   private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
   private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(Exception exception, WebRequest webRequest, HttpStatus httpStatus) {
-    logger.warn(
-            "{} handled. Returning HttpStatus {}. Message: {}",
+    logger.warn("{} handled. Returning HttpStatus {}. Message: {}",
             exception.getClass().getSimpleName(),
             httpStatus,
             exception.getMessage());
