@@ -3,8 +3,6 @@ package com.evatool.common.util;
 public class FunctionalErrorCodesUtil {
 
     private FunctionalErrorCodesUtil() {
-        // TODO Update failed cuz not found (for all entities)
-        // TODO Deletion failed cuz not found (for all entities)
     }
 
     // 400 Not found codes.
