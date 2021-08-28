@@ -125,19 +125,19 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
 
     private int getNotFoundInFindErrorCode(Class type) {
         if (type == Analysis.class) {
-            return FunctionalErrorCodesUtil.ANALYSIS_NOT_FOUND;
+            return FunctionalErrorCodesUtil.ANALYSIS_FIND_FAILED_NOT_FOUND;
         } else if (type == Impact.class) {
-            return FunctionalErrorCodesUtil.IMPACT_NOT_FOUND;
+            return FunctionalErrorCodesUtil.IMPACT_FIND_FAILED_NOT_FOUND;
         } else if (type == Requirement.class) {
-            return FunctionalErrorCodesUtil.REQUIREMENT_NOT_FOUND;
+            return FunctionalErrorCodesUtil.REQUIREMENT_FIND_FAILED_NOT_FOUND;
         } else if (type == RequirementDelta.class) {
-            return FunctionalErrorCodesUtil.REQUIREMENT_DELTA_NOT_FOUND;
+            return FunctionalErrorCodesUtil.REQUIREMENT_DELTA_FIND_FAILED_NOT_FOUND;
         } else if (type == Stakeholder.class) {
-            return FunctionalErrorCodesUtil.STAKEHOLDER_NOT_FOUND;
+            return FunctionalErrorCodesUtil.STAKEHOLDER_FIND_FAILED_NOT_FOUND;
         } else if (type == Value.class) {
-            return FunctionalErrorCodesUtil.VALUE_NOT_FOUND;
+            return FunctionalErrorCodesUtil.VALUE_FIND_FAILED_NOT_FOUND;
         } else if (type == Variant.class) {
-            return FunctionalErrorCodesUtil.VARIANT_NOT_FOUND;
+            return FunctionalErrorCodesUtil.VARIANT_FIND_FAILED_NOT_FOUND;
         } else {
             throw new IllegalArgumentException("No functional error code found for type " + type.getSimpleName());
         }
