@@ -35,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @Value("${evatool.auth.registration.enabled:false}")
     private boolean registrationEnabled;
