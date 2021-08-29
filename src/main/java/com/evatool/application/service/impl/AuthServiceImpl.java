@@ -120,8 +120,9 @@ public class AuthServiceImpl implements AuthService {
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
-            logger.warn("Auth responded with status {}: {}", response.getStatusCode(), response.getBody());
-            if (response.getBody().contains("\"errorMessage\":\"User exists with same email\"")) {
+            var responseBody = response.getBody();
+            logger.warn("Auth responded with status {}: {}", response.getStatusCode(), responseBody);
+            if (responseBody != null && responseBody.contains("\"errorMessage\":\"User exists with same email\"")) {
                 throw new EmailAlreadyTakenException(email);
             } else {
                 throw new UsernameAlreadyTakenException(username);
