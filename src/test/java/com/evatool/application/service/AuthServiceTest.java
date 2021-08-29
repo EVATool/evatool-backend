@@ -30,10 +30,6 @@ class AuthServiceTest {
     @BeforeEach
     public void setUp() {
         mockServer = MockRestServiceServer.createServer(restTemplate);
-
-        //var gateway = new RestGatewaySupport();
-        //gateway.setRestTemplate(restTemplate);
-        //mockServer = MockRestServiceServer.createServer(gateway);
     }
 
     @Test
@@ -43,15 +39,10 @@ class AuthServiceTest {
         var password = "password";
         var realm = "realm";
 
-        var expectedAuthTokenDto = new AuthTokenDto("token", 1800, "refreshToken", 30000);
+        var expectedAuthTokenDto = getDummyAuthTokenDto();
         mockServer.expect(requestTo("/" + authService.getKeycloakLoginUrl(realm)))
                 .andExpect(method(HttpMethod.POST))
-                .andRespond(withSuccess(
-                        "{access_token: \"" + expectedAuthTokenDto.getToken() + "\"," +
-                                "expires_in: \"" + expectedAuthTokenDto.getTokenExpiresIn() + "\"," +
-                                "refresh_token: \"" + expectedAuthTokenDto.getRefreshToken() + "\"," +
-                                "refresh_expires_in: \"" + expectedAuthTokenDto.getRefreshTokenExpiresIn() + "\"}",
-                        MediaType.TEXT_PLAIN));
+                .andRespond(withSuccess(getKeycloakLoginResponse(expectedAuthTokenDto), MediaType.TEXT_PLAIN));
 
         // when
         var authTokenDto = authService.login(username, password, realm);
@@ -62,10 +53,13 @@ class AuthServiceTest {
     }
 
     private AuthTokenDto getDummyAuthTokenDto() {
-        return null;
+        return new AuthTokenDto("token", 1800, "refreshToken", 30000);
     }
 
     private String getKeycloakLoginResponse(AuthTokenDto authTokenDto) {
-        return null;
+        return "{access_token: \"" + authTokenDto.getToken() + "\"," +
+                "expires_in: \"" + authTokenDto.getTokenExpiresIn() + "\"," +
+                "refresh_token: \"" + authTokenDto.getRefreshToken() + "\"," +
+                "refresh_expires_in: \"" + authTokenDto.getRefreshTokenExpiresIn() + "\"}";
     }
 }
