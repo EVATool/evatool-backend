@@ -123,7 +123,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
-    private int getNotFoundInFindErrorCode(Class type) {
+    private int getNotFoundInFindErrorCode(Class<S> type) {
         if (type == Analysis.class) {
             return FunctionalErrorCodesUtil.ANALYSIS_FIND_FAILED_NOT_FOUND;
         } else if (type == Impact.class) {
@@ -143,7 +143,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         }
     }
 
-    private int getNotFoundInUpdateErrorCode(Class type) {
+    private int getNotFoundInUpdateErrorCode(Class<S> type) {
         if (type == Analysis.class) {
             return FunctionalErrorCodesUtil.ANALYSIS_UPDATE_FAILED_NOT_FOUND;
         } else if (type == Impact.class) {
@@ -163,7 +163,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         }
     }
 
-    private int getNotFoundInDeleteErrorCode(Class type) {
+    private int getNotFoundInDeleteErrorCode(Class<S> type) {
         if (type == Analysis.class) {
             return FunctionalErrorCodesUtil.ANALYSIS_DELETION_FAILED_NOT_FOUND;
         } else if (type == Impact.class) {
