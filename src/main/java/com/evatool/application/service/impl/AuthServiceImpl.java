@@ -35,7 +35,6 @@ public class AuthServiceImpl implements AuthService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
-    @Autowired
     private RestTemplate restTemplate;
 
     @Value("${evatool.auth.registration.enabled:false}")
@@ -47,9 +46,9 @@ public class AuthServiceImpl implements AuthService {
     @Value("${evatool.auth.admin-password:}")
     private String authAdminPassword;
 
-    public AuthServiceImpl() {
-        //this.restTemplate = restTemplate;
-        //restTemplate.setErrorHandler(new RestTemplateResponseErrorHandlerIgnore());
+    public AuthServiceImpl(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+        restTemplate.setErrorHandler(new RestTemplateResponseErrorHandlerIgnore());
     }
 
     public AuthTokenDto login(String username, String password, String realm) {
