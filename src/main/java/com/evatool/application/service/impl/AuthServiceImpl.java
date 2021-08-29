@@ -21,8 +21,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -35,6 +35,8 @@ public class AuthServiceImpl implements AuthService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
+    private final RestTemplate restTemplate;
+
     @Value("${evatool.auth.registration.enabled:false}")
     private boolean registrationEnabled;
 
@@ -44,14 +46,18 @@ public class AuthServiceImpl implements AuthService {
     @Value("${evatool.auth.admin-password:}")
     private String authAdminPassword;
 
+    public AuthServiceImpl(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+        restTemplate.setErrorHandler(new RestTemplateResponseErrorHandlerIgnore());
+    }
+
     public AuthTokenDto login(String username, String password, String realm) {
-        var rest = getRestTemplate();
         var clientId = getClientId(realm);
         var request = getLoginRequest(username, password, clientId);
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         var httpEntity = new HttpEntity<>(request, headers);
-        var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
+        var response = restTemplate.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
         // Error handling.
@@ -80,13 +86,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthTokenDto refreshLogin(String refreshToken, String realm) {
-        var rest = getRestTemplate();
         var clientId = getClientId(realm);
         var request = getRefreshLoginRequest(refreshToken, clientId);
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         var httpEntity = new HttpEntity<>(request, headers);
-        var response = rest.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
+        var response = restTemplate.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
         // Error handling.
@@ -107,7 +112,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthRegisterUserDto registerUser(String username, String email, String password) {
         var adminToken = login(authAdminUser, authAdminPassword, "master").getToken();
-        var rest = getRestTemplate();
 
         // Create user.
         var request = getKeycloakCreateUserJson(username, email, password);
@@ -115,7 +119,7 @@ public class AuthServiceImpl implements AuthService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(adminToken);
         var httpEntity = new HttpEntity<>(request, headers);
-        var response = rest.postForEntity(getKeycloakCreateUserUrl(), httpEntity, String.class);
+        var response = restTemplate.postForEntity(getKeycloakCreateUserUrl(), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
         // Error handling.
@@ -142,7 +146,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Get available realm roles.
         httpEntity = new HttpEntity<>(null, headers);
-        response = rest.exchange(getKeycloakGetRealmRolesUrl(), HttpMethod.GET, httpEntity, String.class);
+        response = restTemplate.exchange(getKeycloakGetRealmRolesUrl(), HttpMethod.GET, httpEntity, String.class);
         httpStatus = response.getStatusCode();
         var realmRolesJson = response.getBody();
 
@@ -155,7 +159,7 @@ public class AuthServiceImpl implements AuthService {
         // Assign realm roles to user.
         request = getKeycloakUpdateUserRealmRolesJson(realmRolesJson);
         httpEntity = new HttpEntity<>(request, headers);
-        response = rest.postForEntity(getKeycloakSetUserRolesUrl(userId), httpEntity, String.class);
+        response = restTemplate.postForEntity(getKeycloakSetUserRolesUrl(userId), httpEntity, String.class);
         httpStatus = response.getStatusCode();
 
         // Error handling.
@@ -201,13 +205,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthRegisterRealmDto registerRealm(String authAdminUsername, String authAdminPassword, String realm) {
         var adminToken = login(authAdminUsername, authAdminPassword, "master").getToken();
-        var rest = getRestTemplate();
         var request = getKeycloakRealmImportJson(realm);
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(adminToken);
         var httpEntity = new HttpEntity<>(request, headers);
-        var response = rest.postForEntity(getKeycloakRegisterRealmUrl(), httpEntity, String.class);
+        var response = restTemplate.postForEntity(getKeycloakRegisterRealmUrl(), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
 
         // Error handling.
@@ -257,12 +260,6 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return realmImportJson;
-    }
-
-    private RestTemplate getRestTemplate() {
-        return new RestTemplateBuilder()
-                .errorHandler(new RestTemplateResponseErrorHandlerIgnore())
-                .build();
     }
 
     @SneakyThrows
