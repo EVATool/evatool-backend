@@ -146,6 +146,23 @@ class AuthServiceTest {
         assertThat(authTokenDto).isEqualTo(expectedAuthTokenDto);
     }
 
+    @Test
+    void testRefreshLogin_KeycloakRespondsWithUnhandledHttpStatus_Throws() {
+        // given
+        var refreshToken = "refreshToken";
+        var realm = "realm";
+
+        var expectedAuthTokenDto = getDummyAuthTokenDto();
+        mockServer.expect(requestTo("/" + authService.getKeycloakLoginUrl(realm)))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withStatus(HttpStatus.INTERNAL_SERVER_ERROR));
+
+        // when
+
+        // then
+        assertThatExceptionOfType(InternalServerErrorException.class).isThrownBy(() -> authService.refreshLogin(refreshToken, realm));
+    }
+
     private AuthTokenDto getDummyAuthTokenDto() {
         return new AuthTokenDto("token", 1800, "refreshToken", 30000);
     }
