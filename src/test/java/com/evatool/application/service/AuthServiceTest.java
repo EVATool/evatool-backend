@@ -1,11 +1,20 @@
 package com.evatool.application.service;
 
+import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.impl.AuthServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 @SpringBootTest(classes = {RestTemplate.class, AuthServiceImpl.class})
 class AuthServiceTest {
@@ -16,11 +25,11 @@ class AuthServiceTest {
     @Autowired
     private AuthServiceImpl authService;
 
-    //private MockRestServiceServer mockServer;
+    private MockRestServiceServer mockServer;
 
     @BeforeEach
     public void setUp() {
-        //mockServer = MockRestServiceServer.createServer(restTemplate);
+        mockServer = MockRestServiceServer.createServer(restTemplate);
 
         //var gateway = new RestGatewaySupport();
         //gateway.setRestTemplate(restTemplate);
@@ -34,18 +43,21 @@ class AuthServiceTest {
         var password = "password";
         var realm = "realm";
 
-//        mockServer.expect(requestTo(authService.getKeycloakLoginUrl(realm)))
-//                .andExpect(method(HttpMethod.GET))
-//                .andRespond(withSuccess("resultSuccess", MediaType.TEXT_PLAIN));
-//
-//        // when
-//        authService.login(username, password, realm);
-//        mockServer.verify(); // ??
+        var expectedAuthTokenDto = new AuthTokenDto("token", 1800, "refreshToken", 30000);
+        mockServer.expect(requestTo("/" + authService.getKeycloakLoginUrl(realm)))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withSuccess(
+                        "{access_token: \"" + expectedAuthTokenDto.getToken() + "\"," +
+                                "expires_in: \"" + expectedAuthTokenDto.getTokenExpiresIn() + "\"," +
+                                "refresh_token: \"" + expectedAuthTokenDto.getRefreshToken() + "\"," +
+                                "refresh_expires_in: \"" + expectedAuthTokenDto.getRefreshTokenExpiresIn() + "\"}",
+                        MediaType.TEXT_PLAIN));
 
+        // when
+        var authTokenDto = authService.login(username, password, realm);
 
         // then
-
-        //assertThat(result, allOf(containsString("SUCCESS"),                containsString("resultSuccess")));
-
+        mockServer.verify();
+        assertThat(authTokenDto).isEqualTo(expectedAuthTokenDto);
     }
 }
