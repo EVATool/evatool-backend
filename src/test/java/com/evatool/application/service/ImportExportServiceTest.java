@@ -68,7 +68,6 @@ class ImportExportServiceTest {
         var analysis2 = saveDummyAnalysisWithFewChildEntities();
 
         var exportAnalysesJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
-        PrintUtil.prettyPrintJson(exportAnalysesJson);
 
         // when
         importExportService.importAnalyses(exportAnalysesJson);
@@ -85,7 +84,6 @@ class ImportExportServiceTest {
         var originalAnalysis = saveDummyAnalysisWithManyChildEntities();
 
         var exportAnalysesJson = importExportService.exportAnalyses(Collections.singletonList(originalAnalysis.getId()));
-        PrintUtil.prettyPrintJson(exportAnalysesJson);
 
         // when
         var importedAnalyses = importExportService.importAnalyses(exportAnalysesJson);
@@ -181,7 +179,6 @@ class ImportExportServiceTest {
         var analysis2 = saveDummyAnalysisWithFewChildEntities();
 
         var exportAnalysesJson = importExportService.exportAnalyses(Arrays.asList(analysis1.getId(), analysis2.getId()));
-        PrintUtil.prettyPrintJson(exportAnalysesJson);
 
         // when
         var exportAnalysesJsonObject = new JSONObject(exportAnalysesJson);
@@ -205,7 +202,6 @@ class ImportExportServiceTest {
         var analysesJson = new JSONObject(exportAnalysesJson);
 
         // then
-        PrintUtil.prettyPrintJson(exportAnalysesJson);
 
         // Check meta data and number of analyses.
         assertThat(analysesJson.get("importExportVersion")).isEqualTo(ImportExportService.NEWEST_IMPORT_EXPORT_VERSION);

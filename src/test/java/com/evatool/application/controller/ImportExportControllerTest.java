@@ -58,8 +58,6 @@ class ImportExportControllerTest {
         var jsonContent = response.getBody();
 
         // then
-        PrintUtil.prettyPrintJson(jsonContent);
-
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(jsonContent).isNotNull();
         assertThat(jsonContent.getClass()).isEqualTo(String.class);

@@ -34,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
-    private static final String keycloakMasterRealm = "master";
+    private static final String KEYCLOAK_MASTER_REALM = "master";
 
     private final RestTemplate restTemplate;
 
@@ -114,7 +114,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthRegisterUserDto registerUser(String username, String email, String password) {
-        var adminToken = login(authAdminUser, authAdminPassword, keycloakMasterRealm).getToken();
+        var adminToken = login(authAdminUser, authAdminPassword, KEYCLOAK_MASTER_REALM).getToken();
 
         // Create user.
         var request = getKeycloakCreateUserJson(username, email, password);
@@ -209,7 +209,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthRegisterRealmDto registerRealm(String authAdminUsername, String authAdminPassword, String realm) {
-        var adminToken = login(authAdminUsername, authAdminPassword, keycloakMasterRealm).getToken();
+        var adminToken = login(authAdminUsername, authAdminPassword, KEYCLOAK_MASTER_REALM).getToken();
         var request = getKeycloakRealmImportJson(realm);
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -278,7 +278,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private String getClientId(String realm) {
-        return realm.equals(keycloakMasterRealm) ? "admin-cli" : "evatool-app";
+        return realm.equals(KEYCLOAK_MASTER_REALM) ? "admin-cli" : "evatool-app";
     }
 
     private void logKeycloakResponse(ResponseEntity<String> response) {

@@ -9,7 +9,8 @@ public class PrintUtil {
     }
 
     @SneakyThrows
-    public static void prettyPrintJson(String json) {
+    public static String prettifyJson(String json) {
         var jsonObject = new JSONObject(json);
+        return jsonObject.toString(4);
     }
 }
