@@ -60,4 +60,12 @@ class AuthServiceTest {
         mockServer.verify();
         assertThat(authTokenDto).isEqualTo(expectedAuthTokenDto);
     }
+
+    private AuthTokenDto getDummyAuthTokenDto() {
+        return null;
+    }
+
+    private String getKeycloakLoginResponse(AuthTokenDto authTokenDto) {
+        return null;
+    }
 }
