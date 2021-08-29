@@ -1,6 +1,5 @@
 package com.evatool.common.exception.handle;
 
-import com.evatool.common.exception.HttpStatusException;
 import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.functional.FunctionalException;
 import com.evatool.common.exception.prevent.PreventException;

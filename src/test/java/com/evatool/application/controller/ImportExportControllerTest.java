@@ -6,7 +6,6 @@ import com.evatool.common.util.PrintUtil;
 import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.repository.AnalysisRepository;
-import lombok.Getter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
