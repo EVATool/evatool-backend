@@ -23,7 +23,7 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
-@SpringBootTest(classes = {RestTemplate.class, AuthServiceImpl.class})
+@SpringBootTest
 class AuthServiceTest {
 
     @Autowired
