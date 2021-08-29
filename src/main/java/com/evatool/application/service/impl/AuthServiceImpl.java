@@ -57,8 +57,8 @@ public class AuthServiceImpl implements AuthService {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
+        logKeycloakResponse(response);
         var httpStatus = response.getStatusCode();
-                logKeycloakResponse(response);
 
         // Error handling.
         if (httpStatus == HttpStatus.NOT_FOUND) {
@@ -92,8 +92,8 @@ public class AuthServiceImpl implements AuthService {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
-        var httpStatus = response.getStatusCode();
         logKeycloakResponse(response);
+        var httpStatus = response.getStatusCode();
 
         // Error handling.
         if (httpStatus != HttpStatus.OK) {
@@ -121,8 +121,8 @@ public class AuthServiceImpl implements AuthService {
         headers.setBearerAuth(adminToken);
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakCreateUserUrl(), httpEntity, String.class);
-        var httpStatus = response.getStatusCode();
         logKeycloakResponse(response);
+        var httpStatus = response.getStatusCode();
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
@@ -148,8 +148,8 @@ public class AuthServiceImpl implements AuthService {
         // Get available realm roles.
         httpEntity = new HttpEntity<>(null, headers);
         response = restTemplate.exchange(getKeycloakGetRealmRolesUrl(), HttpMethod.GET, httpEntity, String.class);
-        httpStatus = response.getStatusCode();
         logKeycloakResponse(response);
+        httpStatus = response.getStatusCode();
         var realmRolesJson = response.getBody();
 
         // Error handling.
@@ -162,8 +162,8 @@ public class AuthServiceImpl implements AuthService {
         request = getKeycloakUpdateUserRealmRolesJson(realmRolesJson);
         httpEntity = new HttpEntity<>(request, headers);
         response = restTemplate.postForEntity(getKeycloakSetUserRolesUrl(userId), httpEntity, String.class);
-        httpStatus = response.getStatusCode();
         logKeycloakResponse(response);
+        httpStatus = response.getStatusCode();
 
         // Error handling.
         if (httpStatus != HttpStatus.NO_CONTENT) {
@@ -214,8 +214,8 @@ public class AuthServiceImpl implements AuthService {
         headers.setBearerAuth(adminToken);
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakRegisterRealmUrl(), httpEntity, String.class);
-        var httpStatus = response.getStatusCode();
         logKeycloakResponse(response);
+        var httpStatus = response.getStatusCode();
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
@@ -280,7 +280,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private void logKeycloakResponse(ResponseEntity<String> response) {
-        logKeycloakResponse(response);
+        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
     }
 
     // Dynamic keycloak URLs.
