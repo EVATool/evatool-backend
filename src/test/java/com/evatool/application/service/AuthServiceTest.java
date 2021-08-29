@@ -7,6 +7,8 @@ import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.functional.http401.InvalidCredentialsException;
 import com.evatool.common.exception.functional.http404.RealmNotFoundException;
 import com.evatool.common.exception.functional.http404.UsernameNotFoundException;
+import com.evatool.common.exception.functional.http409.EmailAlreadyTakenException;
+import com.evatool.common.exception.functional.http409.UsernameAlreadyTakenException;
 import com.evatool.common.util.AuthUtil;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
@@ -207,14 +209,51 @@ class AuthServiceTest {
         assertThat(authRegisterUserDto).isEqualTo(expectedAuthRegisterUserDto);
     }
 
+    @SneakyThrows
     @Test
     void testRegisterUser_KeycloakRespondsWithConflict_EmailAlreadyExists_Throws() {
+        // given
+        String username = "username";
+        String email = "email";
+        String password = "password";
 
+        var expectedAuthTokenDto = getDummyAuthTokenDto();
+        var expectedAuthRegisterUserDto = getDummyAuthRegisterUserDto();
+        mockServer.expect(requestTo("/" + authService.getKeycloakLoginUrl("master")))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withSuccess(getKeycloakLoginResponse(expectedAuthTokenDto), MediaType.TEXT_PLAIN));
+
+        mockServer.expect(requestTo("/" + authService.getKeycloakCreateUserUrl()))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withStatus(HttpStatus.CONFLICT).body("\"errorMessage\":\"User exists with same email\""));
+
+        // when
+
+        // then
+        assertThatExceptionOfType(EmailAlreadyTakenException.class).isThrownBy(() -> authService.registerUser(username, email, password));
     }
 
     @Test
     void testRegisterUser_KeycloakRespondsWithConflict_UsernameAlreadyExists_Throws() {
+        // given
+        String username = "username";
+        String email = "email";
+        String password = "password";
 
+        var expectedAuthTokenDto = getDummyAuthTokenDto();
+        var expectedAuthRegisterUserDto = getDummyAuthRegisterUserDto();
+        mockServer.expect(requestTo("/" + authService.getKeycloakLoginUrl("master")))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withSuccess(getKeycloakLoginResponse(expectedAuthTokenDto), MediaType.TEXT_PLAIN));
+
+        mockServer.expect(requestTo("/" + authService.getKeycloakCreateUserUrl()))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withStatus(HttpStatus.CONFLICT));
+
+        // when
+
+        // then
+        assertThatExceptionOfType(UsernameAlreadyTakenException.class).isThrownBy(() -> authService.registerUser(username, email, password));
     }
 
     private AuthTokenDto getDummyAuthTokenDto() {
