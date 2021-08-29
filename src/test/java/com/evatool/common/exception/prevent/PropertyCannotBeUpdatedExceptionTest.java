@@ -1,20 +1,19 @@
-package com.evatool.common.exception;
+package com.evatool.common.exception.prevent;
 
-import com.evatool.common.exception.prevent.http422.PropertyMustBeNullException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PropertyMustBeNullExceptionTest {
+class PropertyCannotBeUpdatedExceptionTest {
 
     @Test
-    void testPropertyMustBeNullException() {
+    void testPropertyCannotBeUpdatedException() {
         // given
         var entityClass = "testClass";
         var entityProperty = "testProperty";
 
         // when
-        var exception = new PropertyMustBeNullException(entityClass, entityProperty);
+        var exception = new PropertyCannotBeUpdatedException(entityClass, entityProperty);
 
         // then
         assertThat(exception.getMessage()).contains(entityClass);

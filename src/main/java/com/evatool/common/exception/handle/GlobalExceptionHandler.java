@@ -28,20 +28,16 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(errorMessage, httpStatus);
   }
 
-  private ResponseEntity<ErrorMessage> getErrorMessageResponseEntity(HttpStatusException exception, WebRequest webRequest) {
-    return getErrorMessageResponseEntity(exception, webRequest, exception.getHttpStatus());
-  }
-
   // Functional Exceptions.
   @ExceptionHandler(FunctionalException.class)
   public ResponseEntity<ErrorMessage> handle(FunctionalException exception, WebRequest webRequest) {
-    return getErrorMessageResponseEntity(exception, webRequest);
+    return getErrorMessageResponseEntity(exception, webRequest, exception.getHttpStatus());
   }
 
   // Prevent Exceptions.
   @ExceptionHandler(PreventException.class)
   public ResponseEntity<ErrorMessage> handle(PreventException exception, WebRequest webRequest) {
-    return getErrorMessageResponseEntity(exception, webRequest);
+    return getErrorMessageResponseEntity(exception, webRequest, exception.getHttpStatus());
   }
 
   // Internal Server Error.

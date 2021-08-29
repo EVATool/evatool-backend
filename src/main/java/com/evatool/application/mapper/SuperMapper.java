@@ -1,7 +1,7 @@
 package com.evatool.application.mapper;
 
 import com.evatool.application.dto.SuperDto;
-import com.evatool.common.exception.prevent.http404.EntityNotFoundException;
+import com.evatool.common.exception.prevent.ChildEntityNotFoundException;
 import com.evatool.domain.entity.SuperEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +44,7 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
         logger.debug("Find By Id Or Throw If Empty");
         Optional<O> optional = repository.findById(id);
         if (optional.isEmpty()) {
-            throw new EntityNotFoundException(repository.getClass().getSimpleName().replace("Repository", ""), id);
+            throw new ChildEntityNotFoundException(repository.getClass().getSimpleName().replace("Repository", ""), id);
         }
         return optional.get();
     }

@@ -1,13 +1,12 @@
-package com.evatool.common.exception;
+package com.evatool.common.exception.prevent;
 
-import com.evatool.common.exception.prevent.http404.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class EntityNotFoundExceptionTest {
+class ChildEntityNotFoundExceptionTest {
 
     @Test
     void testEntityNotFoundException() {
@@ -16,7 +15,7 @@ class EntityNotFoundExceptionTest {
         var id = UUID.randomUUID();
 
         // when
-        var exception = new EntityNotFoundException(entityClass, id);
+        var exception = new ChildEntityNotFoundException(entityClass, id);
 
         // then
         assertThat(exception.getMessage()).contains(entityClass);

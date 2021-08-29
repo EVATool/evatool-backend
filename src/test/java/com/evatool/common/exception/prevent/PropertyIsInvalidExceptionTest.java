@@ -1,6 +1,5 @@
-package com.evatool.common.exception;
+package com.evatool.common.exception.prevent;
 
-import com.evatool.common.exception.prevent.http422.PropertyIsInvalidException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
