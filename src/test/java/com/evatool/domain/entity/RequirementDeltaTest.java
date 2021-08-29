@@ -14,7 +14,30 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class RequirementDeltaTest extends SuperEntityTest {
 
     @Test
-    void testSetDelta_ExceedsBounds_Throw() {
+    void setSetOverwriteMerit_SetNull_Throws(){
+        // given
+        var delta = getPersistedRequirementDelta();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> delta.setOverwriteMerit(null));
+    }
+
+    @Test
+    void setSetOverwriteMerit_SetInvalidCombination_Throws(){
+        // given
+        var delta = getPersistedRequirementDelta();
+
+        // when
+        delta.getImpact().setMerit(.5f);
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> delta.setOverwriteMerit(.8f));
+    }
+
+    @Test
+    void setSetOverwriteMerit_ExceedsBounds_Throw() {
         // given
         var delta = getPersistedRequirementDelta();
 
