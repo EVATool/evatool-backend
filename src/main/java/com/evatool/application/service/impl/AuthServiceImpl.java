@@ -21,7 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -59,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
-        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
+                logKeycloakResponse(response);
 
         // Error handling.
         if (httpStatus == HttpStatus.NOT_FOUND) {
@@ -94,7 +93,7 @@ public class AuthServiceImpl implements AuthService {
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
-        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
+        logKeycloakResponse(response);
 
         // Error handling.
         if (httpStatus != HttpStatus.OK) {
@@ -123,7 +122,7 @@ public class AuthServiceImpl implements AuthService {
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakCreateUserUrl(), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
-        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
+        logKeycloakResponse(response);
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
@@ -140,7 +139,7 @@ public class AuthServiceImpl implements AuthService {
         // Save user id for later.
         var location = response.getHeaders().getLocation();
         if (location == null) {
-            throw new InternalServerErrorException("Keycloak must return ");
+            throw new InternalServerErrorException("Keycloak must return the freshly created user id in some way");
         }
         var locationStr = location.toString();
         var userId = locationStr.substring(locationStr.lastIndexOf("/") + 1);
@@ -150,7 +149,7 @@ public class AuthServiceImpl implements AuthService {
         httpEntity = new HttpEntity<>(null, headers);
         response = restTemplate.exchange(getKeycloakGetRealmRolesUrl(), HttpMethod.GET, httpEntity, String.class);
         httpStatus = response.getStatusCode();
-        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
+        logKeycloakResponse(response);
         var realmRolesJson = response.getBody();
 
         // Error handling.
@@ -164,7 +163,7 @@ public class AuthServiceImpl implements AuthService {
         httpEntity = new HttpEntity<>(request, headers);
         response = restTemplate.postForEntity(getKeycloakSetUserRolesUrl(userId), httpEntity, String.class);
         httpStatus = response.getStatusCode();
-        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
+        logKeycloakResponse(response);
 
         // Error handling.
         if (httpStatus != HttpStatus.NO_CONTENT) {
@@ -216,7 +215,7 @@ public class AuthServiceImpl implements AuthService {
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakRegisterRealmUrl(), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
-        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
+        logKeycloakResponse(response);
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
@@ -278,6 +277,10 @@ public class AuthServiceImpl implements AuthService {
 
     private String getClientId(String realm) {
         return realm.equals("master") ? "admin-cli" : "evatool-app";
+    }
+
+    private void logKeycloakResponse(ResponseEntity<String> response) {
+        logKeycloakResponse(response);
     }
 
     // Dynamic keycloak URLs.
