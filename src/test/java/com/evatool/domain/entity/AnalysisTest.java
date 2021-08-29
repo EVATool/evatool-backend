@@ -48,8 +48,8 @@ class AnalysisTest extends SuperEntityTest {
 
 
     @Disabled("This test is disabled because the @PreUpdate annotation does not work")
-    @Test
     @SneakyThrows
+    @Test
     void testWasUpdated_Update_LastUpdatedChanges() {
         // given
         var analysis = getPersistedAnalysis();
@@ -63,8 +63,8 @@ class AnalysisTest extends SuperEntityTest {
         assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdatedDate().getTime());
     }
 
-    @Test
     @SneakyThrows
+    @Test
     void testWasUpdated_ChildPersist_LastUpdatedChanges() {
         // given
         var analysis = getPersistedAnalysis();
@@ -79,8 +79,8 @@ class AnalysisTest extends SuperEntityTest {
     }
 
     @Disabled("This test is disabled because the @PreUpdate annotation does not work")
-    @Test
     @SneakyThrows
+    @Test
     void testWasUpdated_ChildUpdate_LastUpdatedChanges() {
         // given
         var analysis = getPersistedAnalysis();
@@ -95,8 +95,8 @@ class AnalysisTest extends SuperEntityTest {
         assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdatedDate().getTime());
     }
 
-    @Test
     @SneakyThrows
+    @Test
     void testWasUpdated_ChildDelete_LastUpdatedChanges() {
         // given
         var analysis = getPersistedAnalysis();
