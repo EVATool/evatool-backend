@@ -59,6 +59,7 @@ public class AuthServiceImpl implements AuthService {
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
+        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
 
         // Error handling.
         if (httpStatus == HttpStatus.NOT_FOUND) {
@@ -93,6 +94,7 @@ public class AuthServiceImpl implements AuthService {
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakLoginUrl(realm), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
+        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
 
         // Error handling.
         if (httpStatus != HttpStatus.OK) {
@@ -121,11 +123,11 @@ public class AuthServiceImpl implements AuthService {
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakCreateUserUrl(), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
+        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
             var responseBody = response.getBody();
-            logger.warn("Auth responded with status {}: {}", response.getStatusCode(), responseBody);
             if (responseBody != null && responseBody.contains("\"errorMessage\":\"User exists with same email\"")) {
                 throw new EmailAlreadyTakenException(email);
             } else {
@@ -148,6 +150,7 @@ public class AuthServiceImpl implements AuthService {
         httpEntity = new HttpEntity<>(null, headers);
         response = restTemplate.exchange(getKeycloakGetRealmRolesUrl(), HttpMethod.GET, httpEntity, String.class);
         httpStatus = response.getStatusCode();
+        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
         var realmRolesJson = response.getBody();
 
         // Error handling.
@@ -161,6 +164,7 @@ public class AuthServiceImpl implements AuthService {
         httpEntity = new HttpEntity<>(request, headers);
         response = restTemplate.postForEntity(getKeycloakSetUserRolesUrl(userId), httpEntity, String.class);
         httpStatus = response.getStatusCode();
+        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
 
         // Error handling.
         if (httpStatus != HttpStatus.NO_CONTENT) {
@@ -212,10 +216,10 @@ public class AuthServiceImpl implements AuthService {
         var httpEntity = new HttpEntity<>(request, headers);
         var response = restTemplate.postForEntity(getKeycloakRegisterRealmUrl(), httpEntity, String.class);
         var httpStatus = response.getStatusCode();
+        logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
 
         // Error handling.
         if (httpStatus == HttpStatus.CONFLICT) {
-            logger.warn("Auth responded with status {}: {}", response.getStatusCode(), response.getBody());
             throw new RealmAlreadyTakenException(realm);
         } else if (httpStatus != HttpStatus.CREATED) {
             throw new InternalServerErrorException("Unhandled response from create realm rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
