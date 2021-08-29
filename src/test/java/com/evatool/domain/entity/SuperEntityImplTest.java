@@ -30,9 +30,10 @@ class SuperEntityImplTest extends SuperEntityTest {
 
         // when
         superEntity.setId(UUID.randomUUID());
+        var newId = UUID.randomUUID();
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> superEntity.setId(UUID.randomUUID()));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> superEntity.setId(newId));
     }
 
     @Test

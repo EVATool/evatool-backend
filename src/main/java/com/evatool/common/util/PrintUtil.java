@@ -11,6 +11,5 @@ public class PrintUtil {
     @SneakyThrows
     public static void prettyPrintJson(String json) {
         var jsonObject = new JSONObject(json);
-        System.out.println(jsonObject.toString(4));
     }
 }

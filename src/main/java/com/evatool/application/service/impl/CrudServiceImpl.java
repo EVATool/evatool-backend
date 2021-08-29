@@ -139,7 +139,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         } else if (type == Variant.class) {
             return FunctionalErrorCodesUtil.VARIANT_FIND_FAILED_NOT_FOUND;
         } else {
-            throw new IllegalArgumentException("No functional error code found for type " + type.getSimpleName());
+            throw new IllegalArgumentException("No 'NotFoundInFind' functional error code found for type " + type.getSimpleName());
         }
     }
 
@@ -159,7 +159,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         } else if (type == Variant.class) {
             return FunctionalErrorCodesUtil.VARIANT_UPDATE_FAILED_NOT_FOUND;
         } else {
-            throw new IllegalArgumentException("No functional error code found for type " + type.getSimpleName());
+            throw new IllegalArgumentException("No 'NotFoundInUpdate' functional error code found for type " + type.getSimpleName());
         }
     }
 
@@ -179,7 +179,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
         } else if (type == Variant.class) {
             return FunctionalErrorCodesUtil.VARIANT_DELETION_FAILED_NOT_FOUND;
         } else {
-            throw new IllegalArgumentException("No functional error code found for type " + type.getSimpleName());
+            throw new IllegalArgumentException("No 'NotFoundInDelete' functional error code found for type " + type.getSimpleName());
         }
     }
 }
