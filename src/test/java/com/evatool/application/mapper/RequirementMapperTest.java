@@ -15,6 +15,21 @@ class RequirementMapperTest extends SuperMapperTest<Requirement, RequirementDto,
     private RequirementMapper mapper;
 
     @Test
+    void testFromDto_VariantIdsNull_StillWorks() {
+        // given
+        var analysis = getPersistedAnalysis();
+        var requirement = getPersistedRequirement(analysis);
+
+        // when
+        var requirementDto = mapper.toDto(requirement);
+        requirementDto.setVariantIds(null);
+
+        // then
+        var reconstructedRequirement = mapper.fromDto(requirementDto);
+        assertThat(reconstructedRequirement.getVariants()).isEmpty();
+    }
+
+    @Test
     void testFromDto_VariantIdsPresent_GetMapped() {
         // given
         var analysis = getPersistedAnalysis();
