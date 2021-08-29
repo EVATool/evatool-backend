@@ -269,7 +269,7 @@ public class ImportExportServiceImpl implements ImportExportService {
                     return this::importAnalysis; // importAnalysis_0_0_1;
 
                 default:
-                    throw new PropertyIsInvalidException("Unknown \"importExportVersion\" (" + currentImportExportVersion + ")");
+                    throw new ImportJsonException("Unknown \"importExportVersion\" (" + currentImportExportVersion + ")");
             }
         }
     }
