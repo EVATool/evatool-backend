@@ -11,6 +11,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AnalysisTest extends SuperEntityTest {
 
     @Test
+    void testGetChildClass_IsNotTemplate() {
+        // given
+        var analysis = getFloatingAnalysis();
+
+        // when
+        analysis.setIsTemplate(false);
+
+        // then
+        assertThat(analysis.getChildClass()).isEqualTo("Analysis");
+    }
+
+    @Test
+    void testGetChildClass_IsTemplate() {
+        // given
+        var analysis = getFloatingAnalysis();
+
+        // when
+        analysis.setIsTemplate(true);
+
+        // then
+        assertThat(analysis.getChildClass()).isEqualTo("Analysis_Template");
+    }
+
+
+    @Test
     void testWasUpdated_Persist_LastUpdatedIsNotNull() {
         // given
         var analysis = getPersistedAnalysis();
@@ -20,6 +45,7 @@ class AnalysisTest extends SuperEntityTest {
         // then
         assertThat(analysis.getLastUpdatedDate()).isNotNull();
     }
+
 
     @Disabled("This test is disabled because the @PreUpdate annotation does not work")
     @Test
