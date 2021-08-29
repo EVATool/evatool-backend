@@ -291,19 +291,19 @@ public class AuthServiceImpl implements AuthService {
         return keycloakBaseUrl + "realms/" + realm + "/protocol/openid-connect/token";
     }
 
-    private String getKeycloakCreateUserUrl() {
+    public String getKeycloakCreateUserUrl() {
         return keycloakBaseUrl + "admin/realms/evatool-realm/users";
     }
 
-    private String getKeycloakGetRealmRolesUrl() {
+    public String getKeycloakGetRealmRolesUrl() {
         return keycloakBaseUrl + "admin/realms/evatool-realm/roles";
     }
 
-    private String getKeycloakSetUserRolesUrl(String userId) {
+    public String getKeycloakSetUserRolesUrl(String userId) {
         return keycloakBaseUrl + "admin/realms/evatool-realm/users/" + userId + "/role-mappings/realm";
     }
 
-    private String getKeycloakRegisterRealmUrl() {
+    public String getKeycloakRegisterRealmUrl() {
         return keycloakBaseUrl + "admin/realms";
     }
 }

@@ -1,20 +1,28 @@
 package com.evatool.application.service;
 
+import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.impl.AuthServiceImpl;
 import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.functional.http401.InvalidCredentialsException;
 import com.evatool.common.exception.functional.http404.RealmNotFoundException;
 import com.evatool.common.exception.functional.http404.UsernameNotFoundException;
+import com.evatool.common.util.AuthUtil;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -60,7 +68,7 @@ class AuthServiceTest {
     }
 
     @Test
-    void testLogin_KeycloakRespondsWithNotFoundIfRealmAndUsernameAreEqual_Throws() {
+    void testLogin_KeycloakRespondsWithNotFound_IfRealmAndUsernameAreEqual_Throws() {
         // given
         var username = "username";
         var password = "password";
@@ -77,7 +85,7 @@ class AuthServiceTest {
     }
 
     @Test
-    void testLogin_KeycloakRespondsWithNotFoundIfRealmAndUsernameAreNotEqual_Throws() {
+    void testLogin_KeycloakRespondsWithNotFound_IfRealmAndUsernameAreNotEqual_Throws() {
         // given
         var username = "username";
         var password = "password";
@@ -94,7 +102,7 @@ class AuthServiceTest {
     }
 
     @Test
-    void testLogin_KeycloakRespondsWithUnauthorized_Throws() {
+    void testLogin_KeycloakRespondsWithUnauthorized_InvalidCredentials_Throws() {
         // given
         var username = "username";
         var password = "password";
@@ -163,8 +171,58 @@ class AuthServiceTest {
         assertThatExceptionOfType(InternalServerErrorException.class).isThrownBy(() -> authService.refreshLogin(refreshToken, realm));
     }
 
+    @SneakyThrows
+    @Test
+    void testRegisterUser() {
+        // given
+        String username = "username";
+        String email = "email";
+        String password = "password";
+
+        var expectedAuthTokenDto = getDummyAuthTokenDto();
+        var expectedAuthRegisterUserDto = getDummyAuthRegisterUserDto();
+        mockServer.expect(requestTo("/" + authService.getKeycloakLoginUrl("master")))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withSuccess(getKeycloakLoginResponse(expectedAuthTokenDto), MediaType.TEXT_PLAIN));
+
+        var responseHeaders = new HttpHeaders();
+        var userId = UUID.randomUUID().toString();
+        responseHeaders.setLocation(new URI("/" + userId));
+        mockServer.expect(requestTo("/" + authService.getKeycloakCreateUserUrl()))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withStatus(HttpStatus.CREATED).headers(responseHeaders));
+
+        mockServer.expect(requestTo("/" + authService.getKeycloakGetRealmRolesUrl()))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(getKeycloakGetRealmRolesResponse(), MediaType.TEXT_PLAIN));
+
+        mockServer.expect(requestTo("/" + authService.getKeycloakSetUserRolesUrl(userId)))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withStatus(HttpStatus.NO_CONTENT));
+
+        // when
+        var authRegisterUserDto = authService.registerUser(username, email, password);
+
+        // then
+        assertThat(authRegisterUserDto).isEqualTo(expectedAuthRegisterUserDto);
+    }
+
+    @Test
+    void testRegisterUser_KeycloakRespondsWithConflict_EmailAlreadyExists_Throws() {
+
+    }
+
+    @Test
+    void testRegisterUser_KeycloakRespondsWithConflict_UsernameAlreadyExists_Throws() {
+
+    }
+
     private AuthTokenDto getDummyAuthTokenDto() {
         return new AuthTokenDto("token", 1800, "refreshToken", 30000);
+    }
+
+    private AuthRegisterUserDto getDummyAuthRegisterUserDto() {
+        return new AuthRegisterUserDto("username", "email");
     }
 
     private String getKeycloakLoginResponse(AuthTokenDto authTokenDto) {
@@ -172,5 +230,15 @@ class AuthServiceTest {
                 "expires_in: \"" + authTokenDto.getTokenExpiresIn() + "\"," +
                 "refresh_token: \"" + authTokenDto.getRefreshToken() + "\"," +
                 "refresh_expires_in: \"" + authTokenDto.getRefreshTokenExpiresIn() + "\"}";
+    }
+
+    private String getKeycloakGetRealmRolesResponse() {
+        var roleResponseList = new ArrayList<String>();
+
+        for (var role : AuthUtil.ALL_ROLES) {
+            roleResponseList.add("{id: \"" + UUID.randomUUID() + "\" ,name: \"" + role + "\" }");
+        }
+
+        return "[" + String.join(",", roleResponseList) + "]";
     }
 }
