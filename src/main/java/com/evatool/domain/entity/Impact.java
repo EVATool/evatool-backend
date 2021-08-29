@@ -101,6 +101,10 @@ public class Impact extends PrefixIdEntity implements FindByAnalysis {
         return merit >= 0;
     }
 
+    public Boolean getIsRisk() {
+        return !getIsGoal();
+    }
+
     @Override
     public String getPrefix() {
         return "IMP";
