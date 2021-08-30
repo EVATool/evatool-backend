@@ -16,7 +16,9 @@ import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -49,19 +51,27 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         super.configure(http);
         if (authEnabled) { // This statement cannot be re-written with an in-between if-statement.
             http
-                    .csrf().disable()
+                    //.csrf().disable()
+                    .csrf().ignoringAntMatchers("/auth/**").csrfTokenRepository(this.getCsrfTokenRepository()).and()
                     .cors().and()
                     .authorizeRequests()
                     .anyRequest()
                     .permitAll();
         } else {
             http
-                    .csrf().disable()
+                    //.csrf().disable()
+                    .csrf().ignoringAntMatchers("/auth/**").csrfTokenRepository(this.getCsrfTokenRepository()).and()
                     .cors().and()
                     .addFilterAfter(new SkipSecurityFilter(), CsrfFilter.class)
                     .authorizeRequests()
                     .anyRequest()
                     .permitAll();
         }
+    }
+
+    private CsrfTokenRepository getCsrfTokenRepository() {
+        CookieCsrfTokenRepository tokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+        tokenRepository.setCookiePath("/");
+        return tokenRepository;
     }
 }
