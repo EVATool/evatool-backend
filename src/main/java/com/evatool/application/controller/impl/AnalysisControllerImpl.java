@@ -18,7 +18,6 @@ import java.util.UUID;
 
 @Api(tags = "Analysis API-Endpoint")
 @RestController
-//@CrossOrigin
 public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, AnalysisDto> implements AnalysisController {
 
     private static final Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);

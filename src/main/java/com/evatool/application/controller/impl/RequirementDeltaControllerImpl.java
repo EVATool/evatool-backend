@@ -18,7 +18,6 @@ import java.util.UUID;
 
 @Api(tags = "Requirement-Delta API-Endpoint")
 @RestController
-//@CrossOrigin
 public class RequirementDeltaControllerImpl extends CrudControllerImpl<RequirementDelta, RequirementDeltaDto> implements RequirementDeltaController {
 
     private static final Logger logger = LoggerFactory.getLogger(RequirementDeltaControllerImpl.class);

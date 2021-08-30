@@ -18,7 +18,6 @@ import java.util.UUID;
 
 @Api(tags = "Impact API-Endpoint")
 @RestController
-//@CrossOrigin
 public class ImpactControllerImpl extends CrudControllerImpl<Impact, ImpactDto> implements ImpactController {
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactControllerImpl.class);
