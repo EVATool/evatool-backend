@@ -52,7 +52,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         super.configure(http);
         if (authEnabled) { // This statement cannot be re-written with an in-between if-statement.
             http
-                    .csrf().ignoringAntMatchers("/**").csrfTokenRepository(this.getCsrfTokenRepository()).and()
+                    .csrf().ignoringAntMatchers("/auth/**").csrfTokenRepository(this.getCsrfTokenRepository()).and()
                     .cors().and()
                     .authorizeRequests()
                     .anyRequest()
