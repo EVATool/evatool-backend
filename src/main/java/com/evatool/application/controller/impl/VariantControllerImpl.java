@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Api(tags = "Variant API-Endpoint")
 @RestController
-@CrossOrigin
+//@CrossOrigin
 public class VariantControllerImpl extends CrudControllerImpl<Variant, VariantDto> implements VariantController {
 
     private static final Logger logger = LoggerFactory.getLogger(VariantControllerImpl.class);

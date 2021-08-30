@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @Api(tags = "Stakeholder API-Endpoint")
 @RestController
-@CrossOrigin
+//@CrossOrigin
 public class StakeholderControllerImpl extends CrudControllerImpl<Stakeholder, StakeholderDto> implements StakeholderController {
 
     private static final Logger logger = LoggerFactory.getLogger(StakeholderControllerImpl.class);

@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @Api(tags = "Import-Export API-Endpoint")
 @RestController
-@CrossOrigin
+//@CrossOrigin
 public class ImportExportControllerImpl implements ImportExportController {
 
     @Autowired

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "Auth API-Endpoint")
 @RestController
-@CrossOrigin
+//@CrossOrigin
 public class AuthControllerImpl implements AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthControllerImpl.class);

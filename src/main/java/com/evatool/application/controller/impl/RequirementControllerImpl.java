@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Api(tags = "Requirement API-Endpoint")
 @RestController
-@CrossOrigin
+//@CrossOrigin
 public class RequirementControllerImpl extends CrudControllerImpl<Requirement, RequirementDto> implements RequirementController {
 
     private static final Logger logger = LoggerFactory.getLogger(RequirementControllerImpl.class);
