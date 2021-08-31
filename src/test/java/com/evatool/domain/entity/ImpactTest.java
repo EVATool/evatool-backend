@@ -29,7 +29,7 @@ class ImpactTest extends SuperEntityTest {
     }
 
     @Test
-    void testSetMerit_DeltaReferencesImpact_InitialOverwriteMeritEqualsImpactMerit(){
+    void testSetMerit_DeltaReferencesImpact_InitialOverwriteMeritEqualsOriginalMerit() {
         // given
         var analysis = getPersistedAnalysis();
         var impact = getPersistedImpact(analysis);
@@ -44,7 +44,7 @@ class ImpactTest extends SuperEntityTest {
     }
 
     @Test
-    void testSetMerit_DeltaReferencesImpact_MeritChangesAndMakesOverwriteMeritIllegal(){
+    void testSetMerit_DeltaReferencesImpact_MeritChangesAndMakesOverwriteMeritIllegal_() {
         // given
         var analysis = getPersistedAnalysis();
         var impact = getPersistedImpact(analysis);
@@ -53,10 +53,10 @@ class ImpactTest extends SuperEntityTest {
         var delta = getPersistedRequirementDelta(impact, requirement);
 
         // when
-
+        impact.setMerit(.3f);
 
         // then
-
+        assertThat(delta.getOverwriteMerit()).isEqualTo(delta.getOriginalMerit());
     }
 
     @ParameterizedTest
