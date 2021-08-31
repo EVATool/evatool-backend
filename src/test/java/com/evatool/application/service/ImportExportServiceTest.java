@@ -8,7 +8,6 @@ import com.evatool.common.enums.StakeholderPriority;
 import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.functional.http400.ImportJsonException;
 import com.evatool.common.util.IterableUtil;
-import com.evatool.common.util.PrintUtil;
 import com.evatool.domain.entity.*;
 import com.evatool.domain.repository.*;
 import lombok.SneakyThrows;
@@ -262,7 +261,7 @@ class ImportExportServiceTest {
         requirementRepository.save(requirement1);
 
         // Requirement Deltas.
-        var requirementDelta1 = new RequirementDelta(0.1f, impact1, requirement1);
+        var requirementDelta1 = new RequirementDelta(impact1, requirement1);
         requirementDeltaRepository.save(requirementDelta1);
 
         return analysis;
@@ -319,15 +318,15 @@ class ImportExportServiceTest {
         requirementRepository.save(requirement3);
 
         // Requirement Deltas.
-        var requirementDelta1 = new RequirementDelta(0.1f, impact1, requirement2);
+        var requirementDelta1 = new RequirementDelta(impact1, requirement2);
         requirementDeltaRepository.save(requirementDelta1);
-        var requirementDelta2 = new RequirementDelta(0.1f, impact2, requirement2);
+        var requirementDelta2 = new RequirementDelta(impact2, requirement2);
         requirementDeltaRepository.save(requirementDelta2);
-        var requirementDelta3 = new RequirementDelta(0.1f, impact1, requirement3);
+        var requirementDelta3 = new RequirementDelta(impact1, requirement3);
         requirementDeltaRepository.save(requirementDelta3);
-        var requirementDelta4 = new RequirementDelta(0.1f, impact3, requirement1);
+        var requirementDelta4 = new RequirementDelta(impact3, requirement1);
         requirementDeltaRepository.save(requirementDelta4);
-        var requirementDelta5 = new RequirementDelta(0.1f, impact4, requirement2);
+        var requirementDelta5 = new RequirementDelta(impact4, requirement2);
         requirementDeltaRepository.save(requirementDelta5);
 
         return analysis;

@@ -34,7 +34,7 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
     @ManyToOne(optional = false)
     private Requirement requirement;
 
-    public RequirementDelta(Float overwriteMerit, Impact impact, Requirement requirement) {
+    public RequirementDelta(Impact impact, Requirement requirement) {
         super();
         logger.debug("Constructor");
         setImpact(impact);

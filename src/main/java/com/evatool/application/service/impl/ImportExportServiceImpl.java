@@ -247,7 +247,8 @@ public class ImportExportServiceImpl implements ImportExportService {
                 throw new ImportJsonException("The Requirement with id " + requirementId + " is referenced by this RequirementDelta but is not present.");
             }
 
-            var delta = new RequirementDelta(deltaOverwriteMerit, impact, requirement);
+            var delta = new RequirementDelta(impact, requirement);
+            delta.setOverwriteMerit(deltaOverwriteMerit);
             TenancySentinel.handleCreate(delta);
             requirementDeltaRepository.save(delta);
 
