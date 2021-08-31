@@ -38,7 +38,7 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
         super();
         logger.debug("Constructor");
         setImpact(impact);
-        setOverwriteMerit(overwriteMerit);
+        setOverwriteMerit(impact.getMerit());
         setRequirement(requirement);
     }
 
