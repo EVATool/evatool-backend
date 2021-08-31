@@ -46,8 +46,6 @@ class AnalysisTest extends SuperEntityTest {
         assertThat(analysis.getLastUpdatedDate()).isNotNull();
     }
 
-
-    @Disabled("This test is disabled because the @PreUpdate annotation does not work")
     @SneakyThrows
     @Test
     void testWasUpdated_Update_LastUpdatedChanges() {
@@ -78,7 +76,6 @@ class AnalysisTest extends SuperEntityTest {
         assertThat(initialTime.getTime()).isLessThanOrEqualTo(analysis.getLastUpdatedDate().getTime());
     }
 
-    @Disabled("This test is disabled because the @PreUpdate annotation does not work")
     @SneakyThrows
     @Test
     void testWasUpdated_ChildUpdate_LastUpdatedChanges() {
