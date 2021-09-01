@@ -146,7 +146,7 @@ public abstract class EntityTest<S extends SuperEntity> {
 
     protected RequirementDelta getFloatingRequirementDelta(Impact impact, Requirement requirement) {
         var analysis = getPersistedAnalysis();
-        return new RequirementDelta(0.0f, impact, requirement);
+        return new RequirementDelta(impact, requirement);
     }
 
     protected RequirementDelta getPersistedRequirementDelta() {

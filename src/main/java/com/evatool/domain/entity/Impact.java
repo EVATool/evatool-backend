@@ -1,5 +1,6 @@
 package com.evatool.domain.entity;
 
+import com.evatool.common.validation.OverwriteMeritValidation;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -94,7 +95,17 @@ public class Impact extends PrefixIdEntity implements FindByAnalysis {
         if (Math.abs(merit) > 1) {
             throw new IllegalArgumentException("Merit must be in [-1, 1]");
         }
+
         this.merit = merit;
+
+        // Ensure that deltas referencing this impact have a valid overwriteMerit.
+        for (var delta : requirementDeltas) {
+            var error = OverwriteMeritValidation.validateOverwriteMerit(delta.getOverwriteMerit(), getMerit());
+            System.out.println(error);
+            if (error != null) {
+                delta.setOverwriteMerit(getMerit());
+            }
+        }
     }
 
     public Boolean getIsGoal() {
