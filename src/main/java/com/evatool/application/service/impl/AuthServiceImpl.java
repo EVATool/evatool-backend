@@ -17,12 +17,14 @@ import com.evatool.common.util.UUIDUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import org.apache.http.HttpRequestFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,7 +51,10 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        restTemplate.setErrorHandler(new RestTemplateResponseErrorHandlerIgnore());
+        var requestFactory = new SimpleClientHttpRequestFactory();
+        requestFactory.setOutputStreaming(false);
+        this.restTemplate.setRequestFactory(requestFactory);
+        this.restTemplate.setErrorHandler(new RestTemplateResponseErrorHandlerIgnore());
     }
 
     public AuthTokenDto login(String username, String password, String realm) {
