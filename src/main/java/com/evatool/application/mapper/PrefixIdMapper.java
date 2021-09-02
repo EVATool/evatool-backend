@@ -12,16 +12,17 @@ public abstract class PrefixIdMapper<S extends PrefixIdEntity, T extends PrefixI
 
     @Override
     public void amendToDto(S entity, T dto) {
-        logger.debug("Amend To Dto");
+        logger.trace("Amend To Dto");
         dto.setPrefixSequenceId(entity.getPrefixSequenceId());
         super.amendToDto(entity, dto);
     }
 
     @Override
     public void amendFromDto(S entity, T dto) {
-        logger.debug("Amend From Dto");
+        logger.trace("Amend From Dto");
         if (dto.getPrefixSequenceId() != null) {
             try {
+                logger.debug("Attempting to set sequence id from string provided in DTO");
                 entity.setSequenceId(Integer.valueOf(dto.getPrefixSequenceId().replaceAll("[^\\d.]", "")));
             } catch (NumberFormatException ex) {
                 throw new PropertyIsInvalidException(String.format("Error extracting numeric value from string after removing letters [input: %s]", dto.getPrefixSequenceId()));

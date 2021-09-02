@@ -20,13 +20,14 @@ public class RequirementDeltaMapper extends SuperMapper<RequirementDelta, Requir
     private final RequirementRepository requirementRepository;
 
     public RequirementDeltaMapper(ImpactRepository impactRepository, RequirementRepository requirementRepository) {
+        logger.trace("Constructor");
         this.impactRepository = impactRepository;
         this.requirementRepository = requirementRepository;
     }
 
     @Override
     public RequirementDeltaDto toDto(RequirementDelta entity) {
-        logger.debug("To Dto");
+        logger.trace("To Dto");
         var dto = new RequirementDeltaDto(
                 entity.getOverwriteMerit(),
                 entity.getOriginalMerit(),
@@ -43,7 +44,7 @@ public class RequirementDeltaMapper extends SuperMapper<RequirementDelta, Requir
 
     @Override
     public RequirementDelta fromDto(RequirementDeltaDto dto) {
-        logger.debug("From Dto");
+        logger.trace("From Dto");
         var entity = new RequirementDelta(
                 findByIdOrThrowIfEmpty(impactRepository, dto.getImpactId()),
                 findByIdOrThrowIfEmpty(requirementRepository, dto.getRequirementId()),

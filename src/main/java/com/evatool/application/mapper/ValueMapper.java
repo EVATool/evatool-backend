@@ -15,12 +15,13 @@ public class ValueMapper extends SuperMapper<Value, ValueDto> {
     private final AnalysisRepository analysisRepository;
 
     public ValueMapper(AnalysisRepository analysisRepository) {
+        logger.trace("Constructor");
         this.analysisRepository = analysisRepository;
     }
 
     @Override
     public ValueDto toDto(Value entity) {
-        logger.debug("To Dto");
+        logger.trace("To Dto");
         var dto = new ValueDto(
                 entity.getName(),
                 entity.getDescription(),
@@ -34,7 +35,7 @@ public class ValueMapper extends SuperMapper<Value, ValueDto> {
 
     @Override
     public Value fromDto(ValueDto dto) {
-        logger.debug("From Dto");
+        logger.trace("From Dto");
         var entity = new Value(
                 dto.getName(),
                 dto.getDescription(),

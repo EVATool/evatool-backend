@@ -15,12 +15,13 @@ public class StakeholderMapper extends PrefixIdMapper<Stakeholder, StakeholderDt
     private final AnalysisRepository analysisRepository;
 
     public StakeholderMapper(AnalysisRepository analysisRepository) {
+        logger.trace("Constructor");
         this.analysisRepository = analysisRepository;
     }
 
     @Override
     public StakeholderDto toDto(Stakeholder entity) {
-        logger.debug("To Dto");
+        logger.trace("To Dto");
         var dto = new StakeholderDto(
                 entity.getName(),
                 entity.getPriority(),
@@ -34,7 +35,7 @@ public class StakeholderMapper extends PrefixIdMapper<Stakeholder, StakeholderDt
 
     @Override
     public Stakeholder fromDto(StakeholderDto dto) {
-        logger.debug("From Dto");
+        logger.trace("From Dto");
         var entity = new Stakeholder(
                 dto.getName(),
                 dto.getPriority(),
