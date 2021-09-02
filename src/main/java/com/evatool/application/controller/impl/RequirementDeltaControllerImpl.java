@@ -28,6 +28,7 @@ public class RequirementDeltaControllerImpl extends CrudControllerImpl<Requireme
 
     protected RequirementDeltaControllerImpl(RequirementDeltaServiceImpl service) {
         super(service);
+        logger.trace("Constructor");
         this.service = service;
     }
 

@@ -28,6 +28,7 @@ public class ImpactControllerImpl extends CrudControllerImpl<Impact, ImpactDto> 
 
     public ImpactControllerImpl(ImpactServiceImpl service) {
         super(service);
+        logger.trace("Constructor");
         this.service = service;
     }
 

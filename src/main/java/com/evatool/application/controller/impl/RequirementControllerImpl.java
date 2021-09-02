@@ -28,6 +28,7 @@ public class RequirementControllerImpl extends CrudControllerImpl<Requirement, R
 
     protected RequirementControllerImpl(RequirementServiceImpl service) {
         super(service);
+        logger.trace("Constructor");
         this.service = service;
     }
 

@@ -27,6 +27,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
 
     public AnalysisControllerImpl(AnalysisServiceImpl service) {
         super(service);
+        logger.trace("Constructor");
         this.service = service;
     }
 
@@ -42,7 +43,7 @@ public class AnalysisControllerImpl extends CrudControllerImpl<Analysis, Analysi
     @PostMapping(UriUtil.ANALYSES_DEEP_COPY)
     @PreAuthorize(AuthUtil.BY_WRITER)
     public ResponseEntity<AnalysisDto> deepCopy(UUID templateAnalysisId, AnalysisDto analysisDto) {
-        logger.debug("Deep Copy");
+        logger.trace("Deep Copy");
         return new ResponseEntity<>(service.deepCopy(templateAnalysisId, analysisDto), HttpStatus.CREATED);
     }
 

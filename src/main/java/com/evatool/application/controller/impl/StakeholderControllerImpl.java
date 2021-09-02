@@ -31,6 +31,7 @@ public class StakeholderControllerImpl extends CrudControllerImpl<Stakeholder, S
 
     protected StakeholderControllerImpl(StakeholderServiceImpl service) {
         super(service);
+        logger.trace("Constructor");
         this.service = service;
     }
 
