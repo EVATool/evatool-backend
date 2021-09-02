@@ -32,6 +32,7 @@ public class AnalysisServiceImpl extends CrudServiceImpl<Analysis, AnalysisDto> 
 
     public AnalysisServiceImpl(AnalysisRepository repository, ValueRepository valueRepository, AnalysisMapper mapper, ValueMapper valueMapper) {
         super(repository, mapper);
+        logger.trace("Constructor");
         this.repository = repository;
         this.valueRepository = valueRepository;
         this.mapper = mapper;
@@ -41,7 +42,7 @@ public class AnalysisServiceImpl extends CrudServiceImpl<Analysis, AnalysisDto> 
     @Override
     @Transactional
     public AnalysisDto deepCopy(UUID templateAnalysisId, AnalysisDto analysisDto) {
-        logger.debug("Deep Copy");
+        logger.trace("Deep Copy");
         var deepCopyAnalysis = create(analysisDto);
         var templateAnalysis = findById(templateAnalysisId);
 

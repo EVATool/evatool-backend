@@ -34,6 +34,7 @@ public class VariantServiceImpl extends CrudServiceImpl<Variant, VariantDto> imp
 
     public VariantServiceImpl(VariantRepository repository, VariantMapper mapper, RequirementRepository requirementRepository) {
         super(repository, mapper);
+        logger.trace("Constructor");
         this.repository = repository;
         this.mapper = mapper;
         this.requirementRepository = requirementRepository;
@@ -41,6 +42,8 @@ public class VariantServiceImpl extends CrudServiceImpl<Variant, VariantDto> imp
 
     @Override
     public void deleteById(UUID id) {
+        logger.trace("Delete By Id");
+
         var referencedRequirements = requirementRepository.findAllByVariantsId(id);
         referencedRequirements = TenancySentinel.handleFind(referencedRequirements);
 

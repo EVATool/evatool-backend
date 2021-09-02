@@ -43,7 +43,7 @@ public class ErrorMessage {
     private final Tag tag;
 
     public ErrorMessage(Exception exception, String path, HttpStatus httpStatusCode) {
-        logger.debug("Constructor");
+        logger.trace("Constructor");
         this.timestamp = new Timestamp(System.currentTimeMillis());
         this.httpStatusCode = httpStatusCode.value();
         this.httpStatus = httpStatusCode.toString().replaceAll("\\d", "").trim();
@@ -54,10 +54,12 @@ public class ErrorMessage {
         this.message = exception.getMessage();
         this.path = path;
         if (exception instanceof FunctionalException) {
+            logger.debug("Functional Exception");
             var functionalException = (FunctionalException) exception;
             this.functionalErrorCode = functionalException.getFunctionalErrorCode();
             this.tag = functionalException.getTag();
         } else {
+            logger.debug("Non-Functional Exception");
             this.functionalErrorCode = null;
             this.tag = null;
         }

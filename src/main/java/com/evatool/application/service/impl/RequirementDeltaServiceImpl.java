@@ -23,6 +23,7 @@ public class RequirementDeltaServiceImpl extends CrudServiceImpl<RequirementDelt
 
     protected RequirementDeltaServiceImpl(RequirementDeltaRepository repository, RequirementDeltaMapper mapper) {
         super(repository, mapper);
+        logger.trace("Constructor");
         this.repository = repository;
         this.mapper = mapper;
     }

@@ -36,6 +36,7 @@ public class ImpactServiceImpl extends CrudServiceImpl<Impact, ImpactDto> implem
 
     public ImpactServiceImpl(ImpactRepository repository, ImpactMapper mapper, RequirementDeltaRepository requirementDeltaRepository) {
         super(repository, mapper);
+        logger.trace("Constructor");
         this.repository = repository;
         this.mapper = mapper;
         this.requirementDeltaRepository = requirementDeltaRepository;
@@ -43,6 +44,7 @@ public class ImpactServiceImpl extends CrudServiceImpl<Impact, ImpactDto> implem
 
     @Override
     public void deleteById(UUID id) {
+        logger.trace("Delete By Id");
         var referencedRequirementDeltas = requirementDeltaRepository.findAllByImpactId(id);
         referencedRequirementDeltas = TenancySentinel.handleFind(referencedRequirementDeltas);
 

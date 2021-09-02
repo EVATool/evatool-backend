@@ -25,11 +25,13 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
 
     @Override
     public KeycloakDeployment resolve(Request request) {
+        logger.trace("Resolve");
         var realm = TenancySentinel.getCurrentRealmFromRequestHeader();
         logger.info("Request to URI {} to realm {}", request.getURI(), realm);
 
         // Use the default realm if no realm was provided.
         if (realm == null || realm.equals("")) {
+            logger.debug("Realm was null of empty string (using default fallback realm \"evatool-realm\")");
             realm = "evatool-realm";
         }
 
@@ -44,6 +46,7 @@ public class GenericConfigResolver implements KeycloakConfigResolver {
     }
 
     static void setAdapterConfig(AdapterConfig adapterConfig) {
+        logger.trace("Set Adapter Config");
         GenericConfigResolver.adapterConfig = adapterConfig;
     }
 }
