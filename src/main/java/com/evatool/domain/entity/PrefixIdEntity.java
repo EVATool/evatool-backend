@@ -31,7 +31,7 @@ public abstract class PrefixIdEntity extends SuperEntity {
     public abstract String getChildClass();
 
     public String getPrefixSequenceId() {
-        logger.debug("Set Prefix Sequence Id");
+        logger.trace("Get Prefix Sequence Id");
         if (this.sequenceId == null)
             return null;
         else

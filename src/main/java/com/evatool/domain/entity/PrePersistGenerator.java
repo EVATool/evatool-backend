@@ -14,9 +14,10 @@ public class PrePersistGenerator extends UUIDGenerator {
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-        logger.debug("Generating new SuperEntityUuid");
+        logger.trace("Generating new SuperEntityUuid");
 
         if (PrefixIdEntity.class.isAssignableFrom(object.getClass())) {
+            logger.debug("PrefixIdEntity is assignable from object");
             var child = (PrefixIdEntity) object;
             var parentId = child.getParentId();
             var parentClass = child.getParentClass();
@@ -31,7 +32,8 @@ public class PrePersistGenerator extends UUIDGenerator {
             var selectQueryResult = selectQuery.getResultList();
             var counter = selectQueryResult.isEmpty() ? 0 : selectQueryResult.get(0);
 
-            if (counter == 0) { // First child for that parent
+            if (counter == 0) {
+                logger.debug("First child of that parent");
                 counter = 1;
                 var insertQuery = session.createNativeQuery(
                         "insert into parent_child_counter (parent_id, parent_class, child_class, counter) values (?1, ?2, ?3, ?4)");
@@ -41,6 +43,7 @@ public class PrePersistGenerator extends UUIDGenerator {
                 insertQuery.setParameter(4, counter);
                 insertQuery.executeUpdate();
             } else {
+                logger.debug("Children with that parent already exist");
                 counter += 1;
                 var updateQuery = session.createQuery(
                         "update parent_child_counter set counter=?1 where parentId=?2 and parentClass=?3 and childClass=?4");

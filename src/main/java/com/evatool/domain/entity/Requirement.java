@@ -46,7 +46,7 @@ public class Requirement extends PrefixIdEntity implements FindByAnalysis {
 
     public Requirement(String description, Analysis analysis) {
         super();
-        logger.debug("Constructor");
+        logger.trace("Constructor");
         setDescription(description);
         setAnalysis(analysis);
     }
@@ -59,19 +59,19 @@ public class Requirement extends PrefixIdEntity implements FindByAnalysis {
     @PreUpdate
     @PreRemove
     void prePersistUpdateRemove() {
-        logger.debug("Pre Persist/Pre Update/Pre Remove");
+        logger.trace("Pre Persist/Pre Update/Pre Remove");
         FindByAnalysis.super.updateAnalysisLastUpdated();
     }
 
     @PostPersist
     void postPersist() {
-        logger.debug("Post Persist");
+        logger.trace("Post Persist");
         analysis.getRequirements().add(this);
     }
 
     @PostRemove
     void postRemove() {
-        logger.debug("Post Remove");
+        logger.trace("Post Remove");
         analysis.getRequirements().remove(this);
     }
 

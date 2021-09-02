@@ -39,7 +39,7 @@ public class Variant extends PrefixIdEntity implements FindByAnalysis {
 
     public Variant(String name, String description, Boolean archived, Analysis analysis) {
         super();
-        logger.debug("Constructor");
+        logger.trace("Constructor");
         setName(name);
         setDescription(description);
         setArchived(archived);
@@ -54,19 +54,19 @@ public class Variant extends PrefixIdEntity implements FindByAnalysis {
     @PreUpdate
     @PreRemove
     void prePersistUpdateRemove() {
-        logger.debug("Pre Persist/Pre Update/Pre Remove");
+        logger.trace("Pre Persist/Pre Update/Pre Remove");
         FindByAnalysis.super.updateAnalysisLastUpdated();
     }
 
     @PostPersist
     void postPersist() {
-        logger.debug("Post Persist");
+        logger.trace("Post Persist");
         analysis.getVariants().add(this);
     }
 
     @PostRemove
     void postRemove() {
-        logger.debug("Post Remove");
+        logger.trace("Post Remove");
         analysis.getVariants().remove(this);
     }
 

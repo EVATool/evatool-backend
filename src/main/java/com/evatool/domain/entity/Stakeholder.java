@@ -54,7 +54,7 @@ public class Stakeholder extends PrefixIdEntity implements FindByAnalysis {
 
     public Stakeholder(String name, StakeholderPriority priority, StakeholderLevel level, Analysis analysis) {
         super();
-        logger.debug("Constructor");
+        logger.trace("Constructor");
         setName(name);
         setPriority(priority);
         setLevel(level);
@@ -69,23 +69,24 @@ public class Stakeholder extends PrefixIdEntity implements FindByAnalysis {
     @PreUpdate
     @PreRemove
     void prePersistUpdateRemove() {
-        logger.debug("Pre Persist/Pre Update/Pre Remove");
+        logger.trace("Pre Persist/Pre Update/Pre Remove");
         FindByAnalysis.super.updateAnalysisLastUpdated();
     }
 
     @PostPersist
     void postPersist() {
-        logger.debug("Post Persist");
+        logger.trace("Post Persist");
         analysis.getStakeholders().add(this);
     }
 
     @PostRemove
     void postRemove() {
-        logger.debug("Post Remove");
+        logger.trace("Post Remove");
         analysis.getStakeholders().remove(this);
     }
 
     public Float getImpacted() {
+        logger.trace("Get Impacted");
         if (this.impacts.isEmpty()) {
             return null;
         }
@@ -116,7 +117,7 @@ public class Stakeholder extends PrefixIdEntity implements FindByAnalysis {
                 break;
 
             default:
-                throw new IllegalArgumentException("Unhandled Stakeholder level.");
+                throw new IllegalArgumentException(String.format("Stakeholder level \"%s\" has no prefix", level));
         }
 
         return prefix;
@@ -124,6 +125,9 @@ public class Stakeholder extends PrefixIdEntity implements FindByAnalysis {
 
     @Override
     public String getParentId() {
+        if(this.analysis.getId() == null){
+            throw new IllegalStateException("Parent entity analysis must be persisted before this method is called");
+        }
         return this.analysis.getId().toString();
     }
 

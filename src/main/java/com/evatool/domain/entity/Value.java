@@ -56,7 +56,7 @@ public class Value extends SuperEntity implements FindByAnalysis {
 
     public Value(String name, String description, ValueType type, Boolean archived, Analysis analysis) {
         super();
-        logger.debug("Constructor");
+        logger.trace("Constructor");
         setName(name);
         setDescription(description);
         setType(type);
@@ -72,19 +72,19 @@ public class Value extends SuperEntity implements FindByAnalysis {
     @PreUpdate
     @PreRemove
     void prePersistUpdateRemove() {
-        logger.debug("Pre Persist/Pre Update/Pre Remove");
+        logger.trace("Pre Persist/Pre Update/Pre Remove");
         FindByAnalysis.super.updateAnalysisLastUpdated();
     }
 
     @PostPersist
     void postPersist() {
-        logger.debug("Post Persist");
+        logger.trace("Post Persist");
         analysis.getValues().add(this);
     }
 
     @PostRemove
     void postRemove() {
-        logger.debug("Post Remove");
+        logger.trace("Post Remove");
         analysis.getValues().remove(this);
     }
 }

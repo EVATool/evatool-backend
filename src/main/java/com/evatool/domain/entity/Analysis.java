@@ -85,7 +85,7 @@ public class Analysis extends PrefixIdEntity {
 
     public Analysis(String name, String description, Boolean isTemplate, String imageUrl) {
         super();
-        logger.debug("Constructor");
+        logger.trace("Constructor");
         setName(name);
         setDescription(description);
         setImageUrl(imageUrl);
@@ -104,12 +104,12 @@ public class Analysis extends PrefixIdEntity {
     @PrePersist
     @PreUpdate
     void prePersistUpdate() {
-        logger.debug("Pre Post/Pre Update");
+        logger.trace("Pre Persist/Pre Update");
         wasUpdated();
     }
 
     public void wasUpdated() {
-        logger.debug("Was Updated");
+        logger.trace("Was Updated");
         lastUpdated = new Date().getTime();
     }
 

@@ -41,7 +41,7 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
 
     public RequirementDelta(Impact impact, Requirement requirement) {
         super();
-        logger.debug("Constructor");
+        logger.trace("Constructor");
         setImpact(impact);
         setOverwriteMerit(impact.getMerit());
         setRequirement(requirement);
@@ -55,26 +55,26 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
     @PreUpdate
     @PreRemove
     void prePersistUpdateRemove() {
-        logger.debug("Pre Persist/Pre Update/Pre Remove");
+        logger.trace("Pre Persist/Pre Update/Pre Remove");
         FindByAnalysis.super.updateAnalysisLastUpdated();
     }
 
     @PostPersist
     void postPersist() {
-        logger.debug("Post Persist");
+        logger.trace("Post Persist");
         impact.getRequirementDeltas().add(this);
         requirement.getRequirementDeltas().add(this);
     }
 
     @PostRemove
     void postRemove() {
-        logger.debug("Post Remove");
+        logger.trace("Post Remove");
         impact.getRequirementDeltas().remove(this);
         requirement.getRequirementDeltas().remove(this);
     }
 
     public void setOverwriteMerit(Float overwriteMerit) {
-        logger.debug("Set Overwrite Merit");
+        logger.trace("Set Overwrite Merit");
         if (overwriteMerit == null) {
             throw new IllegalArgumentException("Delta cannot be null");
         } else if (Math.abs(overwriteMerit) > 1) {
@@ -89,10 +89,12 @@ public class RequirementDelta extends SuperEntity implements FindByAnalysis {
     }
 
     public Float getOriginalMerit() {
+        logger.trace("Get Overwrite Merit");
         return impact.getMerit();
     }
 
     public Color getMeritColor() {
+        logger.trace("Get Merit Color");
         if (impact.getMerit() == 0) {
             return new Color(0.4f, 0.4f, 0.4f);
         } else if (this.overwriteMerit > 0) {

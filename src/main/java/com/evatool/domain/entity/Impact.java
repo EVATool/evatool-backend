@@ -55,7 +55,7 @@ public class Impact extends PrefixIdEntity implements FindByAnalysis {
 
     public Impact(Float merit, String description, Value value, Stakeholder stakeholder, Analysis analysis) {
         super();
-        logger.debug("Constructor");
+        logger.trace("Constructor");
         setMerit(merit);
         setDescription(description);
         setValue(value);
@@ -71,13 +71,13 @@ public class Impact extends PrefixIdEntity implements FindByAnalysis {
     @PreUpdate
     @PreRemove
     void prePersistUpdateRemove() {
-        logger.debug("Pre Persist/Pre Update/Pre Remove");
+        logger.trace("Pre Persist/Pre Update/Pre Remove");
         FindByAnalysis.super.updateAnalysisLastUpdated();
     }
 
     @PostPersist
     void postPersist() {
-        logger.debug("Post Persist");
+        logger.trace("Post Persist");
         analysis.getImpacts().add(this);
         value.getImpacts().add(this);
         stakeholder.getImpacts().add(this);
@@ -85,13 +85,14 @@ public class Impact extends PrefixIdEntity implements FindByAnalysis {
 
     @PostRemove
     void postRemove() {
-        logger.debug("Post Remove");
+        logger.trace("Post Remove");
         analysis.getImpacts().remove(this);
         value.getImpacts().remove(this);
         stakeholder.getImpacts().remove(this);
     }
 
     public void setMerit(Float merit) {
+        logger.trace("Set Merit");
         if (Math.abs(merit) > 1) {
             throw new IllegalArgumentException("Merit must be in [-1, 1]");
         }
