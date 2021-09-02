@@ -102,7 +102,6 @@ public class Impact extends PrefixIdEntity implements FindByAnalysis {
         // Ensure that deltas referencing this impact have a valid overwriteMerit.
         for (var delta : requirementDeltas) {
             var error = OverwriteMeritValidation.validateOverwriteMerit(delta.getOverwriteMerit(), getMerit());
-            System.out.println(error);
             if (error != null) {
                 delta.setOverwriteMerit(getMerit());
             }
