@@ -68,6 +68,7 @@ public class TenancySentinel {
     }
 
     public static String getCurrentRealmFromRequestHeader() {
+        logger.trace("Get Current Realm From Request Header");
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes instanceof ServletRequestAttributes) {
             HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
@@ -77,6 +78,7 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> void handleFind(S entity) {
+        logger.trace("Handle Find");
         if (!multiTenancyEnabled) {
             return;
         }
@@ -88,6 +90,7 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> Iterable<S> handleFind(Iterable<S> entities) {
+        logger.trace("Handle Find");
         if (!multiTenancyEnabled) {
             return entities;
         }
@@ -105,6 +108,7 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> void handleCreate(S entity) {
+        logger.trace("Handle Create");
         if (!multiTenancyEnabled) {
             return;
         }
@@ -114,6 +118,7 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> void handleUpdate(S entity) {
+        logger.trace("Handle Update");
         if (!multiTenancyEnabled) {
             return;
         }
@@ -125,6 +130,7 @@ public class TenancySentinel {
     }
 
     public static <S extends SuperEntity> void handleDelete(S entity) {
+        logger.trace("Handle Delete");
         if (!multiTenancyEnabled) {
             return;
         }
