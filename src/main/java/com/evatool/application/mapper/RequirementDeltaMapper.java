@@ -45,9 +45,9 @@ public class RequirementDeltaMapper extends SuperMapper<RequirementDelta, Requir
     public RequirementDelta fromDto(RequirementDeltaDto dto) {
         logger.debug("From Dto");
         var entity = new RequirementDelta(
-                dto.getOverwriteMerit(),
                 findByIdOrThrowIfEmpty(impactRepository, dto.getImpactId()),
-                findByIdOrThrowIfEmpty(requirementRepository, dto.getRequirementId())
+                findByIdOrThrowIfEmpty(requirementRepository, dto.getRequirementId()),
+                dto.getOverwriteMerit()
         );
         super.amendFromDto(entity, dto);
         return entity;

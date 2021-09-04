@@ -1,14 +1,14 @@
 package com.evatool.domain.entity;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@DataJpaTest
+@SpringBootTest
 class SuperEntityImplTest extends SuperEntityTest {
 
     @Test
