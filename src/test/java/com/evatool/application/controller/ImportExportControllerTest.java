@@ -2,7 +2,6 @@ package com.evatool.application.controller;
 
 import com.evatool.application.dto.AnalysisDto;
 import com.evatool.common.util.IterableUtil;
-import com.evatool.common.util.PrintUtil;
 import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Analysis;
 import com.evatool.domain.repository.AnalysisRepository;
