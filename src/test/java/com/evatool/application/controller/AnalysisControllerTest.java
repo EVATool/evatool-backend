@@ -35,6 +35,8 @@ class AnalysisControllerTest extends CrudControllerTest<Analysis, AnalysisDto> {
         var templateValue1 = getPersistedValue(templateAnalysis);
         var templateValue2 = getPersistedValue(templateAnalysis);
         var templateValue3 = getPersistedValue(templateAnalysis);
+        var templateStakeholder1 = getPersistedStakeholder(templateAnalysis);
+        var templateStakeholder2 = getPersistedStakeholder(templateAnalysis);
 
         // when
         var newAnalysisDto = analysisMapper.toDto(getFloatingAnalysis());
@@ -45,5 +47,6 @@ class AnalysisControllerTest extends CrudControllerTest<Analysis, AnalysisDto> {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(deepCopyAnalysis).isNotNull();
         assertThat(valueRepository.findAllByAnalysisId(deepCopyAnalysis.getId())).hasSize(3);
+        assertThat(stakeholderRepository.findAllByAnalysisId(deepCopyAnalysis.getId())).hasSize(2);
     }
 }
