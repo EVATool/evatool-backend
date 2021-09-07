@@ -92,6 +92,9 @@ public class AuthServiceImpl implements AuthService {
         } else if (httpStatus == HttpStatus.UNAUTHORIZED) {
             loginAttemptService.loginFailed(clientIp);
             var remainingLoginAttempts = loginAttemptService.getRemainingAttempts(clientIp);
+            if(remainingLoginAttempts <= 0){
+                throw new RemoteIpBlockedException();
+            }
             throw new InvalidCredentialsException(remainingLoginAttempts);
         } else if (httpStatus != HttpStatus.OK) {
             throw new InternalServerErrorException("Unhandled response from login rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");

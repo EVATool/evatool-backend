@@ -157,13 +157,14 @@ class AuthServiceTest {
                 .andRespond(withStatus(HttpStatus.UNAUTHORIZED));
 
         // when
-        for (int i = 0; i < MAX_ATTEMPTS; i++) {
+        for (int i = 0; i < MAX_ATTEMPTS - 1; i++) {
             assertThatExceptionOfType(InvalidCredentialsException.class).isThrownBy(() -> authService.login(username, password, realm));
             assertThat(loginAttemptService.getRemainingAttempts("127.0.0.1")).isEqualTo(MAX_ATTEMPTS - (i + 1));
         }
 
         // then
         assertThatExceptionOfType(RemoteIpBlockedException.class).isThrownBy(() -> authService.login(username, password, realm));
+        assertThatExceptionOfType(RemoteIpBlockedException.class).isThrownBy(() -> authService.login(username, password, realm)); // This is here to verify the ip remains banned.
     }
 
     @Test
