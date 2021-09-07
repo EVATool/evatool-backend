@@ -6,6 +6,7 @@ import com.evatool.application.service.impl.AuthServiceImpl;
 import com.evatool.application.service.impl.LoginAttemptServiceImpl;
 import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.functional.http401.InvalidCredentialsException;
+import com.evatool.common.exception.functional.http403.RemoteIpBlockedException;
 import com.evatool.common.exception.functional.http404.RealmNotFoundException;
 import com.evatool.common.exception.functional.http404.UsernameNotFoundException;
 import com.evatool.common.exception.functional.http409.EmailAlreadyTakenException;
@@ -20,6 +21,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,6 +29,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static com.evatool.application.service.api.LoginAttemptService.MAX_ATTEMPTS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -143,8 +146,24 @@ class AuthServiceTest {
     }
 
     @Test
-    void testLogin_RemoteIpIsBlocked_Throws(){
+    void testLogin_RemainingAttemptsDecreases_UntilRemoteIpIsBlocked() {
+        // given
+        var username = "username";
+        var password = "password";
+        var realm = "realm";
 
+        mockServer.expect(ExpectedCount.max(MAX_ATTEMPTS), requestTo("/" + authService.getKeycloakLoginUrl(realm)))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withStatus(HttpStatus.UNAUTHORIZED));
+
+        // when
+        for (int i = 0; i < MAX_ATTEMPTS; i++) {
+            assertThatExceptionOfType(InvalidCredentialsException.class).isThrownBy(() -> authService.login(username, password, realm));
+            assertThat(loginAttemptService.getRemainingAttempts("127.0.0.1")).isEqualTo(MAX_ATTEMPTS - (i + 1));
+        }
+
+        // then
+        assertThatExceptionOfType(RemoteIpBlockedException.class).isThrownBy(() -> authService.login(username, password, realm));
     }
 
     @Test

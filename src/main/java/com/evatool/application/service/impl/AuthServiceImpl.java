@@ -90,7 +90,7 @@ public class AuthServiceImpl implements AuthService {
                 throw new RealmNotFoundException(realm);
             }
         } else if (httpStatus == HttpStatus.UNAUTHORIZED) {
-            loginAttemptService.loginFailed(clientId);
+            loginAttemptService.loginFailed(clientIp);
             var remainingLoginAttempts = loginAttemptService.getRemainingAttempts(clientIp);
             throw new InvalidCredentialsException(remainingLoginAttempts);
         } else if (httpStatus != HttpStatus.OK) {
