@@ -19,7 +19,6 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -56,7 +55,13 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                     .cors().and()
                     .authorizeRequests()
                     .anyRequest()
-                    .permitAll();
+                    .permitAll()
+
+                    .and()
+                    .headers()
+                    .xssProtection()
+                    .and()
+                    .contentSecurityPolicy("script-src 'self'");
         } else {
             http
                     .csrf().disable()
