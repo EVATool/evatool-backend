@@ -27,7 +27,11 @@ import org.springframework.http.*;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -63,6 +67,12 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthTokenDto login(String username, String password, String realm) {
         logger.trace("Login");
+
+        var clientIp = getClientIp();
+        if (loginAttemptService.isBlocked(clientIp)) {
+            throw new RemoteIpBlockedException();
+        }
+
         var clientId = getClientId(realm);
         var request = getLoginRequest(username, password, clientId);
         var headers = new HttpHeaders();
@@ -72,8 +82,6 @@ public class AuthServiceImpl implements AuthService {
         logKeycloakResponse(response);
         var httpStatus = response.getStatusCode();
 
-        var clientIp = "";//getClientIp();
-
         // Error handling.
         if (httpStatus == HttpStatus.NOT_FOUND) {
             if (username.equals(realm)) {
@@ -82,12 +90,8 @@ public class AuthServiceImpl implements AuthService {
                 throw new RealmNotFoundException(realm);
             }
         } else if (httpStatus == HttpStatus.UNAUTHORIZED) {
-            if (loginAttemptService.isBlocked(clientIp)) {
-                throw new RemoteIpBlockedException();
-            } else {
-                var remainingLoginAttempts = loginAttemptService.getRemainingAttempts(clientIp);
-                throw new InvalidCredentialsException(remainingLoginAttempts);
-            }
+            var remainingLoginAttempts = loginAttemptService.getRemainingAttempts(clientIp);
+            throw new InvalidCredentialsException(remainingLoginAttempts);
         } else if (httpStatus != HttpStatus.OK) {
             throw new InternalServerErrorException("Unhandled response from login rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
@@ -307,6 +311,15 @@ public class AuthServiceImpl implements AuthService {
 
     private void logKeycloakResponse(ResponseEntity<String> response) {
         logger.info("Keycloak responded with status {}: {}", response.getStatusCode(), response.getBody());
+    }
+
+    private String getClientIp() {
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (requestAttributes instanceof ServletRequestAttributes) {
+            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+            return request.getRemoteAddr();
+        }
+        throw new IllegalStateException("Cannot get remote ip if not in request context");
     }
 
     // Dynamic keycloak URLs.

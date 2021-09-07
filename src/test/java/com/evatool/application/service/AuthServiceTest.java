@@ -3,6 +3,7 @@ package com.evatool.application.service;
 import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.impl.AuthServiceImpl;
+import com.evatool.application.service.impl.LoginAttemptServiceImpl;
 import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.functional.http401.InvalidCredentialsException;
 import com.evatool.common.exception.functional.http404.RealmNotFoundException;
@@ -42,11 +43,15 @@ class AuthServiceTest {
     @Autowired
     private AuthServiceImpl authService;
 
+    @Autowired
+    private LoginAttemptServiceImpl loginAttemptService;
+
     private MockRestServiceServer mockServer;
 
     @BeforeEach
     public void setUp() {
         mockServer = MockRestServiceServer.createServer(restTemplate);
+        loginAttemptService.loginSucceeded("127.0.0.1");
     }
 
     @Test
@@ -135,6 +140,11 @@ class AuthServiceTest {
 
         // then
         assertThatExceptionOfType(InternalServerErrorException.class).isThrownBy(() -> authService.login(username, password, realm));
+    }
+
+    @Test
+    void testLogin_RemoteIpIsBlocked_Throws(){
+
     }
 
     @Test
