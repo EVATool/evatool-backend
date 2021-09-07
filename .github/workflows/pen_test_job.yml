@@ -1,0 +1,16 @@
+name: Perform automated penetration testing (security)
+
+on:
+  push:
+    branches: [ security ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Pentest
+
+    steps:
+      - name: OWASP ZAP Full Scan
+        uses: zaproxy/action-full-scan@v0.2.0
+        with:
+          target: 'https://evatool.org/'
