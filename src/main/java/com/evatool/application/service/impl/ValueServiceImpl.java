@@ -36,6 +36,7 @@ public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implement
 
     public ValueServiceImpl(ValueRepository repository, ValueMapper mapper, ImpactRepository impactRepository) {
         super(repository, mapper);
+        logger.trace("Constructor");
         this.repository = repository;
         this.mapper = mapper;
         this.impactRepository = impactRepository;
@@ -43,6 +44,8 @@ public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implement
 
     @Override
     public void deleteById(UUID id) {
+        logger.trace("Delete By Id");
+
         var referencedImpacts = impactRepository.findAllByValueId(id);
         referencedImpacts = TenancySentinel.handleFind(referencedImpacts);
 
@@ -60,7 +63,7 @@ public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implement
 
     @Override
     public Iterable<ValueType> findAllValueTypes() {
-        logger.debug("Find All Value Types");
+        logger.trace("Find All Value Types");
         return Arrays.asList(ValueType.values());
     }
 }

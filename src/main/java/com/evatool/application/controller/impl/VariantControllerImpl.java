@@ -27,6 +27,7 @@ public class VariantControllerImpl extends CrudControllerImpl<Variant, VariantDt
 
     public VariantControllerImpl(VariantServiceImpl service) {
         super(service);
+        logger.trace("Constructor");
         this.service = service;
     }
 

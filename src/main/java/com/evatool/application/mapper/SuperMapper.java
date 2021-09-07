@@ -24,24 +24,24 @@ public abstract class SuperMapper<S extends SuperEntity, T extends SuperDto> {
     public abstract S fromDto(T dto);
 
     public List<T> toDtoList(Iterable<S> entityList) {
-        logger.debug("To Dto List");
+        logger.trace("To Dto List");
         var dtoList = new ArrayList<T>();
         entityList.forEach(entity -> dtoList.add(toDto(entity)));
         return dtoList;
     }
 
     protected void amendToDto(S entity, T dto) {
-        logger.debug("Amend To Dto");
+        logger.trace("Amend To Dto");
         dto.setId(entity.getId());
     }
 
     protected void amendFromDto(S entity, T dto) {
-        logger.debug("Amend From Dto");
+        logger.trace("Amend From Dto");
         entity.setId(dto.getId());
     }
 
     public <O> O findByIdOrThrowIfEmpty(CrudRepository<O, UUID> repository, UUID id) {
-        logger.debug("Find By Id Or Throw If Empty");
+        logger.trace("Find By Id Or Throw If Empty");
         Optional<O> optional = repository.findById(id);
         if (optional.isEmpty()) {
             throw new ChildEntityNotFoundException(repository.getClass().getSimpleName().replace("Repository", ""), id);

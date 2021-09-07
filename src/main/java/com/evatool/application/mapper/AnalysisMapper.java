@@ -13,7 +13,7 @@ public class AnalysisMapper extends PrefixIdMapper<Analysis, AnalysisDto> {
 
     @Override
     public AnalysisDto toDto(Analysis entity) {
-        logger.debug("To Dto");
+        logger.trace("To Dto");
         var dto = new AnalysisDto(
                 entity.getName(),
                 entity.getDescription(),
@@ -28,7 +28,7 @@ public class AnalysisMapper extends PrefixIdMapper<Analysis, AnalysisDto> {
 
     @Override
     public Analysis fromDto(AnalysisDto dto) {
-        logger.debug("From Dto");
+        logger.trace("From Dto");
         var entity = new Analysis(
                 dto.getName(),
                 dto.getDescription(),

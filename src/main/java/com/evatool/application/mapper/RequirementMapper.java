@@ -19,13 +19,14 @@ public class RequirementMapper extends PrefixIdMapper<Requirement, RequirementDt
     private final VariantRepository variantRepository;
 
     public RequirementMapper(AnalysisRepository analysisRepository, VariantRepository variantRepository) {
+        logger.trace("Constructor");
         this.analysisRepository = analysisRepository;
         this.variantRepository = variantRepository;
     }
 
     @Override
     public RequirementDto toDto(Requirement entity) {
-        logger.debug("To Dto");
+        logger.trace("To Dto");
         var dto = new RequirementDto(
                 entity.getDescription(),
                 entity.getAnalysis().getId(),
@@ -37,7 +38,7 @@ public class RequirementMapper extends PrefixIdMapper<Requirement, RequirementDt
 
     @Override
     public Requirement fromDto(RequirementDto dto) {
-        logger.debug("From Dto");
+        logger.trace("From Dto");
         var entity = new Requirement(
                 dto.getDescription(),
                 findByIdOrThrowIfEmpty(analysisRepository, dto.getAnalysisId())

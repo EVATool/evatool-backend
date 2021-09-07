@@ -29,13 +29,14 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
     protected final SuperMapper<S, T> baseMapper;
 
     protected CrudServiceImpl(CrudRepository<S, UUID> crudRepository, SuperMapper<S, T> baseMapper) {
+        logger.trace("Constructor");
         this.crudRepository = crudRepository;
         this.baseMapper = baseMapper;
     }
 
     @Override
     public T findById(UUID id) {
-        logger.debug("Find By Id");
+        logger.trace("Find By Id");
         if (id == null) {
             throw new PropertyCannotBeNullException(getEntityClass().getSimpleName(), "id");
         }
@@ -51,7 +52,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
 
     @Override
     public Iterable<T> findAll() {
-        logger.debug("Find All");
+        logger.trace("Find All");
         List<T> dtoList = new ArrayList<>();
         var entities = crudRepository.findAll();
         entities = TenancySentinel.handleFind(entities);
@@ -63,7 +64,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
 
     @Override
     public T create(T dto) {
-        logger.debug("Create");
+        logger.trace("Create");
         if (dto.getId() != null) {
             throw new PropertyMustBeNullException(getDtoClass().getSimpleName(), "id");
         }
@@ -75,7 +76,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
 
     @Override
     public T update(T dto) {
-        logger.debug("Update");
+        logger.trace("Update");
         if (dto.getId() == null) {
             throw new PropertyCannotBeNullException(getEntityClass().getSimpleName(), "id");
         }
@@ -94,7 +95,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
 
     @Override
     public void deleteById(UUID id) {
-        logger.debug("Delete");
+        logger.trace("Delete By Id");
         if (id == null) {
             throw new PropertyCannotBeNullException(getEntityClass().getSimpleName(), "id");
         }
@@ -109,7 +110,7 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
     }
 
     public void deleteAll() {
-        logger.debug("Delete All");
+        logger.trace("Delete All");
         var entities = crudRepository.findAll();
         entities = TenancySentinel.handleFind(entities);
         crudRepository.deleteAll(entities);

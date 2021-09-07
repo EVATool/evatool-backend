@@ -35,13 +35,15 @@ public abstract class SuperEntity {
 
     @PrePersist
     private void prePersist() {
+        logger.trace("Pre Persist");
         if (this.realm == null) {
+            logger.debug("Realm was null, using default fallback realm \"evatool-realm\"");
             this.setRealm("evatool-realm");
         }
     }
 
     public void setId(UUID id) {
-        logger.debug("Set Id");
+        logger.trace("Set Id");
         if (this.id != null) {
             throw new IllegalArgumentException("Existing id cannot be set");
         }
@@ -49,7 +51,7 @@ public abstract class SuperEntity {
     }
 
     public void setRealm(String realm) {
-        logger.debug("Set Realm");
+        logger.trace("Set Realm");
         if (this.realm != null) {
             throw new IllegalArgumentException("Existing realm cannot be set");
         }

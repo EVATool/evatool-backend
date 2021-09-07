@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,11 +49,16 @@ public class AuthServiceImpl implements AuthService {
     private String authAdminPassword;
 
     public AuthServiceImpl(RestTemplate restTemplate) {
+        logger.trace("Constructor");
         this.restTemplate = restTemplate;
-        restTemplate.setErrorHandler(new RestTemplateResponseErrorHandlerIgnore());
+        var requestFactory = new SimpleClientHttpRequestFactory();
+        requestFactory.setOutputStreaming(false);
+        this.restTemplate.setRequestFactory(requestFactory);
+        this.restTemplate.setErrorHandler(new RestTemplateResponseErrorHandlerIgnore());
     }
 
     public AuthTokenDto login(String username, String password, String realm) {
+        logger.trace("Login");
         var clientId = getClientId(realm);
         var request = getLoginRequest(username, password, clientId);
         var headers = new HttpHeaders();
@@ -88,6 +94,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthTokenDto refreshLogin(String refreshToken, String realm) {
+        logger.trace("Refresh Login");
         var clientId = getClientId(realm);
         var request = getRefreshLoginRequest(refreshToken, clientId);
         var headers = new HttpHeaders();
@@ -117,6 +124,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthRegisterUserDto registerUser(String username, String email, String password) {
+        logger.trace("Register User");
         var adminToken = login(authAdminUser, authAdminPassword, KEYCLOAK_MASTER_REALM).getToken();
 
         // Create user.
@@ -212,6 +220,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthRegisterRealmDto registerRealm(String authAdminUsername, String authAdminPassword, String realm) {
+        logger.trace("Register Realm");
         var adminToken = login(authAdminUsername, authAdminPassword, KEYCLOAK_MASTER_REALM).getToken();
         var request = getKeycloakRealmImportJson(realm);
         var headers = new HttpHeaders();

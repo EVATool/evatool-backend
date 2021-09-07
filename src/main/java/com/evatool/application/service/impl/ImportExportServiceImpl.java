@@ -16,6 +16,8 @@ import com.google.gson.GsonBuilder;
 import lombok.SneakyThrows;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,8 @@ import java.util.function.Function;
 
 @Service
 public class ImportExportServiceImpl implements ImportExportService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ImportExportServiceImpl.class);
 
     @Autowired
     private AnalysisRepository analysisRepository;
@@ -73,6 +77,8 @@ public class ImportExportServiceImpl implements ImportExportService {
     @Override
     @Transactional
     public Iterable<AnalysisDto> importAnalyses(String importAnalyses) {
+        logger.trace("Import Analyses");
+
         var importedAnalysisDtoList = new ArrayList<AnalysisDto>();
         try {
             var importJsonObject = new JSONObject(importAnalyses);
@@ -94,6 +100,8 @@ public class ImportExportServiceImpl implements ImportExportService {
 
     @SneakyThrows(value = {JSONException.class, ImportJsonException.class})
     private Analysis importAnalysis(JSONObject analysisJsonObject) {
+        logger.trace("Import Analysis");
+
         // Analysis.
         var analysisJson = analysisJsonObject.getJSONObject("analysis");
         var analysisName = analysisJson.getString("name");
@@ -259,6 +267,8 @@ public class ImportExportServiceImpl implements ImportExportService {
     }
 
     private Function<JSONObject, Analysis> resolveImportAnalysisFunction(String currentImportExportVersion) {
+        logger.trace("Resolve Import Analysis Function");
+
         if (NEWEST_IMPORT_EXPORT_VERSION.equals(currentImportExportVersion)) {
             return this::importAnalysis;
         } else {  // Migration.
@@ -276,6 +286,7 @@ public class ImportExportServiceImpl implements ImportExportService {
     @SneakyThrows
     @Override
     public String exportAnalyses(Iterable<UUID> analysisIds) {
+        logger.trace("Export Analyses");
 
         // Create entity json.
         var analyses = analysisRepository.findAllById(analysisIds);
@@ -325,6 +336,8 @@ public class ImportExportServiceImpl implements ImportExportService {
     }
 
     private ImportExportAnalysisDto exportAnalysis(Analysis analysis) {
+        logger.trace("Export Analysis");
+
         // Retrieve entities.
         var analysisId = analysis.getId();
         var values = valueRepository.findAllByAnalysisId(analysisId);

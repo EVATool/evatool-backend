@@ -29,6 +29,7 @@ public class ValueControllerImpl extends CrudControllerImpl<Value, ValueDto> imp
 
     public ValueControllerImpl(ValueServiceImpl service) {
         super(service);
+        logger.trace("Constructor");
         this.service = service;
     }
 

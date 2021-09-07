@@ -15,12 +15,13 @@ public class VariantMapper extends PrefixIdMapper<Variant, VariantDto> {
     private final AnalysisRepository analysisRepository;
 
     public VariantMapper(AnalysisRepository analysisRepository) {
+        logger.trace("Constructor");
         this.analysisRepository = analysisRepository;
     }
 
     @Override
     public VariantDto toDto(Variant entity) {
-        logger.debug("To Dto");
+        logger.trace("To Dto");
         var dto = new VariantDto(
                 entity.getName(),
                 entity.getDescription(),
@@ -33,7 +34,7 @@ public class VariantMapper extends PrefixIdMapper<Variant, VariantDto> {
 
     @Override
     public Variant fromDto(VariantDto dto) {
-        logger.debug("From Dto");
+        logger.trace("From Dto");
         var entity = new Variant(
                 dto.getName(),
                 dto.getDescription(),

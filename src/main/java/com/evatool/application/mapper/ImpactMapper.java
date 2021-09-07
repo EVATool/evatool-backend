@@ -21,6 +21,7 @@ public class ImpactMapper extends PrefixIdMapper<Impact, ImpactDto> {
     private final AnalysisRepository analysisRepository;
 
     public ImpactMapper(ValueRepository valueRepository, StakeholderRepository stakeholderRepository, AnalysisRepository analysisRepository) {
+        logger.trace("Constructor");
         this.valueRepository = valueRepository;
         this.stakeholderRepository = stakeholderRepository;
         this.analysisRepository = analysisRepository;
@@ -28,7 +29,7 @@ public class ImpactMapper extends PrefixIdMapper<Impact, ImpactDto> {
 
     @Override
     public ImpactDto toDto(Impact entity) {
-        logger.debug("To Dto");
+        logger.trace("To Dto");
         var dto = new ImpactDto(
                 entity.getMerit(),
                 entity.getDescription(),
@@ -43,7 +44,7 @@ public class ImpactMapper extends PrefixIdMapper<Impact, ImpactDto> {
 
     @Override
     public Impact fromDto(ImpactDto dto) {
-        logger.debug("From Dto");
+        logger.trace("From Dto");
         var entity = new Impact(
                 dto.getMerit(),
                 dto.getDescription(),

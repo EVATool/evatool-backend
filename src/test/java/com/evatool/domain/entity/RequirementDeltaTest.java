@@ -65,7 +65,6 @@ class RequirementDeltaTest extends SuperEntityTest {
 
         // then
         var color = delta.getMeritColor();
-        System.out.printf("#%02x%02x%02x%n", color.getRed(), color.getGreen(), color.getBlue());
         assertThat(color).isEqualTo(new Color(r, g, b));
     }
 }

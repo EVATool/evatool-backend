@@ -37,6 +37,7 @@ public class StakeholderServiceImpl extends CrudServiceImpl<Stakeholder, Stakeho
 
     public StakeholderServiceImpl(StakeholderRepository repository, StakeholderMapper mapper, ImpactRepository impactRepository) {
         super(repository, mapper);
+        logger.trace("Constructor");
         this.repository = repository;
         this.mapper = mapper;
         this.impactRepository = impactRepository;
@@ -44,6 +45,8 @@ public class StakeholderServiceImpl extends CrudServiceImpl<Stakeholder, Stakeho
 
     @Override
     public void deleteById(UUID id) {
+        logger.trace("Delete By Id");
+
         var referencedImpacts = impactRepository.findAllByStakeholderId(id);
         referencedImpacts = TenancySentinel.handleFind(referencedImpacts);
 
@@ -61,13 +64,13 @@ public class StakeholderServiceImpl extends CrudServiceImpl<Stakeholder, Stakeho
 
     @Override
     public Iterable<StakeholderLevel> findAllStakeholderLevels() {
-        logger.debug("Find All Stakeholder Levels");
+        logger.trace("Find All Stakeholder Levels");
         return Arrays.asList(StakeholderLevel.values());
     }
 
     @Override
     public Iterable<StakeholderPriority> findAllStakeholderPriorities() {
-        logger.debug("Find All Stakeholder Priorities");
+        logger.trace("Find All Stakeholder Priorities");
         return Arrays.asList(StakeholderPriority.values());
     }
 }

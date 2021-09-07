@@ -19,6 +19,7 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
     @Bean
     public LinkDiscoverers discoverers() {
         List<LinkDiscoverer> plugins = new ArrayList<>();
