@@ -18,6 +18,7 @@ public class FunctionalErrorCodesUtil {
 
     // 403 Forbidden codes.
     public static final int CROSS_REALM_ACCESS = 403_001;
+    public static final int REMOTE_IP_BLOCKED = 403_002;
 
     // 404 Not found codes.
     public static final int LOGIN_REALM_NOT_FOUND = 404_001;

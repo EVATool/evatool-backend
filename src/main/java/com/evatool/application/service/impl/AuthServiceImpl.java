@@ -6,6 +6,7 @@ import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.api.AuthService;
 import com.evatool.common.exception.InternalServerErrorException;
 import com.evatool.common.exception.functional.http401.InvalidCredentialsException;
+import com.evatool.common.exception.functional.http403.RemoteIpBlockedException;
 import com.evatool.common.exception.functional.http404.RealmNotFoundException;
 import com.evatool.common.exception.functional.http404.UsernameNotFoundException;
 import com.evatool.common.exception.functional.http409.EmailAlreadyTakenException;
@@ -39,6 +40,8 @@ public class AuthServiceImpl implements AuthService {
 
     private final RestTemplate restTemplate;
 
+    private final LoginAttemptServiceImpl loginAttemptService;
+
     @Value("${evatool.auth.registration.enabled:false}")
     private boolean registrationEnabled;
 
@@ -48,13 +51,14 @@ public class AuthServiceImpl implements AuthService {
     @Value("${evatool.auth.admin-password:}")
     private String authAdminPassword;
 
-    public AuthServiceImpl(RestTemplate restTemplate) {
+    public AuthServiceImpl(RestTemplate restTemplate, LoginAttemptServiceImpl loginAttemptService) {
         logger.trace("Constructor");
         this.restTemplate = restTemplate;
         var requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setOutputStreaming(false);
         this.restTemplate.setRequestFactory(requestFactory);
         this.restTemplate.setErrorHandler(new RestTemplateResponseErrorHandlerIgnore());
+        this.loginAttemptService = loginAttemptService;
     }
 
     public AuthTokenDto login(String username, String password, String realm) {
@@ -68,6 +72,8 @@ public class AuthServiceImpl implements AuthService {
         logKeycloakResponse(response);
         var httpStatus = response.getStatusCode();
 
+        var clientIp = "";//getClientIp();
+
         // Error handling.
         if (httpStatus == HttpStatus.NOT_FOUND) {
             if (username.equals(realm)) {
@@ -76,11 +82,17 @@ public class AuthServiceImpl implements AuthService {
                 throw new RealmNotFoundException(realm);
             }
         } else if (httpStatus == HttpStatus.UNAUTHORIZED) {
-            throw new InvalidCredentialsException();
+            if (loginAttemptService.isBlocked(clientIp)) {
+                throw new RemoteIpBlockedException();
+            } else {
+                var remainingLoginAttempts = loginAttemptService.getRemainingAttempts(clientIp);
+                throw new InvalidCredentialsException(remainingLoginAttempts);
+            }
         } else if (httpStatus != HttpStatus.OK) {
             throw new InternalServerErrorException("Unhandled response from login rest call to keycloak (Status: " + httpStatus + ", Body: " + response.getBody() + ")");
         }
 
+        loginAttemptService.loginSucceeded(clientIp);
         return getAuthTokenDtoFromKeycloakResponse(response.getBody());
     }
 
