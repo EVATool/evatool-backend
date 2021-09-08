@@ -286,6 +286,12 @@ class AuthServiceTest {
         assertThatExceptionOfType(UsernameAlreadyTakenException.class).isThrownBy(() -> authService.registerUser(username, email, password));
     }
 
+    // TODO ...and error cases...
+    @Test
+    void testRegisterRealm() {
+
+    }
+
     private AuthTokenDto getDummyAuthTokenDto() {
         return new AuthTokenDto("token", 1800, "refreshToken", 30000);
     }
