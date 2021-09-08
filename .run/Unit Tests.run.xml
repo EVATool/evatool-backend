@@ -4,7 +4,7 @@
     <option name="PACKAGE_NAME" value="com.evatool" />
     <option name="MAIN_CLASS_NAME" value="" />
     <option name="METHOD_NAME" value="" />
-    <option name="TEST_OBJECT" value="package" />
+    <option name="TEST_OBJECT" value="pattern" />
     <option name="VM_PARAMETERS" value="-Dspring.profiles.active=test" />
     <option name="TEST_SEARCH_SCOPE">
       <value defaultName="wholeProject" />
@@ -13,6 +13,9 @@
       <env name="server.port" value="8082" />
     </envs>
     <dir value="$PROJECT_DIR$" />
+    <patterns>
+      <pattern testClass="^(?!.*Integration$).*$" />
+    </patterns>
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
