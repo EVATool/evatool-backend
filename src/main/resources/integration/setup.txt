@@ -1,0 +1,3 @@
+1. Start keycloak and database docker containers
+2. Run Spring server with flyway profile once to init db (might need to clear data on database docker container)
+3. Run Integration tests (IntelliJ run config or -Dgroups=integration)
