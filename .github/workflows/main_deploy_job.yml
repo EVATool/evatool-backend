@@ -18,9 +18,9 @@ jobs:
         with:
           java-version: 11
 
-      - name: Test
+      - name: Unit Test
         run: |
-          mvn test --file pom.xml
+          mvn test --file pom.xml -Dgroups=\!integration
 
       - name: Build
         run: |
