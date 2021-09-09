@@ -264,7 +264,7 @@ public class AuthServiceImpl implements AuthService {
     @SneakyThrows
     private String getKeycloakRealmImportJson(String realm) {
         // Retrieve template keycloak realm from application resources.
-        var in = Thread.currentThread().getContextClassLoader().getResourceAsStream("auth/evatool-realm.json");
+        var in = Thread.currentThread().getContextClassLoader().getResourceAsStream("auth/keycloak/evatool-realm.json");
         var mapper = new ObjectMapper();
         var jsonNode = mapper.readValue(in, JsonNode.class);
         var realmImportJson = mapper.writeValueAsString(jsonNode);

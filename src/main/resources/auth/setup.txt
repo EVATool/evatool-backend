@@ -1,11 +1,24 @@
+Auto import realm (docker):
+docker run --name evatool-test-auth -p 8081:8080 -v ./keycloak:/opt/jboss/keycloak/imports -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json quay.io/keycloak/keycloak:13.0.0
+
+
+
+
+docker run -e KEYCLOAK_USER=<USERNAME> -e KEYCLOAK_PASSWORD=<PASSWORD> \
+    -e KEYCLOAK_IMPORT=/tmp/example-realm.json -v /tmp/example-realm.json:/tmp/example-realm.json jboss/keycloak
+
+
+
+
+
+
 Start keycloak with http (docker):
 docker run --name evatool-test-auth -p 8081:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin quay.io/keycloak/keycloak:13.0.0
 
 Start keycloak with https (docker):
 docker run --name evatool-test-auth -p 8081:8443 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin quay.io/keycloak/keycloak:13.0.0
 
-Auto import realm (not working yet):
-docker run --name evatool-test-auth -p 8081:8080 -v ./evatool-realm.json:/opt/jboss/keycloak/imports/evatool-realm.json -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json quay.io/keycloak/keycloak:13.0.0
+
 
 Start keycloak (without docker):
 standalone.bat -Djboss.socket.binding.port-offset=1
