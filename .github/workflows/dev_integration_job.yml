@@ -21,7 +21,7 @@ jobs:
       - name: Setup auxillary systems
         run: |
           docker run --name evatool-test-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=evatooldb -d mysql:8.0.24
-          docker run --name evatool-test-auth -p 8081:8080 -v ./src/main/resources/auth/keycloak:/opt/jboss/keycloak/imports -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json quay.io/keycloak/keycloak:13.0.0
+          docker run --name evatool-test-auth -p 8081:8080 -v ${PWD}/src/main/resources/auth/keycloak:/opt/jboss/keycloak/imports -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json quay.io/keycloak/keycloak:13.0.0
           #docker run --name evatool-test-auth -p 8081:8080 -v ${PWD}/src/main/resources/auth/keycloak:/opt/jboss/keycloak/imports -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json quay.io/keycloak/keycloak:13.0.0
           #docker run --name evatool-test-auth -p 8081:8080 -v ./keycloak:/opt/jboss/keycloak/imports -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json quay.io/keycloak/keycloak:13.0.0
           # init db with maven flyway plugin.
