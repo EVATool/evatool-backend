@@ -18,10 +18,6 @@ jobs:
         with:
           java-version: 11
 
-      - name: Unit Test
-        run: |
-          mvn test --file pom.xml -Dgroups=\!integration
-
       - name: Build
         run: |
           mvn clean install -P prod -Dmaven.test.skip=true --file pom.xml

@@ -1,4 +1,4 @@
-name: Testing (dev)
+name: Unit Testing (dev)
 
 on:
   push:
