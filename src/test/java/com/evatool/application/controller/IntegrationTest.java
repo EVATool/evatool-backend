@@ -15,12 +15,16 @@ public abstract class IntegrationTest {
     protected String token;
     protected String refreshToken;
 
-    protected void loginAsUser() {
+    protected void loginAsEvatoolUser() {
         login("user", "user");
     }
 
-    protected void loginAsAdmin() {
+    protected void loginAsEvatoolAdmin() {
         login("admin", "admin");
+    }
+
+    protected void loginAsKeycloakAdmin() {
+        login("admin", "admin", "master");
     }
 
     private void login(String username, String password) {
