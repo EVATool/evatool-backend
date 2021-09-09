@@ -34,6 +34,11 @@ class AuthControllerIntegrationTest extends IntegrationTest {
         // Authorize.
         loginAsKeycloakAdmin();
 
+        var headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(token);
+        var httpEntity = new HttpEntity<>(null, headers);
+
         // Delete test user.
         //var keycloakUsers = rest.getForEntity(keycloakBaseUrl + "evatool-realm/users", String.class);
         //System.out.println(keycloakUsers);
@@ -41,14 +46,7 @@ class AuthControllerIntegrationTest extends IntegrationTest {
         //rest.delete("/evatool-realm/users/" + testUserId);
 
         // Delete test realm.
-        //rest.delete(keycloakBaseUrl + testRealm);
-        System.out.println(keycloakBaseUrl + "admin/realms/" + testRealm);
-        var headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(token);
-        var httpEntity = new HttpEntity<>(null, headers);
         var s = rest.exchange(keycloakBaseUrl + "admin/realms/" + testRealm, HttpMethod.DELETE, httpEntity, Void.class);
-        System.out.println(s);
     }
 
     @Test
