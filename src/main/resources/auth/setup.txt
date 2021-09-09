@@ -1,8 +1,8 @@
 Start keycloak (docker, windows, http):
-docker run --name evatool-test-auth -p 8081:8080 -v "%cd%/keycloak":/opt/jboss/keycloak/imports -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json quay.io/keycloak/keycloak:13.0.0
+docker run --name evatool-test-auth -p 8081:8080 -v "%cd%/keycloak":/opt/jboss/keycloak/imports -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json -d quay.io/keycloak/keycloak:13.0.0
 
 Start keycloak (docker, windows, https):
-docker run --name evatool-test-auth -p 8081:8443 -v "%cd%/keycloak":/opt/jboss/keycloak/imports -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json quay.io/keycloak/keycloak:13.0.0
+docker run --name evatool-test-auth -p 8081:8443 -v "%cd%/keycloak":/opt/jboss/keycloak/imports -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json -d quay.io/keycloak/keycloak:13.0.0
 
 
 
