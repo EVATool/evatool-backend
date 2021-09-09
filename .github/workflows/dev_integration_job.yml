@@ -21,6 +21,7 @@ jobs:
       - name: Setup auxillary systems
         run: |
           docker run --name evatool-test-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=evatooldb -d mysql:8.0.24
+          curl https://raw.githubusercontent.com/EVATool/evatool-backend/main/src/main/resources/auth/evatool-realm.json -o evatool-realm.json
           docker run --name evatool-test-auth -p 8081:8080 -v ./evatool-realm.json:/opt/jboss/keycloak/imports/evatool-realm.json -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json quay.io/keycloak/keycloak:13.0.0
 
 
