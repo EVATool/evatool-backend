@@ -24,8 +24,7 @@ jobs:
           docker run --name evatool-test-auth -p 8081:8080 -v ${PWD}/src/main/resources/auth/keycloak:/opt/jboss/keycloak/imports -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -e KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/evatool-realm.json -d quay.io/keycloak/keycloak:13.0.0
           mvn flyway:baseline
           mvn flyway:migrate
-          # init db with maven flyway plugin.
-          # maybe wait a few seconds...
+          sleep 120
 
       - name: Integration Test
         run: mvn -B clean install -P integration --file ./pom.xml -Dgroups=integration
