@@ -5,6 +5,8 @@ import com.evatool.application.dto.AuthRegisterUserDto;
 import com.evatool.application.dto.AuthTokenDto;
 import com.evatool.application.service.impl.AuthServiceImpl;
 import com.evatool.common.util.UriUtil;
+import lombok.SneakyThrows;
+import org.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -29,6 +31,7 @@ class AuthControllerIntegrationTest extends IntegrationTest {
     @Value("${keycloak.auth-server-url:}")
     private String keycloakBaseUrl;
 
+    @SneakyThrows
     @BeforeEach
     void resetKeycloak() {
         // Authorize.
@@ -40,13 +43,22 @@ class AuthControllerIntegrationTest extends IntegrationTest {
         var httpEntity = new HttpEntity<>(null, headers);
 
         // Delete test user.
-        //var keycloakUsers = rest.getForEntity(keycloakBaseUrl + "evatool-realm/users", String.class);
-        //System.out.println(keycloakUsers);
-        // for each username == testUserId then id -> testUserId
-        //rest.delete("/evatool-realm/users/" + testUserId);
+        var keycloakUsers = rest.exchange(keycloakBaseUrl + "admin/realms/evatool-realm/users", HttpMethod.GET, httpEntity, String.class);
+        var keycloakUsersJsonArray = new JSONArray(keycloakUsers.getBody());
+        String testUserId = null;
+        for (int i = 0; i < keycloakUsersJsonArray.length(); i++) {
+            var keycloakUserJsonObject = keycloakUsersJsonArray.getJSONObject(i);
+            var keycloakUsername = keycloakUserJsonObject.getString("username");
+            if (keycloakUsername.equals(testUser)) {
+                testUserId = keycloakUserJsonObject.getString("id");
+                break;
+            }
+        }
+        var s = rest.exchange(keycloakBaseUrl + "admin/realms/evatool-realm/users/" + testUserId, HttpMethod.DELETE, httpEntity, Void.class);
+        System.out.println(s);
 
         // Delete test realm.
-        var s = rest.exchange(keycloakBaseUrl + "admin/realms/" + testRealm, HttpMethod.DELETE, httpEntity, Void.class);
+        rest.exchange(keycloakBaseUrl + "admin/realms/" + testRealm, HttpMethod.DELETE, httpEntity, Void.class);
     }
 
     @Test
