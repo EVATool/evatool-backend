@@ -25,8 +25,8 @@ class AuthControllerIntegrationTest extends IntegrationTest {
     private AuthServiceImpl authService;
 
     // These variables represent entities that might have been created in a test and need to be deleted.
-    private String testUser = "username";
-    private String testRealm = "realm";
+    private final String testUser = "username";
+    private final String testRealm = "realm";
 
     @Value("${keycloak.auth-server-url:}")
     private String keycloakBaseUrl;
@@ -36,7 +36,6 @@ class AuthControllerIntegrationTest extends IntegrationTest {
     void resetKeycloak() {
         // Authorize.
         loginAsKeycloakAdmin();
-
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(token);
@@ -54,8 +53,7 @@ class AuthControllerIntegrationTest extends IntegrationTest {
                 break;
             }
         }
-        var s = rest.exchange(keycloakBaseUrl + "admin/realms/evatool-realm/users/" + testUserId, HttpMethod.DELETE, httpEntity, Void.class);
-        System.out.println(s);
+        rest.exchange(keycloakBaseUrl + "admin/realms/evatool-realm/users/" + testUserId, HttpMethod.DELETE, httpEntity, Void.class);
 
         // Delete test realm.
         rest.exchange(keycloakBaseUrl + "admin/realms/" + testRealm, HttpMethod.DELETE, httpEntity, Void.class);
