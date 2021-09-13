@@ -109,7 +109,7 @@ public class ImportExportServiceImpl implements ImportExportService {
         var analysisIsTemplate = analysisJson.getBoolean("isTemplate");
         var analysisImageUrl = analysisJson.isNull("imageUrl") ? null : analysisJson.getString("imageUrl");
         var analysis = new Analysis(analysisName, analysisDescription, analysisIsTemplate, analysisImageUrl);
-        TenancySentinel.handleCreate(analysis);
+        //TenancySentinel.handleCreate(analysis);
         analysisRepository.save(analysis);
 
         // Values.
@@ -130,7 +130,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             var valueArchived = valueJson.getBoolean("archived");
 
             var value = new Value(valueName, valueDescription, valueType, valueArchived, analysis);
-            TenancySentinel.handleCreate(value);
+            //TenancySentinel.handleCreate(value);
             valueRepository.save(value);
 
             var valueId = valueJson.getString("id");
@@ -160,7 +160,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             }
 
             var stakeholder = new Stakeholder(stakeholderName, stakeholderPriority, stakeholderLevel, analysis);
-            TenancySentinel.handleCreate(stakeholder);
+            //TenancySentinel.handleCreate(stakeholder);
             stakeholderRepository.save(stakeholder);
 
             var stakeholderId = stakeholderJson.getString("id");
@@ -187,7 +187,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             }
 
             var impact = new Impact(impactMerit, impactDescription, value, stakeholder, analysis);
-            TenancySentinel.handleCreate(impact);
+            //TenancySentinel.handleCreate(impact);
             impactRepository.save(impact);
 
             var impactId = impactJson.getString("id");
@@ -205,7 +205,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             var variantArchived = variantJson.getBoolean("archived");
 
             var variant = new Variant(variantName, variantDescription, variantArchived, analysis);
-            TenancySentinel.handleCreate(variant);
+            //TenancySentinel.handleCreate(variant);
             variantRepository.save(variant);
 
             var variantId = variantJson.getString("id");
@@ -230,7 +230,7 @@ public class ImportExportServiceImpl implements ImportExportService {
                 }
                 requirement.getVariants().add(variant);
             }
-            TenancySentinel.handleCreate(requirement);
+            //TenancySentinel.handleCreate(requirement);
             requirementRepository.save(requirement);
 
             var requirementId = requirementJson.getString("id");
@@ -256,7 +256,7 @@ public class ImportExportServiceImpl implements ImportExportService {
             }
 
             var delta = new RequirementDelta(impact, requirement, deltaOverwriteMerit);
-            TenancySentinel.handleCreate(delta);
+            //TenancySentinel.handleCreate(delta);
             requirementDeltaRepository.save(delta);
 
             var deltaId = deltaJson.getString("id");

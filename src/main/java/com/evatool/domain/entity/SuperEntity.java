@@ -1,5 +1,6 @@
 package com.evatool.domain.entity;
 
+import com.evatool.application.service.TenancySentinel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -36,10 +37,18 @@ public abstract class SuperEntity {
     @PrePersist
     private void prePersist() {
         logger.trace("Pre Persist");
+        TenancySentinel.handleCreate(this);
         if (this.realm == null) {
             logger.debug("Realm was null, using default fallback realm \"evatool-realm\"");
             this.setRealm("evatool-realm");
         }
+    }
+
+    @PreUpdate
+    @PreRemove
+    private void preUpdateRemove() {
+        logger.trace("Pre Update/Remove");
+        TenancySentinel.handleUpdateOrDelete(this);
     }
 
     public void setId(UUID id) {

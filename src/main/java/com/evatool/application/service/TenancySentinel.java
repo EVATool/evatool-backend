@@ -117,20 +117,8 @@ public class TenancySentinel {
         entity.setRealm(realm);
     }
 
-    public static <S extends SuperEntity> void handleUpdate(S entity) {
-        logger.trace("Handle Update");
-        if (!multiTenancyEnabled) {
-            return;
-        }
-
-        var realm = getCurrentRealmFromRequestToken();
-        if (!entity.getRealm().equals(realm)) {
-            throw new CrossRealmAccessException();
-        }
-    }
-
-    public static <S extends SuperEntity> void handleDelete(S entity) {
-        logger.trace("Handle Delete");
+    public static <S extends SuperEntity> void handleUpdateOrDelete(S entity) {
+        logger.trace("Handle Update/Delete");
         if (!multiTenancyEnabled) {
             return;
         }
