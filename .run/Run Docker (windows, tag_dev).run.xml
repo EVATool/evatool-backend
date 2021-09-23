@@ -1,0 +1,22 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Docker (windows, tag:dev)" type="docker-deploy" factoryName="docker-image" server-name="Docker">
+    <deployment type="docker-image">
+      <settings>
+        <option name="imageTag" value="evatool/evatool-backend:dev" />
+        <option name="command" value="" />
+        <option name="containerName" value="evatool-backend-dev" />
+        <option name="entrypoint" value="" />
+        <option name="portBindings">
+          <list>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="8080" />
+              <option name="hostPort" value="8080" />
+            </DockerPortBindingImpl>
+          </list>
+        </option>
+        <option name="commandLineOptions" value="" />
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>
