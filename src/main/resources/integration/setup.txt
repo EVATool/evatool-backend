@@ -1,4 +1,4 @@
-1. Start keycloak (Fix auto realm import) and database docker containers
+1. Start keycloak and database docker containers
 2. Run Spring server with flyway profile once to init db (might need to clear data on database docker container)
    -> How to init the database without starting spring server once? run maven flyway plugin baseline/migrate?
 3. Run Integration tests (IntelliJ run config or -Dgroups=integration)
