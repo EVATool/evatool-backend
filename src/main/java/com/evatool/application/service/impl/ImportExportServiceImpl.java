@@ -18,7 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,47 +31,64 @@ public class ImportExportServiceImpl implements ImportExportService {
 
     private static final Logger logger = LoggerFactory.getLogger(ImportExportServiceImpl.class);
 
-    @Autowired
-    private AnalysisRepository analysisRepository;
+    private final AnalysisRepository analysisRepository;
 
-    @Autowired
-    private ImpactRepository impactRepository;
+    private final ImpactRepository impactRepository;
 
-    @Autowired
-    private RequirementRepository requirementRepository;
+    private final RequirementRepository requirementRepository;
 
-    @Autowired
-    private RequirementDeltaRepository requirementDeltaRepository;
+    private final RequirementDeltaRepository requirementDeltaRepository;
 
-    @Autowired
-    private StakeholderRepository stakeholderRepository;
+    private final StakeholderRepository stakeholderRepository;
 
-    @Autowired
-    private ValueRepository valueRepository;
+    private final ValueRepository valueRepository;
 
-    @Autowired
-    private VariantRepository variantRepository;
+    private final VariantRepository variantRepository;
 
-    @Autowired
-    private AnalysisMapper analysisMapper;
+    private final AnalysisMapper analysisMapper;
 
-    @Autowired
-    private ImpactMapper impactMapper;
+    private final ImpactMapper impactMapper;
 
-    @Autowired
-    private RequirementMapper requirementMapper;
+    private final RequirementMapper requirementMapper;
 
-    @Autowired
-    private RequirementDeltaMapper requirementDeltaMapper;
+    private final RequirementDeltaMapper requirementDeltaMapper;
 
-    @Autowired
-    private StakeholderMapper stakeholderMapper;
+    private final StakeholderMapper stakeholderMapper;
 
-    @Autowired
-    private ValueMapper valueMapper;
+    private final ValueMapper valueMapper;
 
-    @Autowired
-    private VariantMapper variantMapper;
+    private final VariantMapper variantMapper;
+
+    public ImportExportServiceImpl(AnalysisRepository analysisRepository,
+                                   ImpactRepository impactRepository,
+                                   RequirementRepository requirementRepository,
+                                   RequirementDeltaRepository requirementDeltaRepository,
+                                   StakeholderRepository stakeholderRepository,
+                                   ValueRepository valueRepository,
+                                   VariantRepository variantRepository,
+                                   AnalysisMapper analysisMapper,
+                                   ImpactMapper impactMapper,
+                                   RequirementMapper requirementMapper,
+                                   RequirementDeltaMapper requirementDeltaMapper,
+                                   StakeholderMapper stakeholderMapper,
+                                   ValueMapper valueMapper,
+                                   VariantMapper variantMapper) {
+        this.analysisRepository = analysisRepository;
+        this.impactRepository = impactRepository;
+        this.requirementRepository = requirementRepository;
+        this.requirementDeltaRepository = requirementDeltaRepository;
+        this.stakeholderRepository = stakeholderRepository;
+        this.valueRepository = valueRepository;
+        this.variantRepository = variantRepository;
+
+        this.analysisMapper = analysisMapper;
+        this.impactMapper = impactMapper;
+        this.requirementMapper = requirementMapper;
+        this.requirementDeltaMapper = requirementDeltaMapper;
+        this.stakeholderMapper = stakeholderMapper;
+        this.valueMapper = valueMapper;
+        this.variantMapper = variantMapper;
+    }
 
     @Override
     @Transactional
