@@ -237,6 +237,7 @@ class ImportExportServiceTest {
         assertThat(requirementDeltasJson.getJSONObject(0).length()).isEqualTo(4);
     }
 
+    // TODO perform this test for each file in the directory with version files.
     @SneakyThrows
     @Test
     void testImportMigration_FromPreviousVersion_0_0_1() {
@@ -247,10 +248,9 @@ class ImportExportServiceTest {
         var importJson = new String(inputStream.readAllBytes());
 
         // when
-        System.out.println(importJson);
-        importExportService.importAnalyses(importJson);
 
         // then
+        importExportService.importAnalyses(importJson);
         // TODO actually assert import analysis instead of only checking if the import does not cause any exceptions.
     }
 
