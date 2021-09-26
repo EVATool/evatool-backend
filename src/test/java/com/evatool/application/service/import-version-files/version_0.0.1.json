@@ -1,0 +1,1406 @@
+{
+    "analyses": [
+        {
+            "requirements": [
+                {
+                    "variantIds": [],
+                    "description": "ILA must provide training material (e.g. videos) in easy language, explaining system and its advantages, but also the contact person's liability and the system's limitations. The documentation should recommend not to use the system if the contact person is ill or unavailable.&nbsp;&nbsp; ",
+                    "id": "c3cce9bb-f556-449c-8232-e519ef88d14f"
+                },
+                {
+                    "variantIds": [
+                        "f184f08d-7ce9-48b5-a2b2-eec5f46d94fb"
+                    ],
+                    "description": "If there are multiple contact persons, each with limited availability: in that case, ILA's registration process for contact persons must be designed in a such a way that times where none of the contact persons is available, this is immediately visible and obvious. ",
+                    "id": "9b67d812-437b-44bb-a195-8033059617b1"
+                },
+                {
+                    "variantIds": [
+                        "0c66cf4f-fbcb-4ef0-b025-632a1fc2d6b6"
+                    ],
+                    "description": "ILA must be able to automatically forward a distress call to an emergency call system, if none of the contact persons are available.",
+                    "id": "ac5ca927-8bff-4f0a-b2c7-1fd82dcad9ac"
+                },
+                {
+                    "variantIds": [
+                        "f9a18a42-6a1b-4096-aa65-b335982a639c"
+                    ],
+                    "description": "ILA must provide introductory training material for caregivers and nursing home management, explaining recommendations for ILA registration and tracker use within these organisations.",
+                    "id": "01a37f51-0236-4df9-a84a-eeb966c79b38"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must offer a way of canceling an alert button in a shop or medical practice, in order to reduce the number of false alerts. ",
+                    "id": "ac7165a7-a840-4862-832e-dae779a0e3b5"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must make sure that an alert is cancelled once the person suffering from dementia is back in her usual zone",
+                    "id": "19d80e5b-9209-429a-bc1e-95abea49adc0"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must implement the option to show a list of recent false alerts, with an explanation, so that the administrator has the option to adjust the settings (e.g. the usual places zone).",
+                    "id": "6c8a8642-5e75-43c3-b4a9-79b6cf84396d"
+                },
+                {
+                    "variantIds": [],
+                    "description": "The administrator must be able to set grace period before an alert about leaving the \"usual zone\" is triggered.",
+                    "id": "f116fbae-f0a1-45ff-9297-a0ee09d24422"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must provide a consent form for the person suffering from dementia in easy language, explaining data usage, rights, and obligations. ",
+                    "id": "3da36c94-06a3-4cfc-abe3-e6f4dd14a844"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must provide a consent form for the contact person in easy language, explaining data usage, rights, and obligations. ",
+                    "id": "b99bdd19-378b-42ae-85de-7849a482f39d"
+                },
+                {
+                    "variantIds": [],
+                    "description": "The alert button must be \"plug&amp;play\" to install for shops or medical practices. ",
+                    "id": "ccf50738-bc0b-4996-8413-40d510ff4a9f"
+                },
+                {
+                    "variantIds": [],
+                    "description": "Alert buttons must be free of charge for shops or medical practices; the ILA business model must cover this. ",
+                    "id": "32f107b9-a697-4d2d-bf07-f17820ba2653"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must contain some easy-to-understand warning mechanism for administrators to notify them when a tracker is running out of battery. ",
+                    "id": "d39692a1-f80e-4282-bcb6-73b90549197a"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must come with visual instructions in easy language, explaining how to set up a tracker, change batteries, switch trackers etc.",
+                    "id": "7cc5bc50-a580-4107-9607-67cf3e4d4986"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must contain some remote monitoring mechanism for alert buttons, in order to check if they are still functional, or will soon fail. This mechanism must be part of the platform itself. ",
+                    "id": "dbf56c58-38ad-41d4-a913-42cdded4e517"
+                },
+                {
+                    "variantIds": [],
+                    "description": "The ILA business model must contain some mechanism to exchange alert buttons when they stop working (e.g. by sending out replacements). ",
+                    "id": "683b10ac-da5c-4001-95f0-dee829410e64"
+                },
+                {
+                    "variantIds": [
+                        "f184f08d-7ce9-48b5-a2b2-eec5f46d94fb"
+                    ],
+                    "description": "ILA must provide a way for contact persons to communicate unavailability to other contact persons who need to \"jump in\" then.",
+                    "id": "d9239f2c-4284-40d0-8338-22fa8be49cdc"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must provide training material (e.g. videos) in easy language, explaining the alert button user's liability, the system's limitations, and how to adminstrate it.",
+                    "id": "d8be4795-ae60-4f8a-8e67-bf5fcbd92a23"
+                },
+                {
+                    "variantIds": [],
+                    "description": "In case of an exceptional situation, the contact person must be able to see the current location and a short history of recent locations of the person suffering from dementia. This way, the contact person knows where to go. ",
+                    "id": "fd1fa5c4-991e-4177-ac30-38f5b2559c59"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must make sure a contact person an only change her own contact information, not that of others. ",
+                    "id": "06facf06-5a7a-46aa-ad0c-04375a807d7e"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must provide an administrator role, allowing a \"knowledgeable\" contact person to administrate the whole system.",
+                    "id": "a66b4863-1c80-441b-a024-2eed47dab44a"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must offer a phone support in order to fix problems that contact persons cannot fix themselves. ",
+                    "id": "027821b7-bee8-4fb3-a044-4a716544e93f"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must allow to perform the registration process for persons suffering from dementia in their own surroundings, e.g. by offering a tablet version of the registration UI ",
+                    "id": "f52ae081-3464-4c51-9d8e-c62b87334b09"
+                },
+                {
+                    "variantIds": [],
+                    "description": "A contact person must learn about the whereabouts of a person suffering from dementia only in case of an exceptional situation, so she can come to help. In all other cases, there be no way for her to track the person suffering from dementia.",
+                    "id": "e42bc344-c761-47db-bc24-138c257f27fe"
+                },
+                {
+                    "variantIds": [],
+                    "description": "Access to ILA must be protected by authentication, so that no outsider can access the data or whereabouts of a person suffering from dementia.",
+                    "id": "e3dc0d79-263b-4a6d-b1c2-9f43958042ab"
+                },
+                {
+                    "variantIds": [],
+                    "description": "Tracker ID must contain no clue on the identity of persons suffering from dementia, so that intercepting tracker signals will not allow for unauthorized outsiders to track them.",
+                    "id": "58c9fe03-70a6-4473-abcd-b061d75d0bcf"
+                },
+                {
+                    "variantIds": [],
+                    "description": "If the ILA business model contains a free \"basic\" account, it must not funded by selling data of persons suffering from dementia, or contact persons, for marketing purposes.",
+                    "id": "74e980c4-a224-49fc-a9e4-51b84ef066d0"
+                },
+                {
+                    "variantIds": [
+                        "bfb69bc2-9c86-4ae7-8094-1a94caeaa6ca"
+                    ],
+                    "description": "If ILA is funded by a health insurance, it must not contain any advertisements. ",
+                    "id": "720698df-6255-4025-8978-36854e456c7b"
+                },
+                {
+                    "variantIds": [],
+                    "description": "When a person suffering from dementia is unregistered from ILA, all personal data (registration information, consent declarations, attached contact persons, \"usual zones\", historical tracker data, etc.) must be removed from the operative data bases. The data must be archived where necessary to prove proper operation. ",
+                    "id": "e4d25f95-9414-4aae-aab2-d396661caeaa"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must contain an archiving option. When an account is unregistered, proof of proper operation (like a consent form) needs to be stored long-term for legal purposes, while the data is removed from the operational data sources. ",
+                    "id": "0174e63f-7baf-4737-a331-251481a8896a"
+                },
+                {
+                    "variantIds": [],
+                    "description": "If an account of a person suffering from dementia is unregistered, any attached tracker must be added back into the pool, and not maintain any connection with that person. ",
+                    "id": "5474819b-6646-4378-a232-259343ceb961"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must be able to produce a data transparency statement in easy language, informing about \"what data is stored where\", depending on the account role. This statement must explicitly designed in such a way that any worries about \"my data is just somewhere\" are properly addressed. ",
+                    "id": "df44b6c4-547c-4442-97e7-6b4880568531"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA data must be stored in a cloud under control of EU GDPR laws. ",
+                    "id": "97507d7e-ba14-4157-8468-a6a2ebb1601e"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must never disclose any data about locations with alert buttons (e.g. for marketing purposes or testimonials) to anyone outside, unless the location owners explicitly agree to this. ",
+                    "id": "1e955833-fb53-43c9-ac30-5dff93575f49"
+                },
+                {
+                    "variantIds": [],
+                    "description": "If a shop, medical practice etc. stops having an alert button, i.e. unregisters its account, its location and other information must be deleted from the operational data bases of ILA. The data must be archived where necessary to prove proper operation. ",
+                    "id": "ada11788-755f-44b0-af87-a429d6dfd8ac"
+                },
+                {
+                    "variantIds": [
+                        "1910a37b-d9fc-4076-9167-9ff4f1eceac1"
+                    ],
+                    "description": "ILA must never disclose any data about nursing homes and their personnel (e.g. for marketing purposes or testimonials) to anyone outside, unless the nursing home, and the employees in question, explicitly agrees to this. ",
+                    "id": "77de27c8-4de7-4061-8d1c-bba0a717f7cf"
+                },
+                {
+                    "variantIds": [
+                        "1910a37b-d9fc-4076-9167-9ff4f1eceac1"
+                    ],
+                    "description": "If a nursing home stops provinding ILA as a service, all data about the nursing home and its employees must be deleted from the operational data bases, and archived where necessary to prove proper operation. ",
+                    "id": "94dbcb4f-2f6e-467a-89b2-92ec8df9678b"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA should reserve for itself the right to collect anonymous data about frequency of emergency situations. So ILA could inform a contact person if the person suffering from dementia has an unusually high frequency of exceptional situations. This might help a contact person to realize that the task becomes to hard to take, and that the person suffering from dementia should go to a nursing home. ",
+                    "id": "765418db-2082-48bc-8918-7543aa7e4ce6"
+                },
+                {
+                    "variantIds": [],
+                    "description": "When a contact person is unregistered from ILA, all personal data (registration information, payment information, consent declarations, etc.) must be removed from the operative data bases. The data must be archived where necessary to prove proper operation. ",
+                    "id": "810ec653-cdc6-46e7-ae3f-8ab709765eef"
+                },
+                {
+                    "variantIds": [
+                        "f184f08d-7ce9-48b5-a2b2-eec5f46d94fb"
+                    ],
+                    "description": "ILA should offer a way for several contact persons sharing responsibility to see a history of exceptional situations, and who of them came to help. This way, they an lead fairness discussions based on factual data.",
+                    "id": "30ea5369-3e6d-487c-aca4-15267a9fecae"
+                },
+                {
+                    "variantIds": [],
+                    "description": "In case that there are multiple available contact persons, ILA should offer an easily accessible communication channel between them, so they have the option to briefly discuss who an come to help. ",
+                    "id": "6f331570-d3ec-4f0c-aefc-fb878d6e53e4"
+                },
+                {
+                    "variantIds": [],
+                    "description": "When location with alert button is unregistered from ILA, all information about the location, and personal data of the staff, must be removed from the operative data bases. The data must be archived where necessary to prove proper operation. ",
+                    "id": "bcb44584-6b0e-4657-9fff-bd7a5e5c6f12"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must not contain ANY personal information about staff of an alert button location. Operation of the button needs to be strictly anonymous.",
+                    "id": "00d7686f-e10c-484e-812a-f34b6bc1d531"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must store only \"name\" and \"address\" for locations with alert buttons, as e.g. medical practices might have sensitive personal data.",
+                    "id": "be2a84c9-ddd1-4b6a-93e1-0cb0d52fb28c"
+                },
+                {
+                    "variantIds": [],
+                    "description": "Only in case the alert button is pressed, the contact person can earn that the person suffering from dementia currently is at that location. ",
+                    "id": "806bef7a-1b9c-4bd2-84fa-4c4b4993d7d6"
+                },
+                {
+                    "variantIds": [],
+                    "description": "No one but the contact person must ever know that a person suffering from dementia is at the location with an alert button.",
+                    "id": "87703382-2870-4d1d-924b-8d2f1c607d19"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must provide an FAQ and clear information material for potential locations with alert buttons. This information must especially address privacy concerns. ",
+                    "id": "9a923031-4bc8-40ca-8803-6056830f6325"
+                },
+                {
+                    "variantIds": [
+                        "1910a37b-d9fc-4076-9167-9ff4f1eceac1"
+                    ],
+                    "description": "ILA must provide a standard contract for nursing homes providing ILA services, containing an indemnification clause for the nursing home in case of privacy breaches.",
+                    "id": "6671be27-2549-4f8e-aae2-0a6712be8e52"
+                },
+                {
+                    "variantIds": [
+                        "0c66cf4f-fbcb-4ef0-b025-632a1fc2d6b6"
+                    ],
+                    "description": "The interface between ILA and an emergency call system must be protected by authentication, so that no outsider access is possible.",
+                    "id": "03c8c214-16d7-47ef-83ff-e98882b66433"
+                },
+                {
+                    "variantIds": [
+                        "0c66cf4f-fbcb-4ef0-b025-632a1fc2d6b6"
+                    ],
+                    "description": "The interface between ILA and an emergency call system must not contain personal information about the person suffering from dementia, or a contact person. Data exchange must be based on a technical ID. ",
+                    "id": "00755a28-bdb3-49a4-a68a-1032142c82b2"
+                },
+                {
+                    "variantIds": [],
+                    "description": "The alert button must be designed in such a way that it provides feedback about the status of the help underway. ",
+                    "id": "ccb016ff-675c-4371-8846-61039aea4817"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA should provide badges like \"this shop supports the helping community\" and other suitable marketing material, allowing locations to use their ILA commitment as PR. ",
+                    "id": "6c519399-6e15-454a-8b45-0ac6bee6b6c6"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must provide a standard contract for locations with an alert button, containing a legal indemnification clause for the location.",
+                    "id": "e87b6704-4ae8-4989-9d2f-5857cc481527"
+                },
+                {
+                    "variantIds": [],
+                    "description": "Registration as an alert button location must not cause any additional costs for the location. The alert buttons must be provided for free.",
+                    "id": "7259e1a9-5399-424b-b2d1-4bf23833ddbc"
+                },
+                {
+                    "variantIds": [
+                        "1910a37b-d9fc-4076-9167-9ff4f1eceac1"
+                    ],
+                    "description": "ILA must provide a nursing home business model with a trial period, allowing a nursing home to build trust in the system. ",
+                    "id": "40e90c65-931d-4abb-8efc-abede6710e08"
+                },
+                {
+                    "variantIds": [
+                        "1910a37b-d9fc-4076-9167-9ff4f1eceac1"
+                    ],
+                    "description": "ILA should provide marketing material and certifications / badges for nursing homes offering ILA, enabling the nursing home to use this as a marketing tool.",
+                    "id": "1b231fb4-2a56-4b26-9305-42b3bb088217"
+                },
+                {
+                    "variantIds": [
+                        "bfb69bc2-9c86-4ae7-8094-1a94caeaa6ca"
+                    ],
+                    "description": "The health insurance must come up with a simple and clear set of criteria about entitlement for ILA.",
+                    "id": "8b9a29f8-2eaf-44ce-9f06-3b28d01a20b1"
+                },
+                {
+                    "variantIds": [
+                        "bfb69bc2-9c86-4ae7-8094-1a94caeaa6ca"
+                    ],
+                    "description": "The ILA startup should seek collaboration with health insurance organisations, to evaluate ILA. This way, the health insurance an use this as a marketing story.",
+                    "id": "06ce9a9b-ff35-4a37-81f2-8bea21213e8d"
+                },
+                {
+                    "variantIds": [
+                        "9bc1a91d-4135-41aa-9541-d76c4595862e"
+                    ],
+                    "description": "Evaluation of ILA should be conducted with focus on persons suffering from dementia who still live in their own home.",
+                    "id": "86e53eee-151d-4785-ba8f-385814ae1cad"
+                },
+                {
+                    "variantIds": [
+                        "bfb69bc2-9c86-4ae7-8094-1a94caeaa6ca"
+                    ],
+                    "description": "ILA must provide a standard contract for health insurances, containing a legal indemnification clause.",
+                    "id": "b69137d1-6a0f-4ca0-8e1a-91b558d90bc5"
+                },
+                {
+                    "variantIds": [
+                        "0c66cf4f-fbcb-4ef0-b025-632a1fc2d6b6"
+                    ],
+                    "description": "ILA should provide an architecture blueprint for a connectivity solution to any emergency call service",
+                    "id": "15c9bc35-552c-4c4b-9fe3-1caa1cb8311f"
+                },
+                {
+                    "variantIds": [
+                        "0c66cf4f-fbcb-4ef0-b025-632a1fc2d6b6"
+                    ],
+                    "description": "ILA should provide a business case blueprint that managers in an emergency call service can use to justify the investment in their own business model and infrastructure.",
+                    "id": "9db1b6c1-d286-485b-99ac-4d321f4b6f3e"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA must provide a standard service contract that limits legal product liability claims. ",
+                    "id": "59b677e7-6842-4854-85b3-09dbcfe6a6c3"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA should provide marketing material to emergency call operators that they can use to market \"package deals\" with ILA.",
+                    "id": "6b095827-bdb0-47b7-839a-103d7e6ef160"
+                },
+                {
+                    "variantIds": [
+                        "1910a37b-d9fc-4076-9167-9ff4f1eceac1"
+                    ],
+                    "description": "ILA should directly target nursing homes as ILA operators.",
+                    "id": "4dadea66-2292-4437-9135-c7051d9c2c9b"
+                },
+                {
+                    "variantIds": [
+                        "f9a18a42-6a1b-4096-aa65-b335982a639c"
+                    ],
+                    "description": "ILA should address \"indirect sales\" through nursing homes, e.g. by giving nursing homes an incentive if they inform relatives of their patients about ILA.",
+                    "id": "c481b5f3-f708-4e49-a87b-1b409b847308"
+                },
+                {
+                    "variantIds": [
+                        "bfb69bc2-9c86-4ae7-8094-1a94caeaa6ca"
+                    ],
+                    "description": "ILA should target health insurances to add ILA to their catalogue.",
+                    "id": "4f409998-9acd-48a1-a3fe-d5aa20fcf464"
+                },
+                {
+                    "variantIds": [],
+                    "description": "ILA should target relatives of persons suffering from dementia directly, offering a trial. ",
+                    "id": "b55b8bcf-5a5e-4361-b76d-5d79e2320f0f"
+                }
+            ],
+            "values": [
+                {
+                    "archived": false,
+                    "name": "Safety",
+                    "description": "Safety primarily means protecting a person against harm. It includes also the subjective feeling of \"being well protected\". ",
+                    "id": "1760b16a-c95e-4cb0-93cc-468b8c4c21e9",
+                    "type": "SOCIAL"
+                },
+                {
+                    "archived": false,
+                    "name": "Care",
+                    "description": "Care is given and decisions and responsibility are taken on behalf of the other – the one in need – to the extent that that person is no longer able to do these things themselves [...].",
+                    "id": "1f2e9efe-df3f-443b-be33-b076707ea7a1",
+                    "type": "SOCIAL"
+                },
+                {
+                    "archived": false,
+                    "name": "Autonomy",
+                    "description": "The term autonomy […] is nowadays often equated with an individual’s maximum freedom of decision and action.",
+                    "id": "6ac46228-977d-492d-8893-511031a0a7ca",
+                    "type": "SOCIAL"
+                },
+                {
+                    "archived": false,
+                    "name": "Participation",
+                    "description": "Participation […] means providing people with access, rights, services, and assets that enable them to live together with other people in society.",
+                    "id": "1d092c03-1fa1-4c07-8c7d-17f7be3681eb",
+                    "type": "SOCIAL"
+                },
+                {
+                    "archived": false,
+                    "name": "Privacy",
+                    "description": "(1) Transparency: inform data subject about data use. (2) Purpose limitation / minimization: Store as few data as possible, and use it only for its dedicated purpose. (3) Integrity: prevent unauthorized access. (4) The right to be forgotten.",
+                    "id": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "type": "SOCIAL"
+                },
+                {
+                    "archived": false,
+                    "name": "Self-Conception",
+                    "description": "A persons' freedom to evaluate and perceive herself according to her own personal mental model. Strongly related is the perceived self-efficacy, the expectation to successfully carry out intended acts based on one's competences. ",
+                    "id": "4ddc1bc2-0d46-4a70-ba2f-797b5b00836c",
+                    "type": "SOCIAL"
+                },
+                {
+                    "archived": false,
+                    "name": "Fairness",
+                    "description": "Fairness means that the same standards are applied to everyone, and that resources are provided according to degree of neediness. ",
+                    "id": "0326a4ab-7d5b-4a03-bc5c-c22a0327eca2",
+                    "type": "SOCIAL"
+                },
+                {
+                    "archived": false,
+                    "name": "Liability",
+                    "description": "Does the system save effort (time, money, responsibilities, …), or does it require additional resources for its operation (compared to a situation without the system)?",
+                    "id": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "type": "ECONOMIC"
+                },
+                {
+                    "archived": false,
+                    "name": "Profitability",
+                    "description": "Profitability means an organisation's ability to fund its operations and strategic development out of its revenues. ",
+                    "id": "e1852972-8267-4b66-9ccb-6800272af28c",
+                    "type": "ECONOMIC"
+                },
+                {
+                    "archived": false,
+                    "name": "Opportunity",
+                    "description": "Opportunity describes an organisation's ability and position to drive innovation, expand its market share, improve customer loyalty, or pursue any other strategic goals.",
+                    "id": "993f7b89-397a-4ddf-abac-2f6094e5775e",
+                    "type": "ECONOMIC"
+                }
+            ],
+            "stakeholders": [
+                {
+                    "level": "INDIVIDUAL",
+                    "name": "Person Suffering From Dementia",
+                    "id": "37e18514-ce78-4a07-bd0b-2719d7771627",
+                    "priority": "FOUR"
+                },
+                {
+                    "level": "INDIVIDUAL",
+                    "name": "Contact Person",
+                    "id": "74f24594-449a-40fb-8a5d-4322977d58f3",
+                    "priority": "THREE"
+                },
+                {
+                    "level": "INDIVIDUAL",
+                    "name": "Alert Button User",
+                    "id": "80f453dd-50e0-47b5-8087-0dc24dca4293",
+                    "priority": "TWO"
+                },
+                {
+                    "level": "ORGANIZATION",
+                    "name": "Location with Alert Button",
+                    "id": "5fee987e-3005-49f2-8472-6ffb4cb60a3b",
+                    "priority": "TWO"
+                },
+                {
+                    "level": "INDIVIDUAL",
+                    "name": "Nursing Home Caregiver",
+                    "id": "7fa1036a-e308-4c4c-8ff4-619e51412f61",
+                    "priority": "TWO"
+                },
+                {
+                    "level": "INDIVIDUAL",
+                    "name": "Nursing Home Manager",
+                    "id": "0606d213-e075-41ca-97c1-e9ff25524cce",
+                    "priority": "TWO"
+                },
+                {
+                    "level": "ORGANIZATION",
+                    "name": "Nursing Home",
+                    "id": "906a75b1-ccf0-45d8-8d3f-7bcce0507672",
+                    "priority": "TWO"
+                },
+                {
+                    "level": "ORGANIZATION",
+                    "name": "Health Insurance",
+                    "id": "b019779e-2edc-4265-878d-3814b03dc668",
+                    "priority": "ONE"
+                },
+                {
+                    "level": "ORGANIZATION",
+                    "name": "ILA Startup",
+                    "id": "2e7feb1a-57c1-44fd-a406-df7681314e3a",
+                    "priority": "ONE"
+                },
+                {
+                    "level": "SOCIETY",
+                    "name": "Society",
+                    "id": "ecf43ae5-2847-4fef-802a-9f5166f2c72f",
+                    "priority": "ONE"
+                },
+                {
+                    "level": "ORGANIZATION",
+                    "name": "Emergency Call System Operator",
+                    "id": "65622cb0-e1de-417f-892e-46caadca8d77",
+                    "priority": "ONE"
+                }
+            ],
+            "impacts": [
+                {
+                    "valueId": "1760b16a-c95e-4cb0-93cc-468b8c4c21e9",
+                    "description": "In case no contact person comes to help in a challenging situation (or the contact person needs too much time to come), a person suffering from dementia may perceive this as a kind of betrayal - this way her subjective sense of safety might be severely impacted.",
+                    "merit": -0.5,
+                    "id": "d1d86e3c-27e6-4163-adcd-2a936894e8aa",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "1760b16a-c95e-4cb0-93cc-468b8c4c21e9",
+                    "description": "If a contact person changes (involuntarily or deliberately) the contact information for another contact person, this might lead to no one reacting to an exceptional situation, thus leading to a false sense of safety. ",
+                    "merit": -0.5,
+                    "id": "4f3aab5e-8926-4a5d-a56c-506f1e9eabfb",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "1760b16a-c95e-4cb0-93cc-468b8c4c21e9",
+                    "description": "If the tracker that the person suffering from dementia wears is poorly maintained (e.g. has an empty battery), and this is not noticed by the contact person, this might lead to no one reacting to an exceptional situation, thus leading to a false sense of safety. ",
+                    "merit": -0.5,
+                    "id": "a632b697-8b11-42c2-868c-eb547a79e50b",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "1760b16a-c95e-4cb0-93cc-468b8c4c21e9",
+                    "description": "If ILA works as planned, a timely intervention may stop a challenging situation (say, a panic attack) into escalating into an actual emergency.",
+                    "merit": 0.6,
+                    "id": "a86b9664-2db1-4549-adf9-cc6da6550afc",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "1f2e9efe-df3f-443b-be33-b076707ea7a1",
+                    "description": "If the registration process for ILA requires the person suffering from dementia to go to unusual places (e.g. the nursing home management office), this process might be perceived as uncomfortable. If the person is confused, she might e.g. think that she has done something wrong, and is about to be \"punished\".",
+                    "merit": -0.5,
+                    "id": "6a1c3593-f277-428e-9a0d-93f8c077acff",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "1d092c03-1fa1-4c07-8c7d-17f7be3681eb",
+                    "description": "Similar to the autonomy gain, the option to freely leave one's home makes it easier for the person suffering from dementia to participate in social events, without being accompanied by a relative or a caregiver.",
+                    "merit": 1,
+                    "id": "626351ef-f353-4d00-bd43-75007da86442",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If ILA is implemented improperly, a contact person or an unauthorized 3rd party could track the movements of the person suffering from dementia. (Violation of \"Integrity\" Principle)",
+                    "merit": -0.5,
+                    "id": "922efd43-743f-4519-915e-903e4e163ec1",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "The idea that \"my data is stored somewhere\" might alienate the person suffering from dementia. (Violation of \"Transparency\" Principle)",
+                    "merit": -0.5,
+                    "id": "02f0f0be-40c7-4983-a9a1-7d6b5cdb70d3",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If the data is not deleted from ILA's databases after termination of an ILA account, undesired effects (like false alerts) might occur. (Violation of \"Right to be Forgotten\" Principle)",
+                    "merit": -0.6,
+                    "id": "a7c5ec88-1228-4126-890f-70154120e535",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "The information about the dementia illness might be used improperly, e.g. for marketing purposes. (Violation of \"Purpose Limitation\" Principle)",
+                    "merit": -0.5,
+                    "id": "d6682be0-b07c-4c83-a117-a7b0c8db0bd7",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "6ac46228-977d-492d-8893-511031a0a7ca",
+                    "description": "Every time ILA produces \"false alerts\", the person suffering from dementia will feel checked on, or micro-managed (because a contact person appears offering help that the person does not need in this moment). In the worst case, ILA might be perceived as a system that allows an external person to control one's movements. ",
+                    "merit": -0.6,
+                    "id": "1c29677e-2411-47a4-b1b4-1f944a12644d",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "6ac46228-977d-492d-8893-511031a0a7ca",
+                    "description": "A person suffering from dementia can leave her living quarters with the assurance that she will be helped, in case she loses her way, or has a panic attack. In addition, caregivers or relatives have fewer incentives to keep the person from going out (for safety reasons, in a more or less subtle manner).",
+                    "merit": 1,
+                    "id": "0e0bc116-8d17-404c-b239-d1ce033e03d9",
+                    "stakeholderId": "37e18514-ce78-4a07-bd0b-2719d7771627"
+                },
+                {
+                    "valueId": "1f2e9efe-df3f-443b-be33-b076707ea7a1",
+                    "description": "If there is just one contact person, there is a risk that ILA focuses the responsibility for the person suffering from demential solely on this contact person. It might wear out that person. ",
+                    "merit": -1,
+                    "id": "57bbab61-b75b-4755-bd59-cc2c72f7f207",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "6ac46228-977d-492d-8893-511031a0a7ca",
+                    "description": "In the best case scenario, ILA might give a contact person some \"peace of mind\" with regard to the well-being of a related person suffering from dementia. ILA might help the contact person to better handle a great responsibility.",
+                    "merit": 0.5,
+                    "id": "3f1b0b30-748b-4715-bf03-0d4f9dfcbe74",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "6ac46228-977d-492d-8893-511031a0a7ca",
+                    "description": "The constant risk of being alerted might severely impact the contact person's freedom to plan her own time. ",
+                    "merit": -1,
+                    "id": "744966cc-9cce-48c5-88df-53b04bd6096d",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If ILA is implemented improperly, personal information could be obtained illegally, like e.g. credit card information. (Violation of \"Integrity\" Principle)",
+                    "merit": -0.5,
+                    "id": "df5cd167-1d07-49ea-936d-fc4873462b25",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If ILA is implemented improperly, personal information about a contact person could be used in an unintended way, e.g. for marketing purposes. (Violation of \"Purpose Limitation\" Principle)",
+                    "merit": -0.6,
+                    "id": "7a988a28-da2b-43ca-ac6d-b53f2a3a6735",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If the contact person's data is not deleted from ILA's data bases after termination of an ILA account, undesired effects (like false alerts) might occur. (Violation of \"Right to be Forgotten\" Principle)",
+                    "merit": -0.5,
+                    "id": "9209c018-d209-4384-a4df-c688bcae6906",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "The idea that \"my data is stored somewhere\" might be frightening for a contact person. (Violation of \"Transparency\" Principle)",
+                    "merit": -0.5,
+                    "id": "c1f84a36-aa32-440b-a15d-d14b291e337a",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "0326a4ab-7d5b-4a03-bc5c-c22a0327eca2",
+                    "description": "If there are several contact persons sharing the responsibility, in the worst case one contact might have to handle a lot more load than others.",
+                    "merit": -0.6,
+                    "id": "22b30ecd-680a-4d0f-8ec3-eb198147041c",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "If ILA produces many false alerts, the frequent calls for support might cause considerable effort for the contact person. ",
+                    "merit": -1,
+                    "id": "eb231c9e-a35a-445f-bcdc-41c6fb5c3ee2",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "Administration of ILA (handling of GPS sensor, battery monitoring and change, administration of data, …) might require some effort from the contact person. ",
+                    "merit": -0.6,
+                    "id": "14b4f7f8-b08f-4c9f-b8d9-379609ca892a",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "4ddc1bc2-0d46-4a70-ba2f-797b5b00836c",
+                    "description": "If ILA is difficult to administrate, and/or is unreliable in execution, the contact person may get a feeling of \"being too stupid to use the system properly\". ",
+                    "merit": -0.5,
+                    "id": "1e6ea9b8-5724-4661-9e00-290437ba2b7a",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "4ddc1bc2-0d46-4a70-ba2f-797b5b00836c",
+                    "description": "If ILA reliably informs about exceptional situations, it will effectively support the contact person to be a \"guardian angel\". In that case, the contact person can feel good about her own role.",
+                    "merit": 0.5,
+                    "id": "52749247-e0dc-4b95-b2c0-1a52a78a8539",
+                    "stakeholderId": "74f24594-449a-40fb-8a5d-4322977d58f3"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If ILA requires the alarm button user to register in the system, she might worry what data is stored about her, and where. (Violation of \"Transparency\" Principle)",
+                    "merit": -0.6,
+                    "id": "6df57f97-7a9e-4bc2-9cc1-fa904566f307",
+                    "stakeholderId": "80f453dd-50e0-47b5-8087-0dc24dca4293"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If the alert button user's data is not deleted from ILA's data bases after termination of an ILA account, undesired effects (like being contacted for no reason) might occur. (Violation of \"Right to be Forgotten\" Principle)",
+                    "merit": -0.5,
+                    "id": "2f2b11c9-133a-4db7-bbed-9da25431c477",
+                    "stakeholderId": "80f453dd-50e0-47b5-8087-0dc24dca4293"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If ILA is implemented improperly, personal information about an alert button user might be used in an unintended way, or accessed illegally. (Violation of \"Purpose Limitation\" or \"Integrity\" Principle)",
+                    "merit": -0.5,
+                    "id": "44936148-6fcf-46b8-add6-d28ddc9cc66e",
+                    "stakeholderId": "80f453dd-50e0-47b5-8087-0dc24dca4293"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "An employee in a location with alert button might fear to have her actions tracked and judged - has she reacted properly if a person suffering from dementia has had a panic attack in her shop?",
+                    "merit": -1,
+                    "id": "d8bed31a-2e77-49fb-90f8-e327047c698a",
+                    "stakeholderId": "80f453dd-50e0-47b5-8087-0dc24dca4293"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "An employee in a location may feel relieved that she an just hit the alert button if a person suffering from dementia has a panic attack in her shop. It saves her the troubles to call for help through other channels.",
+                    "merit": 0.6,
+                    "id": "c95b9ffa-1a33-46e6-aa9b-e873ec852319",
+                    "stakeholderId": "80f453dd-50e0-47b5-8087-0dc24dca4293"
+                },
+                {
+                    "valueId": "6ac46228-977d-492d-8893-511031a0a7ca",
+                    "description": "A shop or medical practice might feel \"pressed\" into using the system, because competitors in their neighbourhood do that, too - could caused \"poor PR\" if they refuse. ",
+                    "merit": -0.4,
+                    "id": "fee77051-5274-43fc-8841-62a4156e74a6",
+                    "stakeholderId": "5fee987e-3005-49f2-8472-6ffb4cb60a3b"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If ILA is implemented improperly, sensitive information about the shop / practice could be obtained illegally. This is an especially severe risk for medical practices, where information about patients is very sensitive. (Violation of \"Integrity\" Principle)",
+                    "merit": -1,
+                    "id": "7371249b-45fb-4de9-b403-d3663fbef575",
+                    "stakeholderId": "5fee987e-3005-49f2-8472-6ffb4cb60a3b"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If ILA is implemented improperly, sensitive information about the shop / practice could be used in an unintended way, e.g. for marketing purposes. (Violation of \"Purpose Limitation\" Principle)",
+                    "merit": -0.6,
+                    "id": "88c87371-ab64-4aea-85fe-b392511575eb",
+                    "stakeholderId": "5fee987e-3005-49f2-8472-6ffb4cb60a3b"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If the shop / practice's data is not deleted from ILA's data bases after termination of an ILA account, undesired effects (like false alerts) might occur. (Violation of \"Right to be Forgotten\" Principle)",
+                    "merit": -0.5,
+                    "id": "dfdac43b-5c51-4973-8513-14ac3f8f66ac",
+                    "stakeholderId": "5fee987e-3005-49f2-8472-6ffb4cb60a3b"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "The idea that \"my data is stored somewhere\" might cause worry for a shop or practice, esp. if it deals with sensitive personal information (e.g. a doctor's practice). (Violation of \"Transparency\" Principle)",
+                    "merit": -0.6,
+                    "id": "680a0f3a-51cd-4566-8fe9-08c2206eb1ea",
+                    "stakeholderId": "5fee987e-3005-49f2-8472-6ffb4cb60a3b"
+                },
+                {
+                    "valueId": "4ddc1bc2-0d46-4a70-ba2f-797b5b00836c",
+                    "description": "A shop or a medical practice could perceive ILA as a way of \"doing good\".",
+                    "merit": 0.6,
+                    "id": "b14a9270-57ee-4f95-b643-87e7c27215c6",
+                    "stakeholderId": "5fee987e-3005-49f2-8472-6ffb4cb60a3b"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "A shop or a medical practice might fear legal risks of an alert button - can the shop / practice be sued if the alert button is NOT hit in time?",
+                    "merit": -1,
+                    "id": "74b91c72-2db5-46b2-aff9-2a471fdb3db5",
+                    "stakeholderId": "5fee987e-3005-49f2-8472-6ffb4cb60a3b"
+                },
+                {
+                    "valueId": "e1852972-8267-4b66-9ccb-6800272af28c",
+                    "description": "Administration of an alert button may cause additional efforts for the shop's / practice's organisation.",
+                    "merit": -0.5,
+                    "id": "008b398f-cd28-4a01-9ee6-ff665702197c",
+                    "stakeholderId": "5fee987e-3005-49f2-8472-6ffb4cb60a3b"
+                },
+                {
+                    "valueId": "e1852972-8267-4b66-9ccb-6800272af28c",
+                    "description": "The alert button(s) may cost money to purchase for the shop / practice.",
+                    "merit": -0.6,
+                    "id": "e6df607f-f98d-47a8-bead-fc164a5cb067",
+                    "stakeholderId": "5fee987e-3005-49f2-8472-6ffb4cb60a3b"
+                },
+                {
+                    "valueId": "e1852972-8267-4b66-9ccb-6800272af28c",
+                    "description": "If ILA works well, an alert button may save money and efforts for the shop / practice in case of exceptional situations with customers suffering from dementia.",
+                    "merit": 0.6,
+                    "id": "34945528-55d7-4c76-a4f1-ee5deba96890",
+                    "stakeholderId": "5fee987e-3005-49f2-8472-6ffb4cb60a3b"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "If ILA fulfills its promises, there will be less situations where a caregiver feels she should prevent a patient with dementia from going outside (for safety reasons, and with subtle means, as this is officially illegal). ",
+                    "merit": 0.6,
+                    "id": "39bf0ba7-3967-4f50-b6fc-41578a496872",
+                    "stakeholderId": "7fa1036a-e308-4c4c-8ff4-619e51412f61"
+                },
+                {
+                    "valueId": "4ddc1bc2-0d46-4a70-ba2f-797b5b00836c",
+                    "description": "A caregiver may feel better about her own role, if she can allow to let a person suffering from dementia leave the nursing home at any time, with less worries about risks.",
+                    "merit": 0.5,
+                    "id": "5e588b31-6718-4689-aa44-232c4b9a5c60",
+                    "stakeholderId": "7fa1036a-e308-4c4c-8ff4-619e51412f61"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If ILA is implemented improperly, personal information about the manager could be obtained illegally, like e.g. credit card information. (Violation of \"Integrity\" Principle)",
+                    "merit": -0.5,
+                    "id": "ed39038e-ddcd-4709-8809-0b32fc11a15b",
+                    "stakeholderId": "0606d213-e075-41ca-97c1-e9ff25524cce"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If ILA is implemented improperly, personal information about the manager could be used in an unintended way, e.g. for marketing purposes. (Violation of \"Purpose Limitation\" Principle)",
+                    "merit": -0.6,
+                    "id": "8f3d38c8-461b-4db9-8b63-dc8aa9dba96c",
+                    "stakeholderId": "0606d213-e075-41ca-97c1-e9ff25524cce"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If the nursing home manager's data is not deleted from ILA's data bases after termination of an ILA account, undesired effects (like false alerts) might occur. (Violation of \"Right to be Forgotten\" Principle)",
+                    "merit": -0.6,
+                    "id": "a6ddb312-eeb1-440c-8116-fcc88d8533f1",
+                    "stakeholderId": "0606d213-e075-41ca-97c1-e9ff25524cce"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "The idea that \"my data is stored somewhere\" might worry a nursing home manager. (Violation of \"Transparency\" Principle)",
+                    "merit": -0.5,
+                    "id": "75a7e514-af6f-4a29-8258-198c6865eeaf",
+                    "stakeholderId": "0606d213-e075-41ca-97c1-e9ff25524cce"
+                },
+                {
+                    "valueId": "4ddc1bc2-0d46-4a70-ba2f-797b5b00836c",
+                    "description": "A properly working ILA will allow the acting persons in nursing home management to provide \"care\" in the pure sense of the word, giving persons suffering from dementia more autononomy, and having to restrain their movements less frequently. ",
+                    "merit": 0.5,
+                    "id": "f26a05b8-786f-403c-bf0b-854db06d9286",
+                    "stakeholderId": "0606d213-e075-41ca-97c1-e9ff25524cce"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "In the best case scenario, with the help of ILA there might be less situations where an inhabitant of the nursing home goes missing, and the police needs to be notified. ",
+                    "merit": 0.6,
+                    "id": "fdf1a3a4-3b77-4818-a638-c329e8314baa",
+                    "stakeholderId": "0606d213-e075-41ca-97c1-e9ff25524cce"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "Administration of ILA (handling of GPS sensor, battery monitoring and change, administration of data, …) might require some effort from the nursing home management, if the operation of ILA is in their hands.",
+                    "merit": -0.4,
+                    "id": "a88c33e6-41d4-4c9a-9a54-ad030eac75e2",
+                    "stakeholderId": "0606d213-e075-41ca-97c1-e9ff25524cce"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "A Data Privacy failure in ILA might be a legal problem for the nursing home owner, if the nursing home is in any way (co-)responsible for the introduction and use of ILA. (Violation of \"Purpose Limitation\" or \"Integrity\" Principle)",
+                    "merit": -1,
+                    "id": "e593c35a-6e16-4908-a969-84a8a7fb2c0f",
+                    "stakeholderId": "906a75b1-ccf0-45d8-8d3f-7bcce0507672"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If ILA fails to display in a transparent way what nursing home data is used for what purpose, the nursing home runs an operative risk. (Violation of \"Transparency\" or \"Right to be Forgotten\" Principle) ",
+                    "merit": -0.6,
+                    "id": "18179677-ddb3-4e12-9fc2-588187d725f6",
+                    "stakeholderId": "906a75b1-ccf0-45d8-8d3f-7bcce0507672"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "If the nursing home is in any way (co-)responsible for the introduction and use of ILA, any failure might backfire and cast a bad light on the management.",
+                    "merit": -0.9,
+                    "id": "39c70ae8-550c-4207-a946-fc941a056331",
+                    "stakeholderId": "906a75b1-ccf0-45d8-8d3f-7bcce0507672"
+                },
+                {
+                    "valueId": "e1852972-8267-4b66-9ccb-6800272af28c",
+                    "description": "Usage of ILA might make operations easier, due to less emergency (missing patients) situations. ",
+                    "merit": 0.5,
+                    "id": "69940e31-1a78-4102-bde2-cee2e464cbc2",
+                    "stakeholderId": "906a75b1-ccf0-45d8-8d3f-7bcce0507672"
+                },
+                {
+                    "valueId": "993f7b89-397a-4ddf-abac-2f6094e5775e",
+                    "description": "The ILA offering might be a competitive advantage for the nursing home, enabling it to present itself as innovative.",
+                    "merit": 0.5,
+                    "id": "69d49d97-052c-42a0-9078-3e6e1ac84647",
+                    "stakeholderId": "906a75b1-ccf0-45d8-8d3f-7bcce0507672"
+                },
+                {
+                    "valueId": "0326a4ab-7d5b-4a03-bc5c-c22a0327eca2",
+                    "description": "In case ILA is a service covered by health insurance, then there is a risk of unfair selection of patients who are entitled to it. ",
+                    "merit": -0.5,
+                    "id": "21b9ea05-0714-431b-92f0-06f88d2a9093",
+                    "stakeholderId": "b019779e-2edc-4265-878d-3814b03dc668"
+                },
+                {
+                    "valueId": "4ddc1bc2-0d46-4a70-ba2f-797b5b00836c",
+                    "description": "The overall promise of a properly working ILA is supports a health insurance's self image as an \"organisation intended to help by innovative means\". ",
+                    "merit": 0.7,
+                    "id": "6461da06-d939-4711-9aa4-c472708174d0",
+                    "stakeholderId": "b019779e-2edc-4265-878d-3814b03dc668"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "ILA must be taken up as service in the insurance's catalogue of benefits. ",
+                    "merit": -0.6,
+                    "id": "3130395f-5caa-45f1-9f0b-c3b3e7f51040",
+                    "stakeholderId": "b019779e-2edc-4265-878d-3814b03dc668"
+                },
+                {
+                    "valueId": "e1852972-8267-4b66-9ccb-6800272af28c",
+                    "description": "In the best possible case, ILA will contribute to persons suffering from dementia living longer in their own home, thus saving cost for the health insurance.",
+                    "merit": 0.5,
+                    "id": "3d9633c7-c1c8-4f95-88c9-8b11e56bd4c0",
+                    "stakeholderId": "b019779e-2edc-4265-878d-3814b03dc668"
+                },
+                {
+                    "valueId": "993f7b89-397a-4ddf-abac-2f6094e5775e",
+                    "description": "If ILA is sucessful, the insurance's reputation may benefit for offering such an innovative service.",
+                    "merit": 0.6,
+                    "id": "cab57332-95c9-41f2-bed9-5f6b1cc61587",
+                    "stakeholderId": "b019779e-2edc-4265-878d-3814b03dc668"
+                },
+                {
+                    "valueId": "993f7b89-397a-4ddf-abac-2f6094e5775e",
+                    "description": "If ILA is offered as an innovative health insurance service, the insurance's reputation is at stake in case something goes wrong with the product.",
+                    "merit": -0.7,
+                    "id": "80db7586-a105-4a58-b3eb-81d342a23d32",
+                    "stakeholderId": "b019779e-2edc-4265-878d-3814b03dc668"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "A B2B connection to ILA might cause severe technical efforts for the home emergency call system operator (APIs, connectivity functionality). ",
+                    "merit": -1,
+                    "id": "07083ee1-93ac-49dd-9a18-505434fd344a",
+                    "stakeholderId": "65622cb0-e1de-417f-892e-46caadca8d77"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "The business model of the home emergency call system might have to be changed in order to work together with ILA (integration with the mobile emergency service).",
+                    "merit": -1,
+                    "id": "40a6f7a9-9da1-4330-a573-3b79c1dd20a1",
+                    "stakeholderId": "65622cb0-e1de-417f-892e-46caadca8d77"
+                },
+                {
+                    "valueId": "e1852972-8267-4b66-9ccb-6800272af28c",
+                    "description": "Selling ILA as a value adding feature might generate an additional profit for the emergency call operator.",
+                    "merit": 0.6,
+                    "id": "1fac328c-5728-4d92-8551-39dd97b746ad",
+                    "stakeholderId": "65622cb0-e1de-417f-892e-46caadca8d77"
+                },
+                {
+                    "valueId": "e1852972-8267-4b66-9ccb-6800272af28c",
+                    "description": "The technical effort for connecting ILA might be more costly than the additional revenue. ",
+                    "merit": -0.6,
+                    "id": "ae150bf6-93c8-40ea-8825-c5ca2c0e733e",
+                    "stakeholderId": "65622cb0-e1de-417f-892e-46caadca8d77"
+                },
+                {
+                    "valueId": "993f7b89-397a-4ddf-abac-2f6094e5775e",
+                    "description": "ILA might be perceived as a value-adding feature to an early-adopting emergency call system, improving its market position compared to competitors.",
+                    "merit": 1,
+                    "id": "cb655128-c542-4e89-aceb-8fdd91c6c870",
+                    "stakeholderId": "65622cb0-e1de-417f-892e-46caadca8d77"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "The interface between ILA and emergency call system operator might be a risk for data leaks, if poorly implemented. (Violation of \"Integrity\" Principle)",
+                    "merit": -1,
+                    "id": "d7c052a7-4c31-4a2f-a82e-c572dde587d6",
+                    "stakeholderId": "65622cb0-e1de-417f-892e-46caadca8d77"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "The company behind ILA will run an existential risk in case of any detected privacy violations (all principles).",
+                    "merit": -1,
+                    "id": "5abce6a8-7a4f-41f7-854b-f640bed6e893",
+                    "stakeholderId": "2e7feb1a-57c1-44fd-a406-df7681314e3a"
+                },
+                {
+                    "valueId": "8c67537b-d02b-451a-8298-fddd2404b304",
+                    "description": "The company behind ILA will run an existential risk in case of product liability lawsuits. ",
+                    "merit": -1,
+                    "id": "54e3967f-b7e4-4153-bf15-bac5fe58c714",
+                    "stakeholderId": "2e7feb1a-57c1-44fd-a406-df7681314e3a"
+                },
+                {
+                    "valueId": "e1852972-8267-4b66-9ccb-6800272af28c",
+                    "description": "The ILA provider will earn money with the product. ",
+                    "merit": 1,
+                    "id": "f331d383-3b5f-4a6e-8792-b8b08377fb92",
+                    "stakeholderId": "2e7feb1a-57c1-44fd-a406-df7681314e3a"
+                },
+                {
+                    "valueId": "e1852972-8267-4b66-9ccb-6800272af28c",
+                    "description": "If ILA operation is coupled to an emergency call system, there might be additional technical constraints on hardware and support model, affecting profitability.",
+                    "merit": -1,
+                    "id": "d634d948-205e-4d23-9bf7-accff2ec3cd3",
+                    "stakeholderId": "2e7feb1a-57c1-44fd-a406-df7681314e3a"
+                },
+                {
+                    "valueId": "e1852972-8267-4b66-9ccb-6800272af28c",
+                    "description": "If ILA operation is coupled to an emergency call system, a potential package deal might boost sales. ",
+                    "merit": 1,
+                    "id": "ebe189bf-b31d-4832-875d-a655a9f29d76",
+                    "stakeholderId": "2e7feb1a-57c1-44fd-a406-df7681314e3a"
+                },
+                {
+                    "valueId": "993f7b89-397a-4ddf-abac-2f6094e5775e",
+                    "description": "If ILA is successful, the startup behind ILA will be able to grow. ",
+                    "merit": 1,
+                    "id": "dda9e832-07f5-448e-8599-8c3275447f23",
+                    "stakeholderId": "2e7feb1a-57c1-44fd-a406-df7681314e3a"
+                },
+                {
+                    "valueId": "6ac46228-977d-492d-8893-511031a0a7ca",
+                    "description": "ILA has the potential to generelly improve autonomy of persons suffering from dementia, if rolled out on a broad scale. ",
+                    "merit": 0.6,
+                    "id": "b6870828-45c3-4974-8743-7709b8a32c08",
+                    "stakeholderId": "ecf43ae5-2847-4fef-802a-9f5166f2c72f"
+                },
+                {
+                    "valueId": "1d092c03-1fa1-4c07-8c7d-17f7be3681eb",
+                    "description": "ILA has the potential to generelly improve particicaption of persons suffering from dementia, if rolled out on a broad scale. ",
+                    "merit": 0.5,
+                    "id": "936cd19a-82cf-491e-bc68-0ba39198c3cb",
+                    "stakeholderId": "ecf43ae5-2847-4fef-802a-9f5166f2c72f"
+                },
+                {
+                    "valueId": "67d9ca4e-0f4a-442b-98d1-aafb0b44753f",
+                    "description": "If poorly implemented, ILA might contribute to a general loss of privacy by technical support solutions.",
+                    "merit": -0.7,
+                    "id": "98b8c0f0-16e1-4a79-b45a-5817e349f6ca",
+                    "stakeholderId": "ecf43ae5-2847-4fef-802a-9f5166f2c72f"
+                }
+            ],
+            "variants": [
+                {
+                    "archived": false,
+                    "name": "Own Home",
+                    "description": "Person suffering from dementia lives in his/her own home (e.g. apartment or house)",
+                    "id": "9bc1a91d-4135-41aa-9541-d76c4595862e"
+                },
+                {
+                    "archived": false,
+                    "name": "Nursing Home",
+                    "description": "Person suffering from dementia lives in a nursing home",
+                    "id": "f9a18a42-6a1b-4096-aa65-b335982a639c"
+                },
+                {
+                    "archived": false,
+                    "name": "One Contact",
+                    "description": "One main contact person living in same household or nearby, frequently available, and capable of helping",
+                    "id": "7f772e5d-8bf4-4f2a-ba3b-3a2787810272"
+                },
+                {
+                    "archived": false,
+                    "name": "Several Contacts",
+                    "description": "Several contact persons, not all living nearby, not all frequently available",
+                    "id": "f184f08d-7ce9-48b5-a2b2-eec5f46d94fb"
+                },
+                {
+                    "archived": false,
+                    "name": "Legally Competent",
+                    "description": "Person suffering from dementia is still legally competent to sign any documents",
+                    "id": "b5b9b122-0b25-43cd-afcc-21710290660b"
+                },
+                {
+                    "archived": false,
+                    "name": "Guardianship",
+                    "description": "Person suffering from dementia is under guardianship",
+                    "id": "85af5bb2-c8f9-42ba-99f5-1708ce9fbbce"
+                },
+                {
+                    "archived": false,
+                    "name": "Admin Contact",
+                    "description": "ILA is administered by a contact person",
+                    "id": "3737e158-0b14-4ad9-918b-d02e77b1e4b6"
+                },
+                {
+                    "archived": false,
+                    "name": "Admin Nursing Home",
+                    "description": "ILA is offered as a nursing home service and administed by the nursing home",
+                    "id": "1910a37b-d9fc-4076-9167-9ff4f1eceac1"
+                },
+                {
+                    "archived": false,
+                    "name": "Stand Alone",
+                    "description": "ILA is offered as a standalone platform",
+                    "id": "d529081b-9f12-4d92-a898-e442f16d365d"
+                },
+                {
+                    "archived": false,
+                    "name": "With Emergence Call",
+                    "description": "ILA operates as part of a home emergency call service",
+                    "id": "0c66cf4f-fbcb-4ef0-b025-632a1fc2d6b6"
+                },
+                {
+                    "archived": false,
+                    "name": "Self Paid",
+                    "description": "ILA is paid for by the person suffering from dementia, or a relative",
+                    "id": "a679a687-b967-497b-a6a8-13ba12732556"
+                },
+                {
+                    "archived": false,
+                    "name": "Paid By Health Insurance",
+                    "description": "ILA is paid for by the health insurance",
+                    "id": "bfb69bc2-9c86-4ae7-8094-1a94caeaa6ca"
+                }
+            ],
+            "analysis": {
+                "isTemplate": false,
+                "imageUrl": null,
+                "name": "ILA (Independent Life Assistent)",
+                "description": "An app that helps dementia patients become more independent",
+                "id": "5b3009d4-716e-490a-a487-d8d030c8a6c2"
+            },
+            "requirementDeltas": [
+                {
+                    "overwriteMerit": -1,
+                    "impactId": "57bbab61-b75b-4755-bd59-cc2c72f7f207",
+                    "id": "00f2e2b5-2a28-4501-b77f-9b8a4944780b",
+                    "requirementId": "c3cce9bb-f556-449c-8232-e519ef88d14f"
+                },
+                {
+                    "overwriteMerit": 0.5,
+                    "impactId": "3f1b0b30-748b-4715-bf03-0d4f9dfcbe74",
+                    "id": "7c66209c-454b-4f3d-89fc-ceb7fddbe7b2",
+                    "requirementId": "c3cce9bb-f556-449c-8232-e519ef88d14f"
+                },
+                {
+                    "overwriteMerit": -1,
+                    "impactId": "eb231c9e-a35a-445f-bcdc-41c6fb5c3ee2",
+                    "id": "5ce6675c-2f36-405e-94e4-4cf3c0821d91",
+                    "requirementId": "c3cce9bb-f556-449c-8232-e519ef88d14f"
+                },
+                {
+                    "overwriteMerit": -0.3,
+                    "impactId": "14b4f7f8-b08f-4c9f-b8d9-379609ca892a",
+                    "id": "119bc616-9cb5-4db7-a920-4ab7137a4e72",
+                    "requirementId": "c3cce9bb-f556-449c-8232-e519ef88d14f"
+                },
+                {
+                    "overwriteMerit": 0,
+                    "impactId": "1e6ea9b8-5724-4661-9e00-290437ba2b7a",
+                    "id": "1cd73a46-6800-4b33-aa7d-c767a2eb76ba",
+                    "requirementId": "c3cce9bb-f556-449c-8232-e519ef88d14f"
+                },
+                {
+                    "overwriteMerit": 0.5,
+                    "impactId": "52749247-e0dc-4b95-b2c0-1a52a78a8539",
+                    "id": "0943c8f9-7685-4db2-a5de-cdb2f3c45607",
+                    "requirementId": "c3cce9bb-f556-449c-8232-e519ef88d14f"
+                },
+                {
+                    "overwriteMerit": 0.5,
+                    "impactId": "3f1b0b30-748b-4715-bf03-0d4f9dfcbe74",
+                    "id": "63102810-e508-4278-8207-ab9055e1b9c9",
+                    "requirementId": "9b67d812-437b-44bb-a195-8033059617b1"
+                },
+                {
+                    "overwriteMerit": -0.6,
+                    "impactId": "744966cc-9cce-48c5-88df-53b04bd6096d",
+                    "id": "1de219a3-356c-45f9-ac2c-10b46d8bbc80",
+                    "requirementId": "9b67d812-437b-44bb-a195-8033059617b1"
+                },
+                {
+                    "overwriteMerit": -0.4,
+                    "impactId": "22b30ecd-680a-4d0f-8ec3-eb198147041c",
+                    "id": "d797d412-585d-4644-8328-f92ab5c97380",
+                    "requirementId": "9b67d812-437b-44bb-a195-8033059617b1"
+                },
+                {
+                    "overwriteMerit": 0,
+                    "impactId": "1e6ea9b8-5724-4661-9e00-290437ba2b7a",
+                    "id": "09c7ef2b-2f32-4e38-a5fa-fbc52a6889eb",
+                    "requirementId": "9b67d812-437b-44bb-a195-8033059617b1"
+                },
+                {
+                    "overwriteMerit": 0.5,
+                    "impactId": "52749247-e0dc-4b95-b2c0-1a52a78a8539",
+                    "id": "82bfa836-c646-4e51-b90c-ac8f36661e46",
+                    "requirementId": "9b67d812-437b-44bb-a195-8033059617b1"
+                },
+                {
+                    "overwriteMerit": -1,
+                    "impactId": "57bbab61-b75b-4755-bd59-cc2c72f7f207",
+                    "id": "381cc6c1-9139-444d-a296-a189da2730ac",
+                    "requirementId": "ac5ca927-8bff-4f0a-b2c7-1fd82dcad9ac"
+                },
+                {
+                    "overwriteMerit": 0.5,
+                    "impactId": "3f1b0b30-748b-4715-bf03-0d4f9dfcbe74",
+                    "id": "e10b756e-042e-40ac-940a-592236d0d900",
+                    "requirementId": "ac5ca927-8bff-4f0a-b2c7-1fd82dcad9ac"
+                },
+                {
+                    "overwriteMerit": 0.5,
+                    "impactId": "52749247-e0dc-4b95-b2c0-1a52a78a8539",
+                    "id": "bd6c951e-ff10-4469-b1e6-b8668ca0d152",
+                    "requirementId": "ac5ca927-8bff-4f0a-b2c7-1fd82dcad9ac"
+                },
+                {
+                    "overwriteMerit": -0.5,
+                    "impactId": "eb231c9e-a35a-445f-bcdc-41c6fb5c3ee2",
+                    "id": "262f4dd5-975c-4677-89e5-c2fe88e6eabf",
+                    "requirementId": "ac7165a7-a840-4862-832e-dae779a0e3b5"
+                },
+                {
+                    "overwriteMerit": -0.4,
+                    "impactId": "eb231c9e-a35a-445f-bcdc-41c6fb5c3ee2",
+                    "id": "aede060d-f1ed-4da3-b989-d794efd4fc15",
+                    "requirementId": "19d80e5b-9209-429a-bc1e-95abea49adc0"
+                },
+                {
+                    "overwriteMerit": -0.6,
+                    "impactId": "57bbab61-b75b-4755-bd59-cc2c72f7f207",
+                    "id": "b30a712a-09ea-4a27-ab47-21ed1758a272",
+                    "requirementId": "6c8a8642-5e75-43c3-b4a9-79b6cf84396d"
+                },
+                {
+                    "overwriteMerit": 0.5,
+                    "impactId": "3f1b0b30-748b-4715-bf03-0d4f9dfcbe74",
+                    "id": "34704d05-aaee-4c36-96d9-572698257025",
+                    "requirementId": "6c8a8642-5e75-43c3-b4a9-79b6cf84396d"
+                },
+                {
+                    "overwriteMerit": -0.5,
+                    "impactId": "eb231c9e-a35a-445f-bcdc-41c6fb5c3ee2",
+                    "id": "15e0048b-dee8-4760-9184-e67f2e44ab00",
+                    "requirementId": "6c8a8642-5e75-43c3-b4a9-79b6cf84396d"
+                },
+                {
+                    "overwriteMerit": 0.5,
+                    "impactId": "3f1b0b30-748b-4715-bf03-0d4f9dfcbe74",
+                    "id": "d256d36a-ad71-4be6-8ce6-eeebc1a25047",
+                    "requirementId": "f116fbae-f0a1-45ff-9297-a0ee09d24422"
+                },
+                {
+                    "overwriteMerit": -0.4,
+                    "impactId": "57bbab61-b75b-4755-bd59-cc2c72f7f207",
+                    "id": "1cb5dfac-37b4-4e6c-9a3f-9fef74826c52",
+                    "requirementId": "f116fbae-f0a1-45ff-9297-a0ee09d24422"
+                },
+                {
+                    "overwriteMerit": -0.5,
+                    "impactId": "eb231c9e-a35a-445f-bcdc-41c6fb5c3ee2",
+                    "id": "e9ea5932-e04e-4ea3-a4f7-7832be626c30",
+                    "requirementId": "f116fbae-f0a1-45ff-9297-a0ee09d24422"
+                },
+                {
+                    "overwriteMerit": -0.4,
+                    "impactId": "14b4f7f8-b08f-4c9f-b8d9-379609ca892a",
+                    "id": "1698cc4a-25f4-494e-947e-d2d4c3ad8da2",
+                    "requirementId": "d39692a1-f80e-4282-bcb6-73b90549197a"
+                },
+                {
+                    "overwriteMerit": -0.1,
+                    "impactId": "1e6ea9b8-5724-4661-9e00-290437ba2b7a",
+                    "id": "04cc3752-393e-40e0-bf17-7d922b9ceaba",
+                    "requirementId": "d39692a1-f80e-4282-bcb6-73b90549197a"
+                },
+                {
+                    "overwriteMerit": 0,
+                    "impactId": "1e6ea9b8-5724-4661-9e00-290437ba2b7a",
+                    "id": "e7dfa499-b55e-49b0-bef0-039ed12bdb16",
+                    "requirementId": "7cc5bc50-a580-4107-9607-67cf3e4d4986"
+                },
+                {
+                    "overwriteMerit": -0.4,
+                    "impactId": "14b4f7f8-b08f-4c9f-b8d9-379609ca892a",
+                    "id": "54725f58-f3ea-426b-9770-00baa1187e7d",
+                    "requirementId": "7cc5bc50-a580-4107-9607-67cf3e4d4986"
+                },
+                {
+                    "overwriteMerit": 0.5,
+                    "impactId": "3f1b0b30-748b-4715-bf03-0d4f9dfcbe74",
+                    "id": "09ed3078-318a-49bc-8f86-7ff1265649d6",
+                    "requirementId": "d9239f2c-4284-40d0-8338-22fa8be49cdc"
+                },
+                {
+                    "overwriteMerit": -0.6,
+                    "impactId": "57bbab61-b75b-4755-bd59-cc2c72f7f207",
+                    "id": "c2071dde-3825-44c5-9fd6-e79fb5584e85",
+                    "requirementId": "d9239f2c-4284-40d0-8338-22fa8be49cdc"
+                },
+                {
+                    "overwriteMerit": 0,
+                    "impactId": "744966cc-9cce-48c5-88df-53b04bd6096d",
+                    "id": "429d2120-480e-40a8-b363-455819b88b29",
+                    "requirementId": "d9239f2c-4284-40d0-8338-22fa8be49cdc"
+                },
+                {
+                    "overwriteMerit": -0.4,
+                    "impactId": "22b30ecd-680a-4d0f-8ec3-eb198147041c",
+                    "id": "a64aca19-6e47-48ee-a1be-b4b94a541885",
+                    "requirementId": "d9239f2c-4284-40d0-8338-22fa8be49cdc"
+                },
+                {
+                    "overwriteMerit": -0.4,
+                    "impactId": "14b4f7f8-b08f-4c9f-b8d9-379609ca892a",
+                    "id": "557d86a4-d43f-4b2f-bcdf-0d536532b86a",
+                    "requirementId": "027821b7-bee8-4fb3-a044-4a716544e93f"
+                },
+                {
+                    "overwriteMerit": 0,
+                    "impactId": "1e6ea9b8-5724-4661-9e00-290437ba2b7a",
+                    "id": "ef3fe5e1-499f-414d-944a-b689a449a002",
+                    "requirementId": "027821b7-bee8-4fb3-a044-4a716544e93f"
+                },
+                {
+                    "overwriteMerit": 0,
+                    "impactId": "df5cd167-1d07-49ea-936d-fc4873462b25",
+                    "id": "87b9a487-35bd-4d4d-bd5b-8fad257e4e81",
+                    "requirementId": "e3dc0d79-263b-4a6d-b1c2-9f43958042ab"
+                },
+                {
+                    "overwriteMerit": 0,
+                    "impactId": "7a988a28-da2b-43ca-ac6d-b53f2a3a6735",
+                    "id": "0284b16b-cf9e-4909-9298-cd1ba62ff740",
+                    "requirementId": "74e980c4-a224-49fc-a9e4-51b84ef066d0"
+                },
+                {
+                    "overwriteMerit": 0,
+                    "impactId": "7a988a28-da2b-43ca-ac6d-b53f2a3a6735",
+                    "id": "a642504a-c1e3-416a-a00f-e63ed543d89a",
+                    "requirementId": "720698df-6255-4025-8978-36854e456c7b"
+                },
+                {
+                    "overwriteMerit": -0.3,
+                    "impactId": "9209c018-d209-4384-a4df-c688bcae6906",
+                    "id": "c939a342-a7d7-4e57-ac1c-71960af654e7",
+                    "requirementId": "e4d25f95-9414-4aae-aab2-d396661caeaa"
+                },
+                {
+                    "overwriteMerit": -0.3,
+                    "impactId": "c1f84a36-aa32-440b-a15d-d14b291e337a",
+                    "id": "3eb3054b-470f-41b0-a525-8f9d0b930919",
+                    "requirementId": "df44b6c4-547c-4442-97e7-6b4880568531"
+                },
+                {
+                    "overwriteMerit": -0.3,
+                    "impactId": "df5cd167-1d07-49ea-936d-fc4873462b25",
+                    "id": "45965f53-e2b8-4d29-8fce-36388755b9f1",
+                    "requirementId": "97507d7e-ba14-4157-8468-a6a2ebb1601e"
+                },
+                {
+                    "overwriteMerit": -0.3,
+                    "impactId": "7a988a28-da2b-43ca-ac6d-b53f2a3a6735",
+                    "id": "e0c70bf3-3791-43de-935d-8326734b6453",
+                    "requirementId": "97507d7e-ba14-4157-8468-a6a2ebb1601e"
+                },
+                {
+                    "overwriteMerit": -0.3,
+                    "impactId": "9209c018-d209-4384-a4df-c688bcae6906",
+                    "id": "a2164502-0617-4e45-8848-162a9f385e1b",
+                    "requirementId": "97507d7e-ba14-4157-8468-a6a2ebb1601e"
+                },
+                {
+                    "overwriteMerit": -0.3,
+                    "impactId": "c1f84a36-aa32-440b-a15d-d14b291e337a",
+                    "id": "ea162c4a-b02b-480a-890c-dbc048d375ef",
+                    "requirementId": "97507d7e-ba14-4157-8468-a6a2ebb1601e"
+                },
+                {
+                    "overwriteMerit": -0.5,
+                    "impactId": "57bbab61-b75b-4755-bd59-cc2c72f7f207",
+                    "id": "ca06596e-3418-4929-bcdd-632e330e0826",
+                    "requirementId": "765418db-2082-48bc-8918-7543aa7e4ce6"
+                },
+                {
+                    "overwriteMerit": 0,
+                    "impactId": "9209c018-d209-4384-a4df-c688bcae6906",
+                    "id": "414cd19b-a429-4446-9552-1e59b0c88369",
+                    "requirementId": "810ec653-cdc6-46e7-ae3f-8ab709765eef"
+                },
+                {
+                    "overwriteMerit": 0,
+                    "impactId": "22b30ecd-680a-4d0f-8ec3-eb198147041c",
+                    "id": "f8496bfd-f471-40ef-8831-abc1e4ed6e4f",
+                    "requirementId": "30ea5369-3e6d-487c-aca4-15267a9fecae"
+                },
+                {
+                    "overwriteMerit": 0,
+                    "impactId": "22b30ecd-680a-4d0f-8ec3-eb198147041c",
+                    "id": "a901bf97-2da9-4f85-b30f-7d8c1484efb2",
+                    "requirementId": "6f331570-d3ec-4f0c-aefc-fb878d6e53e4"
+                }
+            ]
+        }
+    ],
+    "importExportVersion": "0.0.1"
+}

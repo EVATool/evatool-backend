@@ -100,11 +100,11 @@ public class ImportExportServiceImpl implements ImportExportService {
             var importJsonObject = new JSONObject(importAnalyses);
             var currentImportExportVersion = importJsonObject.getString("importExportVersion");
             var analysesJsonArray = importJsonObject.getJSONArray("analyses");
-            var importAnalysisFunction = resolveImportAnalysisFunction(currentImportExportVersion);
 
             for (int i = 0; i < analysesJsonArray.length(); i++) {
                 var analysisJsonObject = analysesJsonArray.getJSONObject(i);
-                var importedAnalysis = importAnalysisFunction.apply(analysisJsonObject);
+                migrateAnalysisJsonObject(analysisJsonObject, currentImportExportVersion);
+                var importedAnalysis = importAnalysis(analysisJsonObject);
                 var importedAnalysisDto = analysisMapper.toDto(importedAnalysis);
                 importedAnalysisDtoList.add(importedAnalysisDto);
             }
@@ -153,13 +153,14 @@ public class ImportExportServiceImpl implements ImportExportService {
             valuesMap.put(valueId, value);
         }
 
-        // Stakeholders
+        // Stakeholders.
         var stakeholdersJson = analysisJsonObject.getJSONArray("stakeholders");
         var stakeholdersMap = new HashMap<String, Stakeholder>();
         for (int i = 0; i < stakeholdersJson.length(); i++) {
             var stakeholderJson = stakeholdersJson.getJSONObject(i);
 
             var stakeholderName = stakeholderJson.getString("name");
+            var stakeholderDescription = stakeholderJson.getString("description");
             var stakeholderPriorityString = stakeholderJson.getString("priority");
             StakeholderPriority stakeholderPriority;
             try {
@@ -175,7 +176,7 @@ public class ImportExportServiceImpl implements ImportExportService {
                 throw new ImportJsonException("Unknown StakeholderLevel (" + stakeholderLevelString + ")");
             }
 
-            var stakeholder = new Stakeholder(stakeholderName, stakeholderPriority, stakeholderLevel, analysis);
+            var stakeholder = new Stakeholder(stakeholderName, stakeholderDescription, stakeholderPriority, stakeholderLevel, analysis);
             //TenancySentinel.handleCreate(stakeholder);
             stakeholderRepository.save(stakeholder);
 
@@ -280,6 +281,32 @@ public class ImportExportServiceImpl implements ImportExportService {
         }
 
         return analysis;
+    }
+
+    @SneakyThrows
+    private void migrateAnalysisJsonObject(JSONObject analysisJsonObject, String currentImportExportVersion) {
+        logger.trace("Migrate Analysis Json Object from version {}", currentImportExportVersion);
+
+        switch (currentImportExportVersion) {
+            case "0.0.1":
+                logger.trace("Migrate from version 0.0.1 to 0.0.2"); // Database migration: V1_0_1.
+                // Add empty description to stakeholders.
+                var stakeholdersJson = analysisJsonObject.getJSONArray("stakeholders");
+                for (int i = 0; i < stakeholdersJson.length(); i++) {
+                    var stakeholderJson = stakeholdersJson.getJSONObject(i);
+                    stakeholderJson.put("description", "");
+                }
+
+                migrateAnalysisJsonObject(analysisJsonObject, "0.0.2");
+                break;
+
+            case NEWEST_IMPORT_EXPORT_VERSION: // Version is up to date (recursion base).
+                logger.trace("Arrived at newest version {}", currentImportExportVersion);
+                break;
+
+            default:
+                throw new ImportJsonException("Unknown \"importExportVersion\" (" + currentImportExportVersion + ")");
+        }
     }
 
     private Function<JSONObject, Analysis> resolveImportAnalysisFunction(String currentImportExportVersion) {

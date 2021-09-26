@@ -30,6 +30,11 @@ public class Stakeholder extends PrefixIdEntity implements FindByAnalysis {
 
     @Getter
     @Setter
+    @Column(name = "description", nullable = false, length = 2048)
+    private String description;
+
+    @Getter
+    @Setter
     @Column(name = "priority", nullable = false)
     @Enumerated(EnumType.STRING)
     private StakeholderPriority priority;
@@ -52,10 +57,11 @@ public class Stakeholder extends PrefixIdEntity implements FindByAnalysis {
     @ToString.Exclude
     private final Set<Impact> impacts = new HashSet<>();
 
-    public Stakeholder(String name, StakeholderPriority priority, StakeholderLevel level, Analysis analysis) {
+    public Stakeholder(String name,String description, StakeholderPriority priority, StakeholderLevel level, Analysis analysis) {
         super();
         logger.trace("Constructor");
         setName(name);
+        setDescription(description);
         setPriority(priority);
         setLevel(level);
         setAnalysis(analysis);

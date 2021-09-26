@@ -163,7 +163,7 @@ public abstract class EntityTest<S extends SuperEntity> {
     }
 
     protected Stakeholder getFloatingStakeholder(Analysis analysis) {
-        return new Stakeholder("name", StakeholderPriority.ONE, StakeholderLevel.INDIVIDUAL, analysis);
+        return new Stakeholder("name", "description", StakeholderPriority.ONE, StakeholderLevel.INDIVIDUAL, analysis);
     }
 
     protected Stakeholder getPersistedStakeholder() {

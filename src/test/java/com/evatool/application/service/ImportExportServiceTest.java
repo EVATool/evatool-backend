@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -220,7 +222,7 @@ class ImportExportServiceTest {
 
         var stakeholdersJson = analysisJson.getJSONArray("stakeholders");
         assertThat(stakeholdersJson.length()).isEqualTo(1);
-        assertThat(stakeholdersJson.getJSONObject(0).length()).isEqualTo(4);
+        assertThat(stakeholdersJson.getJSONObject(0).length()).isEqualTo(5);
 
         var impactsJson = analysisJson.getJSONArray("impacts");
         assertThat(impactsJson.length()).isEqualTo(1);
@@ -235,6 +237,23 @@ class ImportExportServiceTest {
         assertThat(requirementDeltasJson.getJSONObject(0).length()).isEqualTo(4);
     }
 
+    @SneakyThrows
+    @Test
+    void testImportMigration_FromPreviousVersion_0_0_1() {
+        // given
+        var importPath = System.getProperty("user.dir") + "/src/test/java/com/evatool/application/service/import-version-files/version_0.0.1.json";
+        var importFile = new File(importPath);
+        var inputStream = new FileInputStream(importFile);
+        var importJson = new String(inputStream.readAllBytes());
+
+        // when
+        System.out.println(importJson);
+        importExportService.importAnalyses(importJson);
+
+        // then
+        // TODO actually assert import analysis instead of only checking if the import does not cause any exceptions.
+    }
+
     private Analysis saveDummyAnalysisWithFewChildEntities() {
         var analysis = new Analysis("", "", false);
         analysisRepository.save(analysis);
@@ -244,7 +263,7 @@ class ImportExportServiceTest {
         valueRepository.save(value1);
 
         // Stakeholders.
-        var stakeholder1 = new Stakeholder("", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
+        var stakeholder1 = new Stakeholder("", "", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
         stakeholderRepository.save(stakeholder1);
 
         // Impacts.
@@ -280,11 +299,11 @@ class ImportExportServiceTest {
         valueRepository.save(value3);
 
         // Stakeholders.
-        var stakeholder1 = new Stakeholder("", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
+        var stakeholder1 = new Stakeholder("", "", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
         stakeholderRepository.save(stakeholder1);
-        var stakeholder2 = new Stakeholder("", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
+        var stakeholder2 = new Stakeholder("", "", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
         stakeholderRepository.save(stakeholder2);
-        var stakeholder3 = new Stakeholder("", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
+        var stakeholder3 = new Stakeholder("", "", StakeholderPriority.ONE, StakeholderLevel.SOCIETY, analysis);
         stakeholderRepository.save(stakeholder3);
 
         // Impacts.

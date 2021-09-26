@@ -25,6 +25,11 @@ public class StakeholderDto extends PrefixIdDto implements AnalysisChildDto {
     @ApiModelProperty(required = true)
     @NotNull
     @ImportExportInclude
+    private String description;
+
+    @ApiModelProperty(required = true)
+    @NotNull
+    @ImportExportInclude
     private StakeholderPriority priority;
 
     @ApiModelProperty(required = true)
@@ -39,8 +44,9 @@ public class StakeholderDto extends PrefixIdDto implements AnalysisChildDto {
     @ApiModelProperty
     private Float impacted;
 
-    public StakeholderDto(String name, StakeholderPriority priority, StakeholderLevel level, UUID analysisId, Float impacted) {
+    public StakeholderDto(String name, String description, StakeholderPriority priority, StakeholderLevel level, UUID analysisId, Float impacted) {
         this.name = name;
+        this.description = description;
         this.priority = priority;
         this.level = level;
         this.analysisId = analysisId;

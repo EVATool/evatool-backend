@@ -24,6 +24,7 @@ public class StakeholderMapper extends PrefixIdMapper<Stakeholder, StakeholderDt
         logger.trace("To Dto");
         var dto = new StakeholderDto(
                 entity.getName(),
+                entity.getDescription(),
                 entity.getPriority(),
                 entity.getLevel(),
                 entity.getAnalysis().getId(),
@@ -38,6 +39,7 @@ public class StakeholderMapper extends PrefixIdMapper<Stakeholder, StakeholderDt
         logger.trace("From Dto");
         var entity = new Stakeholder(
                 dto.getName(),
+                dto.getDescription(),
                 dto.getPriority(),
                 dto.getLevel(),
                 findByIdOrThrowIfEmpty(analysisRepository, dto.getAnalysisId())
