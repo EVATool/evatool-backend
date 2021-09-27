@@ -99,6 +99,10 @@ abstract class CrudControllerTest<S extends SuperEntity, T extends SuperDto> ext
             return UriUtil.VALUES;
         } else if (type == VariantDto.class) {
             return UriUtil.VARIANTS;
+        } else if (type == VariantTypeDto.class) {
+            return UriUtil.VARIANT_TYPES;
+        } else if (type == ValueTypeDto.class) {
+            return UriUtil.VALUE_TYPES;
         } else {
             throw new IllegalArgumentException("No controller found for type " + type.getSimpleName());
         }
