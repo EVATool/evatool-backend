@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.function.Function;
 
 @Service
 public class ImportExportServiceImpl implements ImportExportService {
@@ -31,31 +30,23 @@ public class ImportExportServiceImpl implements ImportExportService {
     private static final Logger logger = LoggerFactory.getLogger(ImportExportServiceImpl.class);
 
     private final AnalysisRepository analysisRepository;
-
     private final ImpactRepository impactRepository;
-
     private final RequirementRepository requirementRepository;
-
     private final RequirementDeltaRepository requirementDeltaRepository;
-
     private final StakeholderRepository stakeholderRepository;
-
+    private final ValueTypeRepository valueTypeRepository;
     private final ValueRepository valueRepository;
-
+    private final VariantTypeRepository variantTypeRepository;
     private final VariantRepository variantRepository;
 
     private final AnalysisMapper analysisMapper;
-
     private final ImpactMapper impactMapper;
-
     private final RequirementMapper requirementMapper;
-
     private final RequirementDeltaMapper requirementDeltaMapper;
-
     private final StakeholderMapper stakeholderMapper;
-
+    private final ValueTypeMapper valueTypeMapper;
     private final ValueMapper valueMapper;
-
+    private final VariantTypeMapper variantTypeMapper;
     private final VariantMapper variantMapper;
 
     public ImportExportServiceImpl(AnalysisRepository analysisRepository,
@@ -63,21 +54,23 @@ public class ImportExportServiceImpl implements ImportExportService {
                                    RequirementRepository requirementRepository,
                                    RequirementDeltaRepository requirementDeltaRepository,
                                    StakeholderRepository stakeholderRepository,
-                                   ValueRepository valueRepository,
-                                   VariantRepository variantRepository,
+                                   ValueTypeRepository valueTypeRepository, ValueRepository valueRepository,
+                                   VariantTypeRepository variantTypeRepository, VariantRepository variantRepository,
                                    AnalysisMapper analysisMapper,
                                    ImpactMapper impactMapper,
                                    RequirementMapper requirementMapper,
                                    RequirementDeltaMapper requirementDeltaMapper,
                                    StakeholderMapper stakeholderMapper,
-                                   ValueMapper valueMapper,
-                                   VariantMapper variantMapper) {
+                                   ValueTypeMapper valueTypeMapper, ValueMapper valueMapper,
+                                   VariantTypeMapper variantTypeMapper, VariantMapper variantMapper) {
         this.analysisRepository = analysisRepository;
         this.impactRepository = impactRepository;
         this.requirementRepository = requirementRepository;
         this.requirementDeltaRepository = requirementDeltaRepository;
         this.stakeholderRepository = stakeholderRepository;
+        this.valueTypeRepository = valueTypeRepository;
         this.valueRepository = valueRepository;
+        this.variantTypeRepository = variantTypeRepository;
         this.variantRepository = variantRepository;
 
         this.analysisMapper = analysisMapper;
@@ -85,7 +78,9 @@ public class ImportExportServiceImpl implements ImportExportService {
         this.requirementMapper = requirementMapper;
         this.requirementDeltaMapper = requirementDeltaMapper;
         this.stakeholderMapper = stakeholderMapper;
+        this.valueTypeMapper = valueTypeMapper;
         this.valueMapper = valueMapper;
+        this.variantTypeMapper = variantTypeMapper;
         this.variantMapper = variantMapper;
     }
 
@@ -127,6 +122,21 @@ public class ImportExportServiceImpl implements ImportExportService {
         //TenancySentinel.handleCreate(analysis);
         analysisRepository.save(analysis);
 
+        // Value Types.
+        var valueTypesJson = analysisJsonObject.getJSONArray("valueTypes");
+        var valueTypesMap = new HashMap<String, ValueType>();
+        for (int i = 0; i < valueTypesJson.length(); i++) {
+            var valueTypeJson = valueTypesJson.getJSONObject(i);
+            var valueTypeName = valueTypeJson.getString("name");
+            var valueTypeDescription = valueTypeJson.getString("description");
+
+            var valueType = new ValueType(valueTypeName, valueTypeDescription, analysis);
+            valueTypeRepository.save(valueType);
+
+            var valueTypeId = valueTypeJson.getString("id");
+            valueTypesMap.put(valueTypeId, valueType);
+        }
+
         // Values.
         var valuesJson = analysisJsonObject.getJSONArray("values");
         var valuesMap = new HashMap<String, Value>();
@@ -136,15 +146,14 @@ public class ImportExportServiceImpl implements ImportExportService {
             var valueName = valueJson.getString("name");
             var valueDescription = valueJson.getString("description");
             var valueTypeString = valueJson.getString("type");
-            ValueType valueType;
-            try {
-                valueType = ValueType.valueOf(valueTypeString);
-            } catch (IllegalArgumentException exception) {
-                throw new ImportJsonException("Unknown ValueType (" + valueTypeString + ")");
-            }
             var valueArchived = valueJson.getBoolean("archived");
+            var valueTypeId = valueJson.getString("valueTypeId");
+            var valueType = valueTypesMap.get(valueTypeId);
+            if (valueType == null) {
+                throw new ImportJsonException("The ValueType with id " + valueTypeId + " is referenced by this value but is not present.");
+            }
 
-            var value = new Value(valueName, valueDescription, valueType, valueArchived, analysis);
+            var value = new Value(valueName, valueDescription, valueArchived, valueType, analysis);
             //TenancySentinel.handleCreate(value);
             valueRepository.save(value);
 
@@ -210,6 +219,21 @@ public class ImportExportServiceImpl implements ImportExportService {
             impactsMap.put(impactId, impact);
         }
 
+        // Variant Types.
+        var variantTypesJson = analysisJsonObject.getJSONArray("variantTypes");
+        var variantTypesMap = new HashMap<String, VariantType>();
+        for (int i = 0; i < variantTypesJson.length(); i++) {
+            var variantTypeJson = variantTypesJson.getJSONObject(i);
+            var variantTypeName = variantTypeJson.getString("name");
+            var variantTypeDescription = variantTypeJson.getString("description");
+
+            var variantType = new VariantType(variantTypeName, variantTypeDescription, analysis);
+            variantTypeRepository.save(variantType);
+
+            var variantTypeId = variantTypeJson.getString("id");
+            variantTypesMap.put(variantTypeId, variantType);
+        }
+
         // Variants.
         var variantsJson = analysisJsonObject.getJSONArray("variants");
         var variantsMap = new HashMap<String, Variant>();
@@ -219,8 +243,13 @@ public class ImportExportServiceImpl implements ImportExportService {
             var variantName = variantJson.getString("name");
             var variantDescription = variantJson.getString("description");
             var variantArchived = variantJson.getBoolean("archived");
+            var variantTypeId = variantJson.getString("variantTypeId");
+            var variantType = variantTypesMap.get(variantTypeId);
+            if (variantType == null) {
+                throw new ImportJsonException("The VariantType with id " + variantTypeId + " is referenced by this variant but is not present.");
+            }
 
-            var variant = new Variant(variantName, variantDescription, variantArchived, analysis);
+            var variant = new Variant(variantName, variantDescription, variantArchived, variantType, analysis);
             //TenancySentinel.handleCreate(variant);
             variantRepository.save(variant);
 
@@ -320,23 +349,6 @@ public class ImportExportServiceImpl implements ImportExportService {
         }
     }
 
-    private Function<JSONObject, Analysis> resolveImportAnalysisFunction(String currentImportExportVersion) {
-        logger.trace("Resolve Import Analysis Function");
-
-        if (NEWEST_IMPORT_EXPORT_VERSION.equals(currentImportExportVersion)) {
-            return this::importAnalysis;
-        } else {  // Migration.
-            switch (currentImportExportVersion) {
-
-                case "0.0.1": // Not yet reachable.
-                    return this::importAnalysis; // importAnalysis_0_0_1;
-
-                default:
-                    throw new ImportJsonException("Unknown \"importExportVersion\" (" + currentImportExportVersion + ")");
-            }
-        }
-    }
-
     @SneakyThrows
     @Override
     public String exportAnalyses(Iterable<UUID> analysisIds) {
@@ -394,29 +406,35 @@ public class ImportExportServiceImpl implements ImportExportService {
 
         // Retrieve entities.
         var analysisId = analysis.getId();
+        var valueTypes = valueTypeRepository.findAllByAnalysisId(analysisId);
         var values = valueRepository.findAllByAnalysisId(analysisId);
         var stakeholders = stakeholderRepository.findAllByAnalysisId(analysisId);
         var impacts = impactRepository.findAllByAnalysisId(analysisId);
         var requirements = requirementRepository.findAllByAnalysisId(analysisId);
         var requirementDeltas = requirementDeltaRepository.findAllByAnalysisId(analysisId);
+        var variantTypes = variantTypeRepository.findAllByAnalysisId(analysisId);
         var variants = variantRepository.findAllByAnalysisId(analysisId);
 
         // Convert entities to json strings.
         var analysisDto = analysisMapper.toDto(analysis);
-        var valuesDtoList = valueMapper.toDtoList(values);
-        var stakeholdersDtoList = stakeholderMapper.toDtoList(stakeholders);
-        var impactsDtoList = impactMapper.toDtoList(impacts);
-        var requirementsDtoList = requirementMapper.toDtoList(requirements);
-        var requirementDeltasDtoList = requirementDeltaMapper.toDtoList(requirementDeltas);
-        var variantsDtoList = variantMapper.toDtoList(variants);
+        var valueTypeDtoList = valueTypeMapper.toDtoList(valueTypes);
+        var valueDtoList = valueMapper.toDtoList(values);
+        var stakeholderDtoList = stakeholderMapper.toDtoList(stakeholders);
+        var impactDtoList = impactMapper.toDtoList(impacts);
+        var requirementDtoList = requirementMapper.toDtoList(requirements);
+        var requirementDeltaDtoList = requirementDeltaMapper.toDtoList(requirementDeltas);
+        var variantTypeDtoList = variantTypeMapper.toDtoList(variantTypes);
+        var variantDtoList = variantMapper.toDtoList(variants);
 
         return new ImportExportAnalysisDto(
                 analysisDto,
-                valuesDtoList,
-                stakeholdersDtoList,
-                impactsDtoList,
-                requirementsDtoList,
-                requirementDeltasDtoList,
-                variantsDtoList);
+                valueTypeDtoList,
+                valueDtoList,
+                stakeholderDtoList,
+                impactDtoList,
+                requirementDtoList,
+                requirementDeltaDtoList,
+                variantTypeDtoList,
+                variantDtoList);
     }
 }
