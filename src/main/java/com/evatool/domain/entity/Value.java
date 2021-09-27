@@ -1,6 +1,5 @@
 package com.evatool.domain.entity;
 
-import com.evatool.common.enums.ValueType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,13 +33,13 @@ public class Value extends SuperEntity implements FindByAnalysis {
 
     @Getter
     @Setter
-    @Column(name = "type", nullable = false)
-    private ValueType type;
+    @Column(name = "archived", nullable = false)
+    private Boolean archived;
 
     @Getter
     @Setter
-    @Column(name = "archived", nullable = false)
-    private Boolean archived;
+    @ManyToOne(optional = false)
+    private ValueType type;
 
     @Getter
     @Setter
@@ -54,13 +53,13 @@ public class Value extends SuperEntity implements FindByAnalysis {
     @ToString.Exclude
     private final Set<Impact> impacts = new HashSet<>();
 
-    public Value(String name, String description, ValueType type, Boolean archived, Analysis analysis) {
+    public Value(String name, String description, Boolean archived, ValueType type, Analysis analysis) {
         super();
         logger.trace("Constructor");
         setName(name);
         setDescription(description);
-        setType(type);
         setArchived(archived);
+        setType(type);
         setAnalysis(analysis);
     }
 

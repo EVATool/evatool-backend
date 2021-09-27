@@ -3,6 +3,7 @@ package com.evatool.application.mapper;
 import com.evatool.application.dto.ValueDto;
 import com.evatool.domain.entity.Value;
 import com.evatool.domain.repository.AnalysisRepository;
+import com.evatool.domain.repository.ValueTypeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,11 @@ public class ValueMapper extends SuperMapper<Value, ValueDto> {
 
     private final AnalysisRepository analysisRepository;
 
-    public ValueMapper(AnalysisRepository analysisRepository) {
+    private final ValueTypeRepository valueTypeRepository;
+
+    public ValueMapper(AnalysisRepository analysisRepository, ValueTypeRepository valueTypeRepository) {
         logger.trace("Constructor");
+        this.valueTypeRepository = valueTypeRepository;
         this.analysisRepository = analysisRepository;
     }
 
@@ -25,8 +29,8 @@ public class ValueMapper extends SuperMapper<Value, ValueDto> {
         var dto = new ValueDto(
                 entity.getName(),
                 entity.getDescription(),
-                entity.getType(),
                 entity.getArchived(),
+                entity.getType().getId(),
                 entity.getAnalysis().getId()
         );
         super.amendToDto(entity, dto);
@@ -39,8 +43,8 @@ public class ValueMapper extends SuperMapper<Value, ValueDto> {
         var entity = new Value(
                 dto.getName(),
                 dto.getDescription(),
-                dto.getType(),
                 dto.getArchived(),
+                findByIdOrThrowIfEmpty(valueTypeRepository, dto.getValueTypeId()),
                 findByIdOrThrowIfEmpty(analysisRepository, dto.getAnalysisId())
         );
         super.amendFromDto(entity, dto);

@@ -3,7 +3,6 @@ package com.evatool.application.controller.impl;
 import com.evatool.application.controller.api.ValueController;
 import com.evatool.application.dto.ValueDto;
 import com.evatool.application.service.impl.ValueServiceImpl;
-import com.evatool.common.enums.ValueType;
 import com.evatool.common.util.AuthUtil;
 import com.evatool.common.util.UriUtil;
 import com.evatool.domain.entity.Value;
@@ -11,7 +10,6 @@ import io.swagger.annotations.Api;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +29,6 @@ public class ValueControllerImpl extends CrudControllerImpl<Value, ValueDto> imp
         super(service);
         logger.trace("Constructor");
         this.service = service;
-    }
-
-    @Override
-    @GetMapping(UriUtil.VALUES_TYPES)
-    @PreAuthorize(AuthUtil.BY_READER)
-    public ResponseEntity<Iterable<ValueType>> findAllValuesTypes() {
-        return new ResponseEntity<>(service.findAllValueTypes(), HttpStatus.OK);
     }
 
     @Override

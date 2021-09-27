@@ -7,13 +7,13 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-@ApiModel(value = "VariantDto")
+@ApiModel(value = "VariantTypeDto")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Getter
 @Setter
 @NoArgsConstructor
-public class VariantDto extends PrefixIdDto implements AnalysisChildDto {
+public class VariantTypeDto extends SuperDto implements AnalysisChildDto {
 
     @ApiModelProperty(required = true)
     @NotNull
@@ -27,22 +27,11 @@ public class VariantDto extends PrefixIdDto implements AnalysisChildDto {
 
     @ApiModelProperty(required = true)
     @NotNull
-    @ImportExportInclude
-    private Boolean archived;
-
-    @ApiModelProperty(required = true)
-    @NotNull
-    private UUID variantTypeId;
-
-    @ApiModelProperty(required = true)
-    @NotNull
     private UUID analysisId;
 
-    public VariantDto(String name, String description, Boolean archived, UUID variantTypeId, UUID analysisId) {
+    public VariantTypeDto(String name, String description, UUID analysisId) {
         this.name = name;
         this.description = description;
-        this.archived = archived;
-        this.variantTypeId = variantTypeId;
         this.analysisId = analysisId;
     }
 }

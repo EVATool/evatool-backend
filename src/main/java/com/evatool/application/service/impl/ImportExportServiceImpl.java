@@ -6,7 +6,6 @@ import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ImportExportService;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
-import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.functional.http400.ImportJsonException;
 import com.evatool.domain.entity.*;
 import com.evatool.domain.repository.*;

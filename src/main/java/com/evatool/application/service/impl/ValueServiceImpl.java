@@ -4,7 +4,6 @@ import com.evatool.application.dto.ValueDto;
 import com.evatool.application.mapper.ValueMapper;
 import com.evatool.application.service.TenancySentinel;
 import com.evatool.application.service.api.ValueService;
-import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.functional.http409.EntityStillReferencedException;
 import com.evatool.common.util.IterableUtil;
 import com.evatool.domain.entity.Value;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 import static com.evatool.common.util.FunctionalErrorCodesUtil.VALUE_REFERENCED_BY_IMPACT;
@@ -59,11 +57,5 @@ public class ValueServiceImpl extends CrudServiceImpl<Value, ValueDto> implement
                     tag);
         }
         super.deleteById(id);
-    }
-
-    @Override
-    public Iterable<ValueType> findAllValueTypes() {
-        logger.trace("Find All Value Types");
-        return Arrays.asList(ValueType.values());
     }
 }

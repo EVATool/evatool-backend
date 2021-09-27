@@ -1,6 +1,5 @@
 package com.evatool.application.dto;
 
-import com.evatool.common.enums.ValueType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -28,8 +27,7 @@ public class ValueDto extends SuperDto implements AnalysisChildDto {
 
     @ApiModelProperty(required = true)
     @NotNull
-    @ImportExportInclude
-    private ValueType type;
+    private UUID valueTypeId;
 
     @ApiModelProperty(required = true)
     @NotNull
@@ -40,11 +38,11 @@ public class ValueDto extends SuperDto implements AnalysisChildDto {
     @NotNull
     private UUID analysisId;
 
-    public ValueDto(String name, String description, ValueType type, Boolean archived, UUID analysisId) {
+    public ValueDto(String name, String description, Boolean archived, UUID valueTypeId, UUID analysisId) {
         this.name = name;
-        this.type = type;
         this.description = description;
         this.archived = archived;
+        this.valueTypeId = valueTypeId;
         this.analysisId = analysisId;
     }
 }
