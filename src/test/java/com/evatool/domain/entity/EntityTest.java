@@ -2,7 +2,6 @@ package com.evatool.domain.entity;
 
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
-import com.evatool.common.enums.ValueType;
 import com.evatool.domain.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +29,16 @@ public abstract class EntityTest<S extends SuperEntity> {
     protected ValueRepository valueRepository;
 
     @Autowired
+    protected ValueTypeRepository valueTypeRepository;
+
+    @Autowired
     protected VariantRepository variantRepository;
+
+    @Autowired
+    protected VariantTypeRepository variantTypeRepository;
 
     @BeforeEach
     protected void clearDatabase() {
-        requirementDeltaRepository.deleteAll();
-        requirementRepository.deleteAll();
-        impactRepository.deleteAll();
-        valueRepository.deleteAll();
-        stakeholderRepository.deleteAll();
-        variantRepository.deleteAll();
         analysisRepository.deleteAll();
     }
 
@@ -179,7 +178,11 @@ public abstract class EntityTest<S extends SuperEntity> {
     }
 
     protected Value getFloatingValue(Analysis analysis) {
-        return new Value("name", "description", ValueType.SOCIAL, false, analysis);
+        return getFloatingValue(analysis, getPersistedValueType(analysis));
+    }
+
+    protected Value getFloatingValue(Analysis analysis, ValueType valueType) {
+        return new Value("name", "description", false, valueType, analysis);
     }
 
     protected Value getPersistedValue() {
@@ -190,12 +193,32 @@ public abstract class EntityTest<S extends SuperEntity> {
         return valueRepository.save(getFloatingValue(analysis));
     }
 
+    protected VariantType getFloatingVariantType() {
+        return getFloatingVariantType(getPersistedAnalysis());
+    }
+
+    protected VariantType getFloatingVariantType(Analysis analysis) {
+        return new VariantType("name", "description", analysis);
+    }
+
+    protected VariantType getPersistedVariantType() {
+        return getPersistedVariantType(getPersistedAnalysis());
+    }
+
+    protected VariantType getPersistedVariantType(Analysis analysis) {
+        return variantTypeRepository.save(getFloatingVariantType(analysis));
+    }
+
     protected Variant getFloatingVariant() {
         return getFloatingVariant(getPersistedAnalysis());
     }
 
     protected Variant getFloatingVariant(Analysis analysis) {
-        return new Variant("name", "description", false, analysis);
+        return getFloatingVariant(analysis, getPersistedVariantType(analysis));
+    }
+
+    protected Variant getFloatingVariant(Analysis analysis, VariantType variantType) {
+        return new Variant("name", "description", false, variantType, analysis);
     }
 
     protected Variant getPersistedVariant() {

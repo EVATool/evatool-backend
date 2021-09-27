@@ -263,8 +263,12 @@ class ImportExportServiceTest {
         var analysis = new Analysis("", "", false);
         analysisRepository.save(analysis);
 
+        // Value types.
+        var valueType1 = new ValueType("", "", analysis);
+        valueTypeRepository.save(valueType1);
+
         // Values.
-        var value1 = new Value("", "", ValueType.SOCIAL, false, analysis);
+        var value1 = new Value("", "", false, valueType1, analysis);
         valueRepository.save(value1);
 
         // Stakeholders.
@@ -275,8 +279,12 @@ class ImportExportServiceTest {
         var impact1 = new Impact(0.2f, "", value1, stakeholder1, analysis);
         impactRepository.save(impact1);
 
+        // Variant types.
+        var variantType1 = new VariantType("", "", analysis);
+        variantTypeRepository.save(variantType1);
+
         // Variants.
-        var variant1 = new Variant("", "", false, analysis);
+        var variant1 = new Variant("", "", false, variantType1, analysis);
         variantRepository.save(variant1);
 
         // Requirements.
@@ -295,12 +303,18 @@ class ImportExportServiceTest {
         var analysis = new Analysis("", "", false);
         analysisRepository.save(analysis);
 
+        // Value types.
+        var valueType1 = new ValueType("", "", analysis);
+        valueTypeRepository.save(valueType1);
+        var valueType2 = new ValueType("", "", analysis);
+        valueTypeRepository.save(valueType2);
+
         // Values.
-        var value1 = new Value("", "", ValueType.SOCIAL, false, analysis);
+        var value1 = new Value("", "", false, valueType1, analysis);
         valueRepository.save(value1);
-        var value2 = new Value("", "", ValueType.SOCIAL, false, analysis);
+        var value2 = new Value("", "", false, valueType2, analysis);
         valueRepository.save(value2);
-        var value3 = new Value("", "", ValueType.SOCIAL, false, analysis);
+        var value3 = new Value("", "", false, valueType1, analysis);
         valueRepository.save(value3);
 
         // Stakeholders.
@@ -321,12 +335,18 @@ class ImportExportServiceTest {
         var impact4 = new Impact(0.2f, "", value1, stakeholder2, analysis);
         impactRepository.save(impact4);
 
+        // Variant types.
+        var variantType1 = new VariantType("", "", analysis);
+        variantTypeRepository.save(variantType1);
+        var variantType2 = new VariantType("", "", analysis);
+        variantTypeRepository.save(variantType2);
+
         // Variants.
-        var variant1 = new Variant("", "", false, analysis);
+        var variant1 = new Variant("", "", false, variantType1, analysis);
         variantRepository.save(variant1);
-        var variant2 = new Variant("", "", false, analysis);
+        var variant2 = new Variant("", "", false, variantType1, analysis);
         variantRepository.save(variant2);
-        var variant3 = new Variant("", "", false, analysis);
+        var variant3 = new Variant("", "", false, variantType2, analysis);
         variantRepository.save(variant3);
 
         // Requirements.

@@ -152,7 +152,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             var dto = (Value) _entity;
             dto.setName("updated");
             dto.setDescription("updated");
-            dto.setType(ValueType.ECONOMIC);
             dto.setArchived(true);
         } else if (type == Variant.class) {
             var dto = (Variant) _entity;
@@ -191,7 +190,6 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             var dto = (ValueDto) _dto;
             dto.setName("updated");
             dto.setDescription("updated");
-            dto.setType(ValueType.ECONOMIC);
             dto.setArchived(true);
         } else if (type == VariantDto.class) {
             var dto = (VariantDto) _dto;
