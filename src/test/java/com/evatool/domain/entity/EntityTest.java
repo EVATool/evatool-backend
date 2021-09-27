@@ -173,6 +173,22 @@ public abstract class EntityTest<S extends SuperEntity> {
         return stakeholderRepository.save(getFloatingStakeholder(analysis));
     }
 
+    protected ValueType getFloatingValueType() {
+        return getFloatingValueType(getPersistedAnalysis());
+    }
+
+    protected ValueType getFloatingValueType(Analysis analysis) {
+        return new ValueType("name", "description", analysis);
+    }
+
+    protected ValueType getPersistedValueType() {
+        return getPersistedValueType(getPersistedAnalysis());
+    }
+
+    protected ValueType getPersistedValueType(Analysis analysis) {
+        return valueTypeRepository.save(getFloatingValueType(analysis));
+    }
+
     protected Value getFloatingValue() {
         return getFloatingValue(getPersistedAnalysis());
     }
