@@ -62,6 +62,10 @@ public abstract class EntityTest<S extends SuperEntity> {
             return getFloatingValue();
         } else if (type == Variant.class) {
             return getFloatingVariant();
+        } else if (type == VariantType.class) {
+            return getFloatingVariantType();
+        } else if (type == ValueType.class) {
+            return getFloatingValueType();
         } else {
             throw new IllegalArgumentException("No method found for type " + type.getSimpleName());
         }
@@ -83,6 +87,10 @@ public abstract class EntityTest<S extends SuperEntity> {
             return getPersistedValue();
         } else if (type == Variant.class) {
             return getPersistedVariant();
+        } else if (type == VariantType.class) {
+            return getPersistedVariantType();
+        } else if (type == ValueType.class) {
+            return getPersistedValueType();
         } else {
             throw new IllegalArgumentException("No method found for type " + type.getSimpleName());
         }

@@ -35,6 +35,10 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             return valueRepository;
         } else if (type == Variant.class) {
             return variantRepository;
+        } else if (type == VariantType.class) {
+            return variantTypeRepository;
+        } else if (type == ValueType.class) {
+            return valueTypeRepository;
         } else {
             throw new IllegalArgumentException("No repository found for type " + type.getSimpleName());
         }
@@ -56,6 +60,10 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             return valueMapper;
         } else if (type == VariantDto.class) {
             return variantMapper;
+        } else if (type == VariantTypeDto.class) {
+            return variantTypeMapper;
+        } else if (type == ValueTypeDto.class) {
+            return valueTypeMapper;
         } else {
             throw new IllegalArgumentException("No service found for type " + type.getSimpleName());
         }
@@ -77,11 +85,16 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
     protected StakeholderMapper stakeholderMapper;
 
     @Autowired
+    protected ValueTypeMapper valueTypeMapper;
+
+    @Autowired
     protected ValueMapper valueMapper;
 
     @Autowired
-    protected VariantMapper variantMapper;
+    protected VariantTypeMapper variantTypeMapper;
 
+    @Autowired
+    protected VariantMapper variantMapper;
 
     public T getPersistedDto() {
         var type = getDtoClass();
@@ -158,6 +171,14 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             dto.setName("updated");
             dto.setDescription("updated");
             dto.setArchived(true);
+        } else if (type == VariantType.class) {
+            var dto = (VariantType) _entity;
+            dto.setName("updated");
+            dto.setDescription("updated");
+        } else if (type == ValueType.class) {
+            var dto = (ValueType) _entity;
+            dto.setName("updated");
+            dto.setDescription("updated");
         } else {
             throw new IllegalArgumentException("No method found for type " + type.getSimpleName());
         }
