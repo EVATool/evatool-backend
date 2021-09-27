@@ -7,8 +7,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class VariantMapperTest extends SuperMapperTest<Variant, VariantDto, VariantMapper> {
-
-    @Autowired
-    private VariantMapper mapper;
-
 }

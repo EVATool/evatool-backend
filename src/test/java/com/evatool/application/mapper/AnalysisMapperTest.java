@@ -7,8 +7,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class AnalysisMapperTest extends SuperMapperTest<Analysis, AnalysisDto, AnalysisMapper> {
-
-    @Autowired
-    private AnalysisMapper mapper;
-
 }

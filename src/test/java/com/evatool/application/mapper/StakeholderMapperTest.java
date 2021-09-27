@@ -7,8 +7,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class StakeholderMapperTest extends SuperMapperTest<Stakeholder, StakeholderDto, StakeholderMapper> {
-
-    @Autowired
-    private StakeholderMapper mapper;
-
 }

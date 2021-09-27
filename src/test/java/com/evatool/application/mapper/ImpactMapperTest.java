@@ -7,8 +7,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class ImpactMapperTest extends SuperMapperTest<Impact, ImpactDto, ImpactMapper> {
-
-    @Autowired
-    private ImpactMapper mapper;
-
 }
