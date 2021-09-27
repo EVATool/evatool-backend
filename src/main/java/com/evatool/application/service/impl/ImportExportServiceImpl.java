@@ -7,12 +7,14 @@ import com.evatool.application.service.api.ImportExportService;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
 import com.evatool.common.exception.functional.http400.ImportJsonException;
+import com.evatool.common.util.PrintUtil;
 import com.evatool.domain.entity.*;
 import com.evatool.domain.repository.*;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.GsonBuilder;
 import lombok.SneakyThrows;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -20,9 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ImportExportServiceImpl implements ImportExportService {
@@ -317,6 +317,7 @@ public class ImportExportServiceImpl implements ImportExportService {
         switch (currentImportExportVersion) {
             case "0.0.1":
                 logger.trace("Migrate from version 0.0.1 to 0.0.2"); // Database migration: V1_0_1.
+
                 // Add empty description to stakeholders.
                 var stakeholdersJson = analysisJsonObject.getJSONArray("stakeholders");
                 for (int i = 0; i < stakeholdersJson.length(); i++) {
@@ -329,13 +330,71 @@ public class ImportExportServiceImpl implements ImportExportService {
 
             case "0.0.2":
                 logger.trace("Migrate from version 0.0.2 to 0.0.3"); // Database migration: V1_0_2.
+
+                System.out.println(PrintUtil.prettifyJson(analysisJsonObject.toString()));
+
+                // Create default ValueType entities [SOCIAL, ECONOMIC].
+                var socialValueTypeJson = new JSONObject();
+                var socialValueTypeId = UUID.randomUUID().toString();
+                socialValueTypeJson.put("id", socialValueTypeId);
+                socialValueTypeJson.put("name", "Social");
+                socialValueTypeJson.put("description", "");
+
+                var economicValueTypeJson = new JSONObject();
+                var economicValueTypeId = UUID.randomUUID().toString();
+                economicValueTypeJson.put("id", economicValueTypeId);
+                economicValueTypeJson.put("name", "Economic");
+                economicValueTypeJson.put("description", "");
+
+                // Put default ValueType entities into analysis json.
+                var valueTypesJson = new JSONArray(Arrays.asList(socialValueTypeJson, economicValueTypeJson));
+                analysisJsonObject.putOpt("valueTypes", valueTypesJson);
+
                 // Replace hard coded enums [SOCIAL, ECONOMIC] by default ValueType entities.
-                // TODO
+                var valuesJson = analysisJsonObject.getJSONArray("values");
+                for (int i = 0; i < valuesJson.length(); i++) {
+                    var valueJson = valuesJson.getJSONObject(i);
+
+                    // Remove old type attribute.
+                    var oldValueType = valueJson.getString("type");
+                    valueJson.remove("type");
+
+                    // Add reference to the default ValueType entity that was just created.
+                    switch (oldValueType) {
+                        case "SOCIAL":
+                            valueJson.put("valueTypeId", socialValueTypeId);
+                            break;
+
+                        case "ECONOMIC":
+                            valueJson.put("valueTypeId", economicValueTypeId);
+                            break;
+
+                        default:
+                            throw new ImportJsonException("Invalid (old) ValueType \"" + oldValueType + "\" encountered");
+                    }
+                }
 
                 // VariantTypes didn't exist before, so use a default entity for all existing Variants.
-                // TODO
+                var defaultVariantTypeJson = new JSONObject();
+                var defaultVariantTypeId = UUID.randomUUID().toString();
+                defaultVariantTypeJson.put("id", defaultVariantTypeId);
+                defaultVariantTypeJson.put("name", "Default");
+                defaultVariantTypeJson.put("description", "");
 
-                // TODO migration test.
+                // Put default VariantType entities into analysis json.
+                var variantTypesJson = new JSONArray(Collections.singletonList(defaultVariantTypeJson));
+                analysisJsonObject.putOpt("variantTypes", variantTypesJson);
+
+                // Inject default VariantType into existing Variants.
+                var variantsJson = analysisJsonObject.getJSONArray("variants");
+                for (int i = 0; i < variantsJson.length(); i++) {
+                    var variantJson = variantsJson.getJSONObject(i);
+
+                    // Add reference to the default VariantType entity that was just created.
+                    variantJson.put("variantTypeId", defaultVariantTypeId);
+                }
+                
+                System.out.println(PrintUtil.prettifyJson(analysisJsonObject.toString()));
 
                 break;
 
