@@ -112,6 +112,10 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             return (T) getPersistedValueDto();
         } else if (type == VariantDto.class) {
             return (T) getPersistedVariantDto();
+        } else if (type == VariantTypeDto.class) {
+            return (T) getPersistedVariantTypeDto();
+        } else if (type == ValueTypeDto.class) {
+            return (T) getPersistedValueTypeDto();
         } else {
             throw new IllegalArgumentException("No method found for type " + type.getSimpleName());
         }
@@ -133,6 +137,10 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             return (T) getFloatingValueDto();
         } else if (type == VariantDto.class) {
             return (T) getFloatingVariantDto();
+        } else if (type == VariantTypeDto.class) {
+            return (T) getFloatingVariantTypeDto();
+        } else if (type == ValueTypeDto.class) {
+            return (T) getFloatingValueTypeDto();
         } else {
             throw new IllegalArgumentException("No method found for type " + type.getSimpleName());
         }
@@ -217,6 +225,14 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             dto.setName("updated");
             dto.setDescription("updated");
             dto.setArchived(true);
+        } else if (type == VariantTypeDto.class) {
+            var dto = (VariantTypeDto) _dto;
+            dto.setName("updated");
+            dto.setDescription("updated");
+        } else if (type == ValueTypeDto.class) {
+            var dto = (ValueTypeDto) _dto;
+            dto.setName("updated");
+            dto.setDescription("updated");
         } else {
             throw new IllegalArgumentException("No method found for type " + type.getSimpleName());
         }
@@ -238,6 +254,10 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
             return valueService;
         } else if (type == VariantDto.class) {
             return variantService;
+        } else if (type == VariantTypeDto.class) {
+            return variantTypeService;
+        } else if (type == ValueTypeDto.class) {
+            return valueTypeService;
         } else {
             throw new IllegalArgumentException("No service found for type " + type.getSimpleName());
         }
@@ -259,7 +279,13 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
     private StakeholderServiceImpl stakeholderService;
 
     @Autowired
+    private ValueTypeServiceImpl valueTypeService;
+
+    @Autowired
     private ValueServiceImpl valueService;
+
+    @Autowired
+    private VariantTypeServiceImpl variantTypeService;
 
     @Autowired
     private VariantServiceImpl variantService;
@@ -304,12 +330,28 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
         return stakeholderMapper.toDto(getPersistedStakeholder());
     }
 
+    protected ValueTypeDto getFloatingValueTypeDto() {
+        return valueTypeMapper.toDto(getFloatingValueType());
+    }
+
+    protected ValueTypeDto getPersistedValueTypeDto() {
+        return valueTypeMapper.toDto(getPersistedValueType());
+    }
+
     protected ValueDto getFloatingValueDto() {
         return valueMapper.toDto(getFloatingValue());
     }
 
     protected ValueDto getPersistedValueDto() {
         return valueMapper.toDto(getPersistedValue());
+    }
+
+    protected VariantTypeDto getFloatingVariantTypeDto() {
+        return variantTypeMapper.toDto(getFloatingVariantType());
+    }
+
+    protected VariantTypeDto getPersistedVariantTypeDto() {
+        return variantTypeMapper.toDto(getPersistedVariantType());
     }
 
     protected VariantDto getFloatingVariantDto() {
@@ -319,5 +361,4 @@ public abstract class DataTest<S extends SuperEntity, T extends SuperDto> extend
     protected VariantDto getPersistedVariantDto() {
         return variantMapper.toDto(getPersistedVariant());
     }
-
 }
