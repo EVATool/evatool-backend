@@ -331,8 +331,6 @@ public class ImportExportServiceImpl implements ImportExportService {
             case "0.0.2":
                 logger.trace("Migrate from version 0.0.2 to 0.0.3"); // Database migration: V1_0_2.
 
-                System.out.println(PrintUtil.prettifyJson(analysisJsonObject.toString()));
-
                 // Create default ValueType entities [SOCIAL, ECONOMIC].
                 var socialValueTypeJson = new JSONObject();
                 var socialValueTypeId = UUID.randomUUID().toString();
@@ -393,8 +391,6 @@ public class ImportExportServiceImpl implements ImportExportService {
                     // Add reference to the default VariantType entity that was just created.
                     variantJson.put("variantTypeId", defaultVariantTypeId);
                 }
-                
-                System.out.println(PrintUtil.prettifyJson(analysisJsonObject.toString()));
 
                 break;
 
