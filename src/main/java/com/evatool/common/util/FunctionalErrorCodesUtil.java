@@ -31,6 +31,8 @@ public class FunctionalErrorCodesUtil {
     public static final int VARIANT_FIND_FAILED_NOT_FOUND = 404_105;
     public static final int REQUIREMENT_FIND_FAILED_NOT_FOUND = 404_106;
     public static final int REQUIREMENT_DELTA_FIND_FAILED_NOT_FOUND = 404_107;
+    public static final int VALUE_TYPE_FIND_FAILED_NOT_FOUND = 404_108;
+    public static final int VARIANT_TYPE_FIND_FAILED_NOT_FOUND = 404_109;
 
     public static final int ANALYSIS_UPDATE_FAILED_NOT_FOUND = 404_201;
     public static final int STAKEHOLDER_UPDATE_FAILED_NOT_FOUND = 404_202;
@@ -39,6 +41,8 @@ public class FunctionalErrorCodesUtil {
     public static final int VARIANT_UPDATE_FAILED_NOT_FOUND = 404_205;
     public static final int REQUIREMENT_UPDATE_FAILED_NOT_FOUND = 404_206;
     public static final int REQUIREMENT_DELTA_UPDATE_FAILED_NOT_FOUND = 404_207;
+    public static final int VALUE_TYPE_UPDATE_FAILED_NOT_FOUND = 404_208;
+    public static final int VARIANT_TYPE_UPDATE_FAILED_NOT_FOUND = 404_209;
 
     public static final int ANALYSIS_DELETION_FAILED_NOT_FOUND = 404_301;
     public static final int STAKEHOLDER_DELETION_FAILED_NOT_FOUND = 404_302;
@@ -47,6 +51,8 @@ public class FunctionalErrorCodesUtil {
     public static final int VARIANT_DELETION_FAILED_NOT_FOUND = 404_305;
     public static final int REQUIREMENT_DELETION_FAILED_NOT_FOUND = 404_306;
     public static final int REQUIREMENT_DELTA_DELETION_FAILED_NOT_FOUND = 404_307;
+    public static final int VALUE_TYPE_DELETION_FAILED_NOT_FOUND = 404_308;
+    public static final int VARIANT_TYPE_DELETION_FAILED_NOT_FOUND = 404_309;
 
     // 409 Conflict codes.
     public static final int VALUE_REFERENCED_BY_IMPACT = 409_001;
@@ -56,5 +62,7 @@ public class FunctionalErrorCodesUtil {
     public static final int REGISTER_USERNAME_ALREADY_EXISTS = 409_005;
     public static final int REGISTER_EMAIL_ALREADY_EXISTS = 409_006;
     public static final int REGISTER_REALM_ALREADY_EXISTS = 409_007;
+    public static final int VALUE_TYPE_REFERENCED_BY_VALUE = 409_008;
+    public static final int VARIANT_TYPE_REFERENCED_BY_VARIANT = 409_009;
 
 }

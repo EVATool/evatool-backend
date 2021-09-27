@@ -139,6 +139,10 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
             return FunctionalErrorCodesUtil.VALUE_FIND_FAILED_NOT_FOUND;
         } else if (type == Variant.class) {
             return FunctionalErrorCodesUtil.VARIANT_FIND_FAILED_NOT_FOUND;
+        } else if (type == VariantType.class) {
+            return FunctionalErrorCodesUtil.VARIANT_TYPE_FIND_FAILED_NOT_FOUND;
+        } else if (type == ValueType.class) {
+            return FunctionalErrorCodesUtil.VALUE_TYPE_FIND_FAILED_NOT_FOUND;
         } else {
             throw new IllegalArgumentException("No 'NotFoundInFind' functional error code found for type " + type.getSimpleName());
         }
@@ -159,6 +163,10 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
             return FunctionalErrorCodesUtil.VALUE_UPDATE_FAILED_NOT_FOUND;
         } else if (type == Variant.class) {
             return FunctionalErrorCodesUtil.VARIANT_UPDATE_FAILED_NOT_FOUND;
+        } else if (type == VariantType.class) {
+            return FunctionalErrorCodesUtil.VARIANT_TYPE_UPDATE_FAILED_NOT_FOUND;
+        } else if (type == ValueType.class) {
+            return FunctionalErrorCodesUtil.VALUE_TYPE_UPDATE_FAILED_NOT_FOUND;
         } else {
             throw new IllegalArgumentException("No 'NotFoundInUpdate' functional error code found for type " + type.getSimpleName());
         }
@@ -179,6 +187,10 @@ public abstract class CrudServiceImpl<S extends SuperEntity, T extends SuperDto>
             return FunctionalErrorCodesUtil.VALUE_DELETION_FAILED_NOT_FOUND;
         } else if (type == Variant.class) {
             return FunctionalErrorCodesUtil.VARIANT_DELETION_FAILED_NOT_FOUND;
+        } else if (type == VariantType.class) {
+            return FunctionalErrorCodesUtil.VARIANT_TYPE_DELETION_FAILED_NOT_FOUND;
+        } else if (type == ValueType.class) {
+            return FunctionalErrorCodesUtil.VALUE_TYPE_DELETION_FAILED_NOT_FOUND;
         } else {
             throw new IllegalArgumentException("No 'NotFoundInDelete' functional error code found for type " + type.getSimpleName());
         }
