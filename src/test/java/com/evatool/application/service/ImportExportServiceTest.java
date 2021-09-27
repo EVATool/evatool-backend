@@ -109,6 +109,18 @@ class ImportExportServiceTest {
         assertThat(originalAnalysis.getIsTemplate()).isEqualTo(importedAnalysis.getIsTemplate());
         assertThat(originalAnalysis.getImageUrl()).isEqualTo(importedAnalysis.getImageUrl());
 
+        // Check value types equality.
+        var originalValueTypes = new ArrayList<>(originalAnalysis.getValueTypes());
+        var importedValueTypes = new ArrayList<>(importedAnalysis.getValueTypes());
+        assertThat(originalValueTypes).hasSize(importedValueTypes.size());
+        for (int i = 0; i < originalAnalysis.getValueTypes().size(); i++) {
+            var originalValueType = originalValueTypes.get(i);
+            var importedValueType = importedValueTypes.get(i);
+
+            assertThat(originalValueType.getName()).isEqualTo(importedValueType.getName());
+            assertThat(originalValueType.getDescription()).isEqualTo(importedValueType.getDescription());
+        }
+        
         // Check values equality.
         var originalValues = new ArrayList<>(originalAnalysis.getValues());
         var importedValues = new ArrayList<>(importedAnalysis.getValues());
@@ -119,7 +131,6 @@ class ImportExportServiceTest {
 
             assertThat(originalValue.getName()).isEqualTo(importedValue.getName());
             assertThat(originalValue.getDescription()).isEqualTo(importedValue.getDescription());
-            assertThat(originalValue.getValueType()).isEqualTo(importedValue.getValueType());
             assertThat(originalValue.getArchived()).isEqualTo(importedValue.getArchived());
         }
 
@@ -148,6 +159,18 @@ class ImportExportServiceTest {
             assertThat(originalImpact.getDescription()).isEqualTo(importedImpact.getDescription());
         }
 
+        // Check variant types equality.
+        var originalVariantTypes = new ArrayList<>(originalAnalysis.getVariantTypes());
+        var importedVariantTypes = new ArrayList<>(importedAnalysis.getVariantTypes());
+        assertThat(originalVariantTypes).hasSize(importedVariantTypes.size());
+        for (int i = 0; i < originalAnalysis.getVariantTypes().size(); i++) {
+            var originalVariantType = originalVariantTypes.get(i);
+            var importedVariantType = importedVariantTypes.get(i);
+
+            assertThat(originalVariantType.getName()).isEqualTo(importedVariantType.getName());
+            assertThat(originalVariantType.getDescription()).isEqualTo(importedVariantType.getDescription());
+        }
+        
         // Check variants equality.
         var originalVariants = new ArrayList<>(originalAnalysis.getVariants());
         var importedVariants = new ArrayList<>(importedAnalysis.getVariants());
@@ -221,6 +244,10 @@ class ImportExportServiceTest {
         assertThat(requirementsJson.length()).isEqualTo(1);
         assertThat(requirementsJson.getJSONObject(0).length()).isEqualTo(3);
 
+        var valueTypesJson = analysisJson.getJSONArray("valueTypes");
+        assertThat(valueTypesJson.length()).isEqualTo(1);
+        assertThat(valueTypesJson.getJSONObject(0).length()).isEqualTo(3);
+        
         var valuesJson = analysisJson.getJSONArray("values");
         assertThat(valuesJson.length()).isEqualTo(1);
         assertThat(valuesJson.getJSONObject(0).length()).isEqualTo(5);
@@ -233,9 +260,13 @@ class ImportExportServiceTest {
         assertThat(impactsJson.length()).isEqualTo(1);
         assertThat(impactsJson.getJSONObject(0).length()).isEqualTo(5);
 
+        var variantTypesJson = analysisJson.getJSONArray("variantTypes");
+        assertThat(variantTypesJson.length()).isEqualTo(1);
+        assertThat(variantTypesJson.getJSONObject(0).length()).isEqualTo(3);
+        
         var variantsJson = analysisJson.getJSONArray("variants");
         assertThat(variantsJson.length()).isEqualTo(1);
-        assertThat(variantsJson.getJSONObject(0).length()).isEqualTo(4);
+        assertThat(variantsJson.getJSONObject(0).length()).isEqualTo(5);
 
         var requirementDeltasJson = analysisJson.getJSONArray("requirementDeltas");
         assertThat(requirementDeltasJson.length()).isEqualTo(1);
