@@ -50,4 +50,16 @@ public class VariantType extends SuperEntity implements FindByAnalysis {
         logger.trace("Pre Persist/Pre Update/Pre Remove");
         FindByAnalysis.super.updateAnalysisLastUpdated();
     }
+
+    @PostPersist
+    void postPersist() {
+        logger.trace("Post Persist");
+        analysis.getVariantTypes().add(this);
+    }
+
+    @PostRemove
+    void postRemove() {
+        logger.trace("Post Remove");
+        analysis.getVariantTypes().remove(this);
+    }
 }

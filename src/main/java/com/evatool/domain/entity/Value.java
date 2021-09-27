@@ -39,7 +39,7 @@ public class Value extends SuperEntity implements FindByAnalysis {
     @Getter
     @Setter
     @ManyToOne(optional = false)
-    private ValueType type;
+    private ValueType valueType;
 
     @Getter
     @Setter
@@ -53,13 +53,13 @@ public class Value extends SuperEntity implements FindByAnalysis {
     @ToString.Exclude
     private final Set<Impact> impacts = new HashSet<>();
 
-    public Value(String name, String description, Boolean archived, ValueType type, Analysis analysis) {
+    public Value(String name, String description, Boolean archived, ValueType valueType, Analysis analysis) {
         super();
         logger.trace("Constructor");
         setName(name);
         setDescription(description);
         setArchived(archived);
-        setType(type);
+        setValueType(valueType);
         setAnalysis(analysis);
     }
 

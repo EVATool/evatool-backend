@@ -35,20 +35,20 @@ public class Variant extends PrefixIdEntity implements FindByAnalysis {
     @Getter
     @Setter
     @ManyToOne(optional = false)
-    private VariantType type;
+    private VariantType variantType;
 
     @Getter
     @Setter
     @ManyToOne(optional = false)
     private Analysis analysis;
 
-    public Variant(String name, String description, Boolean archived, VariantType type, Analysis analysis) {
+    public Variant(String name, String description, Boolean archived, VariantType variantType, Analysis analysis) {
         super();
         logger.trace("Constructor");
         setName(name);
         setDescription(description);
         setArchived(archived);
-        setType(type);
+        setVariantType(variantType);
         setAnalysis(analysis);
     }
 

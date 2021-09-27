@@ -74,7 +74,21 @@ public class Analysis extends PrefixIdEntity {
     @LazyCollection(LazyCollectionOption.FALSE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    private final Set<ValueType> valueTypes = new HashSet<>();
+
+    @Getter
+    @OneToMany(orphanRemoval = true, mappedBy = "analysis")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private final Set<Value> values = new HashSet<>();
+
+    @Getter
+    @OneToMany(orphanRemoval = true, mappedBy = "analysis")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private final Set<VariantType> variantTypes = new HashSet<>();
 
     @Getter
     @OneToMany(orphanRemoval = true, mappedBy = "analysis")

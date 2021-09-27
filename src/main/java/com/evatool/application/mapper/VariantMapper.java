@@ -30,7 +30,7 @@ public class VariantMapper extends PrefixIdMapper<Variant, VariantDto> {
                 entity.getName(),
                 entity.getDescription(),
                 entity.getArchived(),
-                entity.getType().getId(),
+                entity.getVariantType().getId(),
                 entity.getAnalysis().getId()
         );
         super.amendToDto(entity, dto);

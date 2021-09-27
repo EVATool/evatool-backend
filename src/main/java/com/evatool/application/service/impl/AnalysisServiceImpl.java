@@ -92,7 +92,7 @@ public class AnalysisServiceImpl extends CrudServiceImpl<Analysis, AnalysisDto> 
         templateValues.forEach(value -> {
             var valueDto = valueMapper.toDto(value);
             valueDto.setAnalysisId(deepCopyAnalysis.getId());
-            valueDto.setValueTypeId(copiedValueTypes.get(value.getType().getId().toString()).getId());
+            valueDto.setValueTypeId(copiedValueTypes.get(value.getValueType().getId().toString()).getId());
             valueRepository.save(valueMapper.fromDto(valueDto));
         });
 
@@ -119,7 +119,7 @@ public class AnalysisServiceImpl extends CrudServiceImpl<Analysis, AnalysisDto> 
         templateVariants.forEach(variant -> {
             var variantDto = variantMapper.toDto(variant);
             variantDto.setAnalysisId(deepCopyAnalysis.getId());
-            variantDto.setVariantTypeId(copiedVariantTypes.get(variant.getType().getId().toString()).getId());
+            variantDto.setVariantTypeId(copiedVariantTypes.get(variant.getVariantType().getId().toString()).getId());
             variantRepository.save(variantMapper.fromDto(variantDto));
         });
 

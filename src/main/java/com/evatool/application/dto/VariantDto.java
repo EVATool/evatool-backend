@@ -32,6 +32,7 @@ public class VariantDto extends PrefixIdDto implements AnalysisChildDto {
 
     @ApiModelProperty(required = true)
     @NotNull
+    @ImportExportInclude
     private UUID variantTypeId;
 
     @ApiModelProperty(required = true)

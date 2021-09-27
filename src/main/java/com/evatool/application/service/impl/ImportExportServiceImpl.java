@@ -145,7 +145,6 @@ public class ImportExportServiceImpl implements ImportExportService {
 
             var valueName = valueJson.getString("name");
             var valueDescription = valueJson.getString("description");
-            var valueTypeString = valueJson.getString("type");
             var valueArchived = valueJson.getBoolean("archived");
             var valueTypeId = valueJson.getString("valueTypeId");
             var valueType = valueTypesMap.get(valueTypeId);

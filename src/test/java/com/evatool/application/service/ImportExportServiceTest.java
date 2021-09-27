@@ -119,7 +119,7 @@ class ImportExportServiceTest {
 
             assertThat(originalValue.getName()).isEqualTo(importedValue.getName());
             assertThat(originalValue.getDescription()).isEqualTo(importedValue.getDescription());
-            assertThat(originalValue.getType()).isEqualTo(importedValue.getType());
+            assertThat(originalValue.getValueType()).isEqualTo(importedValue.getValueType());
             assertThat(originalValue.getArchived()).isEqualTo(importedValue.getArchived());
         }
 

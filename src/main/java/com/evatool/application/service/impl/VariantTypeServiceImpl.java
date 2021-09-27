@@ -8,7 +8,9 @@ import com.evatool.domain.repository.VariantTypeRepository;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class VariantTypeServiceImpl extends CrudServiceImpl<VariantType, VariantTypeDto> implements VariantTypeService {
 
     private static final Logger logger = LoggerFactory.getLogger(VariantTypeServiceImpl.class);

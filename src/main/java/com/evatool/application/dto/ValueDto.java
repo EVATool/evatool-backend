@@ -27,12 +27,13 @@ public class ValueDto extends SuperDto implements AnalysisChildDto {
 
     @ApiModelProperty(required = true)
     @NotNull
-    private UUID valueTypeId;
+    @ImportExportInclude
+    private Boolean archived;
 
     @ApiModelProperty(required = true)
     @NotNull
     @ImportExportInclude
-    private Boolean archived;
+    private UUID valueTypeId;
 
     @ApiModelProperty(required = true)
     @NotNull

@@ -5,7 +5,9 @@ import com.evatool.domain.entity.VariantType;
 import com.evatool.domain.repository.AnalysisRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class VariantTypeMapper extends SuperMapper<VariantType, VariantTypeDto> {
 
     private static final Logger logger = LoggerFactory.getLogger(VariantTypeMapper.class);
