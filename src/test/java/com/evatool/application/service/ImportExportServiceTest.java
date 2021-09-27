@@ -5,7 +5,6 @@ import com.evatool.application.service.api.ImportExportService;
 import com.evatool.application.service.impl.ImportExportServiceImpl;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
-import com.evatool.common.enums.ValueType;
 import com.evatool.common.exception.functional.http400.ImportJsonException;
 import com.evatool.common.util.IterableUtil;
 import com.evatool.domain.entity.*;
@@ -51,7 +50,13 @@ class ImportExportServiceTest {
     private StakeholderRepository stakeholderRepository;
 
     @Autowired
+    private ValueTypeRepository valueTypeRepository;
+
+    @Autowired
     private ValueRepository valueRepository;
+
+    @Autowired
+    private VariantTypeRepository variantTypeRepository;
 
     @Autowired
     private VariantRepository variantRepository;

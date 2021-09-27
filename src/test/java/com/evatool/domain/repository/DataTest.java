@@ -5,7 +5,6 @@ import com.evatool.application.mapper.*;
 import com.evatool.application.service.impl.*;
 import com.evatool.common.enums.StakeholderLevel;
 import com.evatool.common.enums.StakeholderPriority;
-import com.evatool.common.enums.ValueType;
 import com.evatool.domain.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
