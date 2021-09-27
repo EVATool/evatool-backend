@@ -79,11 +79,13 @@ public class Value extends SuperEntity implements FindByAnalysis {
     void postPersist() {
         logger.trace("Post Persist");
         analysis.getValues().add(this);
+        valueType.getValues().add(this);
     }
 
     @PostRemove
     void postRemove() {
         logger.trace("Post Remove");
         analysis.getValues().remove(this);
+        valueType.getValues().remove(this);
     }
 }

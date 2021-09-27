@@ -68,12 +68,14 @@ public class Variant extends PrefixIdEntity implements FindByAnalysis {
     void postPersist() {
         logger.trace("Post Persist");
         analysis.getVariants().add(this);
+        variantType.getVariants().add(this);
     }
 
     @PostRemove
     void postRemove() {
         logger.trace("Post Remove");
         analysis.getVariants().remove(this);
+        variantType.getVariants().remove(this);
     }
 
     @Override

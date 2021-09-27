@@ -47,7 +47,7 @@ public class Impact extends PrefixIdEntity implements FindByAnalysis {
     private Analysis analysis;
 
     @Getter
-    @OneToMany(cascade = CascadeType.DETACH, orphanRemoval = true, mappedBy = "impact")
+    @OneToMany(orphanRemoval = true, mappedBy = "impact")
     @LazyCollection(LazyCollectionOption.FALSE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

@@ -4,10 +4,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "value_type")
 @Table(name = "value_type")
@@ -30,6 +34,13 @@ public class ValueType extends SuperEntity implements FindByAnalysis {
     @Setter
     @ManyToOne(optional = false)
     private Analysis analysis;
+
+    @Getter
+    @OneToMany(orphanRemoval = true, mappedBy = "valueType")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private final Set<Value> values = new HashSet<>();
 
     public ValueType(String name, String description, Analysis analysis) {
         super();
