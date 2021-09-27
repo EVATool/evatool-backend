@@ -299,6 +299,18 @@ public class ImportExportServiceImpl implements ImportExportService {
                 migrateAnalysisJsonObject(analysisJsonObject, "0.0.2");
                 break;
 
+            case "0.0.2":
+                logger.trace("Migrate from version 0.0.2 to 0.0.3"); // Database migration: V1_0_2.
+                // Replace hard coded enums [SOCIAL, ECONOMIC] by default ValueType entities.
+                // TODO
+
+                // VariantTypes didn't exist before, so use a default entity for all existing Variants.
+                // TODO
+
+                // TODO migration test.
+
+                break;
+
             case NEWEST_IMPORT_EXPORT_VERSION: // Version is up to date (recursion base).
                 logger.trace("Arrived at newest version {}", currentImportExportVersion);
                 break;
