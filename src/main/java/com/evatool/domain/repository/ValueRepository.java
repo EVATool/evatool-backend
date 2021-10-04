@@ -9,4 +9,6 @@ import java.util.UUID;
 @Repository
 public interface ValueRepository extends CrudRepository<Value, UUID>, FindByAnalysisRepository<Value> {
 
+    Iterable<Value> findAllByValueTypeId(UUID valueTypeId);
+
 }

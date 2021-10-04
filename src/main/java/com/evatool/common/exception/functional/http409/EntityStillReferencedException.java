@@ -43,4 +43,18 @@ public class EntityStillReferencedException extends ConflictException {
         public final UUID variantId;
         public final UUID[] requirementIds;
     }
+
+    @Getter
+    @RequiredArgsConstructor
+    public static class ValueTypeReferencedByValuesTag extends EntityStillReferencedTag {
+        public final UUID valueTypeId;
+        public final UUID[] valueIds;
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public static class VariantTypeReferencedByVariantsTag extends EntityStillReferencedTag {
+        public final UUID variantTypeId;
+        public final UUID[] variantIds;
+    }
 }
