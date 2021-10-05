@@ -55,9 +55,9 @@ DELIMITER //
 CREATE PROCEDURE migrate_value_and_variant_types()
     BEGIN
         DECLARE analysis_id CHAR(36);
+        DECLARE finished INT DEFAULT 0;
         DECLARE existing_analysis_ids CURSOR FOR SELECT id FROM analysis;
 
-        DECLARE finished INT DEFAULT 0;
         DECLARE EXIT HANDLER FOR NOT FOUND SET finished = 1;
 
         OPEN existing_analysis_ids;
