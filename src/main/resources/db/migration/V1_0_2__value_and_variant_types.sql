@@ -56,35 +56,43 @@ CREATE PROCEDURE migrate_value_and_variant_types()
     BEGIN
         DECLARE analysis_id CHAR(36);
         DECLARE existing_analysis_ids CURSOR FOR SELECT id FROM analysis;
+
+        DECLARE finished INT DEFAULT 0;
+        DECLARE EXIT HANDLER FOR NOT FOUND SET finished = 1;
+
         OPEN existing_analysis_ids;
         FETCH NEXT FROM existing_analysis_ids INTO analysis_id;
+
 /*
         -- Iterate over all existing analyses.
         WHILE FETCH_STATUS = 0
-        BEGIN
-            -- Add ValueTypes that replace the enum values [SOCIAL, ECONOMIC].
-            -- TODO set realm of analysis to new entities!
-            DECLARE social_value_type_id CHAR(36);
-            DECLARE economic_value_type_id CHAR(36);
-            insert into value_type values (null, "", "", analysis_id);
-            SELECT LAST_INSERT_ID() INTO social_value_type_id;
-            insert into value_type values (null, "", "", analysis_id);
-            SELECT LAST_INSERT_ID() INTO economic_value_type_id;
+            BEGIN
+                -- Exit if cursor was empty.
+                -- TODO
 
-            -- Assign the ValueTypes [SOCIAL, ECONOMIC].
-            update value set value_type_id=social_value_type_id where analysis_id=analysis_id and type="SOCIAL";
-            update value set value_type_id=economic_value_type_id where analysis_id=analysis_id and type="ECONOMIC";
+                -- Add ValueTypes that replace the enum values [SOCIAL, ECONOMIC].
+                -- TODO set realm of analysis to new entities!
+                DECLARE social_value_type_id CHAR(36);
+                DECLARE economic_value_type_id CHAR(36);
+                insert into value_type values (null, "", "", analysis_id);
+                SELECT LAST_INSERT_ID() INTO social_value_type_id;
+                insert into value_type values (null, "", "", analysis_id);
+                SELECT LAST_INSERT_ID() INTO economic_value_type_id;
 
-            -- Add a default VariantType.
-            DECLARE default_variant_type_id CHAR(36);
-            insert into variant_type values (null, "", "", analysis_id);
-            SELECT LAST_INSERT_ID() INTO default_variant_type_id;
+                -- Assign the ValueTypes [SOCIAL, ECONOMIC].
+                update value set value_type_id=social_value_type_id where analysis_id=analysis_id and type="SOCIAL";
+                update value set value_type_id=economic_value_type_id where analysis_id=analysis_id and type="ECONOMIC";
 
-            -- Assign the default VariantType.
-            update variant set variant_type_id=default_variant_type_id where analysis_id=analysis_id;
+                -- Add a default VariantType.
+                DECLARE default_variant_type_id CHAR(36);
+                insert into variant_type values (null, "", "", analysis_id);
+                SELECT LAST_INSERT_ID() INTO default_variant_type_id;
 
-            FETCH NEXT FROM existing_analysis_ids INTO analysis_id;
-        END
+                -- Assign the default VariantType.
+                update variant set variant_type_id=default_variant_type_id where analysis_id=analysis_id;
+
+                FETCH NEXT FROM existing_analysis_ids INTO analysis_id;
+            END
         CLOSE existing_analysis_ids;
         DEALLOCATE existing_analysis_ids;
 */
