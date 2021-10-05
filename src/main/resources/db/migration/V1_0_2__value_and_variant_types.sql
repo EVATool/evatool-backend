@@ -60,7 +60,6 @@ CREATE PROCEDURE migrate_value_and_variant_types()
         DECLARE finished INT DEFAULT FALSE;
         DECLARE existing_analysis_ids CURSOR FOR SELECT id FROM analysis;
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = TRUE;
-        -- DECLARE EXIT HANDLER FOR NOT FOUND SET finished = TRUE;
 
         -- Iterate over all existing analyses.
         OPEN existing_analysis_ids;
@@ -74,8 +73,8 @@ CREATE PROCEDURE migrate_value_and_variant_types()
 
             -- Add ValueTypes that replace the enum values [SOCIAL, ECONOMIC].
             -- TODO set realm of analysis to new entities!
-/*
             insert into value_type values (null, "", "", analysis_id);
+/*
             SELECT LAST_INSERT_ID() INTO social_value_type_id;
             insert into value_type values (null, "", "", analysis_id);
             SELECT LAST_INSERT_ID() INTO economic_value_type_id;
