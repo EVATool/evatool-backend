@@ -93,7 +93,6 @@ CREATE PROCEDURE migrate_value_and_variant_types()
 */
         END LOOP;
         CLOSE existing_analysis_ids;
-        DEALLOCATE existing_analysis_ids;
     END //
 DELIMITER ;
 
