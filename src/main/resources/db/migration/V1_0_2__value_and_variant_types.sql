@@ -25,4 +25,4 @@ CALL AddData();
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 
 -- Placeholder
-INSERT INTO ${tableName} (name) VALUES ('Mr. T');
+INSERT INTO test_data (name) VALUES ('Mr. T');
