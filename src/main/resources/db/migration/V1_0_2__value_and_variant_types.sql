@@ -1,3 +1,6 @@
+-- ###############
+-- Create Tables.
+-- ###############
 
 -- Create table for ValueType.
 create table value_type (
