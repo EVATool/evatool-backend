@@ -62,7 +62,6 @@ CREATE PROCEDURE migrate_value_and_variant_types()
         -- Iterate over all existing analyses.
         WHILE FETCH_STATUS = 0
         BEGIN
-            PRINT analysis_id
             -- Add ValueTypes that replace the enum values [SOCIAL, ECONOMIC].
             -- TODO set realm of analysis to new entities!
             DECLARE social_value_type_id CHAR(36);
