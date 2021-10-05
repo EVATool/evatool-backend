@@ -44,7 +44,6 @@ alter table variant
 
 
 
-/*
 -- ###############
 -- Migrate existing analyses from enum to entity.
 -- ###############
@@ -94,7 +93,6 @@ CREATE PROCEDURE migrate_value_and_variant_types()
 DELIMITER ;
 
 CALL migrate_value_and_variant_types();
-*/
 
 
 
