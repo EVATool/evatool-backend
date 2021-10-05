@@ -58,7 +58,7 @@ CREATE PROCEDURE migrate_value_and_variant_types()
         DECLARE finished INT DEFAULT FALSE;
         DECLARE existing_analysis_ids CURSOR FOR SELECT id FROM analysis;
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = TRUE;
-        DECLARE EXIT HANDLER FOR NOT FOUND SET finished = TRUE;
+        --DECLARE EXIT HANDLER FOR NOT FOUND SET finished = TRUE;
 
         -- Iterate over all existing analyses.
         OPEN existing_analysis_ids;
