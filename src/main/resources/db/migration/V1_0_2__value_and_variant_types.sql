@@ -63,7 +63,6 @@ CREATE PROCEDURE migrate_value_and_variant_types()
         OPEN existing_analysis_ids;
         FETCH NEXT FROM existing_analysis_ids INTO analysis_id;
 
-/*
         -- Iterate over all existing analyses.
         WHILE FETCH_STATUS = 0
             BEGIN
@@ -74,6 +73,7 @@ CREATE PROCEDURE migrate_value_and_variant_types()
                 -- TODO set realm of analysis to new entities!
                 DECLARE social_value_type_id CHAR(36);
                 DECLARE economic_value_type_id CHAR(36);
+/*
                 insert into value_type values (null, "", "", analysis_id);
                 SELECT LAST_INSERT_ID() INTO social_value_type_id;
                 insert into value_type values (null, "", "", analysis_id);
@@ -92,7 +92,9 @@ CREATE PROCEDURE migrate_value_and_variant_types()
                 update variant set variant_type_id=default_variant_type_id where analysis_id=analysis_id;
 
                 FETCH NEXT FROM existing_analysis_ids INTO analysis_id;
+*/
             END
+/*
         CLOSE existing_analysis_ids;
         DEALLOCATE existing_analysis_ids;
 */
