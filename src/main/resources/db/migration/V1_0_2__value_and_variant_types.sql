@@ -55,9 +55,9 @@ DELIMITER //
 CREATE PROCEDURE migrate_value_and_variant_types()
     BEGIN
         DECLARE @analysis_id CHAR(36);
-        DECLARE existing_analysis_ids CURSOR FOR SELECT id FROM analysis;
-        OPEN existing_analysis_ids;
-        FETCH NEXT FROM existing_analysis_ids INTO @analysis_id;
+        DECLARE @existing_analysis_ids CURSOR FOR SELECT id FROM analysis;
+        OPEN @existing_analysis_ids;
+        FETCH NEXT FROM @existing_analysis_ids INTO @analysis_id;
 
         -- Iterate over all existing analyses.
         WHILE @@FETCH_STATUS = 0
@@ -84,11 +84,11 @@ CREATE PROCEDURE migrate_value_and_variant_types()
             -- Assign the default VariantType.
             update variant set variant_type_id=@default_variant_type_id where analysis_id=@analysis_id;
 
-            FETCH NEXT FROM existing_analysis_ids INTO @analysis_id;
+            FETCH NEXT FROM @existing_analysis_ids INTO @analysis_id;
         END
 
-        CLOSE existing_analysis_ids;
-        DEALLOCATE existing_analysis_ids;
+        CLOSE @existing_analysis_ids;
+        DEALLOCATE @existing_analysis_ids;
     END //
 DELIMITER ;
 
