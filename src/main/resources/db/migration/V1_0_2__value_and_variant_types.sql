@@ -53,10 +53,10 @@ alter table variant
 
 DELIMITER //
 
-CREATE PROCEDURE migrate_value_and_variant_types()
+CREATE PROCEDURE migrate()
 BEGIN
     DECLARE @analysis_id CHAR(36);
-    
+
 END //
 
 DELIMITER ;
