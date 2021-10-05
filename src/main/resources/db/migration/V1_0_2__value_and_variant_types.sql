@@ -51,7 +51,7 @@ alter table variant
 
 -- Make value_type_id not null.
 alter table value
-    alter column value_type_id CHAR(36) not null;
+    modify value_type_id CHAR(36) not null;
 
 -- Add foreign key constraint to value.
 alter table value
@@ -61,7 +61,7 @@ alter table value
 
 -- Make variant_type_id not null.
 alter table variant
-    alter column variant_type_id CHAR(36) not null;
+    modify variant_type_id CHAR(36) not null;
 
 -- Add foreign key constraint to variant.
 alter table variant
