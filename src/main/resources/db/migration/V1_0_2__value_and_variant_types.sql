@@ -85,9 +85,9 @@ CREATE PROCEDURE migrate_value_and_variant_types()
 
             FETCH NEXT FROM existing_analysis_ids INTO analysis_id;
         END
-*/
         CLOSE existing_analysis_ids;
         DEALLOCATE existing_analysis_ids;
+*/
     END //
 DELIMITER ;
 
