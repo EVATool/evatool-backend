@@ -61,6 +61,7 @@ CREATE PROCEDURE migrate_value_and_variant_types()
         DECLARE analysis_id CHAR(36);
         DECLARE social_value_type_id CHAR(36);
         DECLARE economic_value_type_id CHAR(36);
+        DECLARE default_variant_type_id CHAR(36);
         DECLARE analysis_realm varchar(255);
         DECLARE finished INT DEFAULT FALSE;
         DECLARE existing_analysis_ids CURSOR FOR SELECT id FROM analysis;
@@ -94,7 +95,6 @@ CREATE PROCEDURE migrate_value_and_variant_types()
                 where analysis_id=analysis_id and type="ECONOMIC";
 
             -- Add a default VariantType.
-            DECLARE default_variant_type_id CHAR(36);
             insert into variant_type (realm, name, description, analysis_id)
                 values (analysis_realm, "Default", "", analysis_id);
             SELECT LAST_INSERT_ID() INTO default_variant_type_id;
