@@ -1,3 +1,5 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+
 -- ###############
 -- Create Tables.
 -- ###############
@@ -5,6 +7,7 @@
 -- Create table for ValueType.
 create table value_type (
     id CHAR(36) not null,
+    realm varchar(255) not null,
     name varchar(255) not null,
     description varchar(2048) not null,
     analysis_id CHAR(36) not null,
@@ -18,6 +21,7 @@ alter table value_type
 -- Create table for VariantType.
 create table variant_type (
     id CHAR(36) not null,
+    realm varchar(255) not null,
     name varchar(255) not null,
     description varchar(2048) not null,
     analysis_id CHAR(36) not null,
