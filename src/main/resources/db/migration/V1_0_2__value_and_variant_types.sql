@@ -61,6 +61,7 @@ CREATE PROCEDURE migrate_value_and_variant_types()
         DECLARE analysis_id CHAR(36);
         DECLARE social_value_type_id CHAR(36);
         DECLARE economic_value_type_id CHAR(36);
+        DECLARE analysis_realm varchar(255),
         DECLARE finished INT DEFAULT FALSE;
         DECLARE existing_analysis_ids CURSOR FOR SELECT id FROM analysis;
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = TRUE;
@@ -75,26 +76,33 @@ CREATE PROCEDURE migrate_value_and_variant_types()
                 LEAVE fetch_loop;
             END IF;
 
+            -- Get realm of analysis.
+            SELECT realm INTO analysis_realm FROM analysis WHERE analysis_id=analysis_id;
+
             -- Add ValueTypes that replace the enum values [SOCIAL, ECONOMIC].
-            -- TODO set realm of analysis to new entities!
-/*
-            insert into value_type values (null, "", "", analysis_id);
+            insert into value_type (realm, name, description, analysis_id)
+                values (analysis_realm, "Social", "", analysis_id);
             SELECT LAST_INSERT_ID() INTO social_value_type_id;
-            insert into value_type values (null, "", "", analysis_id);
+            insert into value_type (realm, name, description, analysis_id)
+                values (analysis_realm, "Economic", "", analysis_id);
             SELECT LAST_INSERT_ID() INTO economic_value_type_id;
 
             -- Assign the ValueTypes [SOCIAL, ECONOMIC].
-            update value set value_type_id=social_value_type_id where analysis_id=analysis_id and type="SOCIAL";
-            update value set value_type_id=economic_value_type_id where analysis_id=analysis_id and type="ECONOMIC";
+            update value set value_type_id=social_value_type_id
+                where analysis_id=analysis_id and type="SOCIAL";
+            update value set value_type_id=economic_value_type_id
+                where analysis_id=analysis_id and type="ECONOMIC";
 
             -- Add a default VariantType.
             DECLARE default_variant_type_id CHAR(36);
-            insert into variant_type values (null, "", "", analysis_id);
+            insert into variant_type (realm, name, description, analysis_id)
+                values (analysis_realm, "Default", "", analysis_id);
             SELECT LAST_INSERT_ID() INTO default_variant_type_id;
 
             -- Assign the default VariantType.
-            update variant set variant_type_id=default_variant_type_id where analysis_id=analysis_id;
-*/
+            update variant set variant_type_id=default_variant_type_id
+                where analysis_id=analysis_id;
+
         END LOOP;
         CLOSE existing_analysis_ids;
     END //
