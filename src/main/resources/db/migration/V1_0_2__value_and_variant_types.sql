@@ -61,7 +61,7 @@ CREATE PROCEDURE migrate_value_and_variant_types()
         DECLARE analysis_id CHAR(36);
         DECLARE social_value_type_id CHAR(36);
         DECLARE economic_value_type_id CHAR(36);
-        DECLARE analysis_realm varchar(255),
+        DECLARE analysis_realm varchar(255);
         DECLARE finished INT DEFAULT FALSE;
         DECLARE existing_analysis_ids CURSOR FOR SELECT id FROM analysis;
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = TRUE;
