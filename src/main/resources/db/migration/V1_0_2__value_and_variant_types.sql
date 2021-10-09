@@ -90,9 +90,9 @@ CREATE PROCEDURE migrate_value_and_variant_types()
 
             -- Assign the ValueTypes [SOCIAL, ECONOMIC].
             update value set value_type_id=social_value_type_id
-                where analysis_id=analysis_id and type="SOCIAL";
+                where analysis_id=analysis_id and type=0;
             update value set value_type_id=economic_value_type_id
-                where analysis_id=analysis_id and type="ECONOMIC";
+                where analysis_id=analysis_id and type=1;
 
             -- Add a default VariantType.
             SELECT UUID() INTO default_variant_type_id;
