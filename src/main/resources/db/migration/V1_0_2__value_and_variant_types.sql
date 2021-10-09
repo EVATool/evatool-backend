@@ -78,7 +78,7 @@ CREATE PROCEDURE migrate_value_and_variant_types()
             END IF;
 
             -- Get realm of analysis.
-            SELECT realm INTO analysis_realm FROM analysis WHERE analysis_id=analysis_id;
+            SELECT analysis.realm INTO analysis_realm FROM analysis WHERE analysis_id=analysis_id;
 
             -- Add ValueTypes that replace the enum values [SOCIAL, ECONOMIC].
             SELECT UUID() INTO social_value_type_id;
