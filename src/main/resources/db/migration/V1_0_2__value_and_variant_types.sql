@@ -81,12 +81,12 @@ CREATE PROCEDURE migrate_value_and_variant_types()
             SELECT realm INTO analysis_realm FROM analysis WHERE analysis_id=analysis_id;
 
             -- Add ValueTypes that replace the enum values [SOCIAL, ECONOMIC].
-            insert into value_type (realm, name, description, analysis_id)
-                values (analysis_realm, "Social", "", analysis_id);
-            SELECT LAST_INSERT_ID() INTO social_value_type_id;
-            insert into value_type (realm, name, description, analysis_id)
-                values (analysis_realm, "Economic", "", analysis_id);
-            SELECT LAST_INSERT_ID() INTO economic_value_type_id;
+            SELECT UUID() INTO social_value_type_id;
+            insert into value_type (id, realm, name, description, analysis_id)
+                values (social_value_type_id, analysis_realm, "Social", "", analysis_id);
+            SELECT UUID() INTO economic_value_type_id;
+            insert into value_type (id, realm, name, description, analysis_id)
+                values (economic_value_type_id, analysis_realm, "Economic", "", analysis_id);
 
             -- Assign the ValueTypes [SOCIAL, ECONOMIC].
             update value set value_type_id=social_value_type_id
@@ -95,9 +95,9 @@ CREATE PROCEDURE migrate_value_and_variant_types()
                 where analysis_id=analysis_id and type="ECONOMIC";
 
             -- Add a default VariantType.
-            insert into variant_type (realm, name, description, analysis_id)
-                values (analysis_realm, "Default", "", analysis_id);
-            SELECT LAST_INSERT_ID() INTO default_variant_type_id;
+            SELECT UUID() INTO default_variant_type_id;
+            insert into variant_type (id, realm, name, description, analysis_id)
+                values (default_variant_type_id, analysis_realm, "Default", "", analysis_id);
 
             -- Assign the default VariantType.
             update variant set variant_type_id=default_variant_type_id
