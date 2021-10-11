@@ -58,7 +58,7 @@ alter table variant
 DELIMITER //
 CREATE PROCEDURE migrate_value_and_variant_types()
     BEGIN
-        DECLARE analysis_id CHAR(36);
+        DECLARE existing_analysis_id CHAR(36);
         DECLARE social_value_type_id CHAR(36);
         DECLARE economic_value_type_id CHAR(36);
         DECLARE default_variant_type_id CHAR(36);
@@ -70,7 +70,7 @@ CREATE PROCEDURE migrate_value_and_variant_types()
         -- Iterate over all existing analyses.
         OPEN existing_analysis_ids;
         fetch_loop: LOOP
-            FETCH NEXT FROM existing_analysis_ids INTO analysis_id;
+            FETCH NEXT FROM existing_analysis_ids INTO existing_analysis_id;
 
             -- Exit if cursor was empty.
             IF finished THEN
@@ -78,30 +78,30 @@ CREATE PROCEDURE migrate_value_and_variant_types()
             END IF;
 
             -- Get realm of analysis.
-            SELECT analysis.realm INTO analysis_realm FROM analysis WHERE analysis.id=analysis_id;
+            SELECT analysis.realm INTO analysis_realm FROM analysis WHERE analysis.id=existing_analysis_id;
 
             -- Add ValueTypes that replace the enum values [SOCIAL, ECONOMIC].
             SELECT UUID() INTO social_value_type_id;
-            insert into value_type (id, realm, name, description, analysis_id)
-                values (social_value_type_id, analysis_realm, "Social", "", analysis_id);
+            insert into value_type (id, realm, name, description, existing_analysis_id)
+                values (social_value_type_id, analysis_realm, "Social", "", existing_analysis_id);
             SELECT UUID() INTO economic_value_type_id;
-            insert into value_type (id, realm, name, description, analysis_id)
-                values (economic_value_type_id, analysis_realm, "Economic", "", analysis_id);
+            insert into value_type (id, realm, name, description, existing_analysis_id)
+                values (economic_value_type_id, analysis_realm, "Economic", "", existing_analysis_id);
 
             -- Assign the ValueTypes [SOCIAL, ECONOMIC].
             update value set value_type_id=social_value_type_id
-                where analysis_id=analysis_id and type=0;
+                where analysis_id=existing_analysis_id and type=0;
             update value set value_type_id=economic_value_type_id
-                where analysis_id=analysis_id and type=1;
+                where analysis_id=existing_analysis_id and type=1;
 
             -- Add a default VariantType.
             SELECT UUID() INTO default_variant_type_id;
-            insert into variant_type (id, realm, name, description, analysis_id)
-                values (default_variant_type_id, analysis_realm, "Default", "", analysis_id);
+            insert into variant_type (id, realm, name, description, existing_analysis_id)
+                values (default_variant_type_id, analysis_realm, "Default", "", existing_analysis_id);
 
             -- Assign the default VariantType.
             update variant set variant_type_id=default_variant_type_id
-                where analysis_id=analysis_id;
+                where analysis_id=existing_analysis_id;
 
         END LOOP;
         CLOSE existing_analysis_ids;
