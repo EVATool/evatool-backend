@@ -82,10 +82,10 @@ CREATE PROCEDURE migrate_value_and_variant_types()
 
             -- Add ValueTypes that replace the enum values [SOCIAL, ECONOMIC].
             SELECT UUID() INTO social_value_type_id;
-            insert into value_type (id, realm, name, description, existing_analysis_id)
+            insert into value_type (id, realm, name, description, analysis_id)
                 values (social_value_type_id, analysis_realm, "Social", "", existing_analysis_id);
             SELECT UUID() INTO economic_value_type_id;
-            insert into value_type (id, realm, name, description, existing_analysis_id)
+            insert into value_type (id, realm, name, description, analysis_id)
                 values (economic_value_type_id, analysis_realm, "Economic", "", existing_analysis_id);
 
             -- Assign the ValueTypes [SOCIAL, ECONOMIC].
