@@ -96,7 +96,7 @@ CREATE PROCEDURE migrate_value_and_variant_types()
 
             -- Add a default VariantType.
             SELECT UUID() INTO default_variant_type_id;
-            insert into variant_type (id, realm, name, description, existing_analysis_id)
+            insert into variant_type (id, realm, name, description, analysis_id)
                 values (default_variant_type_id, analysis_realm, "Default", "", existing_analysis_id);
 
             -- Assign the default VariantType.
