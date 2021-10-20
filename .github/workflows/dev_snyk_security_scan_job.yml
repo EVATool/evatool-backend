@@ -1,8 +1,8 @@
-name: Deploy to DockerHub (exp)
+name: Scan docker image (dev)
 
 on:
   push:
-    branches: [ exp ]
+    branches: [ dev ]
 
 jobs:
   deploy:
