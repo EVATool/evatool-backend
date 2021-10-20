@@ -28,4 +28,4 @@ jobs:
         run: docker build -t evatool/evatool-backend:local .
 
       - name: Scan docker image
-        run: docker scan --dependency-tree --file Dockerfile --exclude-base evatool/evatool-backend:local
+        run: docker scan evatool/evatool-backend:local --accept-license --dependency-tree --file Dockerfile --exclude-base
